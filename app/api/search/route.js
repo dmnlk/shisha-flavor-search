@@ -2,13 +2,26 @@ import { NextResponse } from 'next/server';
 import { shishaData } from '../../../data/shishaData';
 
 export async function GET(request) {
-  const { searchParams } = new URL(request.url);
-  const query = searchParams.get('query') || '';
-  const manufacturer = searchParams.get('manufacturer') || '';
-  const page = parseInt(searchParams.get('page')) || 1;
-  const itemsPerPage = 12;
-
   try {
+    // Safely parse URL parameters with validation
+    const url = new URL(request.url);
+    const searchParams = url.searchParams;
+    
+    // Get and validate parameters
+    const query = searchParams.get('query') || '';
+    const manufacturer = searchParams.get('manufacturer') || '';
+    const pageParam = searchParams.get('page');
+    const page = pageParam ? Math.max(1, parseInt(pageParam)) : 1;
+    
+    if (isNaN(page)) {
+      return NextResponse.json(
+        { error: 'Invalid page parameter' },
+        { status: 400 }
+      );
+    }
+
+    const itemsPerPage = 12;
+
     // Start with all data
     let filteredData = [...shishaData];
 
@@ -30,19 +43,23 @@ export async function GET(request) {
 
     // Calculate pagination
     const totalItems = filteredData.length;
-    const totalPages = Math.ceil(totalItems / itemsPerPage);
-    const startIndex = (page - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
+    const totalPages = Math.max(1, Math.ceil(totalItems / itemsPerPage));
+    const validPage = Math.min(page, totalPages); // Ensure page doesn't exceed total pages
+    const startIndex = (validPage - 1) * itemsPerPage;
+    const endIndex = Math.min(startIndex + itemsPerPage, totalItems);
     const paginatedItems = filteredData.slice(startIndex, endIndex);
 
     return NextResponse.json({
       items: paginatedItems,
       totalPages,
-      currentPage: page,
+      currentPage: validPage,
       totalItems
     });
   } catch (error) {
     console.error('Search error:', error);
-    return NextResponse.json({ error: 'Search failed' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'An error occurred while processing your request' },
+      { status: 500 }
+    );
   }
 }
