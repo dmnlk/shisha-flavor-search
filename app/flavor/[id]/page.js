@@ -105,7 +105,7 @@ export default function FlavorDetail() {
               </h1>
 
               <div className="text-3xl font-bold text-primary-600 mb-6">
-                ${flavor.price.toFixed(2)}
+                {flavor.price}
               </div>
 
               <div className="prose prose-lg max-w-none text-gray-600">

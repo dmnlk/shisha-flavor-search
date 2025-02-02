@@ -31,7 +31,7 @@ export default function ShishaCard({ flavor }) {
         <div className="flex items-center justify-between mb-2">
           <span className="text-sm text-gray-600">{flavor.manufacturer}</span>
           <span className="text-sm font-medium text-primary-600">
-            ${flavor.price.toFixed(2)}
+            {flavor.price}
           </span>
         </div>
         <h3 className="text-lg font-semibold mb-2">{flavor.productName}</h3>

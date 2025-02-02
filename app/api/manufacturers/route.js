@@ -1,4 +1,4 @@
-import { getManufacturers } from '../../../data/shishaData';
+import { getManufacturers } from '../../../data/shishaMethods';
 import { NextResponse } from 'next/server';
 
 export async function GET() {

@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { shishaData } from '../../../data/shishaData';
+import { searchFlavors } from '../../../data/shishaMethods';
 
 export async function GET(request) {
   try {

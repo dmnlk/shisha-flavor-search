@@ -3,7 +3,7 @@ import { shishaData } from '../../../../data/shishaData';
 
 export async function GET(request, { params }) {
   try {
-    const flavor = shishaData.find(item => item.id === params.id);
+    const flavor = shishaData.find(item => item.id === parseInt(params.id));
     
     if (!flavor) {
       return NextResponse.json(
