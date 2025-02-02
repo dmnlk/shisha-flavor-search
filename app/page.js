@@ -144,21 +144,90 @@ export default function Home() {
                   
                   {totalPages > 1 && (
                     <div className="flex justify-center mt-12 gap-2">
-                      {[...Array(totalPages)].map((_, i) => (
+                      {/* Previous button */}
+                      {currentPage > 1 && (
                         <motion.button
-                          key={i}
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
-                          onClick={() => handlePageChange(i + 1)}
-                          className={`px-4 py-2 rounded-lg transition-colors ${
-                            currentPage === i + 1
-                              ? 'bg-primary-600 text-white'
-                              : 'bg-white text-gray-700 hover:bg-primary-50'
-                          } shadow-sm`}
+                          onClick={() => handlePageChange(currentPage - 1)}
+                          className="px-4 py-2 rounded-lg bg-white text-gray-700 hover:bg-primary-50 shadow-sm"
                         >
-                          {i + 1}
+                          ←
                         </motion.button>
-                      ))}
+                      )}
+
+                      {/* First page */}
+                      {currentPage > 2 && (
+                        <motion.button
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          onClick={() => handlePageChange(1)}
+                          className="px-4 py-2 rounded-lg bg-white text-gray-700 hover:bg-primary-50 shadow-sm"
+                        >
+                          1
+                        </motion.button>
+                      )}
+
+                      {/* Ellipsis */}
+                      {currentPage > 3 && (
+                        <span className="px-4 py-2">...</span>
+                      )}
+
+                      {/* Current page and neighbors */}
+                      {[...Array(totalPages)].map((_, i) => {
+                        const pageNumber = i + 1;
+                        if (
+                          pageNumber === currentPage ||
+                          pageNumber === currentPage - 1 ||
+                          pageNumber === currentPage + 1
+                        ) {
+                          return (
+                            <motion.button
+                              key={i}
+                              whileHover={{ scale: 1.05 }}
+                              whileTap={{ scale: 0.95 }}
+                              onClick={() => handlePageChange(pageNumber)}
+                              className={`px-4 py-2 rounded-lg transition-colors ${
+                                currentPage === pageNumber
+                                  ? 'bg-primary-600 text-white'
+                                  : 'bg-white text-gray-700 hover:bg-primary-50'
+                              } shadow-sm`}
+                            >
+                              {pageNumber}
+                            </motion.button>
+                          );
+                        }
+                        return null;
+                      })}
+
+                      {/* Ellipsis */}
+                      {currentPage < totalPages - 2 && (
+                        <span className="px-4 py-2">...</span>
+                      )}
+
+                      {/* Last page */}
+                      {currentPage < totalPages - 1 && (
+                        <motion.button
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          onClick={() => handlePageChange(totalPages)}
+                          className="px-4 py-2 rounded-lg bg-white text-gray-700 hover:bg-primary-50 shadow-sm"
+                        >
+                          {totalPages}
+                        </motion.button>
+                      )}
+
+                      {/* Next button */}
+                      {currentPage < totalPages && (
+                        <motion.button
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          onClick={() => handlePageChange(currentPage + 1)}
+                          className="px-4 py-2 rounded-lg bg-white text-gray-700 hover:bg-primary-50 shadow-sm"
+                        >
+                          →
+                        </motion.button>
+                      )}
                     </div>
                   )}
                 </>
