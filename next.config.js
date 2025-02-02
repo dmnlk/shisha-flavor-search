@@ -9,6 +9,10 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'www.shisha-mart.com'
+      },
+      {
+        protocol: 'https',
+        hostname: 'blogger.googleusercontent.com'
       }
     ]
   },
