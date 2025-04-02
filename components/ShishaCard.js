@@ -11,9 +11,9 @@ export default function ShishaCard({ flavor }) {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       whileHover={{ scale: 1.05 }}
-      className="bg-white rounded-lg shadow-md overflow-hidden"
+      className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden"
     >
-      <div className="aspect-square relative overflow-hidden cursor-pointer">
+      <div className="aspect-square relative overflow-hidden cursor-pointer group">
         <Link href={`/flavor/${flavor.id}`}>
           <div className="relative h-full">
             <Image
@@ -29,13 +29,13 @@ export default function ShishaCard({ flavor }) {
       </div>
       <div className="p-4">
         <div className="flex items-center justify-between mb-2">
-          <span className="text-sm text-gray-600">{flavor.manufacturer}</span>
-          <span className="text-sm font-medium text-primary-600">
+          <span className="text-sm text-gray-600 dark:text-gray-400">{flavor.manufacturer}</span>
+          <span className="text-sm font-medium text-primary-600 dark:text-primary-400">
             {flavor.price}
           </span>
         </div>
-        <h3 className="text-lg font-semibold mb-2">{flavor.productName}</h3>
-        <p className="text-gray-600 text-sm line-clamp-2">
+        <h3 className="text-lg font-semibold mb-2 dark:text-white">{flavor.productName}</h3>
+        <p className="text-gray-600 dark:text-gray-300 text-sm line-clamp-2">
           {flavor.description}
         </p>
       </div>

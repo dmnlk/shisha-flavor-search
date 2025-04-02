@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 export default function BrandList({ manufacturers, selectedManufacturer, onSelect }) {
   return (
     <div className="mb-8">
-      <h2 className="text-lg font-semibold mb-4 text-gray-700">Popular Brands</h2>
+      <h2 className="text-lg font-semibold mb-4 text-gray-700 dark:text-gray-300">Popular Brands</h2>
       <div className="flex flex-wrap gap-2">
         <motion.button
           whileHover={{ scale: 1.05 }}
@@ -14,7 +14,7 @@ export default function BrandList({ manufacturers, selectedManufacturer, onSelec
           className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
             selectedManufacturer === ''
               ? 'bg-primary-600 text-white'
-              : 'bg-white text-gray-700 hover:bg-primary-50'
+              : 'bg-white text-gray-700 hover:bg-primary-50 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600'
           } shadow-sm`}
         >
           All Brands
@@ -28,7 +28,7 @@ export default function BrandList({ manufacturers, selectedManufacturer, onSelec
             className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
               selectedManufacturer === manufacturer
                 ? 'bg-primary-600 text-white'
-                : 'bg-white text-gray-700 hover:bg-primary-50'
+                : 'bg-white text-gray-700 hover:bg-primary-50 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600'
             } shadow-sm`}
           >
             {manufacturer}

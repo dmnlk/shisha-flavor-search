@@ -37,8 +37,8 @@ export default function FlavorDetail() {
   if (!flavor) {
     return (
       <div className="min-h-screen flex flex-col justify-center items-center">
-        <h1 className="text-2xl font-bold mb-4">Flavor not found</h1>
-        <Link href="/" className="text-primary-600 hover:text-primary-700">
+        <h1 className="text-2xl font-bold mb-4 dark:text-white">Flavor not found</h1>
+        <Link href="/" className="text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300">
           Return to Home
         </Link>
       </div>
@@ -46,11 +46,11 @@ export default function FlavorDetail() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-primary-50 to-white py-12">
+    <div className="min-h-screen bg-gradient-to-b from-primary-50 to-white dark:from-gray-900 dark:to-gray-800 py-12">
       <div className="container mx-auto px-4">
         <Link
           href="/"
-          className="inline-flex items-center text-gray-600 hover:text-primary-600 mb-8 group"
+          className="inline-flex items-center text-gray-600 hover:text-primary-600 dark:text-gray-300 dark:hover:text-primary-400 mb-8 group"
         >
           <svg
             className="w-5 h-5 mr-2 transform group-hover:-translate-x-1 transition-transform"
@@ -68,7 +68,7 @@ export default function FlavorDetail() {
           Back to Search
         </Link>
 
-        <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
+        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden">
           <div className="md:flex">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
@@ -94,21 +94,21 @@ export default function FlavorDetail() {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className="px-4 py-1 text-sm font-medium rounded-full bg-primary-100 text-primary-800 hover:bg-primary-200 transition-colors mb-4"
+                  className="px-4 py-1 text-sm font-medium rounded-full bg-primary-100 text-primary-800 hover:bg-primary-200 dark:bg-gray-700 dark:text-primary-300 dark:hover:bg-gray-600 transition-colors mb-4"
                 >
                   {flavor.manufacturer}
                 </motion.button>
               </Link>
 
-              <h1 className="text-3xl font-bold text-gray-900 mb-4">
+              <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
                 {flavor.productName}
               </h1>
 
-              <div className="text-3xl font-bold text-primary-600 mb-6">
+              <div className="text-3xl font-bold text-primary-600 dark:text-primary-400 mb-6">
                 {flavor.price}
               </div>
 
-              <div className="prose prose-lg max-w-none text-gray-600">
+              <div className="prose prose-lg max-w-none text-gray-600 dark:text-gray-300">
                 <p>{flavor.description}</p>
               </div>
             </motion.div>

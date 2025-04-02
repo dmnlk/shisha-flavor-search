@@ -84,7 +84,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-primary-50 to-white">
+    <div className="min-h-screen bg-gradient-to-b from-primary-50 to-white dark:from-gray-900 dark:to-gray-800">
       <main className="container mx-auto px-4 py-12">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -92,10 +92,10 @@ export default function Home() {
           transition={{ duration: 0.5 }}
           className="text-center mb-12"
         >
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
             Shisha Flavor Search
           </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
             Discover your perfect shisha flavor from our extensive collection
           </p>
         </motion.div>
@@ -150,7 +150,7 @@ export default function Home() {
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
                           onClick={() => handlePageChange(currentPage - 1)}
-                          className="px-4 py-2 rounded-lg bg-white text-gray-700 hover:bg-primary-50 shadow-sm"
+                          className="px-4 py-2 rounded-lg bg-white text-gray-700 hover:bg-primary-50 shadow-sm dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
                         >
                           ←
                         </motion.button>
@@ -162,7 +162,7 @@ export default function Home() {
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
                           onClick={() => handlePageChange(1)}
-                          className="px-4 py-2 rounded-lg bg-white text-gray-700 hover:bg-primary-50 shadow-sm"
+                          className="px-4 py-2 rounded-lg bg-white text-gray-700 hover:bg-primary-50 shadow-sm dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
                         >
                           1
                         </motion.button>
@@ -190,7 +190,7 @@ export default function Home() {
                               className={`px-4 py-2 rounded-lg transition-colors ${
                                 currentPage === pageNumber
                                   ? 'bg-primary-600 text-white'
-                                  : 'bg-white text-gray-700 hover:bg-primary-50'
+                                  : 'bg-white text-gray-700 hover:bg-primary-50 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600'
                               } shadow-sm`}
                             >
                               {pageNumber}
@@ -211,7 +211,7 @@ export default function Home() {
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
                           onClick={() => handlePageChange(totalPages)}
-                          className="px-4 py-2 rounded-lg bg-white text-gray-700 hover:bg-primary-50 shadow-sm"
+                          className="px-4 py-2 rounded-lg bg-white text-gray-700 hover:bg-primary-50 shadow-sm dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
                         >
                           {totalPages}
                         </motion.button>
@@ -223,7 +223,7 @@ export default function Home() {
                           whileHover={{ scale: 1.05 }}
                           whileTap={{ scale: 0.95 }}
                           onClick={() => handlePageChange(currentPage + 1)}
-                          className="px-4 py-2 rounded-lg bg-white text-gray-700 hover:bg-primary-50 shadow-sm"
+                          className="px-4 py-2 rounded-lg bg-white text-gray-700 hover:bg-primary-50 shadow-sm dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
                         >
                           →
                         </motion.button>
@@ -233,8 +233,8 @@ export default function Home() {
                 </>
               ) : (
                 <div className="text-center py-12">
-                  <h3 className="text-xl font-medium text-gray-900 mb-2">No flavors found</h3>
-                  <p className="text-gray-600">Try adjusting your search criteria</p>
+                  <h3 className="text-xl font-medium text-gray-900 dark:text-gray-100 mb-2">No flavors found</h3>
+                  <p className="text-gray-600 dark:text-gray-400">Try adjusting your search criteria</p>
                 </div>
               )}
             </motion.div>

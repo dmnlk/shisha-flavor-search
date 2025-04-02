@@ -26,9 +26,9 @@ export default function SearchBar({ onSearch, manufacturers }) {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Search for flavors..."
-            className="w-full px-4 py-3 pl-12 bg-white rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 transition-shadow"
+            className="w-full px-4 py-3 pl-12 bg-white dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400 transition-shadow"
           />
-          <MagnifyingGlassIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+          <MagnifyingGlassIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400 dark:text-gray-300" /> {/* Dark mode icon color */}
         </motion.div>
       </div>
     </form>
