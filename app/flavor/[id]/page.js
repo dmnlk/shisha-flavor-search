@@ -76,7 +76,7 @@ export default function FlavorDetail() {
               className="md:w-1/2"
             >
               <img
-                src={flavor.imageUrl}
+                src={(flavor.imageUrl || '/images/no_image_hookah_cover.png').replace('.png', '_w.png')}
                 alt={flavor.productName}
                 className="w-full h-[400px] object-cover"
               />

@@ -35,7 +35,7 @@ export default function ShishaCard({ flavor, onManufacturerClick }) {
       <Link href={`/flavor/${flavor.id}`} className="block">
         <div className="aspect-[4/5] relative overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800">
           <Image
-            src={flavor.imageUrl}
+            src={flavor.imageUrl || '/images/no_image_hookah_cover.png'}
             alt={flavor.productName}
             fill
             className="object-cover hover:scale-110 transition-transform duration-500"
