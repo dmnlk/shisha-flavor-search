@@ -1,4 +1,5 @@
 import { shishaData } from './shishaData';
+import { normalizeBrandName, getUniqueBrands, normalizeBrandForSearch } from '../lib/utils/brandNormalizer';
 
 export function searchFlavors({ query = '', manufacturer = '', page = 1, limit = 12 }) {
   let filteredData = [...shishaData];
@@ -13,11 +14,13 @@ export function searchFlavors({ query = '', manufacturer = '', page = 1, limit =
     );
   }
 
-  // Filter by manufacturer
+  // Filter by manufacturer (大文字小文字を無視して比較)
   if (manufacturer) {
-    filteredData = filteredData.filter(item =>
-      item.manufacturer.toLowerCase() === manufacturer.toLowerCase()
-    );
+    const normalizedSearchBrand = normalizeBrandForSearch(manufacturer);
+    filteredData = filteredData.filter(item => {
+      const normalizedItemBrand = normalizeBrandForSearch(item.manufacturer);
+      return normalizedItemBrand === normalizedSearchBrand;
+    });
   }
 
   // Calculate pagination
@@ -34,6 +37,6 @@ export function searchFlavors({ query = '', manufacturer = '', page = 1, limit =
 }
 
 export function getManufacturers() {
-  const manufacturers = new Set(shishaData.map(item => item.manufacturer));
-  return Array.from(manufacturers).sort();
+  const manufacturers = shishaData.map(item => item.manufacturer);
+  return getUniqueBrands(manufacturers);
 }

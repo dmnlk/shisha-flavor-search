@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server';
 import { shishaData } from '../../../data/shishaData';
 import { searchFlavors } from '../../../data/shishaMethods';
+import { normalizeBrandForSearch } from '../../../lib/utils/brandNormalizer';
+
+export const dynamic = 'force-dynamic';
 
 export async function GET(request) {
   try {
@@ -26,11 +29,13 @@ export async function GET(request) {
     // Start with all data
     let filteredData = [...shishaData];
 
-    // Filter by manufacturer if specified
+    // Filter by manufacturer if specified (大文字小文字を無視)
     if (manufacturer) {
-      filteredData = filteredData.filter(item => 
-        item.manufacturer.toLowerCase() === manufacturer.toLowerCase()
-      );
+      const normalizedSearchBrand = normalizeBrandForSearch(manufacturer);
+      filteredData = filteredData.filter(item => {
+        const normalizedItemBrand = normalizeBrandForSearch(item.manufacturer);
+        return normalizedItemBrand === normalizedSearchBrand;
+      });
     }
 
     // Then apply search query if specified
