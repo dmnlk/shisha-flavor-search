@@ -1,12 +1,16 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/24/solid';
 import { FunnelIcon } from '@heroicons/react/24/outline';
 import { motion, AnimatePresence } from 'framer-motion';
 
-export default function SearchBar({ onSearch, manufacturers }) {
-  const [searchTerm, setSearchTerm] = useState('');
+export default function SearchBar({ onSearch, manufacturers, searchQuery = '' }) {
+  const [searchTerm, setSearchTerm] = useState(searchQuery);
+
+  useEffect(() => {
+    setSearchTerm(searchQuery);
+  }, [searchQuery]);
   const [isFocused, setIsFocused] = useState(false);
 
   const handleSubmit = (e) => {

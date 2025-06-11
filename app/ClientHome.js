@@ -105,6 +105,13 @@ function HomeContent() {
     });
   };
 
+  const handleHomeReset = () => {
+    setSearchQuery('');
+    setSelectedManufacturer('');
+    setCurrentPage(1);
+    handleSearch({ query: '', manufacturer: '', page: 1 });
+  };
+
   // Initial load - URLパラメータから状態を復元
   useEffect(() => {
     const query = searchParams.get('query') || '';
@@ -123,14 +130,21 @@ function HomeContent() {
           transition={{ duration: 0.5 }}
           className="text-center mb-8 px-4 sm:px-0"
         >
-          <img 
-            src="/images/logo.png" 
-            alt="Shisha Search Logo" 
-            className="w-[200px] sm:w-[240px] h-[60px] sm:h-[80px] object-contain mb-4 mx-auto"
-          />
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent mb-3">
-            Shisha Flavor Search
-          </h1>
+          <motion.div
+            onClick={handleHomeReset}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className="cursor-pointer inline-block"
+          >
+            <img 
+              src="/images/logo.png" 
+              alt="Shisha Search Logo" 
+              className="w-[200px] sm:w-[240px] h-[60px] sm:h-[80px] object-contain mb-4 mx-auto"
+            />
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent mb-3">
+              Shisha Flavor Search
+            </h1>
+          </motion.div>
           <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
             あなただけの特別なフレーバーを見つけよう
           </p>
@@ -138,7 +152,8 @@ function HomeContent() {
         
         <SearchBar 
           onSearch={(params) => handleSearch({ query: params.query, page: 1 })} 
-          manufacturers={manufacturers} 
+          manufacturers={manufacturers}
+          searchQuery={searchQuery}
         />
         
         <BrandList 
