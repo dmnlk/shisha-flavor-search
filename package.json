@@ -38,6 +38,7 @@
     "jest-fetch-mock": "^3.0.3",
     "postcss": "^8.5.5",
     "tailwindcss": "^4.1.10",
+    "ts-node": "^10.9.2",
     "typescript": "^5.8.3"
   }
 }
