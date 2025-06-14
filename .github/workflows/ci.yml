@@ -27,8 +27,14 @@ jobs:
     - name: Install dependencies
       run: pnpm install --frozen-lockfile
       
+    - name: Type check
+      run: npx tsc --noEmit
+      
     - name: Run linting
       run: pnpm lint
       
     - name: Run tests
       run: pnpm test
+      
+    - name: Build project
+      run: pnpm build
