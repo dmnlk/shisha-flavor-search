@@ -65,4 +65,34 @@ npx tsc --noEmit   # Run TypeScript type checking
 
 7. **Node.js Version**: Project uses Node.js 22.12.0 LTS as specified in `.node-version` file.
 
-8. **CSS Framework**: Tailwind CSS v4 with PostCSS configuration in JavaScript format for compatibility. Dark mode implemented with forced slate-800 background colors.
+8. **CSS Framework**: Tailwind CSS v4 with PostCSS configuration in JavaScript format for compatibility.
+
+## Tailwind CSS v4 Dark Mode Implementation Notes
+
+**Important**: Tailwind CSS v4 has significantly different dark mode implementation compared to v3:
+
+### Required Changes for Dark Mode:
+1. **CSS Configuration** (`app/globals.css`):
+   ```css
+   @import "tailwindcss";
+   @custom-variant dark (&:where(.dark, .dark *));
+   ```
+
+2. **Tailwind Config** (`tailwind.config.ts`):
+   - Remove `darkMode` property completely (not needed in v4)
+   - Simplify to minimal content configuration
+
+3. **Theme Provider Implementation**:
+   - Use simple boolean state (`darkMode`) instead of string-based themes
+   - Direct DOM manipulation: `document.documentElement.classList.add/remove("dark")`
+   - No complex theme system needed
+
+### Key Differences from v3:
+- `@custom-variant dark` is required in CSS
+- No `darkMode: 'class'` in config file
+- Simpler implementation without system theme detection
+- Direct classList manipulation works better than complex state management
+
+### References:
+- https://dev.to/khanrabiul/tailwind-css-v4-dark-mode-3kbl
+- https://www.sujalvanjare.com/blog/dark-mode-nextjs15-tailwind-v4
