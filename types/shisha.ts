@@ -2,9 +2,11 @@ export interface ShishaFlavor {
   id: number
   manufacturer: string
   productName: string
-  description: string
+  amount: string
+  country: string
   price: string
-  imageUrl?: string
+  imageUrl: string
+  description?: string
 }
 
 export interface SearchResponse {

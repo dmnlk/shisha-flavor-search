@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
 import { useEffect, useState, MouseEvent } from 'react'
+
 import type { ShishaFlavor } from '../../../types/shisha'
 
 export default function FlavorDetail() {
@@ -110,7 +111,11 @@ export default function FlavorDetail() {
               </div>
 
               <div className="prose prose-sm sm:prose-base md:prose-lg max-w-none text-gray-600 dark:text-gray-300">
-                <p>{flavor.description}</p>
+                <p>{flavor.description || `${flavor.amount} - ${flavor.country}`}</p>
+                <div className="mt-4 space-y-2">
+                  <p><span className="font-semibold">容量:</span> {flavor.amount}</p>
+                  <p><span className="font-semibold">原産国:</span> {flavor.country}</p>
+                </div>
               </div>
             </motion.div>
           </div>

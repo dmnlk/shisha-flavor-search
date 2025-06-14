@@ -25,7 +25,8 @@ export function searchFlavors({ query = '', manufacturer = '', page = 1, limit =
     filteredData = filteredData.filter(item => 
       item.productName.toLowerCase().includes(searchTerm) ||
       item.manufacturer.toLowerCase().includes(searchTerm) ||
-      (item.description && item.description.toLowerCase().includes(searchTerm))
+      item.amount.toLowerCase().includes(searchTerm) ||
+      item.country.toLowerCase().includes(searchTerm)
     )
   }
 

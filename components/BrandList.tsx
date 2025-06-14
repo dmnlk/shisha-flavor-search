@@ -7,7 +7,7 @@ import { useState, useMemo, useEffect } from 'react'
 interface BrandListProps {
   manufacturers: string[]
   selectedManufacturer: string
-  onSelect: (manufacturer: string) => void
+  onSelect: (_manufacturer: string) => void
 }
 
 export default function BrandList({ manufacturers, selectedManufacturer, onSelect }: BrandListProps) {

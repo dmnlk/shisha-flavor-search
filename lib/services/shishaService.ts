@@ -1,4 +1,3 @@
-import type { ShishaFlavor } from '../../types/shisha'
 
 interface MockShishaFlavor {
   id: string

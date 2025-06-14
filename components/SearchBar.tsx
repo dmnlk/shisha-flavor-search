@@ -1,17 +1,16 @@
 'use client'
 
-import { FunnelIcon } from '@heroicons/react/24/outline'
 import { MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/24/solid'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState, useEffect, FormEvent } from 'react'
 
 interface SearchBarProps {
-  onSearch: (params: { query: string }) => void
-  manufacturers: string[]
+  onSearch: (_params: { query: string }) => void
+  manufacturers?: string[]
   searchQuery?: string
 }
 
-export default function SearchBar({ onSearch, manufacturers, searchQuery = '' }: SearchBarProps) {
+export default function SearchBar({ onSearch, searchQuery = '' }: SearchBarProps) {
   const [searchTerm, setSearchTerm] = useState(searchQuery)
 
   useEffect(() => {

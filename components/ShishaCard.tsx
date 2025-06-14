@@ -6,11 +6,12 @@ import { motion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState, MouseEvent } from 'react'
+
 import type { ShishaFlavor } from '../types/shisha'
 
 interface ShishaCardProps {
   flavor: ShishaFlavor
-  onManufacturerClick?: (manufacturer: string) => void
+  onManufacturerClick?: (_manufacturer: string) => void
   index?: number
 }
 
@@ -81,7 +82,7 @@ export default function ShishaCard({ flavor, onManufacturerClick, index = 0 }: S
           </h3>
 
           <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 mb-3 line-clamp-2 leading-relaxed">
-            {flavor.description}
+            {flavor.description || `${flavor.amount} - ${flavor.country}`}
           </p>
 
           <div className="flex justify-between items-center">

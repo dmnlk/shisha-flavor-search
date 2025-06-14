@@ -43,7 +43,7 @@ export async function GET(request: NextRequest): Promise<NextResponse<SearchResp
     if (query) {
       const searchTerms = query.toLowerCase().split(' ')
       filteredData = filteredData.filter(item => {
-        const searchText = `${item.manufacturer} ${item.productName} ${item.description}`.toLowerCase()
+        const searchText = `${item.manufacturer} ${item.productName} ${item.amount} ${item.country}`.toLowerCase()
         return searchTerms.every(term => searchText.includes(term))
       })
     }
