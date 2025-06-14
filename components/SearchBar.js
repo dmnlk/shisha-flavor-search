@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/24/solid';
 import { FunnelIcon } from '@heroicons/react/24/outline';
+import { MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/24/solid';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect } from 'react';
 
 export default function SearchBar({ onSearch, manufacturers, searchQuery = '' }) {
   const [searchTerm, setSearchTerm] = useState(searchQuery);
@@ -64,7 +64,7 @@ export default function SearchBar({ onSearch, manufacturers, searchQuery = '' })
           initial={false}
           animate={{ 
             opacity: isFocused ? 1 : 0,
-            y: isFocused ? 0 : -10 
+            y: isFocused ? 0 : -10,
           }}
           className="absolute inset-x-0 -bottom-1 h-1 bg-gradient-to-r from-primary-400 via-primary-500 to-primary-600 rounded-full blur-sm"
         />

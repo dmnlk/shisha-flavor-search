@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
+
 import { shishaData } from '../../../data/shishaData';
-import { searchFlavors } from '../../../data/shishaMethods';
 import { normalizeBrandForSearch } from '../../../lib/utils/brandNormalizer';
 
 export const dynamic = 'force-dynamic';
@@ -59,7 +59,7 @@ export async function GET(request) {
       items: paginatedItems,
       totalPages,
       currentPage: validPage,
-      totalItems
+      totalItems,
     });
   } catch (error) {
     console.error('Search error:', error);

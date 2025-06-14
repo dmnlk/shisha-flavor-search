@@ -1,11 +1,10 @@
 'use client';
 
+import { HeartIcon, SparklesIcon } from '@heroicons/react/24/outline';
+import { HeartIcon as HeartSolidIcon } from '@heroicons/react/24/solid';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-import clsx from 'clsx';
-import { HeartIcon, SparklesIcon } from '@heroicons/react/24/outline';
-import { HeartIcon as HeartSolidIcon } from '@heroicons/react/24/solid';
 import { useState } from 'react';
 
 export default function ShishaCard({ flavor, onManufacturerClick }) {

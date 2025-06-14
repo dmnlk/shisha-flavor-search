@@ -1,11 +1,12 @@
 'use client';
 
-import { useState, useEffect, Suspense } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useSearchParams, useRouter } from 'next/navigation';
+import { useState, useEffect, Suspense } from 'react';
+
+import BrandList from '../components/BrandList';
 import SearchBar from '../components/SearchBar';
 import ShishaCard from '../components/ShishaCard';
-import BrandList from '../components/BrandList';
 
 function HomeContent() {
   const searchParams = useSearchParams();
@@ -44,7 +45,7 @@ function HomeContent() {
       // Only include manufacturer in query params if it's not empty
       const queryParams = new URLSearchParams({
         query,
-        page: pageToUse.toString()
+        page: pageToUse.toString(),
       });
       
       // Add manufacturer to query params only if it's provided and not empty
@@ -93,7 +94,7 @@ function HomeContent() {
     handleSearch({ 
       query: searchQuery, 
       manufacturer,
-      page: 1 
+      page: 1,
     });
   };
 
@@ -101,7 +102,7 @@ function HomeContent() {
     handleSearch({ 
       query: searchQuery, 
       manufacturer: selectedManufacturer,
-      page: newPage 
+      page: newPage,
     });
   };
 
