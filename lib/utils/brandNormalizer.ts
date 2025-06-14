@@ -4,7 +4,7 @@
  */
 
 // よく知られているブランドの正式名称マッピング
-const BRAND_CANONICAL_NAMES = {
+const BRAND_CANONICAL_NAMES: Record<string, string> = {
   'AL FAKHER': 'Al Fakher',
   'ALFAKHER': 'Al Fakher',
   'STARBUZZ': 'Starbuzz',
@@ -46,32 +46,32 @@ const BRAND_CANONICAL_NAMES = {
   'MILANO': 'Milano',
   'OVERDOZZ': 'Overdozz',
   'OVER DOZZ': 'Overdozz',
-};
+}
 
 /**
  * ブランド名を正規化する
- * @param {string} brandName - 正規化するブランド名
- * @returns {string} 正規化されたブランド名
+ * @param brandName - 正規化するブランド名
+ * @returns 正規化されたブランド名
  */
-export function normalizeBrandName(brandName) {
-  if (!brandName) return '';
+export function normalizeBrandName(brandName: string): string {
+  if (!brandName) return ''
   
   // トリムして余分な空白を削除
-  let normalized = brandName.trim();
+  let normalized = brandName.trim()
   
   // 連続する空白を単一の空白に置換
-  normalized = normalized.replace(/\s+/g, ' ');
+  normalized = normalized.replace(/\s+/g, ' ')
   
   // 大文字に変換してマッピングをチェック
-  const upperCase = normalized.toUpperCase();
+  const upperCase = normalized.toUpperCase()
   if (BRAND_CANONICAL_NAMES[upperCase]) {
-    return BRAND_CANONICAL_NAMES[upperCase];
+    return BRAND_CANONICAL_NAMES[upperCase]
   }
   
   // マッピングにない場合は、Title Caseに変換
   // ただし、全て大文字の短い名前（3文字以下）はそのまま大文字を保持
   if (upperCase === normalized && normalized.length <= 3) {
-    return normalized;
+    return normalized
   }
   
   // Title Caseに変換（各単語の最初の文字を大文字に）
@@ -79,39 +79,39 @@ export function normalizeBrandName(brandName) {
     .split(' ')
     .map(word => {
       // 前置詞や冠詞は小文字のまま（ただし文頭は除く）
-      const lowerWords = ['of', 'the', 'and', 'or', 'in', 'on', 'at', 'to', 'for'];
+      const lowerWords = ['of', 'the', 'and', 'or', 'in', 'on', 'at', 'to', 'for']
       if (lowerWords.includes(word.toLowerCase()) && normalized.indexOf(word) !== 0) {
-        return word.toLowerCase();
+        return word.toLowerCase()
       }
-      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
     })
-    .join(' ');
+    .join(' ')
 }
 
 /**
  * ブランド名の配列から重複を除去し、正規化された一意のリストを返す
- * @param {string[]} brands - ブランド名の配列
- * @returns {string[]} 正規化され重複が除去されたブランド名の配列
+ * @param brands - ブランド名の配列
+ * @returns 正規化され重複が除去されたブランド名の配列
  */
-export function getUniqueBrands(brands) {
-  const normalizedMap = new Map();
+export function getUniqueBrands(brands: string[]): string[] {
+  const normalizedMap = new Map<string, string>()
   
   brands.forEach(brand => {
-    const normalized = normalizeBrandName(brand);
+    const normalized = normalizeBrandName(brand)
     // 最初に出現したオリジナルのブランド名を保持
     if (!normalizedMap.has(normalized.toLowerCase())) {
-      normalizedMap.set(normalized.toLowerCase(), normalized);
+      normalizedMap.set(normalized.toLowerCase(), normalized)
     }
-  });
+  })
   
-  return Array.from(normalizedMap.values()).sort();
+  return Array.from(normalizedMap.values()).sort()
 }
 
 /**
  * 検索用にブランド名を正規化（大文字小文字を無視）
- * @param {string} brandName - ブランド名
- * @returns {string} 検索用に正規化されたブランド名
+ * @param brandName - ブランド名
+ * @returns 検索用に正規化されたブランド名
  */
-export function normalizeBrandForSearch(brandName) {
-  return normalizeBrandName(brandName).toLowerCase();
+export function normalizeBrandForSearch(brandName: string): string {
+  return normalizeBrandName(brandName).toLowerCase()
 }
