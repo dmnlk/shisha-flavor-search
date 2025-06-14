@@ -1,12 +1,14 @@
 'use client'
 
 import { motion, AnimatePresence } from 'framer-motion'
+import Image from 'next/image'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { useState, useEffect, Suspense } from 'react'
 
 import BrandList from '../components/BrandList'
 import SearchBar from '../components/SearchBar'
 import ShishaCard from '../components/ShishaCard'
+import SkeletonGrid from '../components/SkeletonGrid'
 import type { ShishaFlavor, SearchResponse } from '../types/shisha'
 
 interface SearchParams {
@@ -144,9 +146,12 @@ function HomeContent() {
             whileTap={{ scale: 0.98 }}
             className="cursor-pointer inline-block"
           >
-            <img 
+            <Image 
               src="/images/logo.png" 
               alt="Shisha Search Logo" 
+              width={240}
+              height={80}
+              priority
               className="w-[200px] sm:w-[240px] h-[60px] sm:h-[80px] object-contain mb-4 mx-auto"
             />
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent mb-3">
@@ -177,12 +182,8 @@ function HomeContent() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="flex justify-center items-center h-64"
             >
-              <div className="flex flex-col items-center">
-                <div className="w-12 h-12 border-3 border-primary-200 border-t-primary-600 rounded-full animate-spin" />
-                <p className="mt-4 text-sm text-gray-600 dark:text-gray-400">読み込み中...</p>
-              </div>
+              <SkeletonGrid count={12} />
             </motion.div>
           ) : (
             <motion.div

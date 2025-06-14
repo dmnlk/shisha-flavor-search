@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import Image from 'next/image'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
 import { useEffect, useState, MouseEvent } from 'react'
@@ -77,10 +78,14 @@ export default function FlavorDetail() {
               animate={{ opacity: 1, x: 0 }}
               className="md:w-1/2"
             >
-              <img
+              <Image
                 src={(flavor.imageUrl || '/images/no_image_hookah_cover.png').replace('.png', '_w.png')}
                 alt={flavor.productName}
+                width={600}
+                height={400}
                 className="w-full h-[250px] sm:h-[300px] md:h-[400px] object-cover"
+                sizes="(max-width: 768px) 100vw, 50vw"
+                priority
               />
             </motion.div>
 
