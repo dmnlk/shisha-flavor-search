@@ -12,8 +12,8 @@ interface RootLayoutProps {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en" className="dark">
-      <body className="min-h-screen">
+    <html lang="en">
+      <body>
         {children}
       </body>
     </html>

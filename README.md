@@ -17,21 +17,24 @@
 ### フロントエンド
 - **Next.js 15.3.3**: React フレームワーク（App Router使用）
 - **React 19.1.0**: UIライブラリ
-- **Tailwind CSS 3.4**: ユーティリティファーストCSS
-- **Framer Motion 12.18**: アニメーションライブラリ
+- **TypeScript 5.8.3**: 型安全性とコード品質の向上
+- **Tailwind CSS 4.1.10**: 最新のユーティリティファーストCSS
+- **Framer Motion 12.16**: アニメーションライブラリ
 - **Heroicons 2.2**: アイコンライブラリ
 
 ### 開発ツール
-- **pnpm**: 高速で効率的なパッケージマネージャー
-- **ESLint 8**: コード品質管理
-- **Jest 29**: テストフレームワーク
+- **Node.js 22.12.0 LTS**: 最新のLTSランタイム
+- **pnpm 10.x**: 高速で効率的なパッケージマネージャー
+- **ESLint 9.29**: 最新のコード品質管理
+- **Jest 29**: TypeScript対応テストフレームワーク
 - **React Testing Library**: コンポーネントテスト
 
 ## 📦 インストールと起動
 
 ### 必要な環境
-- Node.js 18.x 以上
+- Node.js 22.12.0 LTS（.node-versionで指定）
 - pnpm 10.x 以上
+- TypeScript 5.8.3（自動インストール）
 
 ### セットアップ手順
 
@@ -68,6 +71,9 @@ pnpm test
 # テスト（ウォッチモード）
 pnpm test:watch
 
+# TypeScript型チェック
+npx tsc --noEmit
+
 # コード品質チェック
 pnpm lint
 ```
@@ -77,26 +83,33 @@ pnpm lint
 ```
 shisha-search/
 ├── app/                      # Next.js App Router
-│   ├── api/                  # APIルート
-│   │   ├── search/          # 検索API
-│   │   ├── manufacturers/   # メーカー一覧API
-│   │   └── flavor/[id]/     # フレーバー詳細API
-│   ├── flavor/[id]/         # フレーバー詳細ページ
-│   ├── ClientHome.js        # クライアントサイドホームコンポーネント
-│   ├── layout.js            # ルートレイアウト
-│   └── page.js              # ホームページ
-├── components/              # 再利用可能なコンポーネント
-│   ├── SearchBar.js        # 検索バー
-│   ├── BrandList.js        # メーカーフィルター
-│   └── ShishaCard.js       # フレーバーカード
-├── data/                   # データ層
-│   ├── shishaData.js       # フレーバーデータベース
-│   └── shishaMethods.js    # データ操作ユーティリティ
-├── lib/                    # ライブラリとサービス
-│   ├── services/           # サービス層
-│   └── utils/              # ユーティリティ関数
-└── public/                 # 静的ファイル
-    └── images/             # 画像アセット
+│   ├── api/                  # APIルート（TypeScript）
+│   │   ├── search/          # 検索API (route.ts)
+│   │   ├── manufacturers/   # メーカー一覧API (route.ts)
+│   │   └── flavor/[id]/     # フレーバー詳細API (route.ts)
+│   ├── flavor/[id]/         # フレーバー詳細ページ (page.tsx)
+│   ├── ClientHome.tsx       # クライアントサイドホームコンポーネント
+│   ├── layout.tsx           # ルートレイアウト
+│   ├── page.tsx             # ホームページ
+│   └── globals.css          # グローバルスタイル（Tailwind v4対応）
+├── components/              # 再利用可能なコンポーネント（TypeScript）
+│   ├── SearchBar.tsx        # 検索バー
+│   ├── BrandList.tsx        # メーカーフィルター
+│   └── ShishaCard.tsx       # フレーバーカード
+├── types/                   # TypeScript型定義
+│   └── shisha.ts            # データ型インターフェース
+├── data/                    # データ層
+│   ├── shishaData.js        # フレーバーデータベース
+│   └── shishaMethods.ts     # データ操作ユーティリティ（TypeScript）
+├── lib/                     # ライブラリとサービス
+│   ├── services/            # サービス層（TypeScript）
+│   └── utils/               # ユーティリティ関数
+├── .node-version            # Node.js バージョン指定
+├── postcss.config.js        # PostCSS設定（Tailwind v4対応）
+├── tailwind.config.ts       # Tailwind CSS設定
+├── tsconfig.json            # TypeScript設定
+└── public/                  # 静的ファイル
+    └── images/              # 画像アセット
 ```
 
 ## 🔍 主要機能の詳細
@@ -126,7 +139,7 @@ pnpm test
 pnpm test:ci
 
 # 特定のテストファイルを実行
-pnpm test components/ShishaCard.test.js
+pnpm test components/ShishaCard.test.tsx
 ```
 
 ## 🚀 デプロイ
@@ -148,10 +161,12 @@ pnpm test components/ShishaCard.test.js
 5. プルリクエストを作成
 
 ### コーディング規約
+- TypeScript厳格モードに従う
 - ESLintルールに従う
-- コンポーネントは関数コンポーネントで実装
-- Tailwind CSSのユーティリティクラスを使用
-- テストを書く
+- コンポーネントは関数コンポーネントで実装（.tsxファイル）
+- Tailwind CSS v4のユーティリティクラスを使用
+- 型定義を明確に記述
+- テストを書く（Jest + React Testing Library）
 
 ## 📝 ライセンス
 

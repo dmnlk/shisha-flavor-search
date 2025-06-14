@@ -130,7 +130,7 @@ function HomeContent() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-primary-50/20 dark:from-gray-900 dark:via-gray-800 dark:to-primary-900/20">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-slate-100 to-slate-200 dark:from-slate-900 dark:via-slate-800 dark:to-slate-700">
       <main className="mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-12 max-w-full">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
