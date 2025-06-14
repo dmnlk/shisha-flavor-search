@@ -4,7 +4,8 @@ import { shishaData } from '../../../../data/shishaData';
 
 export async function GET(request, { params }) {
   try {
-    const flavor = shishaData.find(item => item.id === parseInt(params.id));
+    const { id } = await params;
+    const flavor = shishaData.find(item => item.id === parseInt(id));
     
     if (!flavor) {
       return NextResponse.json(

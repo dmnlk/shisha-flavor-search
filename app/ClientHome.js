@@ -124,7 +124,7 @@ function HomeContent() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-primary-50/20 dark:from-gray-900 dark:via-gray-800 dark:to-primary-900/20">
-      <main className="container mx-auto px-0 sm:px-4 py-6 sm:py-12 max-w-7xl">
+      <main className="mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-12 max-w-full">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -146,7 +146,7 @@ function HomeContent() {
               Shisha Flavor Search
             </h1>
           </motion.div>
-          <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 max-w-4xl mx-auto">
             あなただけの特別なフレーバーを見つけよう
           </p>
         </motion.div>
@@ -186,7 +186,7 @@ function HomeContent() {
             >
               {flavors.length > 0 ? (
                 <>
-                  <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4 px-4 sm:px-0">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8 gap-3 sm:gap-4">
                     {flavors.map((flavor, index) => (
                       <ShishaCard 
                         key={flavor.id} 
@@ -198,7 +198,7 @@ function HomeContent() {
                   </div>
                   
                   {totalPages > 1 && (
-                    <div className="flex justify-center mt-8 gap-2 px-4 sm:px-0">
+                    <div className="flex justify-center mt-8 gap-2">
                       {/* Previous button */}
                       {currentPage > 1 && (
                         <motion.button

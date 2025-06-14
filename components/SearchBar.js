@@ -24,7 +24,7 @@ export default function SearchBar({ onSearch, manufacturers, searchQuery = '' })
   };
 
   return (
-    <form onSubmit={handleSubmit} className="mb-6 px-4 sm:px-0">
+    <form onSubmit={handleSubmit} className="mb-6">
       <motion.div
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}

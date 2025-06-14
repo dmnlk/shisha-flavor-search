@@ -1,8 +1,18 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@config "../tailwind.config.js";
 
 @layer base {
+  :root {
+    font-size: 17px; /* Slightly increase base font size for v4 */
+  }
+  
+  /* Adjust spacing scale for v4 */
+  @media (min-width: 640px) {
+    :root {
+      font-size: 18px;
+    }
+  }
+  
   body {
     @apply bg-white text-black;
   }
