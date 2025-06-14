@@ -10,19 +10,19 @@ This is a Next.js 14 application for searching and browsing shisha (hookah) flav
 
 ```bash
 # Development
-npm run dev        # Start development server on http://localhost:3000
+pnpm dev           # Start development server on http://localhost:3000
 
 # Build & Production
-npm run build      # Create production build
-npm run start      # Start production server
+pnpm build         # Create production build
+pnpm start         # Start production server
 
 # Testing
-npm run test       # Run all tests
-npm run test:watch # Run tests in watch mode
-npm run test:ci    # Run tests with coverage for CI
+pnpm test          # Run all tests
+pnpm test:watch    # Run tests in watch mode
+pnpm test:ci       # Run tests with coverage for CI
 
 # Code Quality
-npm run lint       # Run ESLint
+pnpm lint          # Run ESLint
 ```
 
 ## Architecture & Key Components
