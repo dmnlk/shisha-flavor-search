@@ -1,37 +1,39 @@
-'use client';
+'use client'
 
-import { motion } from 'framer-motion';
-import Link from 'next/link';
-import { useParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion'
+import Link from 'next/link'
+import { useParams } from 'next/navigation'
+import { useEffect, useState, MouseEvent } from 'react'
+
+import type { ShishaFlavor } from '../../../types/shisha'
 
 export default function FlavorDetail() {
-  const [flavor, setFlavor] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const params = useParams();
+  const [flavor, setFlavor] = useState<ShishaFlavor | null>(null)
+  const [loading, setLoading] = useState(true)
+  const params = useParams()
 
   useEffect(() => {
     const fetchFlavor = async () => {
       try {
-        const response = await fetch(`/api/flavor/${params.id}`);
-        const data = await response.json();
-        setFlavor(data);
+        const response = await fetch(`/api/flavor/${params.id}`)
+        const data: ShishaFlavor = await response.json()
+        setFlavor(data)
       } catch (error) {
-        console.error('Error fetching flavor:', error);
+        console.error('Error fetching flavor:', error)
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
-    };
+    }
 
-    fetchFlavor();
-  }, [params.id]);
+    fetchFlavor()
+  }, [params.id])
 
   if (loading) {
     return (
       <div className="min-h-screen flex justify-center items-center">
         <div className="w-16 h-16 border-4 border-primary-200 border-t-primary-600 rounded-full animate-spin" />
       </div>
-    );
+    )
   }
 
   if (!flavor) {
@@ -42,7 +44,7 @@ export default function FlavorDetail() {
           Return to Home
         </Link>
       </div>
-    );
+    )
   }
 
   return (
@@ -87,9 +89,9 @@ export default function FlavorDetail() {
               animate={{ opacity: 1, x: 0 }}
               className="p-4 sm:p-6 md:p-8 md:w-1/2"
             >
-              <Link href="/" onClick={(e) => {
-                e.preventDefault();
-                window.history.back();
+              <Link href="/" onClick={(e: MouseEvent<HTMLAnchorElement>) => {
+                e.preventDefault()
+                window.history.back()
               }}>
                 <motion.button
                   whileHover={{ scale: 1.05 }}
@@ -109,12 +111,16 @@ export default function FlavorDetail() {
               </div>
 
               <div className="prose prose-sm sm:prose-base md:prose-lg max-w-none text-gray-600 dark:text-gray-300">
-                <p>{flavor.description}</p>
+                <p>{flavor.description || `${flavor.amount} - ${flavor.country}`}</p>
+                <div className="mt-4 space-y-2">
+                  <p><span className="font-semibold">容量:</span> {flavor.amount}</p>
+                  <p><span className="font-semibold">原産国:</span> {flavor.country}</p>
+                </div>
               </div>
             </motion.div>
           </div>
         </div>
       </div>
     </div>
-  );
+  )
 }
