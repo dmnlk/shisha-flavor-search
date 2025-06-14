@@ -8,7 +8,7 @@ type ThemeProviderProps = {
 
 type ThemeProviderState = {
   darkMode: boolean
-  setDarkMode: (darkMode: boolean) => void
+  setDarkMode: (_darkMode: boolean) => void
 }
 
 const ThemeContext = createContext<ThemeProviderState | undefined>(undefined)

@@ -1,6 +1,7 @@
 'use client'
 
 import { SunIcon, MoonIcon } from '@heroicons/react/24/outline'
+
 import { useTheme } from './ThemeProvider'
 
 export function ThemeToggle() {
