@@ -15,6 +15,7 @@ export async function GET(request: NextRequest): Promise<NextResponse<SearchResp
     // Get and validate parameters
     const query = searchParams.get('query') || ''
     const manufacturer = searchParams.get('manufacturer') || ''
+    const searchType = searchParams.get('searchType') as 'all' | 'brand' | 'flavor' | null
     const pageParam = searchParams.get('page')
     const page = pageParam ? Math.max(1, parseInt(pageParam)) : 1
     
@@ -43,8 +44,20 @@ export async function GET(request: NextRequest): Promise<NextResponse<SearchResp
     if (query) {
       const searchTerms = query.toLowerCase().split(' ')
       filteredData = filteredData.filter(item => {
-        const searchText = `${item.manufacturer} ${item.productName} ${item.amount} ${item.country}`.toLowerCase()
-        return searchTerms.every(term => searchText.includes(term))
+        // 検索タイプに基づいてフィルタリング
+        if (searchType === 'brand') {
+          // ブランド名のみで検索
+          const brandText = item.manufacturer.toLowerCase()
+          return searchTerms.every(term => brandText.includes(term))
+        } else if (searchType === 'flavor') {
+          // フレーバー名のみで検索
+          const flavorText = item.productName.toLowerCase()
+          return searchTerms.every(term => flavorText.includes(term))
+        } else {
+          // すべてで検索（デフォルト）
+          const searchText = `${item.manufacturer} ${item.productName} ${item.amount} ${item.country}`.toLowerCase()
+          return searchTerms.every(term => searchText.includes(term))
+        }
       })
     }
 

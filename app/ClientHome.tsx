@@ -15,6 +15,7 @@ interface SearchParams {
   query?: string
   manufacturer?: string
   page?: number
+  searchType?: 'all' | 'brand' | 'flavor'
 }
 
 function HomeContent() {
@@ -24,6 +25,7 @@ function HomeContent() {
   // URLパラメータから初期値を取得
   const [flavors, setFlavors] = useState<ShishaFlavor[]>([])
   const [loading, setLoading] = useState(false)
+  const [isSearching, setIsSearching] = useState(false)
   const [manufacturers, setManufacturers] = useState<string[]>([])
   const [currentPage, setCurrentPage] = useState(parseInt(searchParams.get('page') || '1'))
   const [totalPages, setTotalPages] = useState(0)
@@ -43,9 +45,14 @@ function HomeContent() {
     fetchManufacturers()
   }, [])
 
-  const handleSearch = async ({ query = '', manufacturer = undefined, page = undefined }: SearchParams) => {
+  const handleSearch = async ({ query = '', manufacturer = undefined, page = undefined, searchType = 'all' }: SearchParams) => {
     try {
-      setLoading(true)
+      // インクリメンタルサーチの場合は isSearching を使用
+      if (page === undefined && manufacturer === undefined) {
+        setIsSearching(true)
+      } else {
+        setLoading(true)
+      }
       setSearchQuery(query)
       
       // Use provided page or current page
@@ -56,6 +63,11 @@ function HomeContent() {
         query,
         page: pageToUse.toString(),
       })
+      
+      // Add searchType to query params
+      if (searchType && searchType !== 'all') {
+        queryParams.append('searchType', searchType)
+      }
       
       // Add manufacturer to query params only if it's provided and not empty
       if (manufacturer !== undefined) {
@@ -91,6 +103,7 @@ function HomeContent() {
       console.error('Search failed:', error)
     } finally {
       setLoading(false)
+      setIsSearching(false)
     }
   }
 
@@ -164,9 +177,10 @@ function HomeContent() {
         </motion.div>
         
         <SearchBar 
-          onSearch={(params) => handleSearch({ query: params.query, page: 1 })} 
+          onSearch={(params) => handleSearch({ query: params.query, searchType: params.searchType, page: 1 })} 
           manufacturers={manufacturers}
           searchQuery={searchQuery}
+          isSearching={isSearching}
         />
         
         <BrandList 
