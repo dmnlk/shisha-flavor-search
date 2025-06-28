@@ -142,6 +142,7 @@ function HomeContent() {
     const page = parseInt(searchParams.get('page') || '1')
     
     handleSearch({ query, manufacturer, page })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

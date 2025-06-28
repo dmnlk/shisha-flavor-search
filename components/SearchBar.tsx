@@ -3,6 +3,7 @@
 import { MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/24/solid'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState, useEffect, FormEvent, useCallback } from 'react'
+
 import { debounce } from '../utils/debounce'
 
 interface SearchBarProps {
@@ -21,7 +22,8 @@ export default function SearchBar({ onSearch, searchQuery = '', isSearching = fa
   }, [searchQuery])
   const [isFocused, setIsFocused] = useState(false)
 
-  // デバウンスされた検索関数
+  // デバウンスされた検索関数を作成
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedSearch = useCallback(
     debounce((query: string, type: 'all' | 'brand' | 'flavor') => {
       onSearch({ query, searchType: type })
