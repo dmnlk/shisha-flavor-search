@@ -1,6 +1,7 @@
-import { shishaData } from './shishaData'
-import { normalizeBrandName, getUniqueBrands, normalizeBrandForSearch } from '../lib/utils/brandNormalizer'
+import { getUniqueBrands, normalizeBrandForSearch } from '../lib/utils/brandNormalizer'
 import type { ShishaFlavor } from '../types/shisha'
+
+import { shishaData } from './shishaData'
 
 interface SearchParams {
   query?: string
@@ -50,7 +51,7 @@ export function searchFlavors({ query = '', manufacturer = '', page = 1, limit =
     data: paginatedData,
     totalPages,
     currentPage: page,
-    totalItems
+    totalItems,
   }
 }
 

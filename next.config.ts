@@ -8,17 +8,17 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'images.unsplash.com'
+        hostname: 'images.unsplash.com',
       },
       {
         protocol: 'https',
-        hostname: 'www.shisha-mart.com'
+        hostname: 'www.shisha-mart.com',
       },
       {
         protocol: 'https',
-        hostname: 'blogger.googleusercontent.com'
-      }
-    ]
+        hostname: 'blogger.googleusercontent.com',
+      },
+    ],
   },
 }
 
