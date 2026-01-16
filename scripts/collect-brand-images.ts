@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { config } from 'dotenv'
 import * as fs from 'fs'
 import * as path from 'path'
 import yargs from 'yargs'
@@ -8,6 +9,9 @@ import { getUniqueBrands } from '../lib/utils/brandNormalizer'
 import { googleCSEClient } from './utils/api-clients/google-cse'
 import { unsplashClient } from './utils/api-clients/unsplash'
 import { createBackup } from './utils/backup'
+
+// Load environment variables from .env.local
+config({ path: path.join(process.cwd(), '.env.local') })
 
 interface BrandImageMap {
   [brand: string]: {

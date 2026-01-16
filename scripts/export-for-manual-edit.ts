@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { config } from 'dotenv'
 import * as fs from 'fs'
 import * as path from 'path'
 import { createObjectCsvWriter } from 'csv-writer'
@@ -6,6 +7,9 @@ import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
 import { shishaData } from '../data/shishaData'
 import { getUniqueBrands } from '../lib/utils/brandNormalizer'
+
+// Load environment variables from .env.local
+config({ path: path.join(process.cwd(), '.env.local') })
 
 interface ExportRecord {
   id: string

@@ -1,5 +1,9 @@
+import { config } from 'dotenv'
 import * as fs from 'fs'
 import * as path from 'path'
+
+// Load environment variables from .env.local
+config({ path: path.join(process.cwd(), '.env.local') })
 
 const DATA_FILE = path.join(process.cwd(), 'data/shishaData.js')
 const BACKUP_DIR = path.join(process.cwd(), 'data/backups')

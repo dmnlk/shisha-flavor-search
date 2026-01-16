@@ -1,5 +1,10 @@
+import { config } from 'dotenv'
+import * as path from 'path'
 import axios from 'axios'
 import { unsplashQueue, retryWithBackoff } from '../rate-limiter'
+
+// Load environment variables from .env.local
+config({ path: path.join(process.cwd(), '.env.local') })
 
 interface UnsplashConfig {
   accessKey: string

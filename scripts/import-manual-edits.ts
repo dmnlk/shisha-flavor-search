@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { config } from 'dotenv'
 import * as fs from 'fs'
 import * as path from 'path'
 import csv from 'csv-parser'
@@ -6,6 +7,9 @@ import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
 import { shishaData } from '../data/shishaData'
 import { createBackup } from './utils/backup'
+
+// Load environment variables from .env.local
+config({ path: path.join(process.cwd(), '.env.local') })
 
 interface ImportRecord {
   id: string
