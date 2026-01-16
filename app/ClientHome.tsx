@@ -5,7 +5,9 @@ import Image from 'next/image'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { useState, useEffect, Suspense } from 'react'
 
+import BackgroundOrbs from '../components/BackgroundOrbs'
 import BrandList from '../components/BrandList'
+import LoadingSpinner from '../components/LoadingSpinner'
 import SearchBar from '../components/SearchBar'
 import ShishaCard from '../components/ShishaCard'
 import SkeletonGrid from '../components/SkeletonGrid'
@@ -147,11 +149,7 @@ function HomeContent() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950 bg-gradient-mesh relative overflow-hidden">
-      {/* Animated background elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-primary-500/20 rounded-full blur-3xl animate-float" />
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent-500/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '1s' }} />
-      </div>
+      <BackgroundOrbs />
 
       <main className="relative mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-16 max-w-full">
         <motion.div
@@ -373,10 +371,7 @@ export default function ClientHome() {
   return (
     <Suspense fallback={
       <div className="min-h-screen flex justify-center items-center bg-white dark:bg-gray-950 bg-gradient-mesh">
-        <div className="relative">
-          <div className="w-20 h-20 border-4 border-primary-200 dark:border-primary-800 border-t-primary-600 dark:border-t-primary-400 rounded-full animate-spin glow" />
-          <div className="absolute inset-0 w-20 h-20 border-4 border-transparent border-b-accent-500 rounded-full animate-spin" style={{ animationDirection: 'reverse', animationDuration: '1s' }} />
-        </div>
+        <LoadingSpinner />
       </div>
     }>
       <HomeContent />

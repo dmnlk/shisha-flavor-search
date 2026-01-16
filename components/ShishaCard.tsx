@@ -64,7 +64,11 @@ export default function ShishaCard({ flavor, onManufacturerClick, index = 0 }: S
             )}
           </motion.button>
 
-          <div className="absolute top-4 left-4 flex items-center gap-1.5 z-10">
+          {/* Decorative accent: sparkles icon and pulsing dot used for visual emphasis only. */}
+          <div
+            className="absolute top-4 left-4 flex items-center gap-1.5 z-10"
+            aria-hidden="true"
+          >
             <SparklesIcon className="h-4 w-4 text-yellow-400 drop-shadow-lg" />
             <div className="w-2 h-2 bg-accent-500 rounded-full animate-pulse" />
           </div>

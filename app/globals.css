@@ -81,34 +81,7 @@
     );
   }
 
-  /* Glassmorphism effects */
-  .glass {
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-  }
-
-  .glass-dark {
-    background: rgba(17, 25, 40, 0.75);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.125);
-  }
-
   /* Modern gradient backgrounds */
-  .bg-gradient-modern {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  }
-
-  .bg-gradient-teal {
-    background: linear-gradient(135deg, #0ea5e9 0%, #14b8a6 100%);
-  }
-
-  .bg-gradient-coral {
-    background: linear-gradient(135deg, #f97316 0%, #fb923c 100%);
-  }
-
   .bg-gradient-mesh {
     background:
       radial-gradient(at 40% 20%, rgba(20, 184, 166, 0.25) 0px, transparent 50%),
@@ -133,12 +106,14 @@
     animation: float 3s ease-in-out infinite;
   }
 
+  /* Reverse spin animation for loading spinner */
+  .animate-spin-reverse {
+    animation-direction: reverse;
+    animation-duration: 1s;
+  }
+
   /* Glow effect */
   .glow {
     box-shadow: 0 0 20px rgba(20, 184, 166, 0.5);
-  }
-
-  .glow-accent {
-    box-shadow: 0 0 20px rgba(249, 115, 22, 0.5);
   }
 }

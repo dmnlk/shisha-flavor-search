@@ -22,7 +22,6 @@ export function ThemeToggle() {
       ) : (
         <MoonIcon className="h-6 w-6 text-primary-600 group-hover:-rotate-12 transition-transform duration-300" />
       )}
-      <span className="sr-only">Toggle theme</span>
     </button>
   )
 }

@@ -6,6 +6,8 @@ import Link from 'next/link'
 import { useParams } from 'next/navigation'
 import { useEffect, useState, MouseEvent } from 'react'
 
+import BackgroundOrbs from '../../../components/BackgroundOrbs'
+import LoadingSpinner from '../../../components/LoadingSpinner'
 import type { ShishaFlavor } from '../../../types/shisha'
 
 export default function FlavorDetail() {
@@ -32,10 +34,7 @@ export default function FlavorDetail() {
   if (loading) {
     return (
       <div className="min-h-screen flex justify-center items-center bg-white dark:bg-gray-950 bg-gradient-mesh">
-        <div className="relative">
-          <div className="w-20 h-20 border-4 border-primary-200 dark:border-primary-800 border-t-primary-600 dark:border-t-primary-400 rounded-full animate-spin glow" />
-          <div className="absolute inset-0 w-20 h-20 border-4 border-transparent border-b-accent-500 rounded-full animate-spin" style={{ animationDirection: 'reverse', animationDuration: '1s' }} />
-        </div>
+        <LoadingSpinner />
       </div>
     )
   }
@@ -65,11 +64,7 @@ export default function FlavorDetail() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950 bg-gradient-mesh relative overflow-hidden py-8 sm:py-12 md:py-16">
-      {/* Animated background elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-primary-500/20 rounded-full blur-3xl animate-float" />
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-accent-500/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '1s' }} />
-      </div>
+      <BackgroundOrbs />
 
       <div className="relative mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <motion.div
