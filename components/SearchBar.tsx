@@ -110,7 +110,7 @@ export default function SearchBar({ onSearch, searchQuery = '', isSearching = fa
         <motion.div
           animate={{
             scale: isFocused ? 1.02 : 1,
-            y: isFocused ? -4 : 0
+            y: isFocused ? -4 : 0,
           }}
           transition={{ duration: 0.2 }}
           className="relative"
