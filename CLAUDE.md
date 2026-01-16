@@ -2,6 +2,39 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## CRITICAL: Pre-Commit Requirements
+
+**ALWAYS run these commands locally before committing code. This is MANDATORY to prevent CI failures:**
+
+```bash
+# 1. Run linting (REQUIRED)
+pnpm lint
+
+# 2. Run tests (REQUIRED)
+pnpm test
+
+# 3. Run TypeScript type checking (REQUIRED)
+npx tsc --noEmit
+
+# 4. Only commit if ALL checks pass
+git add .
+git commit -m "Your commit message"
+git push
+```
+
+**Why this is critical:**
+- CI will fail if any of these checks fail
+- Failing CI blocks PR merges and wastes time
+- Local testing catches issues immediately
+- Prevents broken code from reaching the repository
+
+**Workflow:**
+1. Make code changes
+2. Run all three checks above
+3. Fix any errors reported
+4. Re-run checks until all pass
+5. Only then commit and push
+
 ## Project Overview
 
 This is a Next.js 15.3.3 application for searching and browsing shisha (hookah) flavors. The app is fully migrated to TypeScript 5.8.3 and features a paginated search interface with manufacturer filtering, individual flavor detail pages, and dark mode support.

@@ -3,16 +3,29 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --color-primary-50: #f0f9ff;
-  --color-primary-100: #e0f2fe;
-  --color-primary-200: #bae6fd;
-  --color-primary-300: #7dd3fc;
-  --color-primary-400: #38bdf8;
-  --color-primary-500: #0ea5e9;
-  --color-primary-600: #0284c7;
-  --color-primary-700: #0369a1;
-  --color-primary-800: #075985;
-  --color-primary-900: #0c4a6e;
+  /* Modern Teal/Cyan Palette */
+  --color-primary-50: #f0fdfa;
+  --color-primary-100: #ccfbf1;
+  --color-primary-200: #99f6e4;
+  --color-primary-300: #5eead4;
+  --color-primary-400: #2dd4bf;
+  --color-primary-500: #14b8a6;
+  --color-primary-600: #0d9488;
+  --color-primary-700: #0f766e;
+  --color-primary-800: #115e59;
+  --color-primary-900: #134e4a;
+
+  /* Coral/Orange Accent Colors */
+  --color-accent-50: #fff7ed;
+  --color-accent-100: #ffedd5;
+  --color-accent-200: #fed7aa;
+  --color-accent-300: #fdba74;
+  --color-accent-400: #fb923c;
+  --color-accent-500: #f97316;
+  --color-accent-600: #ea580c;
+  --color-accent-700: #c2410c;
+  --color-accent-800: #9a3412;
+  --color-accent-900: #7c2d12;
 }
 
 @layer base {
@@ -46,7 +59,7 @@
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
   }
-  
+
   /* Custom animation for smooth loading */
   @keyframes shimmer {
     0% {
@@ -56,7 +69,7 @@
       background-position: 200% 0;
     }
   }
-  
+
   .animate-shimmer {
     animation: shimmer 1.5s ease-in-out infinite;
     background-size: 200% 100%;
@@ -66,5 +79,41 @@
       rgba(255, 255, 255, 0.1) 50%,
       transparent 100%
     );
+  }
+
+  /* Modern gradient backgrounds */
+  .bg-gradient-mesh {
+    background:
+      radial-gradient(at 40% 20%, rgba(20, 184, 166, 0.25) 0px, transparent 50%),
+      radial-gradient(at 80% 0%, rgba(249, 115, 22, 0.25) 0px, transparent 50%),
+      radial-gradient(at 0% 50%, rgba(59, 130, 246, 0.25) 0px, transparent 50%),
+      radial-gradient(at 80% 50%, rgba(168, 85, 247, 0.25) 0px, transparent 50%),
+      radial-gradient(at 0% 100%, rgba(236, 72, 153, 0.25) 0px, transparent 50%),
+      radial-gradient(at 80% 100%, rgba(249, 115, 22, 0.25) 0px, transparent 50%);
+  }
+
+  /* Floating animation */
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  /* Reverse spin animation for loading spinner */
+  .animate-spin-reverse {
+    animation-direction: reverse;
+    animation-duration: 1s;
+  }
+
+  /* Glow effect */
+  .glow {
+    box-shadow: 0 0 20px rgba(20, 184, 166, 0.5);
   }
 }

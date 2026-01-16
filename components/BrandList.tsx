@@ -54,17 +54,17 @@ export default function BrandList({ manufacturers, selectedManufacturer, onSelec
   }, [manufacturers, searchQuery])
 
   return (
-    <div className="mb-6 px-4 sm:px-0">
-      <div className="flex flex-wrap gap-2 sm:gap-3 mb-4">
+    <div className="mb-8 px-4 sm:px-0">
+      <div className="flex flex-wrap gap-3 mb-4 justify-center">
         {/* All Brands button */}
         <motion.button
-          whileHover={{ scale: 1.05 }}
+          whileHover={{ scale: 1.05, y: -2 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => onSelect('')}
-          className={`px-3 sm:px-4 py-2 rounded-full text-sm font-medium transition-all
-            ${selectedManufacturer === '' 
-              ? 'bg-primary-600 text-white shadow-lg' 
-              : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-primary-50 dark:hover:bg-gray-700 shadow-md'
+          className={`px-5 sm:px-6 py-2.5 rounded-2xl text-sm font-bold transition-all
+            ${selectedManufacturer === ''
+              ? 'bg-gradient-to-r from-primary-600 to-accent-500 text-white shadow-xl border-2 border-white/20 glow'
+              : 'bg-white/70 dark:bg-gray-800/70 backdrop-blur-md text-gray-700 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-800 shadow-lg border border-gray-200/50 dark:border-gray-700/50'
             }`}
         >
           All Brands
@@ -74,13 +74,13 @@ export default function BrandList({ manufacturers, selectedManufacturer, onSelec
         {popularBrands.map((brand) => (
           <motion.button
             key={brand}
-            whileHover={{ scale: 1.05 }}
+            whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => onSelect(brand)}
-            className={`px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition-all truncate max-w-[120px] sm:max-w-none
-              ${selectedManufacturer === brand 
-                ? 'bg-primary-600 text-white shadow-lg' 
-                : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-primary-50 dark:hover:bg-gray-700 shadow-md'
+            className={`px-4 sm:px-5 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition-all truncate max-w-[140px] sm:max-w-none
+              ${selectedManufacturer === brand
+                ? 'bg-gradient-to-r from-primary-600 to-accent-500 text-white shadow-xl border-2 border-white/20 glow'
+                : 'bg-white/70 dark:bg-gray-800/70 backdrop-blur-md text-gray-700 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-800 shadow-lg border border-gray-200/50 dark:border-gray-700/50'
               }`}
           >
             {brand}
@@ -90,17 +90,17 @@ export default function BrandList({ manufacturers, selectedManufacturer, onSelec
         {/* More brands button */}
         {manufacturers.length > 8 && (
           <motion.button
-            whileHover={{ scale: 1.05 }}
+            whileHover={{ scale: 1.05, y: -2 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => setIsExpanded(!isExpanded)}
-            className="flex items-center px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-medium bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-600 transition-all shadow-md"
+            className="flex items-center px-5 sm:px-6 py-2.5 rounded-2xl text-xs sm:text-sm font-bold bg-white/70 dark:bg-gray-800/70 backdrop-blur-md text-gray-700 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-800 transition-all shadow-lg border border-gray-200/50 dark:border-gray-700/50"
           >
             <span>More</span>
             <motion.div
               animate={{ rotate: isExpanded ? 180 : 0 }}
-              transition={{ duration: 0.2 }}
+              transition={{ duration: 0.3 }}
             >
-              <ChevronDownIcon className="h-4 w-4 ml-1" />
+              <ChevronDownIcon className="h-4 w-4 ml-2" />
             </motion.div>
           </motion.button>
         )}
@@ -110,40 +110,43 @@ export default function BrandList({ manufacturers, selectedManufacturer, onSelec
       <AnimatePresence>
         {isExpanded && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
+            initial={{ opacity: 0, height: 0, y: -20 }}
+            animate={{ opacity: 1, height: 'auto', y: 0 }}
+            exit={{ opacity: 0, height: 0, y: -20 }}
+            transition={{ duration: 0.4 }}
             className="overflow-hidden"
           >
-            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-4 mb-4">
+            <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-3xl shadow-2xl p-6 mb-6 border border-gray-200/50 dark:border-gray-700/50">
               {/* Search input */}
-              <div className="relative mb-4">
+              <div className="relative mb-5">
                 <input
                   type="text"
                   placeholder="ブランドを検索..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full px-4 py-2 pl-10 pr-4 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 rounded-xl border border-gray-200 dark:border-gray-600 focus:border-primary-500 dark:focus:border-primary-400 focus:outline-none transition-all text-sm"
+                  className="w-full px-5 py-3 pl-12 pr-5 bg-white dark:bg-gray-700/50 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 rounded-2xl border-2 border-gray-200 dark:border-gray-600 focus:border-primary-500 dark:focus:border-primary-400 focus:outline-none transition-all text-sm font-medium shadow-inner"
                 />
-                <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 dark:text-gray-500" />
+                <MagnifyingGlassIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-primary-500 dark:text-primary-400" />
               </div>
 
               {/* Brand grid */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
-                {filteredManufacturers.map((brand) => (
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+                {filteredManufacturers.map((brand, idx) => (
                   <motion.button
                     key={brand}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: idx * 0.02 }}
+                    whileHover={{ scale: 1.05, y: -2 }}
+                    whileTap={{ scale: 0.95 }}
                     onClick={() => {
                       onSelect(brand)
                       setIsExpanded(false)
                     }}
-                    className={`px-3 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all text-left truncate
-                      ${selectedManufacturer === brand 
-                        ? 'bg-primary-600 text-white' 
-                        : 'bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-primary-50 dark:hover:bg-gray-600'
+                    className={`px-4 py-3 rounded-2xl text-xs sm:text-sm font-bold transition-all text-center truncate
+                      ${selectedManufacturer === brand
+                        ? 'bg-gradient-to-r from-primary-600 to-accent-500 text-white shadow-lg'
+                        : 'bg-white dark:bg-gray-700/50 text-gray-700 dark:text-gray-300 hover:bg-primary-50 dark:hover:bg-gray-600 shadow-md border border-gray-200/50 dark:border-gray-600/50'
                       }`}
                   >
                     {brand}
@@ -152,9 +155,18 @@ export default function BrandList({ manufacturers, selectedManufacturer, onSelec
               </div>
 
               {filteredManufacturers.length === 0 && (
-                <div className="text-center py-4 text-gray-500 dark:text-gray-400 text-sm">
-                  ブランドが見つかりません
-                </div>
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="text-center py-8"
+                >
+                  <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-primary-100 to-accent-100 dark:from-primary-900/30 dark:to-accent-900/30 rounded-full flex items-center justify-center">
+                    <MagnifyingGlassIcon className="h-8 w-8 text-primary-500 dark:text-primary-400" />
+                  </div>
+                  <p className="text-gray-600 dark:text-gray-400 text-sm font-medium">
+                    ブランドが見つかりません
+                  </p>
+                </motion.div>
               )}
             </div>
           </motion.div>
