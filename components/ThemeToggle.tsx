@@ -14,14 +14,15 @@ export function ThemeToggle() {
   return (
     <button
       onClick={toggleTheme}
-      className="fixed top-4 right-4 z-50 p-3 rounded-full bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm border border-gray-200 dark:border-gray-700 shadow-lg hover:shadow-xl transition-all duration-200 hover:scale-105"
+      className="fixed top-6 right-6 z-50 p-4 rounded-2xl bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg border-2 border-gray-200/50 dark:border-gray-700/50 shadow-2xl hover:shadow-primary-500/50 dark:hover:shadow-accent-500/50 transition-all duration-300 hover:scale-110 hover:-rotate-12 group"
       aria-label="Toggle theme"
     >
       {darkMode ? (
-        <SunIcon className="h-5 w-5 text-yellow-500" />
+        <SunIcon className="h-6 w-6 text-yellow-500 group-hover:rotate-90 transition-transform duration-300" />
       ) : (
-        <MoonIcon className="h-5 w-5 text-gray-700" />
+        <MoonIcon className="h-6 w-6 text-primary-600 group-hover:-rotate-12 transition-transform duration-300" />
       )}
+      <span className="sr-only">Toggle theme</span>
     </button>
   )
 }

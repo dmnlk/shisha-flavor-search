@@ -56,52 +56,65 @@ export default function SearchBar({ onSearch, searchQuery = '', isSearching = fa
   }
 
   return (
-    <form onSubmit={handleSubmit} className="mb-6">
+    <form onSubmit={handleSubmit} className="mb-8">
       <motion.div
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3 }}
-        className="space-y-4"
+        className="space-y-5"
       >
         {/* 検索タイプセレクター */}
-        <div className="flex justify-center gap-2">
-          <button
+        <div className="flex justify-center gap-3 flex-wrap">
+          <motion.button
             type="button"
             onClick={() => handleSearchTypeChange('all')}
-            className={`px-4 py-2 rounded-lg font-medium transition-all ${
+            whileHover={{ scale: 1.05, y: -2 }}
+            whileTap={{ scale: 0.95 }}
+            className={`px-6 py-3 rounded-2xl font-bold transition-all ${
               searchType === 'all'
-                ? 'bg-primary-600 text-white shadow-lg'
-                : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                ? 'bg-gradient-to-r from-primary-600 to-accent-500 text-white shadow-xl border-2 border-white/20 glow'
+                : 'bg-white/70 dark:bg-gray-800/70 backdrop-blur-md text-gray-700 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-800 shadow-lg border border-gray-200/50 dark:border-gray-700/50'
             }`}
           >
             すべて
-          </button>
-          <button
+          </motion.button>
+          <motion.button
             type="button"
             onClick={() => handleSearchTypeChange('brand')}
-            className={`px-4 py-2 rounded-lg font-medium transition-all ${
+            whileHover={{ scale: 1.05, y: -2 }}
+            whileTap={{ scale: 0.95 }}
+            className={`px-6 py-3 rounded-2xl font-bold transition-all ${
               searchType === 'brand'
-                ? 'bg-primary-600 text-white shadow-lg'
-                : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                ? 'bg-gradient-to-r from-primary-600 to-accent-500 text-white shadow-xl border-2 border-white/20 glow'
+                : 'bg-white/70 dark:bg-gray-800/70 backdrop-blur-md text-gray-700 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-800 shadow-lg border border-gray-200/50 dark:border-gray-700/50'
             }`}
           >
             ブランド名
-          </button>
-          <button
+          </motion.button>
+          <motion.button
             type="button"
             onClick={() => handleSearchTypeChange('flavor')}
-            className={`px-4 py-2 rounded-lg font-medium transition-all ${
+            whileHover={{ scale: 1.05, y: -2 }}
+            whileTap={{ scale: 0.95 }}
+            className={`px-6 py-3 rounded-2xl font-bold transition-all ${
               searchType === 'flavor'
-                ? 'bg-primary-600 text-white shadow-lg'
-                : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                ? 'bg-gradient-to-r from-primary-600 to-accent-500 text-white shadow-xl border-2 border-white/20 glow'
+                : 'bg-white/70 dark:bg-gray-800/70 backdrop-blur-md text-gray-700 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-800 shadow-lg border border-gray-200/50 dark:border-gray-700/50'
             }`}
           >
             フレーバー名
-          </button>
+          </motion.button>
         </div>
 
         {/* 検索入力欄 */}
-        <div className={`relative transition-all duration-300 ${isFocused ? 'scale-[1.02]' : ''}`}>
+        <motion.div
+          animate={{
+            scale: isFocused ? 1.02 : 1,
+            y: isFocused ? -4 : 0
+          }}
+          transition={{ duration: 0.2 }}
+          className="relative"
+        >
           <input
             type="text"
             value={searchTerm}
@@ -109,24 +122,28 @@ export default function SearchBar({ onSearch, searchQuery = '', isSearching = fa
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
             placeholder={
-              searchType === 'brand' 
-                ? "ブランド名で検索..." 
-                : searchType === 'flavor' 
-                ? "フレーバー名で検索..." 
+              searchType === 'brand'
+                ? "ブランド名で検索..."
+                : searchType === 'flavor'
+                ? "フレーバー名で検索..."
                 : "お気に入りのフレーバーを検索..."
             }
-            className="w-full px-5 py-4 pl-14 pr-12 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 rounded-2xl shadow-lg border-2 border-transparent focus:border-primary-500 dark:focus:border-primary-400 focus:outline-none transition-all text-base"
+            className={`w-full px-6 py-5 pl-16 pr-14 bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 rounded-3xl shadow-2xl border-2 transition-all text-lg font-medium ${
+              isFocused
+                ? 'border-primary-500 dark:border-primary-400 glow'
+                : 'border-gray-200/50 dark:border-gray-700/50'
+            }`}
           />
-          
-          <div className="absolute left-5 top-1/2 transform -translate-y-1/2">
+
+          <div className="absolute left-6 top-1/2 transform -translate-y-1/2">
             {isSearching ? (
               <motion.div
                 animate={{ rotate: 360 }}
                 transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                className="h-6 w-6"
+                className="h-7 w-7"
               >
                 <svg
-                  className="h-6 w-6 text-primary-500 dark:text-primary-400"
+                  className="h-7 w-7 text-primary-500 dark:text-primary-400"
                   fill="none"
                   viewBox="0 0 24 24"
                 >
@@ -146,25 +163,27 @@ export default function SearchBar({ onSearch, searchQuery = '', isSearching = fa
                 </svg>
               </motion.div>
             ) : (
-              <MagnifyingGlassIcon className="h-6 w-6 text-gray-400 dark:text-gray-500" />
+              <MagnifyingGlassIcon className="h-7 w-7 text-primary-500 dark:text-primary-400" />
             )}
           </div>
-          
+
           <AnimatePresence>
             {searchTerm && (
               <motion.button
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.8 }}
+                whileHover={{ scale: 1.1, rotate: 90 }}
+                whileTap={{ scale: 0.9 }}
                 type="button"
                 onClick={handleClear}
-                className="absolute right-5 top-1/2 transform -translate-y-1/2 h-6 w-6 text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300 transition-colors"
+                className="absolute right-6 top-1/2 transform -translate-y-1/2 h-7 w-7 text-gray-500 hover:text-accent-500 dark:text-gray-400 dark:hover:text-accent-400 transition-colors"
               >
                 <XMarkIcon />
               </motion.button>
             )}
           </AnimatePresence>
-        </div>
+        </motion.div>
       </motion.div>
     </form>
   )
