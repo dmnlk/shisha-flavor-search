@@ -276,7 +276,7 @@ async function fixBrokenImages(brokenResults: VerificationResult[]): Promise<num
     console.log(`[${i + 1}/${brokenResults.length}] Fixing: ${result.manufacturer} - ${result.productName}`)
 
     // Google CSEで再検索
-    const query = `${result.manufacturer} shisha tobacco logo package`
+    const query = `${result.manufacturer} hookah shisha tobacco logo`
     let newImageUrl = await googleCSEClient.searchImage(query)
 
     // Unsplashでフォールバック

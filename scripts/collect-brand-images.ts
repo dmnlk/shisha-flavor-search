@@ -71,7 +71,7 @@ async function collectBrandImages(
 
     // Google CSEで検索
     if (source === 'google' || source === 'both') {
-      const query = `${brand} shisha tobacco logo package`
+      const query = `${brand} hookah shisha tobacco logo`
       imageUrl = await googleCSEClient.searchImage(query)
 
       if (imageUrl) {

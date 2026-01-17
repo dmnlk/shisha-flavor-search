@@ -117,12 +117,12 @@ export class UnsplashClient {
     // 優先度順に検索を試行
     const queries = flavorName
       ? [
-          `${brandName} ${flavorName} shisha tobacco`,
+          `${brandName} ${flavorName} hookah shisha tobacco`,
           `${brandName} hookah tobacco`,
           `hookah ${flavorName}`,
           `shisha tobacco`,
         ]
-      : [`${brandName} shisha tobacco`, `${brandName} hookah`, `hookah tobacco`]
+      : [`${brandName} hookah shisha tobacco`, `${brandName} hookah`, `hookah tobacco`]
 
     for (const query of queries) {
       const imageUrl = await this.searchImage(query)
