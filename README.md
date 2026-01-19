@@ -129,6 +129,238 @@ shisha-search/
 - ワンクリックでフィルタリング
 - 「すべてのブランド」オプション
 
+## 🖼 画像収集システム
+
+5,000以上のフレーバーアイテムに画像を収集・管理するための包括的なツールセットです。
+
+### 特徴
+- **3段階ハイブリッドアプローチ**: 自動収集 + 手動編集 + 品質管理
+- **無料APIのみ使用**: Google Custom Search + Unsplash
+- **完全なバックアップシステム**: すべての変更前に自動バックアップ
+- **品質重視**: 実際の商品パッケージ画像を優先
+
+### セットアップ
+
+#### 1. API キーの取得
+
+**.env.localファイルを作成**
+```bash
+cp .env.local.example .env.local
+```
+
+**Google Custom Search API**
+1. [Google Cloud Console](https://console.cloud.google.com/) でプロジェクト作成
+2. Custom Search API を有効化
+3. API キーを作成
+4. [Programmable Search Engine](https://programmablesearchengine.google.com/) で検索エンジン作成
+5. Search Engine ID を取得
+
+**Unsplash API**
+1. [Unsplash Developers](https://unsplash.com/developers) でアカウント作成
+2. 新規アプリケーション作成
+3. Access Key を取得
+
+**.env.localに設定**
+```bash
+GOOGLE_CSE_API_KEY=your_google_api_key
+GOOGLE_CSE_ID=your_search_engine_id
+UNSPLASH_ACCESS_KEY=your_unsplash_key
+```
+
+### 使い方
+
+#### Phase 1: 自動ブランド画像収集
+
+全5,138アイテムにブランドレベルの画像を適用（100%カバレッジ）
+
+```bash
+# プレビューモード（変更なし）
+pnpm tsx scripts/collect-brand-images.ts --dry-run
+
+# 本番実行（自動バックアップ作成）
+pnpm tsx scripts/collect-brand-images.ts
+
+# Unsplashのみ使用
+pnpm tsx scripts/collect-brand-images.ts --source unsplash
+```
+
+**実行時間**: 約5-10分（77ブランド）
+**結果**: 全アイテムにブランド画像が設定されます
+
+#### Phase 2: 手動編集による品質向上
+
+実際の商品写真を手動で追加してデータ品質を向上させます。
+
+**2-1. データをCSV/JSONにエクスポート**
+```bash
+# 全データをエクスポート
+pnpm tsx scripts/export-for-manual-edit.ts
+
+# 人気ブランドのみエクスポート（推奨）
+pnpm tsx scripts/export-for-manual-edit.ts --priority
+
+# CSVのみ
+pnpm tsx scripts/export-for-manual-edit.ts --format csv
+```
+
+**出力ファイル**:
+- `data/exports/manual-edit.csv` - 全アイテム
+- `data/exports/high-priority.csv` - 人気ブランド（編集推奨）
+- `data/exports/manual-edit.json` - JSON形式
+
+**2-2. CSVを手動編集**
+
+ExcelまたはGoogle Spreadsheetsで`manual-edit.csv`を開いて編集:
+
+1. 商品名でGoogle画像検索
+2. 公式サイトやECサイトから画像URL取得
+3. `Image URL`列に貼り付け
+4. `Source`列に`manual`と記入
+5. 優先度の高い商品から編集（人気ブランド優先）
+6. 保存
+
+**編集のヒント**:
+- 公式サイトの画像を優先
+- 商品パッケージ画像を選択
+- 高解像度の画像を選ぶ
+- 公開アクセス可能なURLを使用（プライベートリンク不可）
+
+**2-3. 編集したCSVをインポート**
+```bash
+# プレビューモード（変更内容を確認）
+pnpm tsx scripts/import-manual-edits.ts --file data/exports/manual-edit.csv --dry-run
+
+# すべての変更を表示
+pnpm tsx scripts/import-manual-edits.ts --file data/exports/manual-edit.csv --dry-run --show-all
+
+# 本番実行（自動バックアップ作成）
+pnpm tsx scripts/import-manual-edits.ts --file data/exports/manual-edit.csv
+```
+
+**変更レポート例**:
+```
+📊 Change Analysis:
+  Total records: 5138
+  Items with changes: 250
+  New images: 200
+  Updated images: 45
+  Removed images: 5
+```
+
+#### Phase 3: 画像検証と品質管理
+
+画像URLの有効性と品質をチェックします。
+
+```bash
+# 基本的な検証
+pnpm tsx scripts/verify-images.ts
+
+# 詳細情報を表示
+pnpm tsx scripts/verify-images.ts --show-details
+
+# レポートをJSONファイルに保存
+pnpm tsx scripts/verify-images.ts --report
+
+# 壊れた画像を自動修復
+pnpm tsx scripts/verify-images.ts --fix
+```
+
+**検証項目**:
+- URL到達性（HTTP 200チェック）
+- Content-Typeが画像形式か
+- 画像サイズ（10KB未満は警告）
+- 壊れたリンク検出
+- 重複URL検出
+
+**レポート例**:
+```
+📊 Verification Report:
+  Total items: 5138
+  With images: 5100 (99.3%)
+  Without images: 38 (0.7%)
+
+  ✅ Valid images: 4950
+  ❌ Broken images: 150
+  ⚠️  Small size (<10KB): 50
+
+  Success rate: 97.1%
+```
+
+### バックアップと復元
+
+すべての書き込み操作前に自動バックアップが作成されます。
+
+```bash
+# バックアップ一覧表示
+pnpm tsx scripts/utils/backup.ts --list
+
+# 手動バックアップ作成
+pnpm tsx scripts/utils/backup.ts --create
+
+# バックアップから復元
+pnpm tsx scripts/utils/backup.ts --restore 2026-01-16T12-30-00
+```
+
+**バックアップ場所**: `data/backups/shishaData.backup.*.js`
+
+### 継続的改善サイクル
+
+```
+1. エクスポート → 2. 手動編集 → 3. インポート → 4. 検証
+                       ↑                              ↓
+                       └──────── 品質向上 ←───────────┘
+```
+
+毎週/毎月、追加で商品写真を手動追加し、データ品質を段階的に向上させることを推奨します。
+
+### API使用量
+
+**Google Custom Search API**
+- 無料枠: 100クエリ/日
+- Phase 1で77クエリ使用（1日で完了）
+- レート制限: 1リクエスト/秒
+
+**Unsplash API**
+- 無料枠: 50リクエスト/時、5,000/月
+- フォールバック用（Googleで見つからない場合）
+- レート制限: 10リクエスト/秒
+
+すべて無料枠内で完結します。
+
+### スクリプト一覧
+
+| スクリプト | 説明 | 主なオプション |
+|-----------|------|---------------|
+| `collect-brand-images.ts` | ブランド画像の自動収集 | `--dry-run`, `--source`, `--force` |
+| `export-for-manual-edit.ts` | CSV/JSONエクスポート | `--priority`, `--format` |
+| `import-manual-edits.ts` | 手動編集のインポート | `--dry-run`, `--show-all` |
+| `verify-images.ts` | 画像検証と品質チェック | `--fix`, `--report`, `--show-details` |
+| `utils/backup.ts` | バックアップ管理 | `--list`, `--create`, `--restore` |
+
+### トラブルシューティング
+
+**API quota exceeded**
+- Google CSE: 翌日まで待つ（100クエリ/日）
+- Unsplash: 次の時間まで待つ（50リクエスト/時）
+
+**壊れた画像リンク**
+```bash
+pnpm tsx scripts/verify-images.ts --fix
+```
+
+**誤ったインポート**
+```bash
+# バックアップから復元
+pnpm tsx scripts/utils/backup.ts --list
+pnpm tsx scripts/utils/backup.ts --restore <timestamp>
+```
+
+**dry-runで必ず確認**
+```bash
+# すべての書き込み操作前に
+--dry-run フラグで変更内容をプレビュー
+```
+
 ## 🧪 テスト
 
 ```bash

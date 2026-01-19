@@ -48,3 +48,11 @@ next-env.d.ts
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# Image collection system
+/data/backups/
+/data/exports/
+/data/brand-image-map.json
+/data/image-collection-progress.json
+/data/verification-report.json
+/scripts/failed-items.json
