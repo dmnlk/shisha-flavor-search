@@ -1,7 +1,6 @@
 'use client'
 
 import { motion, AnimatePresence } from 'framer-motion'
-import Image from 'next/image'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { useState, useEffect, Suspense } from 'react'
 
@@ -168,16 +167,8 @@ function HomeContent() {
             whileTap={{ scale: 0.99 }}
             className="cursor-pointer inline-block"
           >
-            <Image
-              src="/images/logo.png"
-              alt="Shisha Search Logo"
-              width={240}
-              height={80}
-              priority
-              className="w-[160px] sm:w-[220px] h-auto object-contain mb-8 mx-auto opacity-90"
-            />
             <h1
-              className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-normal text-lounge-900 dark:text-lounge-100 mb-4 tracking-tight leading-[0.95]"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-normal text-lounge-900 dark:text-lounge-100 mb-4 tracking-tight leading-[0.95]"
               style={{ fontFamily: 'var(--font-display), serif' }}
             >
               Shisha Flavor
