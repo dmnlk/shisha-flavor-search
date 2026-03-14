@@ -14,38 +14,28 @@ export default function BrandList({ manufacturers, selectedManufacturer, onSelec
   const [isExpanded, setIsExpanded] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const [randomSeed, setRandomSeed] = useState(0)
-  
-  // コンポーネントマウント時にランダムシードを設定
+
   useEffect(() => {
     setRandomSeed(Math.random())
   }, [])
-  
-  // 人気ブランドをランダムに選択
+
   const popularBrands = useMemo(() => {
-    if (manufacturers.length <= 8) {
-      return manufacturers
-    }
-    
-    // シード値を使用して一貫性のあるランダム選択を行う
+    if (manufacturers.length <= 8) return manufacturers
+
     const seededRandom = (seed: number, index: number) => {
       const x = Math.sin(seed + index) * 10000
       return x - Math.floor(x)
     }
-    
-    // インデックスの配列を作成してシャッフル
+
     const indices = manufacturers.map((_, i) => i)
     const shuffled = [...indices]
-    
     for (let i = shuffled.length - 1; i > 0; i--) {
       const j = Math.floor(seededRandom(randomSeed, i) * (i + 1));
       [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
     }
-    
-    // シャッフルしたインデックスから8個のブランドを選択
     return shuffled.slice(0, 8).map(index => manufacturers[index])
   }, [manufacturers, randomSeed])
 
-  // フィルタリングされたブランド
   const filteredManufacturers = useMemo(() => {
     if (!searchQuery) return manufacturers
     return manufacturers.filter(brand =>
@@ -53,101 +43,87 @@ export default function BrandList({ manufacturers, selectedManufacturer, onSelec
     )
   }, [manufacturers, searchQuery])
 
+  const pillClass = (isActive: boolean) =>
+    `px-4 py-2 rounded-lg text-xs font-semibold tracking-wide transition-all duration-300 ${
+      isActive
+        ? 'bg-primary-500 dark:bg-primary-500/90 text-white shadow-sm'
+        : 'bg-lounge-100/80 dark:bg-lounge-800/60 text-lounge-600 dark:text-lounge-400 hover:bg-lounge-200/80 dark:hover:bg-lounge-700/60 border border-lounge-200/50 dark:border-lounge-700/30'
+    }`
+
   return (
-    <div className="mb-8 px-4 sm:px-0">
-      <div className="flex flex-wrap gap-3 mb-4 justify-center">
-        {/* All Brands button */}
+    <div className="mb-10 max-w-4xl mx-auto">
+      <div className="flex flex-wrap gap-2 justify-center">
         <motion.button
-          whileHover={{ scale: 1.05, y: -2 }}
-          whileTap={{ scale: 0.95 }}
+          whileHover={{ y: -1 }}
+          whileTap={{ scale: 0.97 }}
           onClick={() => onSelect('')}
-          className={`px-5 sm:px-6 py-2.5 rounded-2xl text-sm font-bold transition-all
-            ${selectedManufacturer === ''
-              ? 'bg-gradient-to-r from-primary-600 to-accent-500 text-white shadow-xl border-2 border-white/20 glow'
-              : 'bg-white/70 dark:bg-gray-800/70 backdrop-blur-md text-gray-700 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-800 shadow-lg border border-gray-200/50 dark:border-gray-700/50'
-            }`}
+          className={pillClass(selectedManufacturer === '')}
         >
           All Brands
         </motion.button>
 
-        {/* Popular brands */}
         {popularBrands.map((brand) => (
           <motion.button
             key={brand}
-            whileHover={{ scale: 1.05, y: -2 }}
-            whileTap={{ scale: 0.95 }}
+            whileHover={{ y: -1 }}
+            whileTap={{ scale: 0.97 }}
             onClick={() => onSelect(brand)}
-            className={`px-4 sm:px-5 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition-all truncate max-w-[140px] sm:max-w-none
-              ${selectedManufacturer === brand
-                ? 'bg-gradient-to-r from-primary-600 to-accent-500 text-white shadow-xl border-2 border-white/20 glow'
-                : 'bg-white/70 dark:bg-gray-800/70 backdrop-blur-md text-gray-700 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-800 shadow-lg border border-gray-200/50 dark:border-gray-700/50'
-              }`}
+            className={`${pillClass(selectedManufacturer === brand)} truncate max-w-[130px] sm:max-w-none`}
           >
             {brand}
           </motion.button>
         ))}
 
-        {/* More brands button */}
         {manufacturers.length > 8 && (
           <motion.button
-            whileHover={{ scale: 1.05, y: -2 }}
-            whileTap={{ scale: 0.95 }}
+            whileHover={{ y: -1 }}
+            whileTap={{ scale: 0.97 }}
             onClick={() => setIsExpanded(!isExpanded)}
-            className="flex items-center px-5 sm:px-6 py-2.5 rounded-2xl text-xs sm:text-sm font-bold bg-white/70 dark:bg-gray-800/70 backdrop-blur-md text-gray-700 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-800 transition-all shadow-lg border border-gray-200/50 dark:border-gray-700/50"
+            className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-xs font-semibold tracking-wide bg-lounge-100/80 dark:bg-lounge-800/60 text-lounge-600 dark:text-lounge-400 hover:bg-lounge-200/80 dark:hover:bg-lounge-700/60 border border-lounge-200/50 dark:border-lounge-700/30 transition-all duration-300"
           >
             <span>More</span>
-            <motion.div
-              animate={{ rotate: isExpanded ? 180 : 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              <ChevronDownIcon className="h-4 w-4 ml-2" />
+            <motion.div animate={{ rotate: isExpanded ? 180 : 0 }} transition={{ duration: 0.3 }}>
+              <ChevronDownIcon className="h-3.5 w-3.5" />
             </motion.div>
           </motion.button>
         )}
       </div>
 
-      {/* Expanded brand list */}
       <AnimatePresence>
         {isExpanded && (
           <motion.div
-            initial={{ opacity: 0, height: 0, y: -20 }}
-            animate={{ opacity: 1, height: 'auto', y: 0 }}
-            exit={{ opacity: 0, height: 0, y: -20 }}
-            transition={{ duration: 0.4 }}
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3 }}
             className="overflow-hidden"
           >
-            <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg rounded-3xl shadow-2xl p-6 mb-6 border border-gray-200/50 dark:border-gray-700/50">
-              {/* Search input */}
-              <div className="relative mb-5">
+            <div className="mt-4 bg-white/80 dark:bg-lounge-900/60 backdrop-blur-sm rounded-xl border border-lounge-200/60 dark:border-lounge-800/40 p-5">
+              <div className="relative mb-4">
                 <input
                   type="text"
                   placeholder="ブランドを検索..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full px-5 py-3 pl-12 pr-5 bg-white dark:bg-gray-700/50 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 rounded-2xl border-2 border-gray-200 dark:border-gray-600 focus:border-primary-500 dark:focus:border-primary-400 focus:outline-none transition-all text-sm font-medium shadow-inner"
+                  className="w-full px-4 py-2.5 pl-10 bg-lounge-50 dark:bg-lounge-800/50 text-lounge-900 dark:text-lounge-100 placeholder-lounge-400 dark:placeholder-lounge-600 rounded-lg border border-lounge-200/60 dark:border-lounge-700/40 focus:border-primary-400/60 dark:focus:border-primary-500/40 focus:outline-none transition-all text-sm"
                 />
-                <MagnifyingGlassIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-primary-500 dark:text-primary-400" />
+                <MagnifyingGlassIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-lounge-400" />
               </div>
 
-              {/* Brand grid */}
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2">
                 {filteredManufacturers.map((brand, idx) => (
                   <motion.button
                     key={brand}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: idx * 0.02 }}
-                    whileHover={{ scale: 1.05, y: -2 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={() => {
-                      onSelect(brand)
-                      setIsExpanded(false)
-                    }}
-                    className={`px-4 py-3 rounded-2xl text-xs sm:text-sm font-bold transition-all text-center truncate
-                      ${selectedManufacturer === brand
-                        ? 'bg-gradient-to-r from-primary-600 to-accent-500 text-white shadow-lg'
-                        : 'bg-white dark:bg-gray-700/50 text-gray-700 dark:text-gray-300 hover:bg-primary-50 dark:hover:bg-gray-600 shadow-md border border-gray-200/50 dark:border-gray-600/50'
-                      }`}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: idx * 0.015 }}
+                    whileHover={{ y: -1 }}
+                    onClick={() => { onSelect(brand); setIsExpanded(false) }}
+                    className={`px-3 py-2.5 rounded-lg text-xs font-medium transition-all text-center truncate ${
+                      selectedManufacturer === brand
+                        ? 'bg-primary-500 text-white'
+                        : 'bg-lounge-50 dark:bg-lounge-800/40 text-lounge-600 dark:text-lounge-400 hover:bg-lounge-100 dark:hover:bg-lounge-700/50'
+                    }`}
                   >
                     {brand}
                   </motion.button>
@@ -155,18 +131,9 @@ export default function BrandList({ manufacturers, selectedManufacturer, onSelec
               </div>
 
               {filteredManufacturers.length === 0 && (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  className="text-center py-8"
-                >
-                  <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-primary-100 to-accent-100 dark:from-primary-900/30 dark:to-accent-900/30 rounded-full flex items-center justify-center">
-                    <MagnifyingGlassIcon className="h-8 w-8 text-primary-500 dark:text-primary-400" />
-                  </div>
-                  <p className="text-gray-600 dark:text-gray-400 text-sm font-medium">
-                    ブランドが見つかりません
-                  </p>
-                </motion.div>
+                <div className="text-center py-8">
+                  <p className="text-lounge-400 dark:text-lounge-500 text-sm">ブランドが見つかりません</p>
+                </div>
               )}
             </div>
           </motion.div>

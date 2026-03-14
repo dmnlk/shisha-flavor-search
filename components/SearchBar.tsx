@@ -13,6 +13,12 @@ interface SearchBarProps {
   isSearching?: boolean
 }
 
+const searchTypes = [
+  { key: 'all' as const, label: 'すべて' },
+  { key: 'brand' as const, label: 'ブランド' },
+  { key: 'flavor' as const, label: 'フレーバー' },
+]
+
 export default function SearchBar({ onSearch, searchQuery = '', isSearching = false }: SearchBarProps) {
   const [searchTerm, setSearchTerm] = useState(searchQuery)
   const [searchType, setSearchType] = useState<'all' | 'brand' | 'flavor'>('all')
@@ -20,9 +26,9 @@ export default function SearchBar({ onSearch, searchQuery = '', isSearching = fa
   useEffect(() => {
     setSearchTerm(searchQuery)
   }, [searchQuery])
+
   const [isFocused, setIsFocused] = useState(false)
 
-  // デバウンスされた検索関数を作成
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const debouncedSearch = useCallback(
     debounce((query: string, type: 'all' | 'brand' | 'flavor') => {
@@ -31,13 +37,11 @@ export default function SearchBar({ onSearch, searchQuery = '', isSearching = fa
     [onSearch]
   )
 
-  // 入力変更時の処理
   const handleInputChange = (value: string) => {
     setSearchTerm(value)
     debouncedSearch(value, searchType)
   }
 
-  // 検索タイプ変更時の処理
   const handleSearchTypeChange = (type: 'all' | 'brand' | 'flavor') => {
     setSearchType(type)
     if (searchTerm) {
@@ -47,7 +51,6 @@ export default function SearchBar({ onSearch, searchQuery = '', isSearching = fa
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    // インクリメンタルサーチなので、Enterキーでの送信は特に処理しない
   }
 
   const handleClear = () => {
@@ -56,65 +59,40 @@ export default function SearchBar({ onSearch, searchQuery = '', isSearching = fa
   }
 
   return (
-    <form onSubmit={handleSubmit} className="mb-8">
+    <form onSubmit={handleSubmit} className="mb-10 max-w-2xl mx-auto">
       <motion.div
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3 }}
-        className="space-y-5"
+        transition={{ duration: 0.4, delay: 0.2 }}
+        className="space-y-4"
       >
-        {/* 検索タイプセレクター */}
-        <div className="flex justify-center gap-3 flex-wrap">
-          <motion.button
-            type="button"
-            onClick={() => handleSearchTypeChange('all')}
-            whileHover={{ scale: 1.05, y: -2 }}
-            whileTap={{ scale: 0.95 }}
-            className={`px-6 py-3 rounded-2xl font-bold transition-all ${
-              searchType === 'all'
-                ? 'bg-gradient-to-r from-primary-600 to-accent-500 text-white shadow-xl border-2 border-white/20 glow'
-                : 'bg-white/70 dark:bg-gray-800/70 backdrop-blur-md text-gray-700 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-800 shadow-lg border border-gray-200/50 dark:border-gray-700/50'
-            }`}
-          >
-            すべて
-          </motion.button>
-          <motion.button
-            type="button"
-            onClick={() => handleSearchTypeChange('brand')}
-            whileHover={{ scale: 1.05, y: -2 }}
-            whileTap={{ scale: 0.95 }}
-            className={`px-6 py-3 rounded-2xl font-bold transition-all ${
-              searchType === 'brand'
-                ? 'bg-gradient-to-r from-primary-600 to-accent-500 text-white shadow-xl border-2 border-white/20 glow'
-                : 'bg-white/70 dark:bg-gray-800/70 backdrop-blur-md text-gray-700 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-800 shadow-lg border border-gray-200/50 dark:border-gray-700/50'
-            }`}
-          >
-            ブランド名
-          </motion.button>
-          <motion.button
-            type="button"
-            onClick={() => handleSearchTypeChange('flavor')}
-            whileHover={{ scale: 1.05, y: -2 }}
-            whileTap={{ scale: 0.95 }}
-            className={`px-6 py-3 rounded-2xl font-bold transition-all ${
-              searchType === 'flavor'
-                ? 'bg-gradient-to-r from-primary-600 to-accent-500 text-white shadow-xl border-2 border-white/20 glow'
-                : 'bg-white/70 dark:bg-gray-800/70 backdrop-blur-md text-gray-700 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-800 shadow-lg border border-gray-200/50 dark:border-gray-700/50'
-            }`}
-          >
-            フレーバー名
-          </motion.button>
+        {/* Search type tabs */}
+        <div className="flex justify-center gap-1">
+          {searchTypes.map(({ key, label }) => (
+            <button
+              key={key}
+              type="button"
+              onClick={() => handleSearchTypeChange(key)}
+              className={`relative px-4 py-2 text-sm font-medium transition-colors duration-300 ${
+                searchType === key
+                  ? 'text-primary-600 dark:text-primary-400'
+                  : 'text-lounge-400 dark:text-lounge-500 hover:text-lounge-700 dark:hover:text-lounge-300'
+              }`}
+            >
+              {label}
+              {searchType === key && (
+                <motion.div
+                  layoutId="searchTab"
+                  className="absolute bottom-0 left-2 right-2 h-0.5 bg-primary-500 dark:bg-primary-400 rounded-full"
+                  transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                />
+              )}
+            </button>
+          ))}
         </div>
 
-        {/* 検索入力欄 */}
-        <motion.div
-          animate={{
-            scale: isFocused ? 1.02 : 1,
-            y: isFocused ? -4 : 0,
-          }}
-          transition={{ duration: 0.2 }}
-          className="relative"
-        >
+        {/* Search input */}
+        <div className="relative">
           <input
             type="text"
             value={searchTerm}
@@ -123,47 +101,31 @@ export default function SearchBar({ onSearch, searchQuery = '', isSearching = fa
             onBlur={() => setIsFocused(false)}
             placeholder={
               searchType === 'brand'
-                ? "ブランド名で検索..."
+                ? 'ブランド名で検索...'
                 : searchType === 'flavor'
-                ? "フレーバー名で検索..."
-                : "お気に入りのフレーバーを検索..."
+                ? 'フレーバー名で検索...'
+                : 'フレーバーを探す...'
             }
-            className={`w-full px-6 py-5 pl-16 pr-14 bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 rounded-3xl shadow-2xl border-2 transition-all text-lg font-medium ${
+            className={`w-full px-5 py-4 pl-12 pr-12 bg-white/90 dark:bg-lounge-900/80 backdrop-blur-sm text-lounge-900 dark:text-lounge-100 placeholder-lounge-400 dark:placeholder-lounge-600 rounded-xl border transition-all duration-300 text-[15px] font-medium outline-none ${
               isFocused
-                ? 'border-primary-500 dark:border-primary-400 glow'
-                : 'border-gray-200/50 dark:border-gray-700/50'
+                ? 'border-primary-400/60 dark:border-primary-500/40 shadow-[0_0_0_3px_rgba(201,165,94,0.08)] dark:shadow-[0_0_0_3px_rgba(201,165,94,0.06)]'
+                : 'border-lounge-200/80 dark:border-lounge-800/60 shadow-sm'
             }`}
           />
 
-          <div className="absolute left-6 top-1/2 transform -translate-y-1/2">
+          <div className="absolute left-4 top-1/2 -translate-y-1/2">
             {isSearching ? (
               <motion.div
                 animate={{ rotate: 360 }}
-                transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                className="h-7 w-7"
+                transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
               >
-                <svg
-                  className="h-7 w-7 text-primary-500 dark:text-primary-400"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <circle
-                    className="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                  />
-                  <path
-                    className="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                  />
+                <svg className="h-5 w-5 text-primary-500/70 dark:text-primary-400/70" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" />
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                 </svg>
               </motion.div>
             ) : (
-              <MagnifyingGlassIcon className="h-7 w-7 text-primary-500 dark:text-primary-400" />
+              <MagnifyingGlassIcon className="h-5 w-5 text-lounge-400 dark:text-lounge-500" />
             )}
           </div>
 
@@ -173,17 +135,16 @@ export default function SearchBar({ onSearch, searchQuery = '', isSearching = fa
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.8 }}
-                whileHover={{ scale: 1.1, rotate: 90 }}
-                whileTap={{ scale: 0.9 }}
+                whileHover={{ scale: 1.1 }}
                 type="button"
                 onClick={handleClear}
-                className="absolute right-6 top-1/2 transform -translate-y-1/2 h-7 w-7 text-gray-500 hover:text-accent-500 dark:text-gray-400 dark:hover:text-accent-400 transition-colors"
+                className="absolute right-4 top-1/2 -translate-y-1/2 h-5 w-5 text-lounge-400 hover:text-lounge-600 dark:text-lounge-500 dark:hover:text-lounge-300 transition-colors"
               >
                 <XMarkIcon />
               </motion.button>
             )}
           </AnimatePresence>
-        </motion.div>
+        </div>
       </motion.div>
     </form>
   )
