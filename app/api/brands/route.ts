@@ -1,12 +1,14 @@
 import { NextResponse } from 'next/server'
 
 import { shishaData } from '../../../data/shishaData'
+import { getBrandImageUrl } from '../../../data/brandImages'
 import { getUniqueBrands, normalizeBrandName, normalizeBrandForSearch } from '../../../lib/utils/brandNormalizer'
 
 export interface BrandSummary {
   name: string
   count: number
   sampleFlavors: string[]
+  imageUrl?: string
 }
 
 export async function GET(): Promise<NextResponse<BrandSummary[]>> {
@@ -36,6 +38,7 @@ export async function GET(): Promise<NextResponse<BrandSummary[]>> {
       name,
       count: entry?.count ?? 0,
       sampleFlavors: entry?.samples ?? [],
+      imageUrl: getBrandImageUrl(name),
     }
   })
 

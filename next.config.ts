@@ -18,10 +18,6 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'blogger.googleusercontent.com',
       },
-      {
-        protocol: 'https',
-        hostname: 'upload.wikimedia.org',
-      },
     ],
   },
 }

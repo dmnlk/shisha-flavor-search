@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 
+import { getBrandImageUrl } from '../../data/brandImages'
 import { shishaData } from '../../data/shishaData'
 import { getUniqueBrands, normalizeBrandForSearch, normalizeBrandName } from '../../lib/utils/brandNormalizer'
 import type { BrandSummary } from '../api/brands/route'
@@ -37,6 +38,7 @@ function buildBrandSummaries(): BrandSummary[] {
       name,
       count: entry?.count ?? 0,
       sampleFlavors: entry?.samples ?? [],
+      imageUrl: getBrandImageUrl(name),
     }
   })
 }

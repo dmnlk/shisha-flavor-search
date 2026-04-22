@@ -7,7 +7,6 @@ import { useMemo, useState } from 'react'
 
 import BackgroundOrbs from '../../components/BackgroundOrbs'
 import BrandCard from '../../components/BrandCard'
-import { getBrandImageUrl } from '../../data/brandImages'
 import type { BrandSummary } from '../api/brands/route'
 
 type SortKey = 'alpha' | 'popularity'
@@ -116,7 +115,7 @@ export default function BrandsClient({ brands }: BrandsClientProps) {
                 name={brand.name}
                 count={brand.count}
                 sampleFlavors={brand.sampleFlavors}
-                imageUrl={getBrandImageUrl(brand.name)}
+                imageUrl={brand.imageUrl}
                 index={idx}
               />
             ))}

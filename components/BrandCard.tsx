@@ -67,7 +67,6 @@ export default function BrandCard({ name, count, sampleFlavors, imageUrl, index 
               className="object-contain p-6 bg-white/95 dark:bg-lounge-950/40 group-hover:scale-105 transition-transform duration-700 ease-out"
               sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
               onError={() => setImageError(true)}
-              unoptimized
             />
           ) : (
             <>

@@ -1,16 +1,46 @@
+import fs from 'node:fs'
+import path from 'node:path'
+
 import { normalizeBrandForSearch } from '../lib/utils/brandNormalizer'
 
 /**
- * ブランド名 (normalizeBrandForSearch を通した小文字キー) → 画像URL のマップ。
- * 画像は Wikimedia Commons などの信頼できる公開ホストを優先。
- * 追加する場合は next.config.ts の remotePatterns に hostname を追加すること。
+ * Server-only module. Uses `node:fs` to enumerate locally bundled brand
+ * logo files at module init, so it must not be imported from client
+ * components ('use client'). Consume it from server components / API
+ * routes only, then pass resolved URLs down as props.
  */
-const BRAND_IMAGE_ENTRIES: Record<string, string> = {
-  shiazo: 'https://upload.wikimedia.org/wikipedia/commons/c/ce/Shiazo_Blueberry.png',
+
+const BRAND_IMAGES_DIR = path.join(process.cwd(), 'public', 'images', 'brands')
+const SUPPORTED_EXTENSIONS = new Set(['.png', '.jpg', '.jpeg', '.webp', '.svg', '.avif'])
+
+/**
+ * Brand name → URL-safe slug used as the expected filename stem.
+ * Example: "Al Fakher" → "al-fakher", "Coco Nara" → "coco-nara".
+ */
+export function brandSlug(brand: string): string {
+  return normalizeBrandForSearch(brand)
+    .replace(/[^\p{L}\p{N}\s-]/gu, '')
+    .trim()
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
 }
+
+function loadBrandImageMap(): Record<string, string> {
+  if (!fs.existsSync(BRAND_IMAGES_DIR)) return {}
+  const entries: Record<string, string> = {}
+  for (const file of fs.readdirSync(BRAND_IMAGES_DIR)) {
+    const ext = path.extname(file).toLowerCase()
+    if (!SUPPORTED_EXTENSIONS.has(ext)) continue
+    const slug = path.basename(file, ext).toLowerCase()
+    entries[slug] = `/images/brands/${file}`
+  }
+  return entries
+}
+
+const BRAND_IMAGE_MAP: Record<string, string> = loadBrandImageMap()
 
 export function getBrandImageUrl(brand: string): string | undefined {
-  return BRAND_IMAGE_ENTRIES[normalizeBrandForSearch(brand)]
+  return BRAND_IMAGE_MAP[brandSlug(brand)]
 }
 
-export const REGISTERED_BRAND_IMAGE_COUNT = Object.keys(BRAND_IMAGE_ENTRIES).length
+export const REGISTERED_BRAND_IMAGE_COUNT = Object.keys(BRAND_IMAGE_MAP).length
