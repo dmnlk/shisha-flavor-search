@@ -2,7 +2,7 @@
 
 import { MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/24/solid'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useState, useEffect, FormEvent, useCallback } from 'react'
+import { useState, useEffect, FormEvent, useMemo } from 'react'
 
 import { debounce } from '../utils/debounce'
 
@@ -29,11 +29,11 @@ export default function SearchBar({ onSearch, searchQuery = '', isSearching = fa
 
   const [isFocused, setIsFocused] = useState(false)
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const debouncedSearch = useCallback(
-    debounce((query: string, type: 'all' | 'brand' | 'flavor') => {
-      onSearch({ query, searchType: type })
-    }, 300),
+  const debouncedSearch = useMemo(
+    () =>
+      debounce((query: string, type: 'all' | 'brand' | 'flavor') => {
+        onSearch({ query, searchType: type })
+      }, 300),
     [onSearch]
   )
 
