@@ -1,6 +1,7 @@
 'use client'
 
 import { motion, AnimatePresence } from 'framer-motion'
+import Link from 'next/link'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { useState, useEffect, Suspense } from 'react'
 
@@ -179,9 +180,17 @@ function HomeContent() {
 
           <div className="w-12 h-px bg-primary-400/60 mx-auto mb-5" />
 
-          <p className="text-sm sm:text-base text-lounge-400 dark:text-lounge-500 tracking-wide">
+          <p className="text-sm sm:text-base text-lounge-400 dark:text-lounge-500 tracking-wide mb-6">
             あなただけの特別なフレーバーを見つけよう
           </p>
+
+          <Link
+            href="/brands"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/70 dark:bg-lounge-900/60 backdrop-blur-sm border border-lounge-200/60 dark:border-lounge-800/50 text-xs font-semibold uppercase tracking-[0.18em] text-lounge-600 dark:text-lounge-300 hover:border-primary-400/60 dark:hover:border-primary-500/40 hover:text-primary-600 dark:hover:text-primary-400 transition-all"
+          >
+            <span>ブランド一覧を見る</span>
+            <span aria-hidden>→</span>
+          </Link>
         </motion.div>
 
         <SearchBar
