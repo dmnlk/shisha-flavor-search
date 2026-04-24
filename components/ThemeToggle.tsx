@@ -1,27 +1,39 @@
 'use client'
 
-import { SunIcon, MoonIcon } from '@heroicons/react/24/outline'
-
 import { useTheme } from './ThemeProvider'
 
 export function ThemeToggle() {
   const { darkMode, setDarkMode } = useTheme()
 
-  const toggleTheme = () => {
-    setDarkMode(!darkMode)
-  }
-
   return (
-    <button
-      onClick={toggleTheme}
-      className="fixed top-6 right-6 z-50 p-4 rounded-2xl bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg border-2 border-gray-200/50 dark:border-gray-700/50 shadow-2xl hover:shadow-primary-500/50 dark:hover:shadow-accent-500/50 transition-all duration-300 hover:scale-110 hover:-rotate-12 group"
-      aria-label="Toggle theme"
-    >
-      {darkMode ? (
-        <SunIcon className="h-6 w-6 text-yellow-500 group-hover:rotate-90 transition-transform duration-300" />
-      ) : (
-        <MoonIcon className="h-6 w-6 text-primary-600 group-hover:-rotate-12 transition-transform duration-300" />
-      )}
-    </button>
+    <div className="fixed top-5 right-5 z-50 font-mono-tight text-[10px] uppercase tracking-[0.12em]">
+      <div className="flex items-stretch border border-ink-900 dark:border-ink-100 bg-paper-0 dark:bg-paper-950">
+        <button
+          onClick={() => setDarkMode(false)}
+          aria-pressed={!darkMode}
+          aria-label="Light mode"
+          className={`px-2.5 py-1.5 transition-colors ${
+            !darkMode
+              ? 'bg-ink-900 text-paper-0'
+              : 'text-ink-500 hover:text-ember-500'
+          }`}
+        >
+          Day
+        </button>
+        <span aria-hidden className="self-stretch w-px bg-ink-900 dark:bg-ink-100" />
+        <button
+          onClick={() => setDarkMode(true)}
+          aria-pressed={darkMode}
+          aria-label="Dark mode"
+          className={`px-2.5 py-1.5 transition-colors ${
+            darkMode
+              ? 'bg-ink-100 text-paper-950'
+              : 'text-ink-500 hover:text-ember-500'
+          }`}
+        >
+          Night
+        </button>
+      </div>
+    </div>
   )
 }

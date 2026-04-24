@@ -1,11 +1,10 @@
 'use client'
 
 import { motion, AnimatePresence } from 'framer-motion'
-import Image from 'next/image'
+import Link from 'next/link'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { useState, useEffect, Suspense } from 'react'
 
-import BackgroundOrbs from '../components/BackgroundOrbs'
 import BrandList from '../components/BrandList'
 import LoadingSpinner from '../components/LoadingSpinner'
 import SearchBar from '../components/SearchBar'
@@ -23,14 +22,14 @@ interface SearchParams {
 function HomeContent() {
   const searchParams = useSearchParams()
   const router = useRouter()
-  
-  // URLパラメータから初期値を取得
+
   const [flavors, setFlavors] = useState<ShishaFlavor[]>([])
   const [loading, setLoading] = useState(false)
   const [isSearching, setIsSearching] = useState(false)
   const [manufacturers, setManufacturers] = useState<string[]>([])
   const [currentPage, setCurrentPage] = useState(parseInt(searchParams.get('page') || '1'))
   const [totalPages, setTotalPages] = useState(0)
+  const [totalResults, setTotalResults] = useState(0)
   const [selectedManufacturer, setSelectedManufacturer] = useState(searchParams.get('manufacturer') || '')
   const [searchQuery, setSearchQuery] = useState(searchParams.get('query') || '')
 
@@ -49,29 +48,24 @@ function HomeContent() {
 
   const handleSearch = async ({ query = '', manufacturer = undefined, page = undefined, searchType = 'all' }: SearchParams) => {
     try {
-      // インクリメンタルサーチの場合は isSearching を使用
       if (page === undefined && manufacturer === undefined) {
         setIsSearching(true)
       } else {
         setLoading(true)
       }
       setSearchQuery(query)
-      
-      // Use provided page or current page
+
       const pageToUse = page !== undefined ? page : currentPage
-      
-      // Only include manufacturer in query params if it's not empty
+
       const queryParams = new URLSearchParams({
         query,
         page: pageToUse.toString(),
       })
-      
-      // Add searchType to query params
+
       if (searchType && searchType !== 'all') {
         queryParams.append('searchType', searchType)
       }
-      
-      // Add manufacturer to query params only if it's provided and not empty
+
       if (manufacturer !== undefined) {
         if (manufacturer) {
           queryParams.append('manufacturer', manufacturer)
@@ -79,26 +73,25 @@ function HomeContent() {
       } else if (selectedManufacturer) {
         queryParams.append('manufacturer', selectedManufacturer)
       }
-      
+
       const response = await fetch(`/api/search?${queryParams}`)
       const data: SearchResponse = await response.json()
-      
+
       setFlavors(data.items)
       setTotalPages(data.totalPages)
-      
-      // Update current page if it was explicitly provided
+      setTotalResults(data.totalItems ?? data.items.length)
+
       if (page !== undefined) {
         setCurrentPage(page)
       }
-      
-      // URLパラメータを更新
+
       const urlParams = new URLSearchParams()
       if (query) urlParams.set('query', query)
       if (manufacturer !== undefined ? manufacturer : selectedManufacturer) {
         urlParams.set('manufacturer', manufacturer !== undefined ? manufacturer : selectedManufacturer)
       }
       if (pageToUse > 1) urlParams.set('page', pageToUse.toString())
-      
+
       const newUrl = urlParams.toString() ? `?${urlParams.toString()}` : '/'
       router.push(newUrl, { scroll: false })
     } catch (error) {
@@ -110,24 +103,13 @@ function HomeContent() {
   }
 
   const handleManufacturerSelect = (manufacturer: string) => {
-    // Reset to page 1 when changing manufacturer
     setCurrentPage(1)
-    // Update selected manufacturer (empty string for "All Brands")
     setSelectedManufacturer(manufacturer)
-    // Perform search with new manufacturer
-    handleSearch({ 
-      query: searchQuery, 
-      manufacturer,
-      page: 1,
-    })
+    handleSearch({ query: searchQuery, manufacturer, page: 1 })
   }
 
   const handlePageChange = (newPage: number) => {
-    handleSearch({ 
-      query: searchQuery, 
-      manufacturer: selectedManufacturer,
-      page: newPage,
-    })
+    handleSearch({ query: searchQuery, manufacturer: selectedManufacturer, page: newPage })
   }
 
   const handleHomeReset = () => {
@@ -137,227 +119,224 @@ function HomeContent() {
     handleSearch({ query: '', manufacturer: '', page: 1 })
   }
 
-  // Initial load - URLパラメータから状態を復元
   useEffect(() => {
     const query = searchParams.get('query') || ''
     const manufacturer = searchParams.get('manufacturer') || ''
     const page = parseInt(searchParams.get('page') || '1')
-    
     handleSearch({ query, manufacturer, page })
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  return (
-    <div className="min-h-screen bg-white dark:bg-gray-950 bg-gradient-mesh relative overflow-hidden">
-      <BackgroundOrbs />
-
-      <main className="relative mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-16 max-w-full">
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-12"
+  const renderPageButton = (page: number, isCurrent = false) => {
+    const base = 'min-w-[2.5rem] h-9 px-2 flex items-center justify-center font-mono-tight text-[11px] border transition-colors nums'
+    if (isCurrent) {
+      return (
+        <span
+          key={`current-${page}`}
+          className={`${base} bg-ink-900 text-paper-0 border-ink-900 dark:bg-ink-100 dark:text-paper-950 dark:border-ink-100`}
         >
-          <motion.div
-            onClick={handleHomeReset}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            className="cursor-pointer inline-block"
-          >
-            <Image
-              src="/images/logo.png"
-              alt="Shisha Search Logo"
-              width={240}
-              height={80}
-              priority
-              className="w-[200px] sm:w-[280px] h-[60px] sm:h-[90px] object-contain mb-6 mx-auto drop-shadow-2xl"
-            />
-            <h1 className="text-4xl sm:text-5xl md:text-7xl font-black bg-gradient-to-r from-primary-600 via-primary-500 to-accent-500 dark:from-primary-400 dark:via-primary-300 dark:to-accent-400 bg-clip-text text-transparent mb-4 tracking-tight">
-              Shisha Flavor Search
+          {page}
+        </span>
+      )
+    }
+    return (
+      <button
+        key={`page-${page}`}
+        onClick={() => handlePageChange(page)}
+        className={`${base} border-rule-200 dark:border-rule-800 text-ink-600 dark:text-ink-300 hover:text-ember-500 hover:border-ember-500`}
+      >
+        {page}
+      </button>
+    )
+  }
+
+  return (
+    <div className="min-h-screen bg-paper-0 dark:bg-paper-950 text-ink-950 dark:text-ink-50">
+      <main className="mx-auto px-4 sm:px-6 lg:px-10 pt-8 sm:pt-10 pb-24 max-w-[1480px]">
+        {/* Masthead */}
+        <header className="flex flex-wrap items-center justify-between gap-3 py-3 border-t-2 border-b border-ink-900 dark:border-ink-100 font-mono-tight text-[10px] uppercase tracking-[0.16em] text-ink-700 dark:text-ink-200 mb-0">
+          <span className="flex items-center gap-3">
+            <span className="inline-block w-2 h-2 bg-ember-500" aria-hidden />
+            <button
+              type="button"
+              onClick={handleHomeReset}
+              className="font-sans-tight font-semibold text-sm normal-case tracking-[-0.01em] text-ink-950 dark:text-ink-50 hover:text-ember-500 transition-colors"
+            >
+              Shisha Flavor Ledger
+            </button>
+            <span className="hidden sm:inline text-ink-400 dark:text-ink-500">—</span>
+            <span className="hidden sm:inline nums">Vol.&nbsp;I · Ed.&nbsp;2026</span>
+          </span>
+          <Link href="/brands" className="hover:text-ember-500 transition-colors">
+            Brand Index →
+          </Link>
+        </header>
+
+        {/* Hero */}
+        <motion.section
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.35 }}
+          className="grid grid-cols-12 gap-0 border-b border-ink-900 dark:border-ink-100"
+        >
+          <div className="col-span-12 lg:col-span-8 lg:border-r lg:border-rule-200 lg:dark:border-rule-800 py-10 lg:py-14 lg:pr-10">
+            <p className="font-mono-tight text-[10px] uppercase tracking-[0.2em] text-ember-500 mb-5">
+              § 001 · The Ledger
+            </p>
+            <h1 className="font-sans-tight font-semibold leading-[0.9] tracking-[-0.04em] text-ink-950 dark:text-ink-50">
+              <span className="block text-[3.5rem] sm:text-[5rem] lg:text-[7rem]">
+                Shisha Flavor
+              </span>
+              <span className="block text-[3.5rem] sm:text-[5rem] lg:text-[7rem]">
+                Ledger<span className="text-ember-500">.</span>
+              </span>
             </h1>
-          </motion.div>
-          <p className="text-lg sm:text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto font-medium">
-            あなただけの特別なフレーバーを見つけよう
-          </p>
-        </motion.div>
-        
-        <SearchBar 
-          onSearch={(params) => handleSearch({ query: params.query, searchType: params.searchType, page: 1 })} 
-          manufacturers={manufacturers}
-          searchQuery={searchQuery}
-          isSearching={isSearching}
-        />
-        
-        <BrandList 
-          manufacturers={manufacturers}
-          selectedManufacturer={selectedManufacturer}
-          onSelect={handleManufacturerSelect}
-        />
-        
+            <p className="mt-8 font-sans-tight text-ink-600 dark:text-ink-300 text-base sm:text-lg leading-[1.5] max-w-[52ch]">
+              A verified record of every shisha flavor on sale in Japan, cross-checked against the Ministry of Finance tobacco ledger. Search by brand, flavor, or country; every entry lists grammage, origin, and current retail price.
+            </p>
+            <div className="mt-8 flex items-center gap-4">
+              <Link
+                href="/brands"
+                className="font-mono-tight text-[11px] uppercase tracking-[0.14em] px-4 py-2 bg-ink-900 text-paper-0 dark:bg-ink-100 dark:text-paper-950 hover:bg-ember-500 hover:text-paper-0 dark:hover:bg-ember-500 transition-colors"
+              >
+                Browse brand index →
+              </Link>
+              <span className="font-mono-tight text-[10px] uppercase tracking-[0.14em] text-ink-400 dark:text-ink-500">
+                or search below
+              </span>
+            </div>
+          </div>
+
+          <aside className="col-span-12 lg:col-span-4 grid grid-cols-2 lg:grid-cols-1 divide-x lg:divide-x-0 lg:divide-y divide-rule-200 dark:divide-rule-800 border-t lg:border-t-0 border-rule-200 dark:border-rule-800">
+            <div className="py-6 lg:py-7 px-5 lg:px-10">
+              <p className="font-mono-tight text-[10px] uppercase tracking-[0.2em] text-ink-400 dark:text-ink-500 mb-2">
+                Indexed entries
+              </p>
+              <p className="font-sans-tight font-semibold text-4xl sm:text-5xl lg:text-6xl tracking-[-0.04em] text-ink-950 dark:text-ink-50 nums leading-none">
+                {totalResults.toLocaleString()}
+              </p>
+            </div>
+            <div className="py-6 lg:py-7 px-5 lg:px-10">
+              <p className="font-mono-tight text-[10px] uppercase tracking-[0.2em] text-ink-400 dark:text-ink-500 mb-2">
+                Brands
+              </p>
+              <p className="font-sans-tight font-semibold text-4xl sm:text-5xl lg:text-6xl tracking-[-0.04em] text-ink-950 dark:text-ink-50 nums leading-none">
+                {manufacturers.length}
+              </p>
+            </div>
+            <div className="col-span-2 lg:col-span-1 py-6 lg:py-7 px-5 lg:px-10 border-t lg:border-t border-rule-200 dark:border-rule-800">
+              <p className="font-mono-tight text-[10px] uppercase tracking-[0.2em] text-ink-400 dark:text-ink-500 mb-2">
+                Last refresh
+              </p>
+              <p className="font-mono-tight text-base text-ink-950 dark:text-ink-50 nums">
+                2026.04.23
+              </p>
+            </div>
+          </aside>
+        </motion.section>
+
+        {/* Controls */}
+        <section className="py-10">
+          <SearchBar
+            onSearch={(params) => handleSearch({ query: params.query, searchType: params.searchType, page: 1 })}
+            manufacturers={manufacturers}
+            searchQuery={searchQuery}
+            isSearching={isSearching}
+          />
+
+          <BrandList
+            manufacturers={manufacturers}
+            selectedManufacturer={selectedManufacturer}
+            onSelect={handleManufacturerSelect}
+          />
+        </section>
+
+        {/* Results header */}
+        <div className="flex items-baseline justify-between border-t border-ink-900 dark:border-ink-100 border-b border-rule-200 dark:border-rule-800 py-3 mb-0 font-mono-tight text-[10px] uppercase tracking-[0.16em] text-ink-600 dark:text-ink-300">
+          <span className="flex items-center gap-3">
+            <span className="text-ember-500">§</span>
+            <span>Entries</span>
+          </span>
+          <span className="nums">
+            <span className="text-ember-500">{String(totalResults).padStart(4, '0')}</span>
+            <span className="text-ink-400 dark:text-ink-500">&nbsp;/&nbsp;results</span>
+          </span>
+        </div>
+
         <AnimatePresence mode="wait">
           {loading ? (
-            <motion.div
-              key="loader"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-            >
+            <motion.div key="loader" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="pt-6">
               <SkeletonGrid count={12} />
             </motion.div>
           ) : (
-            <motion.div
-              key="results"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-            >
+            <motion.div key="results" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="pt-6">
               {flavors.length > 0 ? (
                 <>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-8 gap-3 sm:gap-4">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
                     {flavors.map((flavor, index) => (
-                      <ShishaCard 
-                        key={flavor.id} 
-                        flavor={flavor} 
+                      <ShishaCard
+                        key={flavor.id}
+                        flavor={flavor}
                         index={index}
                         onManufacturerClick={handleManufacturerSelect}
                       />
                     ))}
                   </div>
-                  
+
                   {totalPages > 1 && (
-                    <div className="flex justify-center mt-12 gap-2">
-                      {/* Previous button */}
+                    <div className="flex justify-center items-center mt-14 gap-1.5 border-t border-rule-200 dark:border-rule-800 pt-8">
                       {currentPage > 1 && (
-                        <motion.button
-                          whileHover={{ scale: 1.05, y: -2 }}
-                          whileTap={{ scale: 0.95 }}
+                        <button
                           onClick={() => handlePageChange(currentPage - 1)}
-                          className="px-4 py-2.5 rounded-2xl bg-white/80 dark:bg-gray-800/80 backdrop-blur-md text-gray-700 dark:text-gray-200 hover:bg-primary-50 dark:hover:bg-gray-700 shadow-lg border border-gray-200/50 dark:border-gray-700/50 font-semibold transition-all"
+                          className="h-9 px-3 font-mono-tight text-[10px] uppercase tracking-[0.14em] border border-rule-200 dark:border-rule-800 text-ink-600 dark:text-ink-300 hover:text-ember-500 hover:border-ember-500 transition-colors"
                         >
-                          ←
-                        </motion.button>
+                          ← prev
+                        </button>
                       )}
 
-                      {/* First page */}
-                      {currentPage > 2 && (
-                        <motion.button
-                          whileHover={{ scale: 1.05, y: -2 }}
-                          whileTap={{ scale: 0.95 }}
-                          onClick={() => handlePageChange(1)}
-                          className="px-4 py-2.5 rounded-2xl bg-white/80 dark:bg-gray-800/80 backdrop-blur-md text-gray-700 dark:text-gray-200 hover:bg-primary-50 dark:hover:bg-gray-700 shadow-lg border border-gray-200/50 dark:border-gray-700/50 font-semibold transition-all"
-                        >
-                          1
-                        </motion.button>
-                      )}
-
-                      {/* Ellipsis */}
+                      {currentPage > 2 && renderPageButton(1)}
                       {currentPage > 3 && (
-                        <span className="px-4 py-2.5 text-gray-400 dark:text-gray-500 font-bold">
-                          ...
-                        </span>
+                        <span className="h-9 px-2 flex items-center text-ink-400 dark:text-ink-500 font-mono-tight text-[10px]">···</span>
                       )}
 
-                      {/* Previous page */}
-                      {currentPage > 1 && (
-                        <motion.button
-                          whileHover={{ scale: 1.05, y: -2 }}
-                          whileTap={{ scale: 0.95 }}
-                          onClick={() => handlePageChange(currentPage - 1)}
-                          className="px-4 py-2.5 rounded-2xl bg-white/80 dark:bg-gray-800/80 backdrop-blur-md text-gray-700 dark:text-gray-200 hover:bg-primary-50 dark:hover:bg-gray-700 shadow-lg border border-gray-200/50 dark:border-gray-700/50 font-semibold transition-all"
-                        >
-                          {currentPage - 1}
-                        </motion.button>
-                      )}
+                      {currentPage > 1 && renderPageButton(currentPage - 1)}
+                      {renderPageButton(currentPage, true)}
+                      {currentPage < totalPages && renderPageButton(currentPage + 1)}
 
-                      {/* Current page */}
-                      <motion.span
-                        layoutId="activePage"
-                        className="px-4 py-2.5 rounded-2xl bg-gradient-to-r from-primary-600 to-accent-500 text-white shadow-xl border-2 border-white/20 font-bold glow"
-                      >
-                        {currentPage}
-                      </motion.span>
-
-                      {/* Next page */}
-                      {currentPage < totalPages && (
-                        <motion.button
-                          whileHover={{ scale: 1.05, y: -2 }}
-                          whileTap={{ scale: 0.95 }}
-                          onClick={() => handlePageChange(currentPage + 1)}
-                          className="px-4 py-2.5 rounded-2xl bg-white/80 dark:bg-gray-800/80 backdrop-blur-md text-gray-700 dark:text-gray-200 hover:bg-primary-50 dark:hover:bg-gray-700 shadow-lg border border-gray-200/50 dark:border-gray-700/50 font-semibold transition-all"
-                        >
-                          {currentPage + 1}
-                        </motion.button>
-                      )}
-
-                      {/* Ellipsis */}
                       {currentPage < totalPages - 2 && (
-                        <span className="px-4 py-2.5 text-gray-400 dark:text-gray-500 font-bold">
-                          ...
-                        </span>
+                        <span className="h-9 px-2 flex items-center text-ink-400 dark:text-ink-500 font-mono-tight text-[10px]">···</span>
                       )}
+                      {currentPage < totalPages - 1 && renderPageButton(totalPages)}
 
-                      {/* Last page */}
-                      {currentPage < totalPages - 1 && (
-                        <motion.button
-                          whileHover={{ scale: 1.05, y: -2 }}
-                          whileTap={{ scale: 0.95 }}
-                          onClick={() => handlePageChange(totalPages)}
-                          className="px-4 py-2.5 rounded-2xl bg-white/80 dark:bg-gray-800/80 backdrop-blur-md text-gray-700 dark:text-gray-200 hover:bg-primary-50 dark:hover:bg-gray-700 shadow-lg border border-gray-200/50 dark:border-gray-700/50 font-semibold transition-all"
-                        >
-                          {totalPages}
-                        </motion.button>
-                      )}
-
-                      {/* Next button */}
                       {currentPage < totalPages && (
-                        <motion.button
-                          whileHover={{ scale: 1.05, y: -2 }}
-                          whileTap={{ scale: 0.95 }}
+                        <button
                           onClick={() => handlePageChange(currentPage + 1)}
-                          className="px-4 py-2.5 rounded-2xl bg-white/80 dark:bg-gray-800/80 backdrop-blur-md text-gray-700 dark:text-gray-200 hover:bg-primary-50 dark:hover:bg-gray-700 shadow-lg border border-gray-200/50 dark:border-gray-700/50 font-semibold transition-all"
+                          className="h-9 px-3 font-mono-tight text-[10px] uppercase tracking-[0.14em] border border-rule-200 dark:border-rule-800 text-ink-600 dark:text-ink-300 hover:text-ember-500 hover:border-ember-500 transition-colors"
                         >
-                          →
-                        </motion.button>
+                          next →
+                        </button>
                       )}
                     </div>
                   )}
                 </>
               ) : (
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="text-center py-16"
-                >
-                  <div className="w-32 h-32 mx-auto mb-8 bg-gradient-to-br from-primary-100 to-accent-100 dark:from-primary-900/30 dark:to-accent-900/30 rounded-full flex items-center justify-center shadow-2xl">
-                    <svg
-                      className="w-16 h-16 text-primary-500 dark:text-primary-400"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                      />
-                    </svg>
-                  </div>
-                  <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-3">
-                    フレーバーが見つかりません
-                  </h3>
-                  <p className="text-lg text-gray-600 dark:text-gray-400 mb-8 max-w-md mx-auto">
-                    検索条件を変更してもう一度お試しください
+                <div className="text-center py-24 border-b border-rule-200 dark:border-rule-800">
+                  <p className="font-mono-tight text-[10px] uppercase tracking-[0.2em] text-ember-500 mb-4">
+                    § no matches
                   </p>
-                  <motion.button
-                    whileHover={{ scale: 1.05, y: -2 }}
-                    whileTap={{ scale: 0.95 }}
+                  <h3 className="font-sans-tight font-semibold text-3xl sm:text-4xl tracking-[-0.02em] text-ink-950 dark:text-ink-50 mb-4">
+                    The ledger is empty.
+                  </h3>
+                  <p className="font-sans-tight text-ink-500 dark:text-ink-400 text-base mb-8">
+                    Adjust the filter or reset the archive.
+                  </p>
+                  <button
                     onClick={handleHomeReset}
-                    className="px-8 py-4 bg-gradient-to-r from-primary-600 to-accent-500 text-white rounded-2xl font-bold text-lg hover:shadow-2xl transition-all shadow-xl glow"
+                    className="font-mono-tight text-[11px] uppercase tracking-[0.14em] px-4 py-2 bg-ink-900 text-paper-0 dark:bg-ink-100 dark:text-paper-950 hover:bg-ember-500 transition-colors"
                   >
-                    すべてのフレーバーを見る
-                  </motion.button>
-                </motion.div>
+                    Reset →
+                  </button>
+                </div>
               )}
             </motion.div>
           )}
@@ -370,7 +349,7 @@ function HomeContent() {
 export default function ClientHome() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen flex justify-center items-center bg-white dark:bg-gray-950 bg-gradient-mesh">
+      <div className="min-h-screen flex justify-center items-center bg-paper-0 dark:bg-paper-950">
         <LoadingSpinner />
       </div>
     }>
