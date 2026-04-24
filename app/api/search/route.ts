@@ -2,25 +2,27 @@ import { NextRequest, NextResponse } from 'next/server'
 
 import { resolveFlavorImage } from '../../../data/flavorImages'
 import { shishaData } from '../../../data/shishaData'
+import { fuzzySearch, type SearchType } from '../../../lib/search/fuzzySearch'
 import { normalizeBrandForSearch } from '../../../lib/utils/brandNormalizer'
-import { normalizeForSearch, tokenizeForSearch } from '../../../lib/utils/japaneseNormalizer'
-import type { SearchResponse } from '../../../types/shisha'
+import type { SearchResponse, ShishaFlavor } from '../../../types/shisha'
 
 export const dynamic = 'force-dynamic'
 
+function coerceSearchType(value: string | null): SearchType {
+  return value === 'brand' || value === 'flavor' ? value : 'all'
+}
+
 export async function GET(request: NextRequest): Promise<NextResponse<SearchResponse | { error: string }>> {
   try {
-    // Safely parse URL parameters with validation
     const url = new URL(request.url)
     const searchParams = url.searchParams
-    
-    // Get and validate parameters
+
     const query = searchParams.get('query') || ''
     const manufacturer = searchParams.get('manufacturer') || ''
-    const searchType = searchParams.get('searchType') as 'all' | 'brand' | 'flavor' | null
+    const searchType = coerceSearchType(searchParams.get('searchType'))
     const pageParam = searchParams.get('page')
     const page = pageParam ? Math.max(1, parseInt(pageParam)) : 1
-    
+
     if (isNaN(page)) {
       return NextResponse.json(
         { error: 'Invalid page parameter' },
@@ -30,43 +32,22 @@ export async function GET(request: NextRequest): Promise<NextResponse<SearchResp
 
     const itemsPerPage = 12
 
-    // Start with all data
-    let filteredData = [...shishaData]
+    // クエリがあれば fuzzy 検索 (スコア順) にかける。空クエリ時は全件そのまま。
+    let filteredData: ShishaFlavor[] = query
+      ? fuzzySearch(query, searchType)
+      : (shishaData as ShishaFlavor[])
 
-    // Filter by manufacturer if specified (大文字小文字を無視)
+    // メーカー絞り込みはファジー結果の順序を保ったまま後段でフィルタ。
     if (manufacturer) {
       const normalizedSearchBrand = normalizeBrandForSearch(manufacturer)
-      filteredData = filteredData.filter(item => {
-        const normalizedItemBrand = normalizeBrandForSearch(item.manufacturer)
-        return normalizedItemBrand === normalizedSearchBrand
-      })
+      filteredData = filteredData.filter(
+        item => normalizeBrandForSearch(item.manufacturer) === normalizedSearchBrand
+      )
     }
 
-    // Then apply search query if specified
-    const searchTerms = tokenizeForSearch(query)
-    if (searchTerms.length > 0) {
-      filteredData = filteredData.filter(item => {
-        // 検索タイプに基づいてフィルタリング
-        // 正規化: ひらがな/カタカナ/全角半角/大文字小文字を吸収
-        if (searchType === 'brand') {
-          const brandText = normalizeForSearch(item.manufacturer)
-          return searchTerms.every(term => brandText.includes(term))
-        } else if (searchType === 'flavor') {
-          const flavorText = normalizeForSearch(item.productName)
-          return searchTerms.every(term => flavorText.includes(term))
-        } else {
-          const searchText = normalizeForSearch(
-            `${item.manufacturer} ${item.productName} ${item.amount} ${item.country}`
-          )
-          return searchTerms.every(term => searchText.includes(term))
-        }
-      })
-    }
-
-    // Calculate pagination
     const totalItems = filteredData.length
     const totalPages = Math.max(1, Math.ceil(totalItems / itemsPerPage))
-    const validPage = Math.min(page, totalPages) // Ensure page doesn't exceed total pages
+    const validPage = Math.min(page, totalPages)
     const startIndex = (validPage - 1) * itemsPerPage
     const endIndex = Math.min(startIndex + itemsPerPage, totalItems)
     const paginatedItems = filteredData.slice(startIndex, endIndex).map(resolveFlavorImage)
