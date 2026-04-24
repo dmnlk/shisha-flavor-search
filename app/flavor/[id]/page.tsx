@@ -16,12 +16,6 @@ function findFlavor(id: string): ShishaFlavor | null {
   return (shishaData as ShishaFlavor[]).find((f) => f.id === parsed) ?? null
 }
 
-export async function generateStaticParams(): Promise<{ id: string }[]> {
-  return (shishaData as ShishaFlavor[]).map((f) => ({ id: String(f.id) }))
-}
-
-export const dynamicParams = false
-
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { id } = await params
   const flavor = findFlavor(id)
