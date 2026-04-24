@@ -1,23 +1,39 @@
 'use client'
 
-import { SunIcon, MoonIcon } from '@heroicons/react/24/outline'
-
 import { useTheme } from './ThemeProvider'
 
 export function ThemeToggle() {
   const { darkMode, setDarkMode } = useTheme()
 
   return (
-    <button
-      onClick={() => setDarkMode(!darkMode)}
-      className="fixed top-5 right-5 z-50 p-3 rounded-xl bg-lounge-50/90 dark:bg-lounge-800/90 backdrop-blur-md border border-lounge-200/60 dark:border-lounge-700/40 shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105 group"
-      aria-label="Toggle theme"
-    >
-      {darkMode ? (
-        <SunIcon className="h-5 w-5 text-primary-400 group-hover:rotate-45 transition-transform duration-500" />
-      ) : (
-        <MoonIcon className="h-5 w-5 text-lounge-600 group-hover:-rotate-12 transition-transform duration-500" />
-      )}
-    </button>
+    <div className="fixed top-5 right-5 z-50 font-mono-tight text-[10px] uppercase tracking-[0.12em]">
+      <div className="flex items-stretch border border-ink-900 dark:border-ink-100 bg-paper-0 dark:bg-paper-950">
+        <button
+          onClick={() => setDarkMode(false)}
+          aria-pressed={!darkMode}
+          aria-label="Light mode"
+          className={`px-2.5 py-1.5 transition-colors ${
+            !darkMode
+              ? 'bg-ink-900 text-paper-0'
+              : 'text-ink-500 hover:text-ember-500'
+          }`}
+        >
+          Day
+        </button>
+        <span aria-hidden className="self-stretch w-px bg-ink-900 dark:bg-ink-100" />
+        <button
+          onClick={() => setDarkMode(true)}
+          aria-pressed={darkMode}
+          aria-label="Dark mode"
+          className={`px-2.5 py-1.5 transition-colors ${
+            darkMode
+              ? 'bg-ink-100 text-paper-950'
+              : 'text-ink-500 hover:text-ember-500'
+          }`}
+        >
+          Night
+        </button>
+      </div>
+    </div>
   )
 }
