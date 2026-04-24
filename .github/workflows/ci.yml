@@ -25,7 +25,10 @@ jobs:
         
     - name: Install dependencies
       run: pnpm install --frozen-lockfile
-      
+
+    - name: Generate build-time data
+      run: pnpm build:data
+
     - name: Type check
       run: npx tsc --noEmit
       
