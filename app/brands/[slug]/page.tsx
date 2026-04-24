@@ -13,6 +13,16 @@ interface PageProps {
   params: Promise<{ slug: string }>
 }
 
+export async function generateStaticParams(): Promise<{ slug: string }[]> {
+  const slugs = new Set<string>()
+  for (const item of shishaData as ShishaFlavor[]) {
+    slugs.add(brandSlug(item.manufacturer))
+  }
+  return Array.from(slugs).map((slug) => ({ slug }))
+}
+
+export const dynamicParams = false
+
 interface ResolvedBrand {
   displayName: string
   flavors: ShishaFlavor[]
