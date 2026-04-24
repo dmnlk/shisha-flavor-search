@@ -7,6 +7,7 @@ import { MouseEvent } from 'react'
 
 import type { ShishaFlavor } from '../types/shisha'
 
+import CountryFlag from './CountryFlag'
 import NoImage from './NoImage'
 
 interface ShishaCardProps {
@@ -17,26 +18,6 @@ interface ShishaCardProps {
 
 function formatIndex(id: number): string {
   return id.toString().padStart(4, '0')
-}
-
-function countryCode(country?: string): string {
-  if (!country) return 'XX'
-  const map: Record<string, string> = {
-    '日本': 'JP',
-    'アメリカ': 'US',
-    'ドイツ': 'DE',
-    'ロシア': 'RU',
-    'トルコ': 'TR',
-    'ヨルダン': 'JO',
-    'UAE': 'AE',
-    '台湾': 'TW',
-    'エジプト': 'EG',
-    'インドネシア': 'ID',
-    'フランス': 'FR',
-    'イタリア': 'IT',
-    'スペイン': 'ES',
-  }
-  return map[country.trim()] ?? country.slice(0, 2).toUpperCase()
 }
 
 export default function ShishaCard({ flavor, onManufacturerClick, index = 0 }: ShishaCardProps) {
@@ -80,7 +61,7 @@ export default function ShishaCard({ flavor, onManufacturerClick, index = 0 }: S
           <div className="flex items-center justify-between font-mono-tight text-[10px] uppercase tracking-[0.08em] text-ink-500 dark:text-ink-400 nums mb-2">
             <span>№&nbsp;{formatIndex(flavor.id)}</span>
             <span className="flex items-center gap-1.5">
-              <span>{countryCode(flavor.country)}</span>
+              <CountryFlag country={flavor.country} />
               <span className="inline-block w-px h-2.5 bg-rule-300 dark:bg-rule-700" />
               <span>{flavor.amount}</span>
             </span>
