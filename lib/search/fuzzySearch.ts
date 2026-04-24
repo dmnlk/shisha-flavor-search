@@ -2,7 +2,11 @@ import Fuse from 'fuse.js'
 
 import { shishaData } from '../../data/shishaData'
 import type { ShishaFlavor } from '../../types/shisha'
-import { normalizeForSearch, tokenizeForSearch } from '../utils/japaneseNormalizer'
+import { tokenizeForSearch } from '../utils/japaneseNormalizer'
+
+// ビルド時に scripts/build-data.ts が生成する事前正規化済みインデックス。
+// モジュール初期化時の正規化ループ (5.3k 件 × 4 フィールド) を読み込みに置き換える。
+import searchIndex from '../../data/generated/searchIndex.json'
 
 export type SearchType = 'all' | 'brand' | 'flavor'
 
@@ -22,19 +26,9 @@ const baseFuseOptions = {
   useExtendedSearch: true,
 } as const
 
-// モジュール初期化時に一度だけ全件を正規化してインデックス化する。
-// 以降のリクエストで再利用することで、5.3k 件データのスキャンが 1 回に抑えられる。
+const indexedFlavors = searchIndex as IndexedFlavor[]
 const allItems = shishaData as ShishaFlavor[]
 const itemsById = new Map<number, ShishaFlavor>(allItems.map(item => [item.id, item]))
-
-const indexedFlavors: IndexedFlavor[] = allItems.map(item => ({
-  id: item.id,
-  manufacturer: normalizeForSearch(item.manufacturer),
-  productName: normalizeForSearch(item.productName),
-  all: normalizeForSearch(
-    `${item.manufacturer} ${item.productName} ${item.amount} ${item.country}`
-  ),
-}))
 
 const fuseByType: Record<SearchType, Fuse<IndexedFlavor>> = {
   all: new Fuse(indexedFlavors, { ...baseFuseOptions, keys: ['all'] }),

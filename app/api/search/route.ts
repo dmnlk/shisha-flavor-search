@@ -1,10 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 import { resolveFlavorImage } from '../../../data/flavorImages'
-import { shishaData } from '../../../data/shishaData'
 import { fuzzySearch, type SearchType } from '../../../lib/search/fuzzySearch'
 import { normalizeBrandForSearch } from '../../../lib/utils/brandNormalizer'
-import type { SearchResponse, ShishaFlavor } from '../../../types/shisha'
+import type { SearchResponse } from '../../../types/shisha'
 
 export const dynamic = 'force-dynamic'
 
@@ -32,10 +31,8 @@ export async function GET(request: NextRequest): Promise<NextResponse<SearchResp
 
     const itemsPerPage = 12
 
-    // クエリがあれば fuzzy 検索 (スコア順) にかける。空クエリ時は全件そのまま。
-    let filteredData: ShishaFlavor[] = query
-      ? fuzzySearch(query, searchType)
-      : (shishaData as ShishaFlavor[])
+    // 空クエリ時は fuzzySearch が全件をそのまま返すため、常にここを通す。
+    let filteredData = fuzzySearch(query, searchType)
 
     // メーカー絞り込みはファジー結果の順序を保ったまま後段でフィルタ。
     if (manufacturer) {
