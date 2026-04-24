@@ -3,6 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "build:data": "tsx scripts/build-data.ts",
+    "predev": "pnpm run build:data",
+    "prebuild": "pnpm run build:data",
+    "pretest": "pnpm run build:data",
+    "pretest:ci": "pnpm run build:data",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
@@ -38,6 +43,7 @@
     "postcss": "^8.5.10",
     "tailwindcss": "^4.2.4",
     "ts-node": "^10.9.2",
+    "tsx": "^4.21.0",
     "typescript": "^6.0.3"
   }
 }
