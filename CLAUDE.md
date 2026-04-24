@@ -54,12 +54,19 @@ npx tsc --noEmit   # Run TypeScript type checking
 - **shishaMethods.ts**: Utility functions for searching and filtering the data (TypeScript)
 - **shishaService.ts**: Contains mock data used by tests (not the real service layer)
 - **types/shisha.ts**: TypeScript interface definitions for ShishaFlavor and API responses
-- **lib/utils/brandNormalizer.ts**: Normalizes manufacturer names for case-insensitive search/dedup
+- **lib/utils/brandNormalizer.ts**: `normalizeBrandName` / `normalizeBrandForSearch` / `brandSlug` — all **client-safe** (no fs). Import `brandSlug` from here in client components.
+- **data/brandImages.ts**: Server-only (uses `node:fs`). Re-exports `brandSlug` for convenience. Enumerates logos from `public/images/brands/<slug>.(png|jpg|jpeg|webp|svg|avif)` at module init.
+- **data/brandDescriptions.ts**: Hand-verified Japanese one-liners per brand slug. `getBrandDescription(slug)` returns `null` for unknown brands; UI hides the blurb in that case — never fabricate descriptions.
 
 ### API Routes (App Router)
 - `/api/search/route.ts`: Main search endpoint with pagination and filtering (TypeScript)
 - `/api/manufacturers/route.ts`: Returns list of unique manufacturers (TypeScript)
-- `/api/flavor/[id]/route.ts`: Returns individual flavor details (TypeScript)
+- `/api/flavor/[id]/route.ts`: Returns individual flavor details (TypeScript) — **currently unused** (`/flavor/[id]` reads `shishaData` directly)
+
+### Routing Strategy
+- `/brands/[slug]` is **SSG** via `generateStaticParams` + `dynamicParams = false` (~92 pages; trivial build cost).
+- `/flavor/[id]` is **intentionally dynamic SSR** (server component reads shishaData directly). Prerendering ~5.3k flavor pages ballooned deploys to 5 min — do not re-add `generateStaticParams` here unless build infra changes.
+- `/` and `/brands` are static.
 
 ### Frontend Architecture
 - **Client-side state management**: Uses React hooks with TypeScript for type-safe state management
@@ -72,9 +79,11 @@ npx tsc --noEmit   # Run TypeScript type checking
   - `ClientHome.tsx`: Main client-side component
 
 ### Design System
-- **Color palette** defined in `app/globals.css` via `@theme`: `primary-*` (gold), `accent-*` (copper), `lounge-*` (warm neutrals)
-- **Fonts**: Cormorant Garamond (`--font-display`) for headings, Plus Jakarta Sans (`--font-body`) for body text, loaded in `app/layout.tsx`
-- **Dark mode**: Uses Tailwind v4 `@custom-variant dark` in globals.css + `document.documentElement.classList` toggle via ThemeProvider
+- **Palette** in `app/globals.css` @theme: `paper-*`, `ink-*`, `rule-*` (hairlines), `ember-*` (single crimson-orange accent `#e8492c`). "Review Ledger" aesthetic — flat, 1px borders, zero radius, zero shadow.
+- **Fonts**: Geist (`.font-sans-tight`, `--font-sans`) + Geist Mono (`.font-mono-tight`, `--font-mono`). Single sans family; no serif display font.
+- **Utilities**: `.nums` (tabular numerals), `.num-index` (prepends `№`), `.ember-tick` (accent bullet).
+- **Gotcha**: `<button>` UA default cancels parent `text-transform: uppercase`. Add explicit `normal-case` when mixing an uppercase masthead with button children, otherwise cases diverge across pages.
+- **Dark mode**: Tailwind v4 `@custom-variant dark` + `document.documentElement.classList` via ThemeProvider.
 
 ### Configuration Notes
 - **Path alias**: `@/*` maps to project root (e.g., `import { ShishaFlavor } from '@/types/shisha'`)
