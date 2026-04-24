@@ -43,9 +43,12 @@ export default function BrandsClient({ brands }: BrandsClientProps) {
         <header className="flex flex-wrap items-center justify-between gap-3 py-3 border-t-2 border-b border-ink-900 dark:border-ink-100 font-mono-tight text-[10px] uppercase tracking-[0.16em] text-ink-700 dark:text-ink-200 mb-0">
           <span className="flex items-center gap-3">
             <span className="inline-block w-2 h-2 bg-ember-500" aria-hidden />
-            <span className="font-sans-tight font-semibold text-sm tracking-[-0.01em] text-ink-950 dark:text-ink-50">
+            <Link
+              href="/"
+              className="font-sans-tight font-semibold text-sm normal-case tracking-[-0.01em] text-ink-950 dark:text-ink-50 hover:text-ember-500 transition-colors"
+            >
               Shisha Flavor Ledger
-            </span>
+            </Link>
             <span className="hidden sm:inline text-ink-400 dark:text-ink-500">—</span>
             <span className="hidden sm:inline nums">Vol.&nbsp;I · Ed.&nbsp;2026</span>
           </span>
