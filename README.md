@@ -15,18 +15,18 @@
 ## 🛠 技術スタック
 
 ### フロントエンド
-- **Next.js 15.3.3**: React フレームワーク（App Router使用）
-- **React 19.1.0**: UIライブラリ
-- **TypeScript 5.8.3**: 型安全性とコード品質の向上
-- **Tailwind CSS 4.1.10**: 最新のユーティリティファーストCSS
-- **Framer Motion 12.16**: アニメーションライブラリ
-- **Heroicons 2.2**: アイコンライブラリ
+- **Next.js 16**: React フレームワーク（App Router使用）
+- **React 19**: UIライブラリ
+- **TypeScript 5.9**: 型安全性とコード品質の向上
+- **Tailwind CSS 4**: 最新のユーティリティファーストCSS
+- **Framer Motion 12**: アニメーションライブラリ
+- **Heroicons 2**: アイコンライブラリ
 
 ### 開発ツール
 - **Node.js 22.12.0 LTS**: 最新のLTSランタイム
 - **pnpm 10.x**: 高速で効率的なパッケージマネージャー
-- **ESLint 9.29**: 最新のコード品質管理
-- **Jest 29**: TypeScript対応テストフレームワーク
+- **ESLint 9**: コード品質管理
+- **Jest 30**: TypeScript対応テストフレームワーク
 - **React Testing Library**: コンポーネントテスト
 
 ## 📦 インストールと起動
@@ -34,7 +34,6 @@
 ### 必要な環境
 - Node.js 22.12.0 LTS（.node-versionで指定）
 - pnpm 10.x 以上
-- TypeScript 5.8.3（自動インストール）
 
 ### セットアップ手順
 
@@ -106,7 +105,6 @@ shisha-search/
 │   └── utils/               # ユーティリティ関数
 ├── .node-version            # Node.js バージョン指定
 ├── postcss.config.js        # PostCSS設定（Tailwind v4対応）
-├── tailwind.config.ts       # Tailwind CSS設定
 ├── tsconfig.json            # TypeScript設定
 └── public/                  # 静的ファイル
     └── images/              # 画像アセット
