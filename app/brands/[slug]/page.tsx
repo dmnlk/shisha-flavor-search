@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 
 import { getBrandDescription } from '../../../data/brandDescriptions'
 import { brandSlug, getBrandImageUrl } from '../../../data/brandImages'
+import { resolveFlavorImage } from '../../../data/flavorImages'
 import { shishaData } from '../../../data/shishaData'
 import { normalizeBrandName } from '../../../lib/utils/brandNormalizer'
 import type { ShishaFlavor } from '../../../types/shisha'
@@ -31,7 +32,9 @@ interface ResolvedBrand {
 
 function resolveBrand(slug: string): ResolvedBrand | null {
   const target = slug.toLowerCase()
-  const flavors = shishaData.filter((item: ShishaFlavor) => brandSlug(item.manufacturer) === target)
+  const flavors = shishaData
+    .filter((item: ShishaFlavor) => brandSlug(item.manufacturer) === target)
+    .map(resolveFlavorImage)
   if (flavors.length === 0) return null
   const displayName = normalizeBrandName(flavors[0].manufacturer)
   return {
