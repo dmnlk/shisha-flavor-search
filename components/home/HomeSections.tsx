@@ -17,7 +17,7 @@ import OriginShelf from './OriginShelf'
  * handed to child components as plain props.
  */
 export default function HomeSections() {
-  const featuredBrands = getFeaturedBrands(8)
+  const featuredBrands = getFeaturedBrands(3)
   const latestFlavors = getLatestFlavors(8)
   const originBuckets = getOriginBuckets(6)
   const editorsPicks = getEditorsPicks()
