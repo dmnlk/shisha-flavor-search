@@ -1,27 +1,25 @@
 import './globals.css'
 import type { Metadata } from 'next'
-import { Cormorant_Garamond, Plus_Jakarta_Sans } from 'next/font/google'
+import { Geist, Geist_Mono } from 'next/font/google'
 
 import { ThemeProvider } from '../components/ThemeProvider'
 import { ThemeToggle } from '../components/ThemeToggle'
 
-const cormorant = Cormorant_Garamond({
+const geistSans = Geist({
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-display',
+  variable: '--font-sans',
   display: 'swap',
 })
 
-const jakarta = Plus_Jakarta_Sans({
+const geistMono = Geist_Mono({
   subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700', '800'],
-  variable: '--font-body',
+  variable: '--font-mono',
   display: 'swap',
 })
 
 export const metadata: Metadata = {
-  title: 'Shisha Flavor Search',
-  description: 'Find your perfect shisha flavor from our extensive collection',
+  title: 'Shisha Flavor Ledger',
+  description: 'A ledger of shisha flavors — brand, grammage, price, origin.',
 }
 
 interface RootLayoutProps {
@@ -30,10 +28,13 @@ interface RootLayoutProps {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${cormorant.variable} ${jakarta.variable}`}>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${geistSans.variable} ${geistMono.variable}`}
+    >
       <body
-        className="min-h-screen bg-lounge-50 dark:bg-lounge-950 text-lounge-900 dark:text-lounge-100 transition-colors duration-500"
-        style={{ fontFamily: 'var(--font-body), sans-serif' }}
+        className="min-h-screen bg-paper-0 dark:bg-paper-950 text-ink-900 dark:text-ink-100 transition-colors duration-150 font-sans-tight"
         suppressHydrationWarning
       >
         <ThemeProvider>

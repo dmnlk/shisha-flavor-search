@@ -1,16 +1,13 @@
 export default function SkeletonCard() {
   return (
-    <div className="bg-white dark:bg-lounge-900/80 rounded-xl overflow-hidden border border-lounge-200/60 dark:border-lounge-800/60 animate-pulse">
-      <div className="aspect-[3/4] bg-lounge-100 dark:bg-lounge-800/60 relative">
-        <div className="absolute inset-0 animate-shimmer" />
+    <div className="border border-rule-200 dark:border-rule-800 bg-paper-0 dark:bg-paper-900">
+      <div className="aspect-square relative overflow-hidden bg-paper-100 dark:bg-paper-800 border-b border-rule-200 dark:border-rule-800">
+        <div className="absolute inset-0 -translate-x-full animate-sweep bg-gradient-to-r from-transparent via-white/40 dark:via-white/5 to-transparent" />
       </div>
-      <div className="p-4">
-        <div className="h-3 bg-lounge-200 dark:bg-lounge-700/50 rounded w-20 mb-3" />
-        <div className="space-y-2 mb-3">
-          <div className="h-4 bg-lounge-200 dark:bg-lounge-700/50 rounded w-full" />
-          <div className="h-4 bg-lounge-200 dark:bg-lounge-700/50 rounded w-2/3" />
-        </div>
-        <div className="h-4 bg-primary-100 dark:bg-primary-900/30 rounded w-16" />
+      <div className="p-3 space-y-2">
+        <div className="h-2.5 bg-paper-100 dark:bg-paper-800 w-16" />
+        <div className="h-4 bg-paper-100 dark:bg-paper-800 w-3/4" />
+        <div className="h-3 bg-ember-500/30 w-14 mt-3" />
       </div>
     </div>
   )
