@@ -3,7 +3,7 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import { useSearchParams, useRouter } from 'next/navigation'
-import { useState, useEffect, Suspense } from 'react'
+import { useState, useEffect, Suspense, type ReactNode } from 'react'
 
 import BrandList from '../components/BrandList'
 import LoadingSpinner from '../components/LoadingSpinner'
@@ -19,7 +19,11 @@ interface SearchParams {
   searchType?: 'all' | 'brand' | 'flavor'
 }
 
-function HomeContent() {
+interface HomeContentProps {
+  editorialSections?: ReactNode
+}
+
+function HomeContent({ editorialSections }: HomeContentProps) {
   const searchParams = useSearchParams()
   const router = useRouter()
 
@@ -238,6 +242,13 @@ function HomeContent() {
           </aside>
         </motion.section>
 
+        {/* Editorial sections (Featured / Latest / Origins / Editor's Picks) */}
+        {!searchQuery && !selectedManufacturer && editorialSections && (
+          <section aria-label="Editorial">
+            {editorialSections}
+          </section>
+        )}
+
         {/* Controls */}
         <section className="py-10">
           <SearchBar
@@ -257,7 +268,7 @@ function HomeContent() {
         {/* Results header */}
         <div className="flex items-baseline justify-between border-t border-ink-900 dark:border-ink-100 border-b border-rule-200 dark:border-rule-800 py-3 mb-0 font-mono-tight text-[10px] uppercase tracking-[0.16em] text-ink-600 dark:text-ink-300">
           <span className="flex items-center gap-3">
-            <span className="text-ember-500">§</span>
+            <span className="text-ember-500 nums">§&nbsp;006</span>
             <span>Entries</span>
           </span>
           <span className="nums">
@@ -349,14 +360,18 @@ function HomeContent() {
   )
 }
 
-export default function ClientHome() {
+interface ClientHomeProps {
+  children?: ReactNode
+}
+
+export default function ClientHome({ children }: ClientHomeProps) {
   return (
     <Suspense fallback={
       <div className="min-h-screen flex justify-center items-center bg-paper-0 dark:bg-paper-950">
         <LoadingSpinner />
       </div>
     }>
-      <HomeContent />
+      <HomeContent editorialSections={children} />
     </Suspense>
   )
 }
