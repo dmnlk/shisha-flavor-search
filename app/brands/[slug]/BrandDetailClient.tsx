@@ -13,6 +13,7 @@ interface BrandDetailClientProps {
   brandName: string
   flavors: ShishaFlavor[]
   imageUrl?: string
+  description?: string | null
 }
 
 function getBrandInitials(name: string): string {
@@ -22,7 +23,7 @@ function getBrandInitials(name: string): string {
   return (words[0][0] + words[1][0]).toUpperCase()
 }
 
-export default function BrandDetailClient({ slug, brandName, flavors, imageUrl }: BrandDetailClientProps) {
+export default function BrandDetailClient({ slug, brandName, flavors, imageUrl, description }: BrandDetailClientProps) {
   const [imageError, setImageError] = useState(false)
   const showImage = Boolean(imageUrl) && !imageError
   const initials = getBrandInitials(brandName)
@@ -61,9 +62,19 @@ export default function BrandDetailClient({ slug, brandName, flavors, imageUrl }
             <h1 className="font-sans-tight font-semibold leading-[0.9] tracking-[-0.04em] text-ink-950 dark:text-ink-50 text-[3rem] sm:text-[4.5rem] lg:text-[6.5rem] break-words">
               {brandName}<span className="text-ember-500">.</span>
             </h1>
-            <p className="mt-8 font-sans-tight text-ink-600 dark:text-ink-300 text-base sm:text-lg leading-[1.5] max-w-[52ch]">
-              Every {brandName} flavor tracked in the ledger — {flavors.length} entries
-              {countries.length > 0 && <> produced in {countries.slice(0, 3).join(', ')}{countries.length > 3 ? ` +${countries.length - 3}` : ''}</>}.
+            {description && (
+              <p className="mt-8 font-sans-tight text-ink-800 dark:text-ink-100 text-lg sm:text-xl leading-[1.55] max-w-[52ch]">
+                {description}
+              </p>
+            )}
+            <p className="mt-4 font-mono-tight text-[11px] uppercase tracking-[0.12em] text-ink-500 dark:text-ink-400 leading-[1.55] max-w-[52ch]">
+              {flavors.length}&nbsp;entries on file
+              {countries.length > 0 && (
+                <>
+                  <span className="mx-2 text-ember-500">·</span>
+                  origin: {countries.slice(0, 3).join(', ')}{countries.length > 3 ? ` +${countries.length - 3}` : ''}
+                </>
+              )}
             </p>
             <div className="mt-8 flex items-center gap-4">
               <Link

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
+import { getBrandDescription } from '../../../data/brandDescriptions'
 import { brandSlug, getBrandImageUrl } from '../../../data/brandImages'
 import { shishaData } from '../../../data/shishaData'
 import { normalizeBrandName } from '../../../lib/utils/brandNormalizer'
@@ -53,6 +54,7 @@ export default async function BrandDetailPage({ params }: PageProps) {
       brandName={brand.displayName}
       flavors={brand.flavors}
       imageUrl={brand.imageUrl}
+      description={getBrandDescription(slug)}
     />
   )
 }
