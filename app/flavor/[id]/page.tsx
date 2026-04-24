@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
+import { resolveFlavorImage } from '../../../data/flavorImages'
 import { shishaData } from '../../../data/shishaData'
 import type { ShishaFlavor } from '../../../types/shisha'
 
@@ -13,7 +14,8 @@ interface PageProps {
 function findFlavor(id: string): ShishaFlavor | null {
   const parsed = Number(id)
   if (!Number.isFinite(parsed)) return null
-  return (shishaData as ShishaFlavor[]).find((f) => f.id === parsed) ?? null
+  const hit = (shishaData as ShishaFlavor[]).find((f) => f.id === parsed)
+  return hit ? resolveFlavorImage(hit) : null
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {

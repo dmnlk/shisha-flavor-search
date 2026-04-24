@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 
+import { resolveFlavorImage } from '../../../data/flavorImages'
 import { shishaData } from '../../../data/shishaData'
 import { normalizeBrandForSearch } from '../../../lib/utils/brandNormalizer'
 import type { SearchResponse } from '../../../types/shisha'
@@ -67,7 +68,7 @@ export async function GET(request: NextRequest): Promise<NextResponse<SearchResp
     const validPage = Math.min(page, totalPages) // Ensure page doesn't exceed total pages
     const startIndex = (validPage - 1) * itemsPerPage
     const endIndex = Math.min(startIndex + itemsPerPage, totalItems)
-    const paginatedItems = filteredData.slice(startIndex, endIndex)
+    const paginatedItems = filteredData.slice(startIndex, endIndex).map(resolveFlavorImage)
 
     return NextResponse.json({
       items: paginatedItems,

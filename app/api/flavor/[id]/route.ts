@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 
+import { resolveFlavorImage } from '../../../../data/flavorImages'
 import { shishaData } from '../../../../data/shishaData'
 import type { ShishaFlavor } from '../../../../types/shisha'
 
@@ -24,7 +25,7 @@ export async function GET(
       )
     }
 
-    return NextResponse.json(flavor)
+    return NextResponse.json(resolveFlavorImage(flavor))
   } catch (error) {
     console.error('Error fetching flavor:', error)
     return NextResponse.json(
