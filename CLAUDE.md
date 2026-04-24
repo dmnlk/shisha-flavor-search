@@ -10,13 +10,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 # 1. Run linting (REQUIRED)
 pnpm lint
 
-# 2. Run tests (REQUIRED — pretest hook regenerates data/generated/ automatically)
+# 2. Run tests (REQUIRED — regenerates data/generated/ first)
 pnpm test
 
-# 3. Run TypeScript type checking (REQUIRED)
-#    Requires data/generated/*.json — pnpm test above regenerates them.
-#    On a fresh checkout where tests haven't run yet, run `pnpm build:data` first.
-npx tsc --noEmit
+# 3. Run TypeScript type checking (REQUIRED — regenerates data/generated/ first)
+pnpm typecheck
 
 # 4. Only commit if ALL checks pass
 git add .
@@ -46,13 +44,13 @@ pnpm test -- __tests__/foo.test.ts  # Run a single test file
 
 # Code Quality
 pnpm lint          # Run ESLint
-npx tsc --noEmit   # Run TypeScript type checking (needs data/generated/*.json)
+pnpm typecheck     # Run TypeScript type checking (regenerates data/generated/ first)
 
 # Build-time data generation
 pnpm build:data    # Regenerate data/generated/searchIndex.json + brands.json.
-                   # Runs automatically before dev/build/test via npm pre-hooks.
-                   # Output is gitignored — run this manually before `npx tsc --noEmit`
-                   # on a fresh checkout where tests haven't yet populated the files.
+                   # dev / build / test / typecheck all chain this ahead of their
+                   # main command via `&&`, so generated JSON is always fresh.
+                   # Output is gitignored.
 ```
 
 ## Architecture & Key Components

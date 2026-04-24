@@ -4,17 +4,14 @@
   "private": true,
   "scripts": {
     "build:data": "tsx scripts/build-data.ts",
-    "predev": "pnpm run build:data",
-    "prebuild": "pnpm run build:data",
-    "pretest": "pnpm run build:data",
-    "pretest:ci": "pnpm run build:data",
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "tsx scripts/build-data.ts && next dev",
+    "build": "tsx scripts/build-data.ts && next build",
     "start": "next start",
     "lint": "eslint .",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:ci": "jest --ci --coverage"
+    "typecheck": "tsx scripts/build-data.ts && tsc --noEmit",
+    "test": "tsx scripts/build-data.ts && jest",
+    "test:watch": "tsx scripts/build-data.ts && jest --watch",
+    "test:ci": "tsx scripts/build-data.ts && jest --ci --coverage"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
