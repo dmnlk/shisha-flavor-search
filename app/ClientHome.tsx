@@ -5,7 +5,6 @@ import Link from 'next/link'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { useState, useEffect, Suspense } from 'react'
 
-import BackgroundOrbs from '../components/BackgroundOrbs'
 import BrandList from '../components/BrandList'
 import LoadingSpinner from '../components/LoadingSpinner'
 import SearchBar from '../components/SearchBar'
@@ -30,6 +29,7 @@ function HomeContent() {
   const [manufacturers, setManufacturers] = useState<string[]>([])
   const [currentPage, setCurrentPage] = useState(parseInt(searchParams.get('page') || '1'))
   const [totalPages, setTotalPages] = useState(0)
+  const [totalResults, setTotalResults] = useState(0)
   const [selectedManufacturer, setSelectedManufacturer] = useState(searchParams.get('manufacturer') || '')
   const [searchQuery, setSearchQuery] = useState(searchParams.get('query') || '')
 
@@ -79,6 +79,7 @@ function HomeContent() {
 
       setFlavors(data.items)
       setTotalPages(data.totalPages)
+      setTotalResults(data.totalItems ?? data.items.length)
 
       if (page !== undefined) {
         setCurrentPage(page)
@@ -127,95 +128,151 @@ function HomeContent() {
   }, [])
 
   const renderPageButton = (page: number, isCurrent = false) => {
+    const base = 'min-w-[2.5rem] h-9 px-2 flex items-center justify-center font-mono-tight text-[11px] border transition-colors nums'
     if (isCurrent) {
       return (
         <span
           key={`current-${page}`}
-          className="w-10 h-10 flex items-center justify-center rounded-lg bg-primary-500 text-white text-sm font-semibold"
+          className={`${base} bg-ink-900 text-paper-0 border-ink-900 dark:bg-ink-100 dark:text-paper-950 dark:border-ink-100`}
         >
           {page}
         </span>
       )
     }
     return (
-      <motion.button
+      <button
         key={`page-${page}`}
-        whileHover={{ y: -1 }}
-        whileTap={{ scale: 0.95 }}
         onClick={() => handlePageChange(page)}
-        className="w-10 h-10 flex items-center justify-center rounded-lg text-sm font-medium text-lounge-500 dark:text-lounge-400 hover:bg-lounge-100 dark:hover:bg-lounge-800/60 transition-colors"
+        className={`${base} border-rule-200 dark:border-rule-800 text-ink-600 dark:text-ink-300 hover:text-ember-500 hover:border-ember-500`}
       >
         {page}
-      </motion.button>
+      </button>
     )
   }
 
   return (
-    <div className="min-h-screen relative overflow-hidden bg-atmosphere-light dark:bg-atmosphere-dark">
-      <BackgroundOrbs />
-
-      <main className="relative mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20 max-w-7xl">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: -16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="text-center mb-14"
-        >
-          <motion.div
-            onClick={handleHomeReset}
-            whileHover={{ scale: 1.01 }}
-            whileTap={{ scale: 0.99 }}
-            className="cursor-pointer inline-block"
-          >
-            <h1
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-normal text-lounge-900 dark:text-lounge-100 mb-4 tracking-tight leading-[0.95]"
-              style={{ fontFamily: 'var(--font-display), serif' }}
+    <div className="min-h-screen bg-paper-0 dark:bg-paper-950 text-ink-950 dark:text-ink-50">
+      <main className="mx-auto px-4 sm:px-6 lg:px-10 pt-8 sm:pt-10 pb-24 max-w-[1480px]">
+        {/* Masthead */}
+        <header className="flex flex-wrap items-center justify-between gap-3 py-3 border-t-2 border-b border-ink-900 dark:border-ink-100 font-mono-tight text-[10px] uppercase tracking-[0.16em] text-ink-700 dark:text-ink-200 mb-0">
+          <span className="flex items-center gap-3">
+            <span className="inline-block w-2 h-2 bg-ember-500" aria-hidden />
+            <button
+              type="button"
+              onClick={handleHomeReset}
+              className="font-sans-tight font-semibold text-sm tracking-[-0.01em] text-ink-950 dark:text-ink-50 hover:text-ember-500 transition-colors"
             >
-              Shisha Flavor
-              <br />
-              <span className="text-gold-gradient">Search</span>
-            </h1>
-          </motion.div>
-
-          <div className="w-12 h-px bg-primary-400/60 mx-auto mb-5" />
-
-          <p className="text-sm sm:text-base text-lounge-400 dark:text-lounge-500 tracking-wide mb-6">
-            あなただけの特別なフレーバーを見つけよう
-          </p>
-
-          <Link
-            href="/brands"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/70 dark:bg-lounge-900/60 backdrop-blur-sm border border-lounge-200/60 dark:border-lounge-800/50 text-xs font-semibold uppercase tracking-[0.18em] text-lounge-600 dark:text-lounge-300 hover:border-primary-400/60 dark:hover:border-primary-500/40 hover:text-primary-600 dark:hover:text-primary-400 transition-all"
-          >
-            <span>ブランド一覧を見る</span>
-            <span aria-hidden>→</span>
+              Shisha Flavor Ledger
+            </button>
+            <span className="hidden sm:inline text-ink-400 dark:text-ink-500">—</span>
+            <span className="hidden sm:inline nums">Vol.&nbsp;I · Ed.&nbsp;2026</span>
+          </span>
+          <Link href="/brands" className="hover:text-ember-500 transition-colors">
+            Brand Index →
           </Link>
-        </motion.div>
+        </header>
 
-        <SearchBar
-          onSearch={(params) => handleSearch({ query: params.query, searchType: params.searchType, page: 1 })}
-          manufacturers={manufacturers}
-          searchQuery={searchQuery}
-          isSearching={isSearching}
-        />
+        {/* Hero */}
+        <motion.section
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.35 }}
+          className="grid grid-cols-12 gap-0 border-b border-ink-900 dark:border-ink-100"
+        >
+          <div className="col-span-12 lg:col-span-8 lg:border-r lg:border-rule-200 lg:dark:border-rule-800 py-10 lg:py-14 lg:pr-10">
+            <p className="font-mono-tight text-[10px] uppercase tracking-[0.2em] text-ember-500 mb-5">
+              § 001 · The Ledger
+            </p>
+            <h1 className="font-sans-tight font-semibold leading-[0.9] tracking-[-0.04em] text-ink-950 dark:text-ink-50">
+              <span className="block text-[3.5rem] sm:text-[5rem] lg:text-[7rem]">
+                Shisha Flavor
+              </span>
+              <span className="block text-[3.5rem] sm:text-[5rem] lg:text-[7rem]">
+                Ledger<span className="text-ember-500">.</span>
+              </span>
+            </h1>
+            <p className="mt-8 font-sans-tight text-ink-600 dark:text-ink-300 text-base sm:text-lg leading-[1.5] max-w-[52ch]">
+              A verified record of every shisha flavor on sale in Japan, cross-checked against the Ministry of Finance tobacco ledger. Search by brand, flavor, or country; every entry lists grammage, origin, and current retail price.
+            </p>
+            <div className="mt-8 flex items-center gap-4">
+              <Link
+                href="/brands"
+                className="font-mono-tight text-[11px] uppercase tracking-[0.14em] px-4 py-2 bg-ink-900 text-paper-0 dark:bg-ink-100 dark:text-paper-950 hover:bg-ember-500 hover:text-paper-0 dark:hover:bg-ember-500 transition-colors"
+              >
+                Browse brand index →
+              </Link>
+              <span className="font-mono-tight text-[10px] uppercase tracking-[0.14em] text-ink-400 dark:text-ink-500">
+                or search below
+              </span>
+            </div>
+          </div>
 
-        <BrandList
-          manufacturers={manufacturers}
-          selectedManufacturer={selectedManufacturer}
-          onSelect={handleManufacturerSelect}
-        />
+          <aside className="col-span-12 lg:col-span-4 grid grid-cols-2 lg:grid-cols-1 divide-x lg:divide-x-0 lg:divide-y divide-rule-200 dark:divide-rule-800 border-t lg:border-t-0 border-rule-200 dark:border-rule-800">
+            <div className="py-6 lg:py-7 px-5 lg:px-10">
+              <p className="font-mono-tight text-[10px] uppercase tracking-[0.2em] text-ink-400 dark:text-ink-500 mb-2">
+                Indexed entries
+              </p>
+              <p className="font-sans-tight font-semibold text-4xl sm:text-5xl lg:text-6xl tracking-[-0.04em] text-ink-950 dark:text-ink-50 nums leading-none">
+                {totalResults.toLocaleString()}
+              </p>
+            </div>
+            <div className="py-6 lg:py-7 px-5 lg:px-10">
+              <p className="font-mono-tight text-[10px] uppercase tracking-[0.2em] text-ink-400 dark:text-ink-500 mb-2">
+                Brands
+              </p>
+              <p className="font-sans-tight font-semibold text-4xl sm:text-5xl lg:text-6xl tracking-[-0.04em] text-ink-950 dark:text-ink-50 nums leading-none">
+                {manufacturers.length}
+              </p>
+            </div>
+            <div className="col-span-2 lg:col-span-1 py-6 lg:py-7 px-5 lg:px-10 border-t lg:border-t border-rule-200 dark:border-rule-800">
+              <p className="font-mono-tight text-[10px] uppercase tracking-[0.2em] text-ink-400 dark:text-ink-500 mb-2">
+                Last refresh
+              </p>
+              <p className="font-mono-tight text-base text-ink-950 dark:text-ink-50 nums">
+                2026.04.23
+              </p>
+            </div>
+          </aside>
+        </motion.section>
+
+        {/* Controls */}
+        <section className="py-10">
+          <SearchBar
+            onSearch={(params) => handleSearch({ query: params.query, searchType: params.searchType, page: 1 })}
+            manufacturers={manufacturers}
+            searchQuery={searchQuery}
+            isSearching={isSearching}
+          />
+
+          <BrandList
+            manufacturers={manufacturers}
+            selectedManufacturer={selectedManufacturer}
+            onSelect={handleManufacturerSelect}
+          />
+        </section>
+
+        {/* Results header */}
+        <div className="flex items-baseline justify-between border-t border-ink-900 dark:border-ink-100 border-b border-rule-200 dark:border-rule-800 py-3 mb-0 font-mono-tight text-[10px] uppercase tracking-[0.16em] text-ink-600 dark:text-ink-300">
+          <span className="flex items-center gap-3">
+            <span className="text-ember-500">§</span>
+            <span>Entries</span>
+          </span>
+          <span className="nums">
+            <span className="text-ember-500">{String(totalResults).padStart(4, '0')}</span>
+            <span className="text-ink-400 dark:text-ink-500">&nbsp;/&nbsp;results</span>
+          </span>
+        </div>
 
         <AnimatePresence mode="wait">
           {loading ? (
-            <motion.div key="loader" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+            <motion.div key="loader" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="pt-6">
               <SkeletonGrid count={12} />
             </motion.div>
           ) : (
-            <motion.div key="results" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+            <motion.div key="results" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="pt-6">
               {flavors.length > 0 ? (
                 <>
-                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-5">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
                     {flavors.map((flavor, index) => (
                       <ShishaCard
                         key={flavor.id}
@@ -227,24 +284,19 @@ function HomeContent() {
                   </div>
 
                   {totalPages > 1 && (
-                    <div className="flex justify-center items-center mt-14 gap-1">
+                    <div className="flex justify-center items-center mt-14 gap-1.5 border-t border-rule-200 dark:border-rule-800 pt-8">
                       {currentPage > 1 && (
-                        <motion.button
-                          whileHover={{ x: -2 }}
-                          whileTap={{ scale: 0.95 }}
+                        <button
                           onClick={() => handlePageChange(currentPage - 1)}
-                          className="w-10 h-10 flex items-center justify-center rounded-lg text-lounge-400 dark:text-lounge-500 hover:bg-lounge-100 dark:hover:bg-lounge-800/60 transition-colors mr-1"
+                          className="h-9 px-3 font-mono-tight text-[10px] uppercase tracking-[0.14em] border border-rule-200 dark:border-rule-800 text-ink-600 dark:text-ink-300 hover:text-ember-500 hover:border-ember-500 transition-colors"
                         >
-                          ←
-                        </motion.button>
+                          ← prev
+                        </button>
                       )}
 
                       {currentPage > 2 && renderPageButton(1)}
-
                       {currentPage > 3 && (
-                        <span className="w-10 h-10 flex items-center justify-center text-lounge-300 dark:text-lounge-600 text-sm">
-                          ···
-                        </span>
+                        <span className="h-9 px-2 flex items-center text-ink-400 dark:text-ink-500 font-mono-tight text-[10px]">···</span>
                       )}
 
                       {currentPage > 1 && renderPageButton(currentPage - 1)}
@@ -252,55 +304,39 @@ function HomeContent() {
                       {currentPage < totalPages && renderPageButton(currentPage + 1)}
 
                       {currentPage < totalPages - 2 && (
-                        <span className="w-10 h-10 flex items-center justify-center text-lounge-300 dark:text-lounge-600 text-sm">
-                          ···
-                        </span>
+                        <span className="h-9 px-2 flex items-center text-ink-400 dark:text-ink-500 font-mono-tight text-[10px]">···</span>
                       )}
-
                       {currentPage < totalPages - 1 && renderPageButton(totalPages)}
 
                       {currentPage < totalPages && (
-                        <motion.button
-                          whileHover={{ x: 2 }}
-                          whileTap={{ scale: 0.95 }}
+                        <button
                           onClick={() => handlePageChange(currentPage + 1)}
-                          className="w-10 h-10 flex items-center justify-center rounded-lg text-lounge-400 dark:text-lounge-500 hover:bg-lounge-100 dark:hover:bg-lounge-800/60 transition-colors ml-1"
+                          className="h-9 px-3 font-mono-tight text-[10px] uppercase tracking-[0.14em] border border-rule-200 dark:border-rule-800 text-ink-600 dark:text-ink-300 hover:text-ember-500 hover:border-ember-500 transition-colors"
                         >
-                          →
-                        </motion.button>
+                          next →
+                        </button>
                       )}
                     </div>
                   )}
                 </>
               ) : (
-                <motion.div
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="text-center py-20"
-                >
-                  <div className="w-20 h-20 mx-auto mb-6 border border-lounge-200 dark:border-lounge-700 rounded-full flex items-center justify-center">
-                    <svg className="w-8 h-8 text-lounge-300 dark:text-lounge-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                    </svg>
-                  </div>
-                  <h3
-                    className="text-xl font-medium text-lounge-700 dark:text-lounge-300 mb-2"
-                    style={{ fontFamily: 'var(--font-display), serif' }}
-                  >
-                    フレーバーが見つかりません
-                  </h3>
-                  <p className="text-sm text-lounge-400 dark:text-lounge-500 mb-8">
-                    検索条件を変更してもう一度お試しください
+                <div className="text-center py-24 border-b border-rule-200 dark:border-rule-800">
+                  <p className="font-mono-tight text-[10px] uppercase tracking-[0.2em] text-ember-500 mb-4">
+                    § no matches
                   </p>
-                  <motion.button
-                    whileHover={{ y: -2 }}
-                    whileTap={{ scale: 0.97 }}
+                  <h3 className="font-sans-tight font-semibold text-3xl sm:text-4xl tracking-[-0.02em] text-ink-950 dark:text-ink-50 mb-4">
+                    The ledger is empty.
+                  </h3>
+                  <p className="font-sans-tight text-ink-500 dark:text-ink-400 text-base mb-8">
+                    Adjust the filter or reset the archive.
+                  </p>
+                  <button
                     onClick={handleHomeReset}
-                    className="px-6 py-3 bg-primary-500 text-white rounded-lg font-medium text-sm hover:bg-primary-600 transition-colors shadow-sm"
+                    className="font-mono-tight text-[11px] uppercase tracking-[0.14em] px-4 py-2 bg-ink-900 text-paper-0 dark:bg-ink-100 dark:text-paper-950 hover:bg-ember-500 transition-colors"
                   >
-                    すべてのフレーバーを見る
-                  </motion.button>
-                </motion.div>
+                    Reset →
+                  </button>
+                </div>
               )}
             </motion.div>
           )}
@@ -313,7 +349,7 @@ function HomeContent() {
 export default function ClientHome() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen flex justify-center items-center bg-lounge-50 dark:bg-lounge-950">
+      <div className="min-h-screen flex justify-center items-center bg-paper-0 dark:bg-paper-950">
         <LoadingSpinner />
       </div>
     }>

@@ -1,6 +1,5 @@
 'use client'
 
-import { MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/24/solid'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState, useEffect, FormEvent, useMemo } from 'react'
 
@@ -14,20 +13,19 @@ interface SearchBarProps {
 }
 
 const searchTypes = [
-  { key: 'all' as const, label: 'すべて' },
-  { key: 'brand' as const, label: 'ブランド' },
-  { key: 'flavor' as const, label: 'フレーバー' },
+  { key: 'all' as const, label: 'All' },
+  { key: 'brand' as const, label: 'Brand' },
+  { key: 'flavor' as const, label: 'Flavor' },
 ]
 
 export default function SearchBar({ onSearch, searchQuery = '', isSearching = false }: SearchBarProps) {
   const [searchTerm, setSearchTerm] = useState(searchQuery)
   const [searchType, setSearchType] = useState<'all' | 'brand' | 'flavor'>('all')
+  const [isFocused, setIsFocused] = useState(false)
 
   useEffect(() => {
     setSearchTerm(searchQuery)
   }, [searchQuery])
-
-  const [isFocused, setIsFocused] = useState(false)
 
   const debouncedSearch = useMemo(
     () =>
@@ -58,94 +56,76 @@ export default function SearchBar({ onSearch, searchQuery = '', isSearching = fa
     onSearch({ query: '', searchType })
   }
 
+  const placeholder =
+    searchType === 'brand'
+      ? 'Search brand name'
+      : searchType === 'flavor'
+      ? 'Search flavor name'
+      : 'Search the ledger'
+
   return (
-    <form onSubmit={handleSubmit} className="mb-10 max-w-2xl mx-auto">
-      <motion.div
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, delay: 0.2 }}
-        className="space-y-4"
-      >
-        {/* Search type tabs */}
-        <div className="flex justify-center gap-1">
-          {searchTypes.map(({ key, label }) => (
-            <button
-              key={key}
-              type="button"
-              onClick={() => handleSearchTypeChange(key)}
-              className={`relative px-4 py-2 text-sm font-medium transition-colors duration-300 ${
-                searchType === key
-                  ? 'text-primary-600 dark:text-primary-400'
-                  : 'text-lounge-400 dark:text-lounge-500 hover:text-lounge-700 dark:hover:text-lounge-300'
-              }`}
-            >
-              {label}
-              {searchType === key && (
-                <motion.div
-                  layoutId="searchTab"
-                  className="absolute bottom-0 left-2 right-2 h-0.5 bg-primary-500 dark:bg-primary-400 rounded-full"
-                  transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-                />
-              )}
-            </button>
-          ))}
-        </div>
-
-        {/* Search input */}
-        <div className="relative">
-          <input
-            type="text"
-            value={searchTerm}
-            onChange={(e) => handleInputChange(e.target.value)}
-            onFocus={() => setIsFocused(true)}
-            onBlur={() => setIsFocused(false)}
-            placeholder={
-              searchType === 'brand'
-                ? 'ブランド名で検索...'
-                : searchType === 'flavor'
-                ? 'フレーバー名で検索...'
-                : 'フレーバーを探す...'
-            }
-            className={`w-full px-5 py-4 pl-12 pr-12 bg-white/90 dark:bg-lounge-900/80 backdrop-blur-sm text-lounge-900 dark:text-lounge-100 placeholder-lounge-400 dark:placeholder-lounge-600 rounded-xl border transition-all duration-300 text-[15px] font-medium outline-none ${
-              isFocused
-                ? 'border-primary-400/60 dark:border-primary-500/40 shadow-[0_0_0_3px_rgba(201,165,94,0.08)] dark:shadow-[0_0_0_3px_rgba(201,165,94,0.06)]'
-                : 'border-lounge-200/80 dark:border-lounge-800/60 shadow-sm'
-            }`}
-          />
-
-          <div className="absolute left-4 top-1/2 -translate-y-1/2">
-            {isSearching ? (
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-              >
-                <svg className="h-5 w-5 text-primary-500/70 dark:text-primary-400/70" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" />
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                </svg>
-              </motion.div>
-            ) : (
-              <MagnifyingGlassIcon className="h-5 w-5 text-lounge-400 dark:text-lounge-500" />
-            )}
-          </div>
-
-          <AnimatePresence>
-            {searchTerm && (
-              <motion.button
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.8 }}
-                whileHover={{ scale: 1.1 }}
+    <form onSubmit={handleSubmit} className="mb-10">
+      <div className="space-y-3">
+        <div className="flex items-center gap-4 font-mono-tight text-[10px] uppercase tracking-[0.16em] text-ink-500 dark:text-ink-400">
+          <span className="text-ember-500">§</span>
+          <span>Filter</span>
+          <div className="flex border border-rule-200 dark:border-rule-800">
+            {searchTypes.map(({ key, label }, idx) => (
+              <button
+                key={key}
                 type="button"
-                onClick={handleClear}
-                className="absolute right-4 top-1/2 -translate-y-1/2 h-5 w-5 text-lounge-400 hover:text-lounge-600 dark:text-lounge-500 dark:hover:text-lounge-300 transition-colors"
+                onClick={() => handleSearchTypeChange(key)}
+                className={`px-3 py-1.5 transition-colors ${
+                  searchType === key
+                    ? 'bg-ink-900 text-paper-0 dark:bg-ink-100 dark:text-paper-950'
+                    : 'text-ink-500 dark:text-ink-400 hover:text-ember-500'
+                } ${idx > 0 ? 'border-l border-rule-200 dark:border-rule-800' : ''}`}
               >
-                <XMarkIcon />
-              </motion.button>
-            )}
-          </AnimatePresence>
+                {label}
+              </button>
+            ))}
+          </div>
         </div>
-      </motion.div>
+
+        <div className={`relative border ${isFocused ? 'border-ember-500' : 'border-ink-900 dark:border-ink-100'} bg-paper-0 dark:bg-paper-950 transition-colors`}>
+          <div className="flex items-center">
+            <span className="font-mono-tight text-[10px] uppercase tracking-[0.18em] text-ink-500 dark:text-ink-400 pl-3 shrink-0">
+              Q.
+            </span>
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={(e) => handleInputChange(e.target.value)}
+              onFocus={() => setIsFocused(true)}
+              onBlur={() => setIsFocused(false)}
+              placeholder={placeholder}
+              className="flex-1 bg-transparent font-sans-tight text-base sm:text-lg text-ink-950 dark:text-ink-50 placeholder:text-ink-300 dark:placeholder:text-ink-500 focus:outline-none py-3 px-3"
+            />
+            <div className="flex items-center gap-0 shrink-0 pr-1">
+              {isSearching && (
+                <span className="font-mono-tight text-[10px] uppercase tracking-[0.12em] text-ember-500 flex items-center gap-1.5 mr-2">
+                  <span className="inline-block w-1.5 h-1.5 bg-ember-500 animate-caret" />
+                  searching
+                </span>
+              )}
+              <AnimatePresence>
+                {searchTerm && (
+                  <motion.button
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    type="button"
+                    onClick={handleClear}
+                    className="font-mono-tight text-[10px] uppercase tracking-[0.14em] text-ink-500 dark:text-ink-400 hover:text-ember-500 transition-colors px-3 py-3"
+                  >
+                    clear ×
+                  </motion.button>
+                )}
+              </AnimatePresence>
+            </div>
+          </div>
+        </div>
+      </div>
     </form>
   )
 }
