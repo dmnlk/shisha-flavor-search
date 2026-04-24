@@ -4,6 +4,13 @@ import nextConfig from "eslint-config-next/core-web-vitals";
 const config = [
   ...nextConfig,
   {
+    settings: {
+      react: {
+        version: "19",
+      },
+    },
+  },
+  {
     rules: {
       // console.logの警告（warn, errorは許可）
       "no-console": ["warn", { allow: ["warn", "error"] }],
@@ -39,7 +46,14 @@ const config = [
     },
   },
   {
-    ignores: ["node_modules/**", ".next/**", "out/**", "data/shishaData.js"],
+    ignores: [
+      "node_modules/**",
+      ".next/**",
+      "out/**",
+      "data/shishaData.js",
+      "eslint.config.mjs",
+      "postcss.config.js",
+    ],
   },
 ];
 
