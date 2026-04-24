@@ -216,14 +216,17 @@ function HomeContent() {
                 {totalResults.toLocaleString()}
               </p>
             </div>
-            <div className="py-6 lg:py-7 px-5 lg:px-10">
-              <p className="font-mono-tight text-[10px] uppercase tracking-[0.2em] text-ink-400 dark:text-ink-500 mb-2">
-                Brands
+            <Link
+              href="/brands"
+              className="py-6 lg:py-7 px-5 lg:px-10 block group hover:bg-paper-100 dark:hover:bg-paper-900 transition-colors"
+            >
+              <p className="font-mono-tight text-[10px] uppercase tracking-[0.2em] text-ink-400 dark:text-ink-500 mb-2 group-hover:text-ember-500 transition-colors">
+                Brands →
               </p>
               <p className="font-sans-tight font-semibold text-4xl sm:text-5xl lg:text-6xl tracking-[-0.04em] text-ink-950 dark:text-ink-50 nums leading-none">
                 {manufacturers.length}
               </p>
-            </div>
+            </Link>
             <div className="col-span-2 lg:col-span-1 py-6 lg:py-7 px-5 lg:px-10 border-t lg:border-t border-rule-200 dark:border-rule-800">
               <p className="font-mono-tight text-[10px] uppercase tracking-[0.2em] text-ink-400 dark:text-ink-500 mb-2">
                 Last refresh
