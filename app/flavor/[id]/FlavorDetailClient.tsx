@@ -3,9 +3,9 @@
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
-import { MouseEvent } from 'react'
 
 import NoImage from '../../../components/NoImage'
+import { brandSlug } from '../../../lib/utils/brandNormalizer'
 import type { ShishaFlavor } from '../../../types/shisha'
 
 function formatIndex(id: number): string {
@@ -62,8 +62,7 @@ export default function FlavorDetailClient({ flavor }: FlavorDetailClientProps) 
           <div className="col-span-12 md:col-span-5">
             <div className="px-6 md:px-10 py-10">
               <Link
-                href="/"
-                onClick={(e: MouseEvent<HTMLAnchorElement>) => { e.preventDefault(); window.history.back() }}
+                href={`/brands/${brandSlug(flavor.manufacturer)}`}
                 className="font-mono-tight text-[10px] uppercase tracking-[0.18em] text-ember-500 hover:text-ember-600 transition-colors block mb-4"
               >
                 {flavor.manufacturer}

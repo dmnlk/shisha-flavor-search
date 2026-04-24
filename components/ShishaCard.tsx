@@ -3,8 +3,10 @@
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { MouseEvent } from 'react'
 
+import { brandSlug } from '../lib/utils/brandNormalizer'
 import type { ShishaFlavor } from '../types/shisha'
 
 import CountryFlag from './CountryFlag'
@@ -21,10 +23,15 @@ function formatIndex(id: number): string {
 }
 
 export default function ShishaCard({ flavor, onManufacturerClick, index = 0 }: ShishaCardProps) {
+  const router = useRouter()
+
   const handleManufacturerClick = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
+    e.stopPropagation()
     if (onManufacturerClick) {
       onManufacturerClick(flavor.manufacturer)
+    } else {
+      router.push(`/brands/${brandSlug(flavor.manufacturer)}`)
     }
   }
 
