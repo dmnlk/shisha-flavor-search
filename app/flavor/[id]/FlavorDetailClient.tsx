@@ -5,6 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 import NoImage from '../../../components/NoImage'
+import ShishaCard from '../../../components/ShishaCard'
 import { brandSlug } from '../../../lib/utils/brandNormalizer'
 import type { ShishaFlavor } from '../../../types/shisha'
 
@@ -14,9 +15,10 @@ function formatIndex(id: number): string {
 
 interface FlavorDetailClientProps {
   flavor: ShishaFlavor
+  related?: ShishaFlavor[]
 }
 
-export default function FlavorDetailClient({ flavor }: FlavorDetailClientProps) {
+export default function FlavorDetailClient({ flavor, related = [] }: FlavorDetailClientProps) {
   return (
     <div className="min-h-screen bg-paper-0 dark:bg-paper-950 text-ink-950 dark:text-ink-50">
       <main className="mx-auto px-4 sm:px-6 lg:px-10 pt-8 sm:pt-10 pb-24 max-w-[1480px]">
@@ -118,6 +120,28 @@ export default function FlavorDetailClient({ flavor }: FlavorDetailClientProps) 
             </div>
           </div>
         </motion.article>
+
+        {related.length > 0 && (
+          <section className="mt-16">
+            <header className="flex items-center justify-between gap-3 py-3 border-t-2 border-b border-ink-900 dark:border-ink-100 font-mono-tight text-[10px] uppercase tracking-[0.16em] text-ink-700 dark:text-ink-200 mb-6">
+              <span className="flex items-center gap-3">
+                <span className="inline-block w-2 h-2 bg-ember-500" aria-hidden />
+                <span>More from {flavor.manufacturer}</span>
+              </span>
+              <Link
+                href={`/brands/${brandSlug(flavor.manufacturer)}`}
+                className="hover:text-ember-500 transition-colors"
+              >
+                View house →
+              </Link>
+            </header>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+              {related.map((item, index) => (
+                <ShishaCard key={item.id} flavor={item} index={index} />
+              ))}
+            </div>
+          </section>
+        )}
       </main>
     </div>
   )

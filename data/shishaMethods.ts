@@ -1,5 +1,6 @@
 import { shishaData } from './shishaData'
 import { getUniqueBrands, normalizeBrandForSearch } from '../lib/utils/brandNormalizer'
+import { normalizeForSearch } from '../lib/utils/japaneseNormalizer'
 import type { ShishaFlavor } from '../types/shisha'
 
 interface SearchParams {
@@ -19,14 +20,14 @@ interface SearchResult {
 export function searchFlavors({ query = '', manufacturer = '', page = 1, limit = 12 }: SearchParams): SearchResult {
   let filteredData = [...shishaData]
 
-  // Filter by search query
-  if (query) {
-    const searchTerm = query.toLowerCase()
-    filteredData = filteredData.filter(item => 
-      item.productName.toLowerCase().includes(searchTerm) ||
-      item.manufacturer.toLowerCase().includes(searchTerm) ||
-      item.amount.toLowerCase().includes(searchTerm) ||
-      item.country.toLowerCase().includes(searchTerm)
+  // Filter by search query (日本語正規化: ひらがな/カタカナ/全角半角を吸収)
+  const searchTerm = normalizeForSearch(query)
+  if (searchTerm) {
+    filteredData = filteredData.filter(item =>
+      normalizeForSearch(item.productName).includes(searchTerm) ||
+      normalizeForSearch(item.manufacturer).includes(searchTerm) ||
+      normalizeForSearch(item.amount).includes(searchTerm) ||
+      normalizeForSearch(item.country).includes(searchTerm)
     )
   }
 

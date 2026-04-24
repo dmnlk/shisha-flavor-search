@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useMemo, useState } from 'react'
 
 import BrandCard from '../../components/BrandCard'
+import { normalizeForSearch } from '../../lib/utils/japaneseNormalizer'
 import type { BrandSummary } from '../api/brands/route'
 
 type SortKey = 'alpha' | 'popularity'
@@ -18,9 +19,9 @@ export default function BrandsClient({ brands }: BrandsClientProps) {
   const [sortKey, setSortKey] = useState<SortKey>('popularity')
 
   const filteredBrands = useMemo(() => {
-    const term = searchQuery.trim().toLowerCase()
+    const term = normalizeForSearch(searchQuery)
     const base = term
-      ? brands.filter(b => b.name.toLowerCase().includes(term))
+      ? brands.filter(b => normalizeForSearch(b.name).includes(term))
       : brands
     const sorted = [...base]
     if (sortKey === 'popularity') {
