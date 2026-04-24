@@ -5,6 +5,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
 
+import { brandSlug } from '../lib/utils/brandNormalizer'
+
 interface BrandCardProps {
   name: string
   count: number
@@ -32,7 +34,7 @@ export default function BrandCard({ name, count, sampleFlavors, imageUrl, index 
       transition={{ delay: Math.min(index * 0.015, 0.3), duration: 0.25 }}
     >
       <Link
-        href={`/?manufacturer=${encodeURIComponent(name)}`}
+        href={`/brands/${brandSlug(name)}`}
         className="group block bg-paper-0 dark:bg-paper-950 border border-rule-200 dark:border-rule-800 transition-[border-color] duration-150 hover:border-ember-500"
       >
         <div className="relative aspect-[4/3] overflow-hidden border-b border-rule-200 dark:border-rule-800 bg-paper-50 dark:bg-paper-900">

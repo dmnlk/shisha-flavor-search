@@ -1,7 +1,9 @@
 import fs from 'node:fs'
 import path from 'node:path'
 
-import { normalizeBrandForSearch } from '../lib/utils/brandNormalizer'
+import { brandSlug } from '../lib/utils/brandNormalizer'
+
+export { brandSlug }
 
 /**
  * Server-only module. Uses `node:fs` to enumerate locally bundled brand
@@ -12,18 +14,6 @@ import { normalizeBrandForSearch } from '../lib/utils/brandNormalizer'
 
 const BRAND_IMAGES_DIR = path.join(process.cwd(), 'public', 'images', 'brands')
 const SUPPORTED_EXTENSIONS = new Set(['.png', '.jpg', '.jpeg', '.webp', '.svg', '.avif'])
-
-/**
- * Brand name → URL-safe slug used as the expected filename stem.
- * Example: "Al Fakher" → "al-fakher", "Coco Nara" → "coco-nara".
- */
-export function brandSlug(brand: string): string {
-  return normalizeBrandForSearch(brand)
-    .replace(/[^\p{L}\p{N}\s-]/gu, '')
-    .trim()
-    .replace(/\s+/g, '-')
-    .replace(/-+/g, '-')
-}
 
 function loadBrandImageMap(): Record<string, string> {
   if (!fs.existsSync(BRAND_IMAGES_DIR)) return {}
