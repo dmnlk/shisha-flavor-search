@@ -7,10 +7,36 @@ import { MouseEvent } from 'react'
 
 import type { ShishaFlavor } from '../types/shisha'
 
+import NoImage from './NoImage'
+
 interface ShishaCardProps {
   flavor: ShishaFlavor
   onManufacturerClick?: (_manufacturer: string) => void
   index?: number
+}
+
+function formatIndex(id: number): string {
+  return id.toString().padStart(4, '0')
+}
+
+function countryCode(country?: string): string {
+  if (!country) return 'XX'
+  const map: Record<string, string> = {
+    '日本': 'JP',
+    'アメリカ': 'US',
+    'ドイツ': 'DE',
+    'ロシア': 'RU',
+    'トルコ': 'TR',
+    'ヨルダン': 'JO',
+    'UAE': 'AE',
+    '台湾': 'TW',
+    'エジプト': 'EG',
+    'インドネシア': 'ID',
+    'フランス': 'FR',
+    'イタリア': 'IT',
+    'スペイン': 'ES',
+  }
+  return map[country.trim()] ?? country.slice(0, 2).toUpperCase()
 }
 
 export default function ShishaCard({ flavor, onManufacturerClick, index = 0 }: ShishaCardProps) {
@@ -22,54 +48,65 @@ export default function ShishaCard({ flavor, onManufacturerClick, index = 0 }: S
   }
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.04, duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
-      whileHover={{ y: -4 }}
-      className="group bg-white dark:bg-lounge-900/80 rounded-xl overflow-hidden border border-lounge-200/60 dark:border-lounge-800/50 hover:border-primary-300/40 dark:hover:border-primary-600/30 transition-all duration-500 hover:shadow-[0_8px_30px_rgba(201,165,94,0.08)] dark:hover:shadow-[0_8px_30px_rgba(201,165,94,0.06)]"
+    <motion.article
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay: Math.min(index * 0.02, 0.3), duration: 0.25 }}
+      className="group"
     >
-      <Link href={`/flavor/${flavor.id}`} className="block">
-        <div className="aspect-[3/4] relative overflow-hidden bg-lounge-100 dark:bg-lounge-800/60">
-          <Image
-            src={flavor.imageUrl || '/images/no_image_hookah_cover.png'}
-            alt={flavor.productName}
-            fill
-            className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-            sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
+      <Link
+        href={`/flavor/${flavor.id}`}
+        className="block bg-paper-0 dark:bg-paper-950 border border-rule-200 dark:border-rule-800 transition-[border-color,background] duration-150 hover:border-ember-500 dark:hover:border-ember-500"
+      >
+        <div className="relative aspect-square overflow-hidden border-b border-rule-200 dark:border-rule-800 bg-paper-100 dark:bg-paper-900">
+          {flavor.imageUrl ? (
+            <Image
+              src={flavor.imageUrl}
+              alt={flavor.productName}
+              fill
+              className="object-cover transition-transform duration-300 ease-out group-hover:scale-[1.015]"
+              sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, 20vw"
+            />
+          ) : (
+            <NoImage />
+          )}
+          <div
+            aria-hidden
+            className="absolute left-0 top-0 h-px w-0 bg-ember-500 transition-[width] duration-200 ease-out group-hover:w-full"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/0 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
         </div>
 
-        <div className="p-4">
+        <div className="px-3 pt-2.5 pb-3">
+          <div className="flex items-center justify-between font-mono-tight text-[10px] uppercase tracking-[0.08em] text-ink-500 dark:text-ink-400 nums mb-2">
+            <span>№&nbsp;{formatIndex(flavor.id)}</span>
+            <span className="flex items-center gap-1.5">
+              <span>{countryCode(flavor.country)}</span>
+              <span className="inline-block w-px h-2.5 bg-rule-300 dark:bg-rule-700" />
+              <span>{flavor.amount}</span>
+            </span>
+          </div>
+
           <button
             onClick={handleManufacturerClick}
-            className="text-[10px] font-semibold uppercase tracking-[0.12em] text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors mb-2 block"
+            className="font-mono-tight text-[10px] uppercase tracking-[0.14em] text-ink-600 dark:text-ink-300 hover:text-ember-500 transition-colors block text-left truncate w-full mb-1"
           >
             {flavor.manufacturer}
           </button>
 
-          <h3
-            className="text-[15px] leading-snug text-lounge-900 dark:text-lounge-100 mb-2 line-clamp-2 transition-colors"
-            style={{ fontFamily: 'var(--font-display), serif' }}
-          >
+          <h3 className="font-sans-tight text-[0.98rem] font-semibold leading-[1.15] text-ink-950 dark:text-ink-50 group-hover:text-ember-500 transition-colors line-clamp-2 mb-2">
             {flavor.productName}
           </h3>
 
-          <p className="text-xs text-lounge-400 dark:text-lounge-500 mb-3 line-clamp-2 leading-relaxed">
-            {flavor.description || `${flavor.amount} · ${flavor.country}`}
-          </p>
-
-          <div className="flex items-center justify-between pt-3 border-t border-lounge-100 dark:border-lounge-800/50">
-            <span className="text-sm font-semibold text-lounge-800 dark:text-lounge-200">
+          <div className="pt-2 mt-2 border-t border-rule-200 dark:border-rule-800 flex items-baseline justify-between">
+            <span className="font-mono-tight text-sm font-medium text-ink-950 dark:text-ink-50 nums">
               {flavor.price}
             </span>
-            <span className="text-xs text-lounge-300 dark:text-lounge-600 group-hover:text-primary-500 dark:group-hover:text-primary-400 transition-colors duration-300">
-              →
+            <span className="font-mono-tight text-[10px] uppercase tracking-[0.1em] text-ember-500 opacity-0 group-hover:opacity-100 transition-opacity">
+              view →
             </span>
           </div>
         </div>
       </Link>
-    </motion.div>
+    </motion.article>
   )
 }
