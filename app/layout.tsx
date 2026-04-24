@@ -29,7 +29,7 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html
-      lang="en"
+      lang="ja"
       suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable}`}
     >

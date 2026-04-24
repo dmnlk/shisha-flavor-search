@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { resolveFlavorImage } from '../../../data/flavorImages'
 import { shishaData } from '../../../data/shishaData'
 import { normalizeBrandForSearch } from '../../../lib/utils/brandNormalizer'
+import { normalizeForSearch, tokenizeForSearch } from '../../../lib/utils/japaneseNormalizer'
 import type { SearchResponse } from '../../../types/shisha'
 
 export const dynamic = 'force-dynamic'
@@ -42,21 +43,21 @@ export async function GET(request: NextRequest): Promise<NextResponse<SearchResp
     }
 
     // Then apply search query if specified
-    if (query) {
-      const searchTerms = query.toLowerCase().split(' ')
+    const searchTerms = tokenizeForSearch(query)
+    if (searchTerms.length > 0) {
       filteredData = filteredData.filter(item => {
         // 検索タイプに基づいてフィルタリング
+        // 正規化: ひらがな/カタカナ/全角半角/大文字小文字を吸収
         if (searchType === 'brand') {
-          // ブランド名のみで検索
-          const brandText = item.manufacturer.toLowerCase()
+          const brandText = normalizeForSearch(item.manufacturer)
           return searchTerms.every(term => brandText.includes(term))
         } else if (searchType === 'flavor') {
-          // フレーバー名のみで検索
-          const flavorText = item.productName.toLowerCase()
+          const flavorText = normalizeForSearch(item.productName)
           return searchTerms.every(term => flavorText.includes(term))
         } else {
-          // すべてで検索（デフォルト）
-          const searchText = `${item.manufacturer} ${item.productName} ${item.amount} ${item.country}`.toLowerCase()
+          const searchText = normalizeForSearch(
+            `${item.manufacturer} ${item.productName} ${item.amount} ${item.country}`
+          )
           return searchTerms.every(term => searchText.includes(term))
         }
       })
