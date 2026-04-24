@@ -1,7 +1,10 @@
 'use client'
 
 import { motion, AnimatePresence } from 'framer-motion'
+import Link from 'next/link'
 import { useState, useMemo, useEffect } from 'react'
+
+import { brandSlug } from '../lib/utils/brandNormalizer'
 
 interface BrandListProps {
   manufacturers: string[]
@@ -65,13 +68,13 @@ export default function BrandList({ manufacturers, selectedManufacturer, onSelec
           All
         </button>
         {popularBrands.map((brand) => (
-          <button
+          <Link
             key={brand}
-            onClick={() => onSelect(brand)}
+            href={`/brands/${brandSlug(brand)}`}
             className={`${chipClass(selectedManufacturer === brand)} truncate max-w-[200px]`}
           >
             {brand}
-          </button>
+          </Link>
         ))}
 
         {manufacturers.length > 10 && (
@@ -109,9 +112,10 @@ export default function BrandList({ manufacturers, selectedManufacturer, onSelec
 
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 -m-px">
                 {filteredManufacturers.map((brand, idx) => (
-                  <button
+                  <Link
                     key={brand}
-                    onClick={() => { onSelect(brand); setIsExpanded(false) }}
+                    href={`/brands/${brandSlug(brand)}`}
+                    onClick={() => setIsExpanded(false)}
                     className={`group relative text-left px-3 py-3 border border-rule-200 dark:border-rule-800 -mt-px -ml-px transition-colors ${
                       selectedManufacturer === brand
                         ? 'bg-ink-900 text-paper-0 dark:bg-ink-100 dark:text-paper-950 border-ink-900 dark:border-ink-100 z-10'
@@ -122,7 +126,7 @@ export default function BrandList({ manufacturers, selectedManufacturer, onSelec
                       № {String(idx + 1).padStart(3, '0')}
                     </span>
                     <span className="font-sans-tight text-sm font-medium truncate block">{brand}</span>
-                  </button>
+                  </Link>
                 ))}
               </div>
 
