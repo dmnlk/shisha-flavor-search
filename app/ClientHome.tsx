@@ -160,7 +160,7 @@ function HomeContent() {
             <button
               type="button"
               onClick={handleHomeReset}
-              className="font-sans-tight font-semibold text-sm tracking-[-0.01em] text-ink-950 dark:text-ink-50 hover:text-ember-500 transition-colors"
+              className="font-sans-tight font-semibold text-sm normal-case tracking-[-0.01em] text-ink-950 dark:text-ink-50 hover:text-ember-500 transition-colors"
             >
               Shisha Flavor Ledger
             </button>
