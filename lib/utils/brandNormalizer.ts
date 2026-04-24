@@ -115,3 +115,15 @@ export function getUniqueBrands(brands: string[]): string[] {
 export function normalizeBrandForSearch(brandName: string): string {
   return normalizeBrandName(brandName).toLowerCase()
 }
+
+/**
+ * URL セーフなブランドスラグ（/brands/<slug> や brand ロゴファイル名に使う）。
+ * Client-safe: fs 非依存で、server / client どちらからも import 可能。
+ */
+export function brandSlug(brandName: string): string {
+  return normalizeBrandForSearch(brandName)
+    .replace(/[^\p{L}\p{N}\s-]/gu, '')
+    .trim()
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+}

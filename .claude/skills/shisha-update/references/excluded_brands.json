@@ -1,0 +1,40 @@
+{
+  "_comment": "Non-shisha brands to exclude from data/shishaData.js. 'substrings' match anywhere in manufacturer or productName (case-insensitive). 'exact_or_prefix' match only as full manufacturer, or at manufacturer/productName start followed by ・/space/hyphen (use for ambiguous tokens like 'ペペ' or 'チェ' that could appear mid-word).",
+  "substrings": [
+    "ダビドフ", "DAVIDOFF",
+    "マックバレン", "MAC BAREN", "MACBAREN",
+    "SAMUEL GAWITH", "サミュエルガーウィズ", "サミュエル・ガーウィズ",
+    "プエブロナチュラル", "PUEBLO",
+    "キャプテンブラック", "CAPTAIN BLACK", "ｷｬﾌﾟﾃﾝﾌﾞﾗｯｸ",
+    "DR.PIPE", "DR. PIPE",
+    "フォン・クラーレン", "フォン クラーレン", "フォンクラーレン",
+    "オールドホルボーン", "OLD HOLBORN",
+    "アムステルダマー", "AMSTERDAMER",
+    "ブラックスパイダーシャグ", "ﾌﾞﾗｯｸｽﾊﾟｲﾀﾞｰｼｬｸﾞ",
+    "レッドフィールド",
+    "フランドリア", "フラントリア", "FLANDRIA",
+    "スタンレー", "STANLEY",
+    "ゴールデンクローバー",
+    "アークローヤル",
+    "4TH ジェネレーション", "4TH GENERATION",
+    "THREE NUNS",
+    "バルカン・フレイク", "グロウスムーア", "コモンウェルス", "スクワドロン",
+    "フル・バージニア", "ベスト・ブラウンフレイク",
+    "サムズ・フレイク", "セントジェームス・フレイク",
+    "コーネルディール", "ジーエル・ピース",
+    "プロムナード", "シルクロード", "ロックン・チェア", "カピート・メローライト",
+    "桃山", "飛鳥",
+    "セブンシーズ",
+    "ハイタバコ",
+    "ゴールデンブレンド",
+    "チョイス・キールロワイヤル", "チョイス・ルバーブ",
+    "アクレマ",
+    "JBR",
+    "キチャグ", "キッチャグ",
+    "RAW"
+  ],
+  "exact_or_prefix": [
+    "ドーラ", "ペペ", "コルツ", "チェ",
+    "ソル", "TP-77", "VK-05", "VK-06", "VK"
+  ]
+}

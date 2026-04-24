@@ -3,117 +3,139 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  /* Modern Teal/Cyan Palette */
-  --color-primary-50: #f0fdfa;
-  --color-primary-100: #ccfbf1;
-  --color-primary-200: #99f6e4;
-  --color-primary-300: #5eead4;
-  --color-primary-400: #2dd4bf;
-  --color-primary-500: #14b8a6;
-  --color-primary-600: #0d9488;
-  --color-primary-700: #0f766e;
-  --color-primary-800: #115e59;
-  --color-primary-900: #134e4a;
+  /* Paper — surface backgrounds */
+  --color-paper-0: #ffffff;
+  --color-paper-50: #fafafa;
+  --color-paper-100: #f4f4f4;
+  --color-paper-200: #ebebeb;
+  --color-paper-800: #1a1a1a;
+  --color-paper-900: #111111;
+  --color-paper-950: #0a0a0a;
 
-  /* Coral/Orange Accent Colors */
-  --color-accent-50: #fff7ed;
-  --color-accent-100: #ffedd5;
-  --color-accent-200: #fed7aa;
-  --color-accent-300: #fdba74;
-  --color-accent-400: #fb923c;
-  --color-accent-500: #f97316;
-  --color-accent-600: #ea580c;
-  --color-accent-700: #c2410c;
-  --color-accent-800: #9a3412;
-  --color-accent-900: #7c2d12;
+  /* Ink — text */
+  --color-ink-50: #f5f5f5;
+  --color-ink-100: #e6e6e6;
+  --color-ink-200: #c9c9c9;
+  --color-ink-300: #a3a3a3;
+  --color-ink-400: #8a8a8a;
+  --color-ink-500: #6b6b6b;
+  --color-ink-600: #525252;
+  --color-ink-700: #3d3d3d;
+  --color-ink-800: #242424;
+  --color-ink-900: #141414;
+  --color-ink-950: #0a0a0a;
+
+  /* Rule — hairlines */
+  --color-rule-100: #ededed;
+  --color-rule-200: #e0e0e0;
+  --color-rule-300: #d4d4d4;
+  --color-rule-700: #2e2e2e;
+  --color-rule-800: #242424;
+  --color-rule-900: #1a1a1a;
+
+  /* Ember — single crimson-orange accent */
+  --color-ember-50: #ffede5;
+  --color-ember-100: #ffd4c2;
+  --color-ember-200: #ffab85;
+  --color-ember-300: #fb8259;
+  --color-ember-400: #f1623a;
+  --color-ember-500: #e8492c;
+  --color-ember-600: #c9381e;
+  --color-ember-700: #a02916;
+  --color-ember-800: #731b0f;
+  --color-ember-900: #4a1209;
+
+  /* Component overrides */
+  --radius-none: 0;
+  --default-transition-duration: 120ms;
 }
 
 @layer base {
   :root {
-    font-size: 17px;
+    font-size: 16px;
   }
-  
+
   @media (min-width: 640px) {
     :root {
-      font-size: 18px;
+      font-size: 16px;
     }
   }
 
   html {
     height: 100%;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
   }
 
   body {
     height: 100%;
     min-height: 100vh;
+    font-feature-settings: "ss01", "ss02", "cv11", "kern";
+    letter-spacing: -0.005em;
+  }
+
+  ::selection {
+    background: var(--color-ember-500);
+    color: var(--color-paper-0);
+  }
+
+  /* Make Tailwind default hairlines (like <hr>) snap to the rule token */
+  hr {
+    border-color: var(--color-rule-200);
+  }
+  .dark hr {
+    border-color: var(--color-rule-800);
   }
 }
 
 @layer utilities {
-  /* Hide scrollbar for Chrome, Safari and Opera */
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
+  .scrollbar-hide::-webkit-scrollbar { display: none; }
+  .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+  /* Font stack helpers */
+  .font-sans-tight {
+    font-family: var(--font-sans), "Helvetica Neue", Helvetica, Arial, sans-serif;
+    letter-spacing: -0.02em;
   }
-  /* Hide scrollbar for IE, Edge and Firefox */
-  .scrollbar-hide {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+  .font-mono-tight {
+    font-family: var(--font-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-feature-settings: "zero", "tnum", "ss02";
+    letter-spacing: 0em;
   }
 
-  /* Custom animation for smooth loading */
-  @keyframes shimmer {
-    0% {
-      background-position: -200% 0;
-    }
-    100% {
-      background-position: 200% 0;
-    }
+  /* Tabular numerals helper */
+  .nums {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
   }
 
-  .animate-shimmer {
-    animation: shimmer 1.5s ease-in-out infinite;
-    background-size: 200% 100%;
-    background-image: linear-gradient(
-      90deg,
-      transparent 0%,
-      rgba(255, 255, 255, 0.1) 50%,
-      transparent 100%
-    );
+  /* Ember tick — small mark used as index / accent bullet */
+  .ember-tick::before {
+    content: "";
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: var(--color-ember-500);
+    margin-right: 10px;
+    vertical-align: middle;
+    transform: translateY(-1px);
   }
 
-  /* Modern gradient backgrounds */
-  .bg-gradient-mesh {
-    background:
-      radial-gradient(at 40% 20%, rgba(20, 184, 166, 0.25) 0px, transparent 50%),
-      radial-gradient(at 80% 0%, rgba(249, 115, 22, 0.25) 0px, transparent 50%),
-      radial-gradient(at 0% 50%, rgba(59, 130, 246, 0.25) 0px, transparent 50%),
-      radial-gradient(at 80% 50%, rgba(168, 85, 247, 0.25) 0px, transparent 50%),
-      radial-gradient(at 0% 100%, rgba(236, 72, 153, 0.25) 0px, transparent 50%),
-      radial-gradient(at 80% 100%, rgba(249, 115, 22, 0.25) 0px, transparent 50%);
+  /* Caret blink for loading */
+  @keyframes caret-blink {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0; }
+  }
+  .animate-caret {
+    animation: caret-blink 0.9s steps(1) infinite;
   }
 
-  /* Floating animation */
-  @keyframes float {
-    0%, 100% {
-      transform: translateY(0px);
-    }
-    50% {
-      transform: translateY(-10px);
-    }
+  /* Skeleton sweep */
+  @keyframes sweep {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(200%); }
   }
-
-  .animate-float {
-    animation: float 3s ease-in-out infinite;
-  }
-
-  /* Reverse spin animation for loading spinner */
-  .animate-spin-reverse {
-    animation-direction: reverse;
-    animation-duration: 1s;
-  }
-
-  /* Glow effect */
-  .glow {
-    box-shadow: 0 0 20px rgba(20, 184, 166, 0.5);
+  .animate-sweep {
+    animation: sweep 1.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
   }
 }
