@@ -1,32 +1,15 @@
-import fs from 'node:fs'
-import path from 'node:path'
+import { FLAVOR_IMAGE_MAP } from './flavorImagesGenerated'
 
 /**
- * Server-only module. Enumerates locally bundled flavor product images at
- * module init (named `<flavor-id>.<ext>` under public/images/flavors/).
- * Must not be imported from client components ('use client'); consume it
- * from server components / API routes, then pass resolved URLs down as
- * plain strings.
+ * Per-flavor product image URLs. Backed by `flavorImagesGenerated.ts`,
+ * which is built from `public/images/flavors/<id>.<ext>` at build time
+ * (via `scripts/build/generate-flavor-image-map.ts`).
+ *
+ * Doing the directory scan at build time instead of runtime keeps Next.js'
+ * file tracer from bundling the whole flavor image directory into the
+ * serverless function output — Vercel's 250MB unzipped function limit
+ * was being blown past once we accumulated ~1.6k product shots.
  */
-
-const FLAVOR_IMAGES_DIR = path.join(process.cwd(), 'public', 'images', 'flavors')
-const SUPPORTED_EXTENSIONS = new Set(['.png', '.jpg', '.jpeg', '.webp', '.avif'])
-
-function loadFlavorImageMap(): Record<number, string> {
-  if (!fs.existsSync(FLAVOR_IMAGES_DIR)) return {}
-  const entries: Record<number, string> = {}
-  for (const file of fs.readdirSync(FLAVOR_IMAGES_DIR)) {
-    const ext = path.extname(file).toLowerCase()
-    if (!SUPPORTED_EXTENSIONS.has(ext)) continue
-    const stem = path.basename(file, ext)
-    const id = Number(stem)
-    if (!Number.isFinite(id)) continue
-    entries[id] = `/images/flavors/${file}`
-  }
-  return entries
-}
-
-const FLAVOR_IMAGE_MAP: Record<number, string> = loadFlavorImageMap()
 
 export function getFlavorImageUrl(id: number): string | undefined {
   return FLAVOR_IMAGE_MAP[id]
