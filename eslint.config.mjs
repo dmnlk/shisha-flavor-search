@@ -51,6 +51,7 @@ const config = [
       ".next/**",
       "out/**",
       "data/shishaData.js",
+      "data/flavorImagesGenerated.ts",
       "eslint.config.mjs",
       "postcss.config.js",
     ],
