@@ -1,7 +1,9 @@
 /**
  * ビルド時にデータセットから派生ファイルを生成する。
  *
- * 出力: (どちらも git 管理外。prebuild / predev / pretest で毎回生成)
+ * package.json の dev / build / test / typecheck が `tsx scripts/build-data.ts && ...`
+ * の形でこのスクリプトを毎回前段実行するため、生成物は常に最新になる (git 管理外)。
+ *
  *   - data/generated/searchIndex.json
  *       Fuse 用に必要な最小フィールドだけを NFKC + カナ寄せ済みで持つ配列。
  *       fuzzySearch は boot 時の正規化ループをこのファイル読み込みに置き換える。
@@ -18,7 +20,6 @@ import {
   brandSlug,
   getUniqueBrands,
   normalizeBrandForSearch,
-  normalizeBrandName,
 } from '../lib/utils/brandNormalizer'
 import { normalizeForSearch } from '../lib/utils/japaneseNormalizer'
 import type { ShishaFlavor } from '../types/shisha'
@@ -53,7 +54,7 @@ function buildSearchIndex(data: ShishaFlavor[]): IndexedFlavor[] {
 }
 
 function buildBrandsSummary(data: ShishaFlavor[]): GeneratedBrand[] {
-  const buckets = new Map<string, { displayName: string; count: number; samples: string[] }>()
+  const buckets = new Map<string, { count: number; samples: string[] }>()
 
   for (const item of data) {
     const key = normalizeBrandForSearch(item.manufacturer)
@@ -63,7 +64,6 @@ function buildBrandsSummary(data: ShishaFlavor[]): GeneratedBrand[] {
       if (bucket.samples.length < 3) bucket.samples.push(item.productName)
     } else {
       buckets.set(key, {
-        displayName: normalizeBrandName(item.manufacturer),
         count: 1,
         samples: [item.productName],
       })
