@@ -25,6 +25,7 @@ function getBrandInitials(name: string): string {
 
 export default function BrandDetailClient({ slug, brandName, flavors, imageUrl, description }: BrandDetailClientProps) {
   const [imageError, setImageError] = useState(false)
+  const [searchTerm, setSearchTerm] = useState('')
   const showImage = Boolean(imageUrl) && !imageError
   const initials = getBrandInitials(brandName)
 
@@ -33,6 +34,15 @@ export default function BrandDetailClient({ slug, brandName, flavors, imageUrl, 
     for (const f of flavors) if (f.country) set.add(f.country)
     return Array.from(set)
   }, [flavors])
+
+  const filteredFlavors = useMemo(() => {
+    const terms = searchTerm.trim().toLowerCase().split(/\s+/).filter(Boolean)
+    if (terms.length === 0) return flavors
+    return flavors.filter((flavor) => {
+      const haystack = `${flavor.productName} ${flavor.description ?? ''}`.toLowerCase()
+      return terms.every((term) => haystack.includes(term))
+    })
+  }, [flavors, searchTerm])
 
   return (
     <div className="min-h-screen bg-paper-0 dark:bg-paper-950 text-ink-950 dark:text-ink-50">
@@ -132,23 +142,60 @@ export default function BrandDetailClient({ slug, brandName, flavors, imageUrl, 
           </aside>
         </motion.section>
 
+        {/* In-brand search */}
+        <div className="mt-10 border-b border-rule-200 dark:border-rule-800">
+          <label htmlFor="brand-flavor-search" className="block font-mono-tight text-[10px] uppercase tracking-[0.2em] text-ink-500 dark:text-ink-400 pt-4 pb-2">
+            <span className="text-ember-500">§</span>&nbsp;&nbsp;Search within {brandName}
+          </label>
+          <div className="relative flex items-center pb-3">
+            <input
+              id="brand-flavor-search"
+              type="search"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Filter by flavor name or description…"
+              className="w-full bg-transparent border-0 border-b border-transparent focus:border-ember-500 focus:outline-none font-sans-tight text-2xl sm:text-3xl tracking-[-0.02em] text-ink-950 dark:text-ink-50 placeholder:text-ink-400 dark:placeholder:text-ink-600 py-2 pr-10"
+              autoComplete="off"
+            />
+            {searchTerm && (
+              <button
+                type="button"
+                onClick={() => setSearchTerm('')}
+                aria-label="Clear search"
+                className="absolute right-0 font-mono-tight text-[11px] uppercase tracking-[0.14em] text-ink-500 dark:text-ink-400 hover:text-ember-500 transition-colors normal-case"
+              >
+                clear ×
+              </button>
+            )}
+          </div>
+        </div>
+
         {/* Results header */}
-        <div className="flex items-baseline justify-between border-b border-rule-200 dark:border-rule-800 py-3 mt-10 font-mono-tight text-[10px] uppercase tracking-[0.16em] text-ink-600 dark:text-ink-300">
+        <div className="flex items-baseline justify-between border-b border-rule-200 dark:border-rule-800 py-3 font-mono-tight text-[10px] uppercase tracking-[0.16em] text-ink-600 dark:text-ink-300">
           <span className="flex items-center gap-3">
             <span className="text-ember-500">§</span>
-            <span>Catalog</span>
+            <span>{searchTerm ? 'Filtered' : 'Catalog'}</span>
           </span>
           <span className="nums">
-            <span className="text-ember-500">{String(flavors.length).padStart(4, '0')}</span>
-            <span className="text-ink-400 dark:text-ink-500">&nbsp;/&nbsp;entries</span>
+            <span className="text-ember-500">{String(filteredFlavors.length).padStart(4, '0')}</span>
+            <span className="text-ink-400 dark:text-ink-500">
+              &nbsp;/&nbsp;
+              {searchTerm ? `of ${String(flavors.length).padStart(4, '0')}` : 'entries'}
+            </span>
           </span>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 pt-6">
-          {flavors.map((flavor, index) => (
-            <ShishaCard key={flavor.id} flavor={flavor} index={index} />
-          ))}
-        </div>
+        {filteredFlavors.length === 0 ? (
+          <div className="py-16 text-center font-mono-tight text-[11px] uppercase tracking-[0.16em] text-ink-500 dark:text-ink-400">
+            <p><span className="text-ember-500">×</span>&nbsp;&nbsp;No flavors match &ldquo;{searchTerm}&rdquo;</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 pt-6">
+            {filteredFlavors.map((flavor, index) => (
+              <ShishaCard key={flavor.id} flavor={flavor} index={index} />
+            ))}
+          </div>
+        )}
       </main>
     </div>
   )
