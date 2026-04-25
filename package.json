@@ -3,14 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "build:data": "tsx scripts/build-data.ts",
+    "dev": "pnpm run build:data && next dev",
     "prebuild": "npx tsx scripts/build/generate-flavor-image-map.ts",
-    "build": "next build",
+    "build": "pnpm run build:data && next build",
     "start": "next start",
     "lint": "eslint .",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:ci": "jest --ci --coverage"
+    "typecheck": "pnpm run build:data && tsc --noEmit",
+    "test": "pnpm run build:data && jest",
+    "test:watch": "pnpm run build:data && jest --watch",
+    "test:ci": "pnpm run build:data && jest --ci --coverage"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
@@ -39,6 +41,7 @@
     "postcss": "^8.5.10",
     "tailwindcss": "^4.2.4",
     "ts-node": "^10.9.2",
+    "tsx": "^4.21.0",
     "typescript": "^6.0.3"
   }
 }
