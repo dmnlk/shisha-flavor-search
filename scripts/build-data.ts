@@ -43,14 +43,19 @@ interface GeneratedBrand {
 }
 
 function buildSearchIndex(data: ShishaFlavor[]): IndexedFlavor[] {
-  return data.map(item => ({
-    id: item.id,
-    manufacturer: normalizeForSearch(item.manufacturer),
-    productName: normalizeForSearch(item.productName),
-    all: normalizeForSearch(
-      `${item.manufacturer} ${item.productName} ${item.amount} ${item.country}`
-    ),
-  }))
+  return data.map(item => {
+    const manufacturer = normalizeForSearch(item.manufacturer)
+    const productName = normalizeForSearch(item.productName)
+    const amount = normalizeForSearch(item.amount)
+    const country = normalizeForSearch(item.country)
+    return {
+      id: item.id,
+      manufacturer,
+      productName,
+      // 空フィールドが混ざっても余分な空白を残さないよう filter してから join
+      all: [manufacturer, productName, amount, country].filter(Boolean).join(' '),
+    }
+  })
 }
 
 function buildBrandsSummary(data: ShishaFlavor[]): GeneratedBrand[] {
