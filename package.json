@@ -5,6 +5,7 @@
   "scripts": {
     "build:data": "tsx scripts/build-data.ts",
     "dev": "pnpm run build:data && next dev",
+    "prebuild": "npx tsx scripts/build/generate-flavor-image-map.ts",
     "build": "pnpm run build:data && next build",
     "start": "next start",
     "lint": "eslint .",
