@@ -103,15 +103,19 @@ def write_data(entries: list[dict]) -> None:
     DATA_FILE.write_text("\n".join(lines))
 
 
-def update_state(new_filenames: list[str]) -> None:
+def update_state(new_filenames: list[str], data_changed: bool = False, new_ids: list[int] | None = None) -> None:
     if STATE_FILE.exists():
         state = json.loads(STATE_FILE.read_text())
     else:
-        state = {"processed_pdfs": [], "last_run": None}
+        state = {"processed_pdfs": [], "last_run": None, "last_data_updated": None, "last_added_ids": []}
     existing = set(state.get("processed_pdfs", []))
     existing.update(new_filenames)
     state["processed_pdfs"] = sorted(existing)
     state["last_run"] = datetime.now().isoformat(timespec="seconds")
+    if data_changed:
+        state["last_data_updated"] = datetime.now().isoformat(timespec="seconds")
+    if new_ids is not None:
+        state["last_added_ids"] = new_ids
     STATE_FILE.parent.mkdir(parents=True, exist_ok=True)
     STATE_FILE.write_text(json.dumps(state, ensure_ascii=False, indent=2))
 
@@ -146,6 +150,7 @@ def main() -> int:
     added = 0
     updated = 0
     excluded_count = 0
+    added_keys: set[tuple[str, str]] = set()
     for p in pdf_entries:
         product = norm(p["product"])
         entry = {
@@ -171,6 +176,7 @@ def main() -> int:
         else:
             merged[k] = entry
             added += 1
+            added_keys.add(k)
 
     # Rebuild final list with sequential ids, sorted by manufacturer then product
     final = sorted(
@@ -184,13 +190,19 @@ def main() -> int:
         e["id"] = i
         e.setdefault("imageUrl", "")
 
+    # Collect IDs of newly added entries (after ID reassignment)
+    new_ids = [
+        e["id"] for e in final
+        if (norm_key(e["productName"]), norm_key(e["amount"])) in added_keys
+    ]
+
     write_data(final)
 
-    # Update state file with processed PDF filenames
+    # Update state file with processed PDF filenames and newly added IDs
     new_pdfs_file = SOURCES / "new_pdfs.json"
     if new_pdfs_file.exists():
         new_pdfs = json.loads(new_pdfs_file.read_text())
-        update_state([p["filename"] for p in new_pdfs])
+        update_state([p["filename"] for p in new_pdfs], data_changed=(added + updated) > 0, new_ids=new_ids)
 
     print("\n=== Diff report ===")
     print(f"Added:    {added}")

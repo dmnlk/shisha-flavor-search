@@ -1,3 +1,6 @@
+import { readFileSync } from 'node:fs'
+import path from 'node:path'
+
 import { BRAND_DESCRIPTIONS } from './brandDescriptions'
 import { getBrandImageUrl } from './brandImages'
 import { EDITORS_PICKS } from './curatedPicks'
@@ -81,11 +84,37 @@ export function getFeaturedBrands(limit = 8): FeaturedBrand[] {
   return candidates.slice(0, limit)
 }
 
+function getLastAddedIds(): number[] {
+  try {
+    const statePath = path.join(process.cwd(), '.claude', 'shisha-update-state.json')
+    const state = JSON.parse(readFileSync(statePath, 'utf-8'))
+    return Array.isArray(state.last_added_ids) ? (state.last_added_ids as number[]) : []
+  } catch {
+    return []
+  }
+}
+
 /**
- * Returns the most recently added flavors (highest ids), capped at `limit`.
- * Image-bearing entries are preferred but not required.
+ * Returns the most recently added flavors.
+ * Reads last_added_ids from shisha-update-state.json (set by merge_into_data.py)
+ * so results reflect actual insertion order, not alphabetical ID position.
+ * Falls back to image-bearing tail entries when no state is available.
  */
 export function getLatestFlavors(limit = 6): ShishaFlavor[] {
+  const lastAddedIds = getLastAddedIds()
+  if (lastAddedIds.length > 0) {
+    const byId = new Map(shishaData.map(f => [f.id, f] as const))
+    const candidates = lastAddedIds
+      .map(id => byId.get(id))
+      .filter((f): f is ShishaFlavor => f !== undefined)
+      .map(resolveFlavorImage)
+    const imaged = candidates.filter(hasImage)
+    const rest = candidates.filter(f => !hasImage(f))
+    const result = [...imaged, ...rest].slice(0, limit)
+    if (result.length >= limit) return result
+  }
+
+  // Fallback: image-bearing entries from tail of data
   const tail = shishaData.slice(-limit * 4)
   const imaged: ShishaFlavor[] = []
   const rest: ShishaFlavor[] = []
