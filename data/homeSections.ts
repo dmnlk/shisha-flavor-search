@@ -82,23 +82,19 @@ export function getFeaturedBrands(limit = 8): FeaturedBrand[] {
 }
 
 /**
- * Returns the most recently indexed flavors (highest ids) that have an
- * image available, capped at `limit`. Falls back to the raw tail when
- * fewer than `limit` imaged entries exist.
+ * Returns the most recently added flavors (highest ids), capped at `limit`.
+ * Image-bearing entries are preferred but not required.
  */
-export function getLatestFlavors(limit = 8): ShishaFlavor[] {
-  const picked: ShishaFlavor[] = []
-  for (let i = shishaData.length - 1; i >= 0 && picked.length < limit; i--) {
-    const resolved = resolveFlavorImage(shishaData[i])
-    if (hasImage(resolved)) picked.push(resolved)
+export function getLatestFlavors(limit = 6): ShishaFlavor[] {
+  const tail = shishaData.slice(-limit * 4)
+  const imaged: ShishaFlavor[] = []
+  const rest: ShishaFlavor[] = []
+  for (let i = tail.length - 1; i >= 0; i--) {
+    const resolved = resolveFlavorImage(tail[i])
+    if (hasImage(resolved)) imaged.push(resolved)
+    else rest.push(resolved)
   }
-  if (picked.length < limit) {
-    for (let i = shishaData.length - 1; i >= 0 && picked.length < limit; i--) {
-      if (picked.find(p => p.id === shishaData[i].id)) continue
-      picked.push(resolveFlavorImage(shishaData[i]))
-    }
-  }
-  return picked
+  return [...imaged, ...rest].slice(0, limit)
 }
 
 const ORIGIN_ORDER: Array<{ code: string; keys: string[] }> = [

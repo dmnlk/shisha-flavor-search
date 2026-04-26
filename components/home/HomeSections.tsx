@@ -18,7 +18,7 @@ import OriginShelf from './OriginShelf'
  */
 export default function HomeSections() {
   const featuredBrands = getFeaturedBrands(3)
-  const latestFlavors = getLatestFlavors(8)
+  const latestFlavors = getLatestFlavors(6)
   const originBuckets = getOriginBuckets(6)
   const editorsPicks = getEditorsPicks()
 
