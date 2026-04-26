@@ -178,7 +178,12 @@ def main() -> int:
             added += 1
             added_keys.add(k)
 
-    # Rebuild final list with sequential ids, sorted by manufacturer then product
+    # Rebuild final list sorted by manufacturer then product.
+    # Preserve existing IDs; assign new monotonically-increasing IDs only to
+    # truly new entries so that image filenames (<id>.<ext>) stay stable.
+    max_existing_id = max((e.get("id", 0) for e in merged.values() if isinstance(e.get("id"), int)), default=0)
+    next_new_id = max_existing_id + 1
+
     final = sorted(
         [
             {k: v for k, v in e.items() if not k.startswith("_")}
@@ -186,11 +191,13 @@ def main() -> int:
         ],
         key=lambda e: ((e["manufacturer"] or "").upper(), e["productName"].upper()),
     )
-    for i, e in enumerate(final, 1):
-        e["id"] = i
+    for e in final:
+        if not isinstance(e.get("id"), int) or e.get("id", 0) <= 0:
+            e["id"] = next_new_id
+            next_new_id += 1
         e.setdefault("imageUrl", "")
 
-    # Collect IDs of newly added entries (after ID reassignment)
+    # Collect IDs of newly added entries
     new_ids = [
         e["id"] for e in final
         if (norm_key(e["productName"]), norm_key(e["amount"])) in added_keys

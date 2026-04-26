@@ -21,9 +21,10 @@ interface SearchParams {
 
 interface HomeContentProps {
   editorialSections?: ReactNode
+  lastDataUpdated?: string | null
 }
 
-function HomeContent({ editorialSections }: HomeContentProps) {
+function HomeContent({ editorialSections, lastDataUpdated }: HomeContentProps) {
   const searchParams = useSearchParams()
   const router = useRouter()
 
@@ -231,14 +232,16 @@ function HomeContent({ editorialSections }: HomeContentProps) {
                 {manufacturers.length}
               </p>
             </Link>
-            <div className="col-span-2 lg:col-span-1 py-6 lg:py-7 px-5 lg:px-10 border-t lg:border-t border-rule-200 dark:border-rule-800">
-              <p className="font-mono-tight text-[10px] uppercase tracking-[0.2em] text-ink-400 dark:text-ink-500 mb-2">
-                Last refresh
-              </p>
-              <p className="font-mono-tight text-base text-ink-950 dark:text-ink-50 nums">
-                2026.04.23
-              </p>
-            </div>
+            {lastDataUpdated && (
+              <div className="col-span-2 lg:col-span-1 py-6 lg:py-7 px-5 lg:px-10 border-t lg:border-t border-rule-200 dark:border-rule-800">
+                <p className="font-mono-tight text-[10px] uppercase tracking-[0.2em] text-ink-400 dark:text-ink-500 mb-2">
+                  Last refresh
+                </p>
+                <p className="font-mono-tight text-base text-ink-950 dark:text-ink-50 nums">
+                  {lastDataUpdated}
+                </p>
+              </div>
+            )}
           </aside>
         </motion.section>
 
@@ -362,16 +365,17 @@ function HomeContent({ editorialSections }: HomeContentProps) {
 
 interface ClientHomeProps {
   children?: ReactNode
+  lastDataUpdated?: string | null
 }
 
-export default function ClientHome({ children }: ClientHomeProps) {
+export default function ClientHome({ children, lastDataUpdated }: ClientHomeProps) {
   return (
     <Suspense fallback={
       <div className="min-h-screen flex justify-center items-center bg-paper-0 dark:bg-paper-950">
         <LoadingSpinner />
       </div>
     }>
-      <HomeContent editorialSections={children} />
+      <HomeContent editorialSections={children} lastDataUpdated={lastDataUpdated} />
     </Suspense>
   )
 }
