@@ -103,17 +103,19 @@ def write_data(entries: list[dict]) -> None:
     DATA_FILE.write_text("\n".join(lines))
 
 
-def update_state(new_filenames: list[str], data_changed: bool = False) -> None:
+def update_state(new_filenames: list[str], data_changed: bool = False, new_ids: list[int] | None = None) -> None:
     if STATE_FILE.exists():
         state = json.loads(STATE_FILE.read_text())
     else:
-        state = {"processed_pdfs": [], "last_run": None, "last_data_updated": None}
+        state = {"processed_pdfs": [], "last_run": None, "last_data_updated": None, "last_added_ids": []}
     existing = set(state.get("processed_pdfs", []))
     existing.update(new_filenames)
     state["processed_pdfs"] = sorted(existing)
     state["last_run"] = datetime.now().isoformat(timespec="seconds")
     if data_changed:
         state["last_data_updated"] = datetime.now().isoformat(timespec="seconds")
+    if new_ids is not None:
+        state["last_added_ids"] = new_ids
     STATE_FILE.parent.mkdir(parents=True, exist_ok=True)
     STATE_FILE.write_text(json.dumps(state, ensure_ascii=False, indent=2))
 
@@ -148,6 +150,7 @@ def main() -> int:
     added = 0
     updated = 0
     excluded_count = 0
+    added_keys: set[tuple[str, str]] = set()
     for p in pdf_entries:
         product = norm(p["product"])
         entry = {
@@ -173,8 +176,14 @@ def main() -> int:
         else:
             merged[k] = entry
             added += 1
+            added_keys.add(k)
 
-    # Rebuild final list with sequential ids, sorted by manufacturer then product
+    # Rebuild final list sorted by manufacturer then product.
+    # Preserve existing IDs; assign new monotonically-increasing IDs only to
+    # truly new entries so that image filenames (<id>.<ext>) stay stable.
+    max_existing_id = max((e.get("id", 0) for e in merged.values() if isinstance(e.get("id"), int)), default=0)
+    next_new_id = max_existing_id + 1
+
     final = sorted(
         [
             {k: v for k, v in e.items() if not k.startswith("_")}
@@ -182,17 +191,25 @@ def main() -> int:
         ],
         key=lambda e: ((e["manufacturer"] or "").upper(), e["productName"].upper()),
     )
-    for i, e in enumerate(final, 1):
-        e["id"] = i
+    for e in final:
+        if not isinstance(e.get("id"), int) or e.get("id", 0) <= 0:
+            e["id"] = next_new_id
+            next_new_id += 1
         e.setdefault("imageUrl", "")
+
+    # Collect IDs of newly added entries
+    new_ids = [
+        e["id"] for e in final
+        if (norm_key(e["productName"]), norm_key(e["amount"])) in added_keys
+    ]
 
     write_data(final)
 
-    # Update state file with processed PDF filenames
+    # Update state file with processed PDF filenames and newly added IDs
     new_pdfs_file = SOURCES / "new_pdfs.json"
     if new_pdfs_file.exists():
         new_pdfs = json.loads(new_pdfs_file.read_text())
-        update_state([p["filename"] for p in new_pdfs], data_changed=(added + updated) > 0)
+        update_state([p["filename"] for p in new_pdfs], data_changed=(added + updated) > 0, new_ids=new_ids)
 
     print("\n=== Diff report ===")
     print(f"Added:    {added}")
