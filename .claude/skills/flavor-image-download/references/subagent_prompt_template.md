@@ -35,9 +35,10 @@ entries for the batch (12〜15 件が目安)。
    3. **shisha-oroshi.myshopify.com** (`cdn.shopify.com` の直 URL が取れたらそちら)
    4. **newemoshisha.com** (公式パッケージ多数)
    5. **smokedex.info** (網羅性高いが、汎用プレースホルダーに注意)
-   6. 楽天市場・Yahoo! ショッピングの商品画像
-   7. ブランド公式サイト
-   8. hookah.com / hookah-shisha.com / texashookah.com (米国物販)
+   6. **worldhookahmarket.com** (欧州物販、SEBERO・ロシア系ブランドが充実)
+   7. 楽天市場・Yahoo! ショッピングの商品画像
+   8. ブランド公式サイト
+   9. hookah.com / hookah-shisha.com / texashookah.com (米国物販)
 
 3. **品質チェック (却下基準)** — 迷ったらスキップ。ユーザーは「怪しいのは要らない」と明言しています。
    - ❌ SmokeDex の汎用プレースホルダー (缶のシルエットだけ / 画像なしアイコン)
