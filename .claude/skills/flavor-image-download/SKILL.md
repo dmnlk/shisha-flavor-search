@@ -169,10 +169,11 @@ npx tsx .claude/skills/flavor-image-download/scripts/verify_images.ts
 3. **shisha-mart.com** (日本) — 正規物販、画像品質高
 4. **shisha-oroshi.myshopify.com** (日本) — 卸売、画像多め
 5. **newemoshisha.com** (日本) — 専門店、公式パッケージ写真が多い
-6. **楽天市場 / Yahoo! ショッピング** (`site:rakuten.co.jp` / `site:shopping.yahoo.co.jp`)
-7. **sisha-zanmai.com / shisha-sun.net / ptbn.jp** など日本のシーシャ専門店
-8. **ブランド公式サイト** (例: `al-fakher.com`, `starbuzztobacco.com`)
-9. **hookah.com / hookah-shisha.com / texashookah.com** など米国物販
+6. **worldhookahmarket.com** (欧州) — SEBERO・ロシア系・中東ブランドが充実
+7. **楽天市場 / Yahoo! ショッピング** (`site:rakuten.co.jp` / `site:shopping.yahoo.co.jp`)
+8. **sisha-zanmai.com / shisha-sun.net / ptbn.jp** など日本のシーシャ専門店
+9. **ブランド公式サイト** (例: `al-fakher.com`, `starbuzztobacco.com`)
+10. **hookah.com / hookah-shisha.com / texashookah.com** など米国物販
 
 同じ画像が複数ソースにあれば **日本の物販サイト優先**。商品画像の構図/解像度のブレが少なく、日本語フレーバー名に正確に紐づいていることが多い。
 
