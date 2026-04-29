@@ -261,6 +261,12 @@ IDs: 445, 446, 447, 453, 623, 625, 638, 641, 653, 659
 | Starbuzz | iconhookah.com, thehookahlab.com, tobaccostock.com | Shopify CDN 直 URL |
 | Tangiers | hookahvault.com, iconhookah.com | Tangiers Noir は hookahvault が充実 |
 | Al Waha | elwano.de | 欧州卸、現行ラインは高カバレッジ |
+| Afzal | **soex.com** (メーカー直), iconhookah.com, thehookahlab.com | soex.com は WordPress 画像 URL が記述的で信頼性高 |
+| Mazaya | iconhookah.com, thehookahlab.com, worldhookahmarket.com | `Resource_Service_XX` ファイル名だが商品ページ紐付きは正確 |
+| Khalil Maamoon | **khalilmamoon.com** (公式 Shopify) | CDN URL が商品名ベース (例: `black-orange_grande.jpg`) で最も信頼性高 |
+| Golden Layalina | **kalyan-hut.ru** (ロシア物販) | フレーバー名ベースの URL で一致検証しやすい |
+| Layalina Ya Layl | htreviews.org, layalinaus.com | 個別フレーバー写真がネット上に極めて少ない |
+| **Panorama** | *(取得不可)* | 地域限定流通でネット上に商品写真がほぼ存在しない → スキップ推奨 |
 
 ## 落とし穴
 
@@ -271,6 +277,9 @@ IDs: 445, 446, 447, 453, 623, 625, 638, 641, 653, 659
 - **類似商品名罠**: ブランド内に名前が似た別フレーバーが存在する場合がある (例: Haze "Mint" と "Mint Supreme"、"Peach" と "Peach Cooler")。URL のファイル名に別フレーバーの名前が入っていたら却下
 - **Haze Cheech & Chong ライン**: 5starhookah.com は "HeyMan" 画像を Cheech & Chong 全バリアント共通で返す。"Hey Man" (ID 2758) にのみ使用し、他の Cheech & Chong フレーバーへの流用は却下
 - **ブランチ名衝突**: 同日 2 回目以降の実行では `images/flavor-YYYYMMDD` が既存の場合がある。`b`, `c` と suffix を付けて回避する (ステップ 7 参照)
+- **kalyan-hut.ru リサイズキャッシュ**: URL パスに `resize_cache/iblock/XXX/200_230_1/` が入る thumbnail URL が取れる。15KB 程度だが magic bytes は正常 JPEG。採用可
+- **layalinaus.com pimg.php**: `pimg.php?o=p&m=limit&w=300&h=300&s=1/img/p/...` 形式の PHP 画像プロキシは `.png` として保存可能。HTML エンティティ `&amp;` を `&` に正規化してから使うこと
+- **Panorama ブランド**: ネット上に商品写真がほぼ存在しないため収集対象外。Haiku エージェントを投入しても空リストが返る
 - **サイズ肥大**: 2 MB 超の画像は次のコマンドで事前圧縮するのが望ましい:
   ```bash
   magick <file> -resize '1024x1024>' -quality 85 <file>
