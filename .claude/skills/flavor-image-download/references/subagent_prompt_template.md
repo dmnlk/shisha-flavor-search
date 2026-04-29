@@ -3,7 +3,7 @@
 Pass this to `general-purpose` subagents via the Agent tool with `model: "haiku"`.
 Replace `{{FLAVORS}}` with a JSON array of `{ id, productName, manufacturer, brandSlug }` entries (20〜25 件が目安)。
 
-**重要**: このサブエージェントは URL を探して返すだけです。curl・ファイル保存・ファイル検証は一切行わないこと。
+**重要**: このサブエージェントは URL を探して返すだけです。**使えるツールは WebSearch と WebFetch のみ**。curl・ファイル保存・ファイル検証は一切行わないこと。
 
 ---
 
@@ -29,7 +29,13 @@ Replace `{{FLAVORS}}` with a JSON array of `{ id, productName, manufacturer, bra
    - `"<productName>" site:rakuten.co.jp`
    - 日本語フレーバー名が含まれていれば日本語でもそのまま検索
 
-2. **採用候補の画像 URL を選ぶ**。優先順:
+2. WebSearch の結果が商品ページの URL を返した場合、**WebFetch でそのページを取得**して `<img>` タグや `og:image` から直接画像 URL を抽出する。
+   - 検索結果に直接画像 URL (`*.jpg`, `*.png` 等) が含まれていれば WebFetch は不要
+   - Shopify 系サイト: `cdn.shopify.com/...` の直 URL を優先
+   - insales-cdn.com 系 (hookahhub.store 等): `static.insales-cdn.com/...` の URL を使う
+   - Next.js の `/_next/image?url=...` 形式は使用不可 — 元の `url=` パラメータを URL デコードして実 URL を使う
+
+3. **採用候補の画像 URL を選ぶ**。優先順:
    1. **htreviews.org** (レビュー写真、正確な商品紐付け)
    2. **shisha-mart.com** (日本の正規物販、画像品質高)
    3. **shisha-oroshi.myshopify.com** (`cdn.shopify.com` の直 URL があればそちら)
@@ -40,7 +46,7 @@ Replace `{{FLAVORS}}` with a JSON array of `{ id, productName, manufacturer, bra
    8. ブランド公式サイト
    9. hookah.com / hookah-shisha.com / texashookah.com (米国物販)
 
-3. **却下基準** — 迷ったらスキップ (URL を返さない):
+4. **却下基準** — 迷ったらスキップ (URL を返さない):
    - ❌ SmokeDex の汎用プレースホルダー (缶のシルエットだけ / 画像なしアイコン)
    - ❌ 人物が主体 / ラウンジ内観 / 使用中シーン
    - ❌ 別商品 / 別フレーバー / パッケージが明らかに違う
@@ -50,7 +56,7 @@ Replace `{{FLAVORS}}` with a JSON array of `{ id, productName, manufacturer, bra
    - ✅ パッケージが正面から大きく写っている、ブランドロゴとフレーバー名が読める
    - ✅ `.png` `.jpg` `.jpeg` `.webp` `.avif` で終わる直接画像 URL
 
-4. **拡張子を判定する**:
+5. **拡張子を判定する**:
    - URL の末尾 (クエリ文字列 `?...` を除いた部分) から拡張子を判定
    - 不明なら `"jpg"` を使用
 

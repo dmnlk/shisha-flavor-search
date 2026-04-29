@@ -92,7 +92,7 @@ for i, b in enumerate(batches):
 
 プロンプト本文は [references/subagent_prompt_template.md](references/subagent_prompt_template.md) を `{{FLAVORS}}` プレースホルダーを JSON で置換して使う。
 
-**並列数の目安**: 100 件なら **4〜5 並列**（1 エージェント 20〜25 件）。サブエージェントが WebSearch だけなので 1 体あたりのコンテキストが小さく、過剰な並列化は不要。
+**並列数の目安**: 100 件なら **4〜5 並列**（1 エージェント 20〜25 件）。サブエージェントは WebSearch + WebFetch を使うため、1 体あたりのコンテキストが増える場合があるが、Haiku なので許容範囲。
 
 ### 4. URL 集約
 
