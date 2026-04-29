@@ -145,14 +145,48 @@ npx tsx .claude/skills/flavor-image-download/scripts/verify_images.ts
 
 不正ファイルは削除候補として提示 → ユーザー確認のうえ削除。
 
-### 7. 最終レポート
+### 7. コミット & PR 作成
+
+検証が通ったら **自動的に** コミットして PR を作る（ユーザーへの確認不要）。
+
+```bash
+# 1. ブランチ作成（main から）
+git checkout -b images/flavor-$(date +%Y%m%d)
+
+# 2. 追加された画像をステージ
+git add public/images/flavors/
+
+# 3. コミット（追加件数とブランドを記載）
+git commit -m "feat(images): add <N> flavor images (<brand1>, <brand2>, ...)
+
+Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>"
+
+# 4. PR 作成
+gh pr create \
+  --title "feat(images): add <N> flavor images (<brand1>, <brand2>, ...)" \
+  --body "$(cat <<'EOF'
+## Summary
+- <N> flavor images added
+- Brands covered: <brand1>, <brand2>, ...
+- Sources: <source1>, <source2>, ...
+
+## Remaining missing
+- <M> flavors still without images (list top examples)
+
+🤖 Generated with [Claude Code](https://claude.com/claude-code)
+EOF
+)"
+```
+
+PR URL をユーザーに提示する。
+
+### 8. 最終レポート
 
 - 追加できた件数と合計ファイルサイズ
 - ブランド別成功率
 - 残った代表例
 - 怪しい保存画像 (10KB 未満など) の再確認推奨リスト
-
-`git status` で差分を添えて、コミット要否を確認。
+- PR URL
 
 ## 命名規則 (重要)
 
@@ -217,4 +251,4 @@ npx tsx .claude/skills/flavor-image-download/scripts/verify_images.ts
 - ステップ3 着手時: 「N 件を Y 個の Haiku サブエージェントに分けて URL 収集開始（ダウンロードはその後 bash で実行）」
 - ステップ4 完了時: URL 収集 N 件 / 見つからず M 件
 - ステップ5 完了時: ダウンロード成功 N 件 / 失敗 M 件
-- ステップ7 終了時: `git status` + 代表的な保存画像パス、コミット要否を確認
+- ステップ7 終了時: ブランチ作成 → コミット → PR 作成を自動実行し、PR URL を報告
