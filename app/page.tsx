@@ -3,6 +3,8 @@ import path from 'node:path'
 
 import ClientHome from './ClientHome'
 import HomeSections from '../components/home/HomeSections'
+import { getManufacturers } from '../data/shishaMethods'
+import { shishaData } from '../data/shishaData'
 
 function getLastDataUpdated(): string | null {
   try {
@@ -19,8 +21,14 @@ function getLastDataUpdated(): string | null {
 
 export default function Home() {
   const lastDataUpdated = getLastDataUpdated()
+  const initialManufacturers = getManufacturers()
+  const initialTotalItems = (shishaData as unknown[]).length
   return (
-    <ClientHome lastDataUpdated={lastDataUpdated}>
+    <ClientHome
+      lastDataUpdated={lastDataUpdated}
+      initialManufacturers={initialManufacturers}
+      initialTotalItems={initialTotalItems}
+    >
       <HomeSections />
     </ClientHome>
   )
