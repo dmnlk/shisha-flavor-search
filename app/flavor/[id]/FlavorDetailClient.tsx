@@ -1,6 +1,5 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -34,12 +33,7 @@ export default function FlavorDetailClient({ flavor, related = [] }: FlavorDetai
         </header>
 
         {/* Entry */}
-        <motion.article
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.25 }}
-          className="grid grid-cols-12 gap-0 border-b border-ink-900 dark:border-ink-100"
-        >
+        <article className="grid grid-cols-12 gap-0 border-b border-ink-900 dark:border-ink-100">
           <figure className="col-span-12 md:col-span-7 md:border-r border-rule-200 dark:border-rule-800 relative bg-paper-50 dark:bg-paper-900">
             <div className="relative aspect-[3/4] md:aspect-auto md:h-full md:min-h-[640px]">
               {flavor.imageUrl ? (
@@ -52,7 +46,7 @@ export default function FlavorDetailClient({ flavor, related = [] }: FlavorDetai
                   priority
                 />
               ) : (
-                <NoImage label="No image on file" />
+                <NoImage label="No image on file" priority />
               )}
             </div>
             <figcaption className="absolute bottom-0 left-0 right-0 px-4 py-2 border-t border-rule-200 dark:border-rule-800 bg-paper-0/95 dark:bg-paper-950/95 backdrop-blur-sm font-mono-tight text-[10px] uppercase tracking-[0.14em] text-ink-500 dark:text-ink-400 flex items-center justify-between nums">
@@ -119,7 +113,7 @@ export default function FlavorDetailClient({ flavor, related = [] }: FlavorDetai
               </div>
             </div>
           </div>
-        </motion.article>
+        </article>
 
         {related.length > 0 && (
           <section className="mt-16">

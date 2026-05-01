@@ -1,10 +1,9 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { MouseEvent } from 'react'
+import { type CSSProperties, MouseEvent } from 'react'
 
 import { brandSlug } from '../lib/utils/brandNormalizer'
 import type { ShishaFlavor } from '../types/shisha'
@@ -36,11 +35,9 @@ export default function ShishaCard({ flavor, onManufacturerClick, index = 0 }: S
   }
 
   return (
-    <motion.article
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ delay: Math.min(index * 0.02, 0.3), duration: 0.25 }}
-      className="group"
+    <article
+      className="group animate-card-in"
+      style={{ '--card-delay': `${Math.min(index * 20, 300)}ms` } as CSSProperties}
     >
       <Link
         href={`/flavor/${flavor.id}`}
@@ -95,6 +92,6 @@ export default function ShishaCard({ flavor, onManufacturerClick, index = 0 }: S
           </div>
         </div>
       </Link>
-    </motion.article>
+    </article>
   )
 }

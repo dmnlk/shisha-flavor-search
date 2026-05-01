@@ -6,7 +6,7 @@ import { useSearchParams, useRouter } from 'next/navigation'
 import { useState, useEffect, Suspense, type ReactNode } from 'react'
 
 import BrandList from '../components/BrandList'
-import LoadingSpinner from '../components/LoadingSpinner'
+import HeroFallback from '../components/home/HeroFallback'
 import SearchBar from '../components/SearchBar'
 import ShishaCard from '../components/ShishaCard'
 import SkeletonGrid from '../components/SkeletonGrid'
@@ -22,23 +22,26 @@ interface SearchParams {
 interface HomeContentProps {
   editorialSections?: ReactNode
   lastDataUpdated?: string | null
+  initialManufacturers?: string[]
+  initialTotalItems?: number
 }
 
-function HomeContent({ editorialSections, lastDataUpdated }: HomeContentProps) {
+function HomeContent({ editorialSections, lastDataUpdated, initialManufacturers = [], initialTotalItems = 0 }: HomeContentProps) {
   const searchParams = useSearchParams()
   const router = useRouter()
 
   const [flavors, setFlavors] = useState<ShishaFlavor[]>([])
   const [loading, setLoading] = useState(false)
   const [isSearching, setIsSearching] = useState(false)
-  const [manufacturers, setManufacturers] = useState<string[]>([])
+  const [manufacturers, setManufacturers] = useState<string[]>(initialManufacturers)
   const [currentPage, setCurrentPage] = useState(parseInt(searchParams.get('page') || '1'))
   const [totalPages, setTotalPages] = useState(0)
-  const [totalResults, setTotalResults] = useState(0)
+  const [totalResults, setTotalResults] = useState(initialTotalItems)
   const [selectedManufacturer, setSelectedManufacturer] = useState(searchParams.get('manufacturer') || '')
   const [searchQuery, setSearchQuery] = useState(searchParams.get('query') || '')
 
   useEffect(() => {
+    if (initialManufacturers.length > 0) return
     const fetchManufacturers = async () => {
       try {
         const response = await fetch('/api/manufacturers')
@@ -49,7 +52,7 @@ function HomeContent({ editorialSections, lastDataUpdated }: HomeContentProps) {
       }
     }
     fetchManufacturers()
-  }, [])
+  }, [initialManufacturers.length])
 
   const handleSearch = async ({ query = '', manufacturer = undefined, page = undefined, searchType = 'all' }: SearchParams) => {
     try {
@@ -178,12 +181,7 @@ function HomeContent({ editorialSections, lastDataUpdated }: HomeContentProps) {
         </header>
 
         {/* Hero */}
-        <motion.section
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.35 }}
-          className="grid grid-cols-12 gap-0 border-b border-ink-900 dark:border-ink-100"
-        >
+        <section className="grid grid-cols-12 gap-0 border-b border-ink-900 dark:border-ink-100">
           <div className="col-span-12 lg:col-span-8 lg:border-r lg:border-rule-200 lg:dark:border-rule-800 py-10 lg:py-14 lg:pr-10">
             <p className="font-mono-tight text-[10px] uppercase tracking-[0.2em] text-ember-500 mb-5">
               § 001 · The Ledger
@@ -243,7 +241,7 @@ function HomeContent({ editorialSections, lastDataUpdated }: HomeContentProps) {
               </div>
             )}
           </aside>
-        </motion.section>
+        </section>
 
         {/* Editorial sections (Featured / Latest / Origins / Editor's Picks) */}
         {!searchQuery && !selectedManufacturer && editorialSections && (
@@ -366,16 +364,25 @@ function HomeContent({ editorialSections, lastDataUpdated }: HomeContentProps) {
 interface ClientHomeProps {
   children?: ReactNode
   lastDataUpdated?: string | null
+  initialManufacturers?: string[]
+  initialTotalItems?: number
 }
 
-export default function ClientHome({ children, lastDataUpdated }: ClientHomeProps) {
+export default function ClientHome({ children, lastDataUpdated, initialManufacturers = [], initialTotalItems = 0 }: ClientHomeProps) {
   return (
     <Suspense fallback={
-      <div className="min-h-screen flex justify-center items-center bg-paper-0 dark:bg-paper-950">
-        <LoadingSpinner />
-      </div>
+      <HeroFallback
+        initialTotalItems={initialTotalItems}
+        initialBrandsCount={initialManufacturers.length}
+        lastDataUpdated={lastDataUpdated ?? null}
+      />
     }>
-      <HomeContent editorialSections={children} lastDataUpdated={lastDataUpdated} />
+      <HomeContent
+        editorialSections={children}
+        lastDataUpdated={lastDataUpdated}
+        initialManufacturers={initialManufacturers}
+        initialTotalItems={initialTotalItems}
+      />
     </Suspense>
   )
 }

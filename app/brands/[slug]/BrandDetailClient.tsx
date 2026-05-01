@@ -1,6 +1,5 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useMemo, useState } from 'react'
@@ -59,12 +58,7 @@ export default function BrandDetailClient({ slug, brandName, flavors, imageUrl, 
         </header>
 
         {/* Hero */}
-        <motion.section
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.25 }}
-          className="grid grid-cols-12 gap-0 border-b border-ink-900 dark:border-ink-100"
-        >
+        <section className="grid grid-cols-12 gap-0 border-b border-ink-900 dark:border-ink-100">
           <div className="col-span-12 md:col-span-8 md:border-r md:border-rule-200 md:dark:border-rule-800 py-10 lg:py-14 md:pr-10">
             <p className="font-mono-tight text-[10px] uppercase tracking-[0.2em] text-ember-500 mb-5">
               § Brand · {flavors.length} flavors on file
@@ -109,6 +103,7 @@ export default function BrandDetailClient({ slug, brandName, flavors, imageUrl, 
                   src={imageUrl as string}
                   alt={`${brandName} logo`}
                   fill
+                  priority
                   className="object-contain p-8 sm:p-10"
                   sizes="(max-width: 768px) 100vw, 33vw"
                   onError={() => setImageError(true)}
@@ -140,7 +135,7 @@ export default function BrandDetailClient({ slug, brandName, flavors, imageUrl, 
               </div>
             </div>
           </aside>
-        </motion.section>
+        </section>
 
         {/* In-brand search */}
         <div className="mt-10 border-b border-rule-200 dark:border-rule-800">

@@ -1,9 +1,8 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useState } from 'react'
+import { type CSSProperties, useState } from 'react'
 
 import { brandSlug } from '../lib/utils/brandNormalizer'
 
@@ -28,10 +27,9 @@ export default function BrandCard({ name, count, sampleFlavors, imageUrl, index 
   const initials = getBrandInitials(name)
 
   return (
-    <motion.article
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ delay: Math.min(index * 0.015, 0.3), duration: 0.25 }}
+    <article
+      className="animate-card-in"
+      style={{ '--card-delay': `${Math.min(index * 15, 300)}ms` } as CSSProperties}
     >
       <Link
         href={`/brands/${brandSlug(name)}`}
@@ -77,6 +75,6 @@ export default function BrandCard({ name, count, sampleFlavors, imageUrl, index 
           )}
         </div>
       </Link>
-    </motion.article>
+    </article>
   )
 }
