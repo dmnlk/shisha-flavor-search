@@ -1,6 +1,5 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { useMemo, useState } from 'react'
 
@@ -59,12 +58,7 @@ export default function BrandsClient({ brands }: BrandsClientProps) {
         </header>
 
         {/* Hero */}
-        <motion.section
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.35 }}
-          className="grid grid-cols-12 gap-0 border-b border-ink-900 dark:border-ink-100"
-        >
+        <section className="grid grid-cols-12 gap-0 border-b border-ink-900 dark:border-ink-100">
           <div className="col-span-12 lg:col-span-8 lg:border-r lg:border-rule-200 lg:dark:border-rule-800 py-10 lg:py-14 lg:pr-10">
             <p className="font-mono-tight text-[10px] uppercase tracking-[0.2em] text-ember-500 mb-5">
               § 002 · The Brands
@@ -110,7 +104,7 @@ export default function BrandsClient({ brands }: BrandsClientProps) {
               </p>
             </div>
           </aside>
-        </motion.section>
+        </section>
 
         {/* Controls */}
         <section className="py-10 grid grid-cols-12 gap-4 border-b border-rule-200 dark:border-rule-800">
