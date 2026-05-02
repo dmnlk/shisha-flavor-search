@@ -1,22 +1,14 @@
-import { readFileSync } from 'node:fs'
-import path from 'node:path'
-
 import ClientHome from './ClientHome'
 import HomeSections from '../components/home/HomeSections'
+import updateState from '../data/generated/updateState.json'
 import { getManufacturers } from '../data/shishaMethods'
 import { shishaData } from '../data/shishaData'
 
 function getLastDataUpdated(): string | null {
-  try {
-    const statePath = path.join(process.cwd(), '.claude', 'shisha-update-state.json')
-    const state = JSON.parse(readFileSync(statePath, 'utf-8'))
-    const iso = state.last_data_updated as string | undefined
-    if (!iso) return null
-    const d = new Date(iso)
-    return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`
-  } catch {
-    return null
-  }
+  const iso = updateState.lastDataUpdated
+  if (!iso) return null
+  const d = new Date(iso)
+  return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`
 }
 
 export default function Home() {

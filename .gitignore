@@ -30,7 +30,11 @@ yarn-error.log*
 .env*.local
 .env
 
-# vercel
+# cloudflare / opennext
+.open-next/
+.wrangler/
+
+# vercel (legacy; remove once migration is verified)
 .vercel
 
 # typescript

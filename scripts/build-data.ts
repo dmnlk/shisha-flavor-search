@@ -10,7 +10,15 @@
  *   - data/generated/brands.json
  *       /api/brands が参照するブランド一覧 (name, slug, count, sampleFlavors)。
  *       これにより brands API から 1.4MB の shishaData 依存を外せる。
+ *   - data/generated/updateState.json
+ *       .claude/shisha-update-state.json から lastDataUpdated と lastAddedIds
+ *       だけを抽出。ランタイム (Cloudflare Workers) で node:fs を呼ばずに済むよう
+ *       ビルド時にスナップショット化する。
+ *   - data/generated/brandImageMap.json
+ *       public/images/brands/ を走査して slug → 公開 URL のマップを作る。
+ *       同上、ランタイムで readdirSync を呼ばないようにするため。
  */
+import { existsSync, readdirSync, readFileSync } from 'node:fs'
 import { mkdir, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -41,6 +49,13 @@ interface GeneratedBrand {
   count: number
   sampleFlavors: string[]
 }
+
+interface UpdateStateSnapshot {
+  lastDataUpdated: string | null
+  lastAddedIds: number[]
+}
+
+const BRAND_IMAGE_EXTENSIONS = new Set(['.png', '.jpg', '.jpeg', '.webp', '.svg', '.avif'])
 
 function buildSearchIndex(data: ShishaFlavor[]): IndexedFlavor[] {
   return data.map(item => {
@@ -87,11 +102,40 @@ function buildBrandsSummary(data: ShishaFlavor[]): GeneratedBrand[] {
   })
 }
 
+function buildUpdateStateSnapshot(): UpdateStateSnapshot {
+  const statePath = path.join(ROOT, '.claude', 'shisha-update-state.json')
+  try {
+    const raw = JSON.parse(readFileSync(statePath, 'utf-8')) as Record<string, unknown>
+    const iso = typeof raw.last_data_updated === 'string' ? raw.last_data_updated : null
+    const lastAddedIds = Array.isArray(raw.last_added_ids)
+      ? (raw.last_added_ids as unknown[]).filter((v): v is number => typeof v === 'number')
+      : []
+    return { lastDataUpdated: iso, lastAddedIds }
+  } catch {
+    return { lastDataUpdated: null, lastAddedIds: [] }
+  }
+}
+
+function buildBrandImageMap(): Record<string, string> {
+  const dir = path.join(ROOT, 'public', 'images', 'brands')
+  if (!existsSync(dir)) return {}
+  const entries: Record<string, string> = {}
+  for (const file of readdirSync(dir)) {
+    const ext = path.extname(file).toLowerCase()
+    if (!BRAND_IMAGE_EXTENSIONS.has(ext)) continue
+    const slug = path.basename(file, ext).toLowerCase()
+    entries[slug] = `/images/brands/${file}`
+  }
+  return entries
+}
+
 async function main(): Promise<void> {
   const data = shishaData as ShishaFlavor[]
 
   const searchIndex = buildSearchIndex(data)
   const brands = buildBrandsSummary(data)
+  const updateState = buildUpdateStateSnapshot()
+  const brandImageMap = buildBrandImageMap()
 
   await mkdir(OUT_DIR, { recursive: true })
   await writeFile(
@@ -102,9 +146,17 @@ async function main(): Promise<void> {
     path.join(OUT_DIR, 'brands.json'),
     JSON.stringify(brands)
   )
+  await writeFile(
+    path.join(OUT_DIR, 'updateState.json'),
+    JSON.stringify(updateState)
+  )
+  await writeFile(
+    path.join(OUT_DIR, 'brandImageMap.json'),
+    JSON.stringify(brandImageMap)
+  )
 
   console.warn(
-    `[build-data] searchIndex=${searchIndex.length} flavors, brands=${brands.length}`
+    `[build-data] searchIndex=${searchIndex.length} flavors, brands=${brands.length}, brandImages=${Object.keys(brandImageMap).length}, lastDataUpdated=${updateState.lastDataUpdated ?? 'null'}`
   )
 }
 

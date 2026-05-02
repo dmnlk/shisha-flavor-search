@@ -37,3 +37,35 @@ jobs:
       
     - name: Build project
       run: pnpm build
+
+  deploy:
+    needs: test
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v6
+
+    - name: Install pnpm
+      uses: pnpm/action-setup@v6
+      with:
+        version: 10
+
+    - name: Use Node.js
+      uses: actions/setup-node@v6
+      with:
+        node-version-file: '.node-version'
+        cache: 'pnpm'
+
+    - name: Install dependencies
+      run: pnpm install --frozen-lockfile
+
+    - name: Build for Cloudflare Workers
+      run: pnpm exec opennextjs-cloudflare build
+
+    - name: Deploy to Cloudflare Workers
+      uses: cloudflare/wrangler-action@v3
+      with:
+        apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        command: deploy
