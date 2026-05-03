@@ -1,10 +1,8 @@
-import { readFileSync } from 'node:fs'
-import path from 'node:path'
-
 import { BRAND_DESCRIPTIONS } from './brandDescriptions'
 import { getBrandImageUrl } from './brandImages'
 import { EDITORS_PICKS } from './curatedPicks'
 import { resolveFlavorImage } from './flavorImages'
+import updateState from './generated/updateState.json'
 import { shishaData } from './shishaData'
 import { brandSlug, getUniqueBrands, normalizeBrandForSearch, normalizeBrandName } from '../lib/utils/brandNormalizer'
 import { getCountryDisplay } from '../lib/utils/countryDisplay'
@@ -12,8 +10,8 @@ import type { ShishaFlavor } from '../types/shisha'
 
 /**
  * Server-only helpers for the home page editorial sections.
- * Imports `data/brandImages` / `data/flavorImages` which use `node:fs`,
- * so this module must only be consumed from server components.
+ * Imports build-time generated JSON for fs-derived data so this module
+ * stays Workers-runtime-safe.
  */
 
 export interface FeaturedBrand {
@@ -85,13 +83,7 @@ export function getFeaturedBrands(limit = 8): FeaturedBrand[] {
 }
 
 function getLastAddedIds(): number[] {
-  try {
-    const statePath = path.join(process.cwd(), '.claude', 'shisha-update-state.json')
-    const state = JSON.parse(readFileSync(statePath, 'utf-8'))
-    return Array.isArray(state.last_added_ids) ? (state.last_added_ids as number[]) : []
-  } catch {
-    return []
-  }
+  return updateState.lastAddedIds
 }
 
 /**

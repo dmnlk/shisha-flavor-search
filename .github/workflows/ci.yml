@@ -2,8 +2,10 @@ name: CI
 
 on:
   push:
-    branches: [ main ]
+    # TODO: revert to [ main ] after Cloudflare migration is verified.
+    branches: [ main, claude/vercel-cloudflare-migration-fUsdt ]
   pull_request:
+  workflow_dispatch:
 
 jobs:
   test:
@@ -37,3 +39,39 @@ jobs:
       
     - name: Build project
       run: pnpm build
+
+  deploy:
+    needs: test
+    # TODO: drop the migration branch from this list after cutover.
+    if: |
+      github.event_name == 'workflow_dispatch'
+      || (github.event_name == 'push'
+          && (github.ref == 'refs/heads/main'
+              || github.ref == 'refs/heads/claude/vercel-cloudflare-migration-fUsdt'))
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v6
+
+    - name: Install pnpm
+      uses: pnpm/action-setup@v6
+      with:
+        version: 10
+
+    - name: Use Node.js
+      uses: actions/setup-node@v6
+      with:
+        node-version-file: '.node-version'
+        cache: 'pnpm'
+
+    - name: Install dependencies
+      run: pnpm install --frozen-lockfile
+
+    - name: Build for Cloudflare Workers
+      run: pnpm exec opennextjs-cloudflare build
+
+    - name: Deploy to Cloudflare Workers
+      env:
+        CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      run: pnpm exec opennextjs-cloudflare deploy
