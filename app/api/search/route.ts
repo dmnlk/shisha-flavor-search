@@ -16,7 +16,15 @@ export async function GET(request: NextRequest): Promise<NextResponse<SearchResp
     const url = new URL(request.url)
     const searchParams = url.searchParams
 
-    const query = searchParams.get('query') || ''
+    const queryParam = searchParams.get('query')
+    if (queryParam !== null && queryParam.length > 100) {
+      return NextResponse.json(
+        { error: 'Query parameter "query" must not exceed 100 characters' },
+        { status: 400 }
+      )
+    }
+
+    const query = queryParam || ''
     const manufacturer = searchParams.get('manufacturer') || ''
     const searchType = coerceSearchType(searchParams.get('searchType'))
     const pageParam = searchParams.get('page')
@@ -49,12 +57,19 @@ export async function GET(request: NextRequest): Promise<NextResponse<SearchResp
     const endIndex = Math.min(startIndex + itemsPerPage, totalItems)
     const paginatedItems = filteredData.slice(startIndex, endIndex).map(resolveFlavorImage)
 
-    return NextResponse.json({
-      items: paginatedItems,
-      totalPages,
-      currentPage: validPage,
-      totalItems,
-    })
+    return NextResponse.json(
+      {
+        items: paginatedItems,
+        totalPages,
+        currentPage: validPage,
+        totalItems,
+      },
+      {
+        headers: {
+          'Cache-Control': 'max-age=60, stale-while-revalidate=300',
+        },
+      }
+    )
   } catch (error) {
     console.error('Search error:', error)
     return NextResponse.json(
