@@ -157,7 +157,7 @@ function buildBrandImageMap(): Record<string, string> {
 
 async function main(): Promise<void> {
   if (isCacheHit()) {
-    console.log('[build-data] cache hit, skipping...')
+    console.warn('[build-data] cache hit, skipping...')
     return
   }
 
