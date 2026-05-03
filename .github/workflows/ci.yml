@@ -1,6 +1,9 @@
 name: CI
 
 on:
+  push:
+    branches: [ main ]
+  pull_request:
   workflow_dispatch:
 
 jobs:
@@ -9,28 +12,29 @@ jobs:
 
     steps:
     - uses: actions/checkout@v6
-    
+
     - name: Install pnpm
       uses: pnpm/action-setup@v6
       with:
         version: 10
-    
+
     - name: Use Node.js
       uses: actions/setup-node@v6
       with:
         node-version-file: '.node-version'
         cache: 'pnpm'
-        
+
     - name: Install dependencies
       run: pnpm install --frozen-lockfile
 
     - name: Type check
       run: pnpm typecheck
-      
+
     - name: Run linting
       run: pnpm lint
-      
+
     - name: Run tests
       run: pnpm test
-      
+
     - name: Build project
+      run: pnpm build
