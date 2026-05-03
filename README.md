@@ -22,6 +22,10 @@
 - **Framer Motion 12**: アニメーションライブラリ
 - **Heroicons 2**: アイコンライブラリ
 
+### インフラ
+- **Cloudflare Workers**: サーバーレスランタイム（`@opennextjs/cloudflare` 経由）
+- **Cloudflare Assets**: 静的アセット配信 + SSGキャッシュ
+
 ### 開発ツール
 - **Node.js 22.12.0 LTS**: 最新のLTSランタイム
 - **pnpm 10.x**: 高速で効率的なパッケージマネージャー
@@ -64,6 +68,12 @@ pnpm build
 # プロダクションサーバー起動
 pnpm start
 
+# Cloudflare Workers ローカルプレビュー
+pnpm preview
+
+# Cloudflare Workers 本番デプロイ
+pnpm deploy
+
 # テスト実行
 pnpm test
 
@@ -71,7 +81,7 @@ pnpm test
 pnpm test:watch
 
 # TypeScript型チェック
-npx tsc --noEmit
+pnpm typecheck
 
 # コード品質チェック
 pnpm lint
@@ -86,7 +96,8 @@ shisha-search/
 │   │   ├── search/          # 検索API (route.ts)
 │   │   ├── manufacturers/   # メーカー一覧API (route.ts)
 │   │   └── flavor/[id]/     # フレーバー詳細API (route.ts)
-│   ├── flavor/[id]/         # フレーバー詳細ページ (page.tsx)
+│   ├── brands/[slug]/       # ブランド詳細ページ（SSG）
+│   ├── flavor/[id]/         # フレーバー詳細ページ（動的SSR）
 │   ├── ClientHome.tsx       # クライアントサイドホームコンポーネント
 │   ├── layout.tsx           # ルートレイアウト
 │   ├── page.tsx             # ホームページ
@@ -98,16 +109,27 @@ shisha-search/
 ├── types/                   # TypeScript型定義
 │   └── shisha.ts            # データ型インターフェース
 ├── data/                    # データ層
-│   ├── shishaData.js        # フレーバーデータベース
-│   └── shishaMethods.ts     # データ操作ユーティリティ（TypeScript）
+│   ├── shishaData.js        # フレーバーデータベース（2.5MB+）
+│   ├── shishaMethods.ts     # データ操作ユーティリティ（TypeScript）
+│   ├── brandImages.ts       # ブランドロゴURL解決（サーバー専用）
+│   ├── brandDescriptions.ts # ブランド説明文（手動管理）
+│   ├── flavorImages.ts      # フレーバー画像URL解決
+│   ├── curatedPicks.ts      # Editor's Selection フレーバーリスト
+│   └── homeSections.ts      # トップページセクション構成
 ├── lib/                     # ライブラリとサービス
-│   ├── services/            # サービス層（TypeScript）
+│   ├── search/              # ファジー検索（Fuse.js）
+│   ├── services/            # テスト用モックデータ
 │   └── utils/               # ユーティリティ関数
+├── scripts/                 # ビルド補助スクリプト
+│   ├── build-data.ts        # searchIndex.json / brands.json 生成
+│   └── build/              # prebuild フック用スクリプト
 ├── .node-version            # Node.js バージョン指定
+├── open-next.config.ts      # Cloudflare Workers 設定
+├── wrangler.jsonc           # Wrangler（Cloudflare CLI）設定
 ├── postcss.config.js        # PostCSS設定（Tailwind v4対応）
 ├── tsconfig.json            # TypeScript設定
 └── public/                  # 静的ファイル
-    └── images/              # 画像アセット
+    └── images/              # 画像アセット（brands/ / flavors/）
 ```
 
 ## 🔍 主要機能の詳細
@@ -137,16 +159,20 @@ pnpm test
 pnpm test:ci
 
 # 特定のテストファイルを実行
-pnpm test components/ShishaCard.test.tsx
+pnpm test -- __tests__/ShishaCard.test.tsx
 ```
 
 ## 🚀 デプロイ
 
-本アプリケーションはVercelでのデプロイに最適化されています。
+本アプリケーションは **Cloudflare Workers** にデプロイされています（`@opennextjs/cloudflare` 使用）。
 
-1. Vercelアカウントでプロジェクトをインポート
-2. 環境変数を設定（必要な場合）
-3. デプロイ実行
+```bash
+# ローカルで Workers 動作確認
+pnpm preview
+
+# 本番環境へデプロイ
+pnpm deploy
+```
 
 ## 🤝 コントリビューション
 
