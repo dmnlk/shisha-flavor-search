@@ -6,6 +6,7 @@ import { brandSlug, getBrandImageUrl } from '../../../data/brandImages'
 import { resolveFlavorImage } from '../../../data/flavorImages'
 import { shishaData } from '../../../data/shishaData'
 import { normalizeBrandName } from '../../../lib/utils/brandNormalizer'
+import { escapeJsonLd } from '../../../lib/utils/jsonLd'
 import type { ShishaFlavor } from '../../../types/shisha'
 
 import BrandDetailClient from './BrandDetailClient'
@@ -71,14 +72,14 @@ export default async function BrandDetailPage({ params }: PageProps) {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Brand',
-    name: brand.displayName ?? '',
+    name: brand.displayName,
   }
 
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: escapeJsonLd(jsonLd) }}
       />
       <BrandDetailClient
         slug={slug.toLowerCase()}

@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import { resolveFlavorImage } from '../../../data/flavorImages'
 import { shishaData } from '../../../data/shishaData'
 import { normalizeBrandForSearch } from '../../../lib/utils/brandNormalizer'
+import { escapeJsonLd } from '../../../lib/utils/jsonLd'
 import type { ShishaFlavor } from '../../../types/shisha'
 
 import FlavorDetailClient from './FlavorDetailClient'
@@ -61,8 +62,8 @@ export default async function FlavorDetailPage({ params }: PageProps) {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Product',
-    name: flavor.productName ?? '',
-    brand: { '@type': 'Brand', name: flavor.manufacturer ?? '' },
+    name: flavor.productName,
+    brand: { '@type': 'Brand', name: flavor.manufacturer },
     description: flavor.description ?? '',
   }
 
@@ -70,7 +71,7 @@ export default async function FlavorDetailPage({ params }: PageProps) {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: escapeJsonLd(jsonLd) }}
       />
       <FlavorDetailClient flavor={flavor} related={related} />
     </>
