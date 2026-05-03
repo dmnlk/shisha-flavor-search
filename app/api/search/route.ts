@@ -16,15 +16,15 @@ export async function GET(request: NextRequest): Promise<NextResponse<SearchResp
     const url = new URL(request.url)
     const searchParams = url.searchParams
 
-    const q = searchParams.get('q')
-    if (q !== null && q.length > 100) {
+    const queryParam = searchParams.get('query')
+    if (queryParam !== null && queryParam.length > 100) {
       return NextResponse.json(
-        { error: 'Query parameter "q" must not exceed 100 characters' },
+        { error: 'Query parameter "query" must not exceed 100 characters' },
         { status: 400 }
       )
     }
 
-    const query = searchParams.get('query') || ''
+    const query = queryParam || ''
     const manufacturer = searchParams.get('manufacturer') || ''
     const searchType = coerceSearchType(searchParams.get('searchType'))
     const pageParam = searchParams.get('page')

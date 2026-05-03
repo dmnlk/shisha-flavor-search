@@ -22,7 +22,7 @@ const baseFuseOptions = {
   shouldSort: true,
   ignoreLocation: true,
   threshold: 0.45,
-  minMatchCharLength: 2,
+  minMatchCharLength: 1,
   useExtendedSearch: true,
 } as const
 
