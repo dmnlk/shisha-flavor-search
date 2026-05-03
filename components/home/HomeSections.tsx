@@ -1,3 +1,5 @@
+import dynamic from 'next/dynamic'
+
 import {
   getEditorsPicks,
   getFeaturedBrands,
@@ -8,7 +10,8 @@ import {
 import EditorsPicks from './EditorsPicks'
 import FeaturedBrands from './FeaturedBrands'
 import LatestFlavors from './LatestFlavors'
-import OriginShelf from './OriginShelf'
+
+const OriginShelf = dynamic(() => import('./OriginShelf'), { ssr: false })
 
 /**
  * Server component that assembles the curated editorial sections shown

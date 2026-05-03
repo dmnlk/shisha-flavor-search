@@ -18,7 +18,7 @@
  *       public/images/brands/ を走査して slug → 公開 URL のマップを作る。
  *       同上、ランタイムで readdirSync を呼ばないようにするため。
  */
-import { existsSync, readdirSync, readFileSync } from 'node:fs'
+import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs'
 import { mkdir, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -35,6 +35,32 @@ import type { ShishaFlavor } from '../types/shisha'
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const ROOT = path.resolve(__dirname, '..')
 const OUT_DIR = path.join(ROOT, 'data', 'generated')
+const CACHE_FILE = path.join(ROOT, '.build-cache')
+const DATA_SOURCE = path.join(ROOT, 'data', 'shishaData.js')
+
+function getSourceMtime(): string {
+  try {
+    return String(statSync(DATA_SOURCE).mtimeMs)
+  } catch {
+    return ''
+  }
+}
+
+function isCacheHit(): boolean {
+  if (!existsSync(CACHE_FILE)) return false
+  if (!existsSync(OUT_DIR)) return false
+  // Check all 4 expected output files exist
+  const expectedFiles = ['searchIndex.json', 'brands.json', 'updateState.json', 'brandImageMap.json']
+  for (const f of expectedFiles) {
+    if (!existsSync(path.join(OUT_DIR, f))) return false
+  }
+  const cached = readFileSync(CACHE_FILE, 'utf-8').trim()
+  return cached === getSourceMtime()
+}
+
+async function writeCache(): Promise<void> {
+  await writeFile(CACHE_FILE, getSourceMtime())
+}
 
 interface IndexedFlavor {
   id: number
@@ -130,6 +156,11 @@ function buildBrandImageMap(): Record<string, string> {
 }
 
 async function main(): Promise<void> {
+  if (isCacheHit()) {
+    console.log('[build-data] cache hit, skipping...')
+    return
+  }
+
   const data = shishaData as ShishaFlavor[]
 
   const searchIndex = buildSearchIndex(data)
@@ -154,6 +185,8 @@ async function main(): Promise<void> {
     path.join(OUT_DIR, 'brandImageMap.json'),
     JSON.stringify(brandImageMap)
   )
+
+  await writeCache()
 
   console.warn(
     `[build-data] searchIndex=${searchIndex.length} flavors, brands=${brands.length}, brandImages=${Object.keys(brandImageMap).length}, lastDataUpdated=${updateState.lastDataUpdated ?? 'null'}`
