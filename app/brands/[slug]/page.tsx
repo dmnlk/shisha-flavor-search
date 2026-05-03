@@ -50,9 +50,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!brand) {
     return { title: 'Brand not found | Shisha Flavor Ledger' }
   }
+  const title = `${brand.displayName} — ${brand.flavors.length} flavors | Shisha Flavor Ledger`
+  const description = `All ${brand.flavors.length} shisha flavors produced by ${brand.displayName}, indexed in the Shisha Flavor Ledger.`
   return {
-    title: `${brand.displayName} — ${brand.flavors.length} flavors | Shisha Flavor Ledger`,
-    description: `All ${brand.flavors.length} shisha flavors produced by ${brand.displayName}, indexed in the Shisha Flavor Ledger.`,
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      type: 'website',
+    },
   }
 }
 
@@ -61,13 +68,25 @@ export default async function BrandDetailPage({ params }: PageProps) {
   const brand = resolveBrand(slug)
   if (!brand) notFound()
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Brand',
+    name: brand.displayName ?? '',
+  }
+
   return (
-    <BrandDetailClient
-      slug={slug.toLowerCase()}
-      brandName={brand.displayName}
-      flavors={brand.flavors}
-      imageUrl={brand.imageUrl}
-      description={getBrandDescription(slug)}
-    />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <BrandDetailClient
+        slug={slug.toLowerCase()}
+        brandName={brand.displayName}
+        flavors={brand.flavors}
+        imageUrl={brand.imageUrl}
+        description={getBrandDescription(slug)}
+      />
+    </>
   )
 }

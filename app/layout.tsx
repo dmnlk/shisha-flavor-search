@@ -20,6 +20,16 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: 'Shisha Flavor Ledger',
   description: 'A ledger of shisha flavors — brand, grammage, price, origin.',
+  openGraph: {
+    type: 'website',
+    locale: 'ja_JP',
+    siteName: 'シーシャフレーバー検索',
+    title: 'Shisha Flavor Ledger',
+    description: 'A ledger of shisha flavors — brand, grammage, price, origin.',
+  },
+  twitter: {
+    card: 'summary',
+  },
 }
 
 interface RootLayoutProps {
