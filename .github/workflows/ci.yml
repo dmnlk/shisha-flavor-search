@@ -2,7 +2,8 @@ name: CI
 
 on:
   push:
-    branches: [ main ]
+    # TODO: revert to [ main ] after Cloudflare migration is verified.
+    branches: [ main, claude/vercel-cloudflare-migration-fUsdt ]
   pull_request:
   workflow_dispatch:
 
@@ -41,7 +42,12 @@ jobs:
 
   deploy:
     needs: test
-    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
+    # TODO: drop the migration branch from this list after cutover.
+    if: |
+      github.event_name == 'workflow_dispatch'
+      || (github.event_name == 'push'
+          && (github.ref == 'refs/heads/main'
+              || github.ref == 'refs/heads/claude/vercel-cloudflare-migration-fUsdt'))
     runs-on: ubuntu-latest
 
     steps:
