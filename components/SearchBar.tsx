@@ -75,6 +75,7 @@ export default function SearchBar({ onSearch, searchQuery = '', isSearching = fa
                 key={key}
                 type="button"
                 onClick={() => handleSearchTypeChange(key)}
+                aria-pressed={searchType === key}
                 className={`px-3 py-1.5 transition-colors ${
                   searchType === key
                     ? 'bg-ink-900 text-paper-0 dark:bg-ink-100 dark:text-paper-950'
@@ -99,6 +100,7 @@ export default function SearchBar({ onSearch, searchQuery = '', isSearching = fa
               onFocus={() => setIsFocused(true)}
               onBlur={() => setIsFocused(false)}
               placeholder={placeholder}
+              aria-label="フレーバーを検索"
               className="flex-1 bg-transparent font-sans-tight text-base sm:text-lg text-ink-950 dark:text-ink-50 placeholder:text-ink-300 dark:placeholder:text-ink-500 focus:outline-none py-3 px-3"
             />
             <div className="flex items-center gap-0 shrink-0 pr-1">

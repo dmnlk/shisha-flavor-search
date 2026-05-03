@@ -12,13 +12,17 @@ interface BrandListProps {
   onSelect: (_manufacturer: string) => void
 }
 
+function getTodaySeed(): number {
+  return parseInt(new Date().toISOString().slice(0, 10).replace(/-/g, ''), 10)
+}
+
 export default function BrandList({ manufacturers, selectedManufacturer, onSelect }: BrandListProps) {
   const [isExpanded, setIsExpanded] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
   const [randomSeed, setRandomSeed] = useState(0)
 
   useEffect(() => {
-    setRandomSeed(Math.random())
+    setRandomSeed(getTodaySeed())
   }, [])
 
   const popularBrands = useMemo(() => {
@@ -80,6 +84,7 @@ export default function BrandList({ manufacturers, selectedManufacturer, onSelec
         {manufacturers.length > 10 && (
           <button
             onClick={() => setIsExpanded(!isExpanded)}
+            aria-expanded={isExpanded}
             className="font-mono-tight text-[10px] uppercase tracking-[0.12em] px-2.5 py-1.5 border border-ember-500 text-ember-500 hover:bg-ember-500 hover:text-paper-0 transition-colors"
           >
             {isExpanded ? '— close' : `+${manufacturers.length - popularBrands.length} more`}
