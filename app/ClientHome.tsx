@@ -101,7 +101,7 @@ function HomeContent({ editorialSections, lastDataUpdated, initialManufacturers 
       if (pageToUse > 1) urlParams.set('page', pageToUse.toString())
 
       const newUrl = urlParams.toString() ? `?${urlParams.toString()}` : '/'
-      router.replace(newUrl, { scroll: false })
+      router.push(newUrl, { scroll: false })
     } catch (error) {
       console.error('Search failed:', error)
     } finally {

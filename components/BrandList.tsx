@@ -13,7 +13,8 @@ interface BrandListProps {
 }
 
 function getTodaySeed(): number {
-  return parseInt(new Date().toISOString().slice(0, 10).replace(/-/g, ''), 10)
+  const date = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Tokyo' })
+  return parseInt(date.replace(/-/g, ''), 10)
 }
 
 export default function BrandList({ manufacturers, selectedManufacturer, onSelect }: BrandListProps) {
@@ -85,6 +86,7 @@ export default function BrandList({ manufacturers, selectedManufacturer, onSelec
           <button
             onClick={() => setIsExpanded(!isExpanded)}
             aria-expanded={isExpanded}
+            aria-controls="brand-list-full"
             className="font-mono-tight text-[10px] uppercase tracking-[0.12em] px-2.5 py-1.5 border border-ember-500 text-ember-500 hover:bg-ember-500 hover:text-paper-0 transition-colors"
           >
             {isExpanded ? '— close' : `+${manufacturers.length - popularBrands.length} more`}
@@ -95,6 +97,7 @@ export default function BrandList({ manufacturers, selectedManufacturer, onSelec
       <AnimatePresence>
         {isExpanded && (
           <motion.div
+            id="brand-list-full"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
