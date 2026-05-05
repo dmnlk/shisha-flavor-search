@@ -42,13 +42,26 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
   const title = `${flavor.productName} — ${flavor.manufacturer} | Shisha Flavor Ledger`
   const description = `${flavor.manufacturer} / ${flavor.productName} · ${flavor.amount} · ${flavor.country} · ${flavor.price}`
+  const path = `/flavor/${flavor.id}`
+  const images = flavor.imageUrl
+    ? [{ url: flavor.imageUrl, alt: flavor.productName }]
+    : undefined
   return {
     title,
     description,
+    alternates: { canonical: path },
     openGraph: {
       title,
       description,
       type: 'website',
+      url: path,
+      images,
+    },
+    twitter: {
+      card: flavor.imageUrl ? 'summary_large_image' : 'summary',
+      title,
+      description,
+      images: flavor.imageUrl ? [flavor.imageUrl] : undefined,
     },
   }
 }

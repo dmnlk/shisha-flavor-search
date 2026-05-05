@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useMemo, useState } from 'react'
 
+import ShareOnX from '../../../components/ShareOnX'
 import ShishaCard from '../../../components/ShishaCard'
 import type { ShishaFlavor } from '../../../types/shisha'
 
@@ -80,13 +81,17 @@ export default function BrandDetailClient({ slug, brandName, flavors, imageUrl, 
                 </>
               )}
             </p>
-            <div className="mt-8 flex items-center gap-4">
+            <div className="mt-8 flex flex-wrap items-center gap-4">
               <Link
                 href="/brands"
                 className="font-mono-tight text-[11px] uppercase tracking-[0.14em] px-4 py-2 border border-rule-200 dark:border-rule-800 text-ink-600 dark:text-ink-300 hover:border-ember-500 hover:text-ember-500 transition-colors"
               >
                 ← All brands
               </Link>
+              <ShareOnX
+                text={`${brandName} — ${flavors.length} flavors`}
+                hashtags={['シーシャ', 'shisha']}
+              />
               <Link
                 href="/"
                 className="font-mono-tight text-[11px] uppercase tracking-[0.14em] text-ink-400 dark:text-ink-500 hover:text-ember-500 transition-colors"

@@ -4,6 +4,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 import NoImage from '../../../components/NoImage'
+import ShareOnX from '../../../components/ShareOnX'
 import ShishaCard from '../../../components/ShishaCard'
 import { brandSlug } from '../../../lib/utils/brandNormalizer'
 import type { ShishaFlavor } from '../../../types/shisha'
@@ -106,6 +107,16 @@ export default function FlavorDetailClient({ flavor, related = [] }: FlavorDetai
                   </dd>
                 </div>
               </dl>
+
+              <div className="py-6 border-b border-rule-200 dark:border-rule-800">
+                <p className="font-mono-tight text-[10px] uppercase tracking-[0.18em] text-ink-400 dark:text-ink-500 mb-3">
+                  Share
+                </p>
+                <ShareOnX
+                  text={`${flavor.productName} — ${flavor.manufacturer}`}
+                  hashtags={['シーシャ', 'shisha']}
+                />
+              </div>
 
               <div className="pt-6 font-mono-tight text-[10px] uppercase tracking-[0.14em] text-ink-400 dark:text-ink-500 flex items-center justify-between nums">
                 <span>Entry № {formatIndex(flavor.id)}</span>
