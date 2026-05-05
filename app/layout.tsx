@@ -17,9 +17,24 @@ const geistMono = Geist_Mono({
   display: 'swap',
 })
 
+const SITE_URL = (
+  process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'
+).replace(/\/$/, '')
+
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: 'Shisha Flavor Ledger',
   description: 'A ledger of shisha flavors — brand, grammage, price, origin.',
+  openGraph: {
+    type: 'website',
+    locale: 'ja_JP',
+    siteName: 'シーシャフレーバー検索',
+    title: 'Shisha Flavor Ledger',
+    description: 'A ledger of shisha flavors — brand, grammage, price, origin.',
+  },
+  twitter: {
+    card: 'summary',
+  },
 }
 
 interface RootLayoutProps {

@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import { resolveFlavorImage } from '../../../data/flavorImages'
 import { shishaData } from '../../../data/shishaData'
 import { normalizeBrandForSearch } from '../../../lib/utils/brandNormalizer'
+import { escapeJsonLd } from '../../../lib/utils/jsonLd'
 import type { ShishaFlavor } from '../../../types/shisha'
 
 import FlavorDetailClient from './FlavorDetailClient'
@@ -39,9 +40,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!flavor) {
     return { title: 'Flavor not found | Shisha Flavor Ledger' }
   }
+  const title = `${flavor.productName} — ${flavor.manufacturer} | Shisha Flavor Ledger`
+  const description = `${flavor.manufacturer} / ${flavor.productName} · ${flavor.amount} · ${flavor.country} · ${flavor.price}`
   return {
-    title: `${flavor.productName} — ${flavor.manufacturer} | Shisha Flavor Ledger`,
-    description: `${flavor.manufacturer} / ${flavor.productName} · ${flavor.amount} · ${flavor.country} · ${flavor.price}`,
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      type: 'website',
+    },
   }
 }
 
@@ -50,5 +58,22 @@ export default async function FlavorDetailPage({ params }: PageProps) {
   const flavor = findFlavor(id)
   if (!flavor) notFound()
   const related = findRelatedFlavors(flavor, RELATED_COUNT)
-  return <FlavorDetailClient flavor={flavor} related={related} />
+
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: flavor.productName,
+    brand: { '@type': 'Brand', name: flavor.manufacturer },
+    description: flavor.description ?? '',
+  }
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: escapeJsonLd(jsonLd) }}
+      />
+      <FlavorDetailClient flavor={flavor} related={related} />
+    </>
+  )
 }
