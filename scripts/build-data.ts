@@ -18,6 +18,7 @@
  *       public/images/brands/ を走査して slug → 公開 URL のマップを作る。
  *       同上、ランタイムで readdirSync を呼ばないようにするため。
  */
+import { createHash } from 'node:crypto'
 import { existsSync, readdirSync, readFileSync } from 'node:fs'
 import { mkdir, writeFile } from 'node:fs/promises'
 import path from 'node:path'
@@ -35,6 +36,53 @@ import type { ShishaFlavor } from '../types/shisha'
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const ROOT = path.resolve(__dirname, '..')
 const OUT_DIR = path.join(ROOT, 'data', 'generated')
+const CACHE_FILE = path.join(ROOT, '.build-cache')
+const DATA_SOURCE = path.join(ROOT, 'data', 'shishaData.js')
+const SCRIPT_PATH = path.join(ROOT, 'scripts', 'build-data.ts')
+
+const CACHE_VERSION = 1
+
+interface CacheShape {
+  version?: number
+  shishaDataHash?: string
+  scriptHash?: string
+}
+
+function fileHash(p: string): string {
+  return createHash('sha256').update(readFileSync(p)).digest('hex')
+}
+
+function loadCache(): CacheShape {
+  if (!existsSync(CACHE_FILE)) return {}
+  try {
+    return JSON.parse(readFileSync(CACHE_FILE, 'utf-8')) as CacheShape
+  } catch {
+    return {}
+  }
+}
+
+function isCacheHit(): boolean {
+  if (!existsSync(OUT_DIR)) return false
+  // Check all 4 expected output files exist
+  const expectedFiles = ['searchIndex.json', 'brands.json', 'updateState.json', 'brandImageMap.json']
+  for (const f of expectedFiles) {
+    if (!existsSync(path.join(OUT_DIR, f))) return false
+  }
+  const cache = loadCache()
+  if (cache.version !== CACHE_VERSION) return false
+  if (!cache.shishaDataHash || !cache.scriptHash) return false
+  return cache.shishaDataHash === fileHash(DATA_SOURCE)
+    && cache.scriptHash === fileHash(SCRIPT_PATH)
+}
+
+async function writeCache(): Promise<void> {
+  const payload: CacheShape = {
+    version: CACHE_VERSION,
+    shishaDataHash: fileHash(DATA_SOURCE),
+    scriptHash: fileHash(SCRIPT_PATH),
+  }
+  await writeFile(CACHE_FILE, JSON.stringify(payload, null, 2))
+}
 
 interface IndexedFlavor {
   id: number
@@ -130,6 +178,11 @@ function buildBrandImageMap(): Record<string, string> {
 }
 
 async function main(): Promise<void> {
+  if (isCacheHit()) {
+    console.warn('[build-data] cache hit, skipping...')
+    return
+  }
+
   const data = shishaData as ShishaFlavor[]
 
   const searchIndex = buildSearchIndex(data)
@@ -154,6 +207,8 @@ async function main(): Promise<void> {
     path.join(OUT_DIR, 'brandImageMap.json'),
     JSON.stringify(brandImageMap)
   )
+
+  await writeCache()
 
   console.warn(
     `[build-data] searchIndex=${searchIndex.length} flavors, brands=${brands.length}, brandImages=${Object.keys(brandImageMap).length}, lastDataUpdated=${updateState.lastDataUpdated ?? 'null'}`
