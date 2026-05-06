@@ -267,6 +267,9 @@ IDs: 445, 446, 447, 453, 623, 625, 638, 641, 653, 659
 | Golden Layalina | **kalyan-hut.ru** (ロシア物販) | フレーバー名ベースの URL で一致検証しやすい |
 | Layalina Ya Layl | htreviews.org, layalinaus.com | 個別フレーバー写真がネット上に極めて少ない。50g 箱の retail listing は層が薄く、layalinaus.com の `pimg.php` 経由でしか取れないことが多い |
 | **Azure** | *(歩留まり低)* | shishaData.js の名前 (Cucumelon, D Cherry, Life's Peach 等) は retailer 上で別名 (Cool Cucumber, Cherry Muffin, Carolina Peach) で出回っていることが多く、エージェントが似た名前の別商品を流用しがち。100g/250g 容量違いの混在もある。**ID 単位で厳密検証**するか、当面はスキップ |
+| Nirvana (Super Shisha) | **5starhookah.com** (`NSS_<Flavor_Name>.png` 形式) | 公式に近い flavor-art ラベル画像。ただし retailer の設定漏れで `NSS_Citrus_OD.png` を別フレーバーに割り当てるケース多発。ファイル名と productName の照合必須 |
+| Hookafina | **hookafina.com** (Shopify CDN), 5starhookah.com, thehookahlab.com | 公式現行ラインナップは ~22 SKU のみ。shishaData の古いリスト (Bahama Mama, Currant, Coconut, Cool Menthol 等) は大半廃番で取得不能。現行の Tutti Fruiti / Vanilla Shake / Watermelon Mint / Deja Blu / Tangy Peach 等のみ採用可 |
+| TickTock | **thehookahlab.com** (Shopify CDN) | `Tick-Tock-Shisha-Tobacco-<NAME>-<Description>_<uuid>_1024x.jpg` 形式でファイル名にフレーバー名が明示。信頼性高 |
 | **Panorama** | *(取得不可)* | 地域限定流通でネット上に商品写真がほぼ存在しない → スキップ推奨 |
 
 ## 落とし穴
@@ -283,6 +286,9 @@ IDs: 445, 446, 447, 453, 623, 625, 638, 641, 653, 659
 - **Panorama ブランド**: ネット上に商品写真がほぼ存在しないため収集対象外。Haiku エージェントを投入しても空リストが返る
 - **Hookah Vault のブランド汎用ロゴ罠**: hookahvault.com は商品個別写真が無いフレーバーで `azurelogo1_<uuid>.png` のようなブランドロゴ画像を返してくる。一見 Shopify CDN 直 URL に見えるが、ファイル名に商品名が含まれていなければ **却下**（プレースホルダー扱い）
 - **Azure 命名ミスマッチ**: shishaData.js のフレーバー名と retailer 上の販売名が一致しないことがある (例: "Cucumelon"→"Cool Cucumber"、"D Cherry"→"Cherry Muffin"、"Life's Peach"→"Carolina Peach"、"Melon Green Tea"→"Melon King"、"Lime Cola"→"Lime")。エージェントは「似た名前の別商品」を平気で流用するので、URL 集約時に **ファイル名と productName が一致するか必ず目視チェック**
+- **Hookafina の旧ラインナップ廃番**: shishaData.js の Hookafina エントリ (Bahama Mama / Blackberry Peach / Chocolate / Chocomint / Citrusberry / Coconut / Currant / Electric Lotus / Frostberry / Grenadine / Mai Tai / Mimosa / Peach Fuzzy Navel / Root Beer Float / S'more / Tijuana Sunrise / Vegas Love 等) は大半廃番。公式 hookafina.com の現行ラインナップ (~22 SKU) と照合し、現行品 (Tutti Fruiti, Vanilla Shake, Watermelon Mint, Deja Blu, Tangy Peach, Pinkberry, Dragon Fruit, Double Melon Blast, Orange Mint, Peppermint 等) のみ採用可
+- **Nirvana 5starhookah のフォールバック画像罠**: `NSS_Citrus_OD.png` を Schnozzberries / Smokin Dead / Spirit Mind Soul / Ice Bon Bon など複数フレーバーに使い回す現象あり。`NSS_<Flavor_Name>.png` でフレーバー名がファイル名に明示されているもののみ採用
+- **`.webp` 拡張子で実体 JPEG 罠**: 5starhookah.com は `.webp` 拡張子で配信しているが実体が JPEG のファイルがある (例: `hookafinavanillashake.webp`)。`verify_images.ts` が catch する。検出されたら拡張子を `.jpg` にリネームすればよい
 - **サイズ肥大**: 2 MB 超の画像は次のコマンドで事前圧縮するのが望ましい:
   ```bash
   magick <file> -resize '1024x1024>' -quality 85 <file>
