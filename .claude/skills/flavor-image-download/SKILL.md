@@ -265,7 +265,8 @@ IDs: 445, 446, 447, 453, 623, 625, 638, 641, 653, 659
 | Mazaya | iconhookah.com, thehookahlab.com, worldhookahmarket.com | `Resource_Service_XX` ファイル名だが商品ページ紐付きは正確 |
 | Khalil Maamoon | **khalilmamoon.com** (公式 Shopify) | CDN URL が商品名ベース (例: `black-orange_grande.jpg`) で最も信頼性高 |
 | Golden Layalina | **kalyan-hut.ru** (ロシア物販) | フレーバー名ベースの URL で一致検証しやすい |
-| Layalina Ya Layl | htreviews.org, layalinaus.com | 個別フレーバー写真がネット上に極めて少ない |
+| Layalina Ya Layl | htreviews.org, layalinaus.com | 個別フレーバー写真がネット上に極めて少ない。50g 箱の retail listing は層が薄く、layalinaus.com の `pimg.php` 経由でしか取れないことが多い |
+| **Azure** | *(歩留まり低)* | shishaData.js の名前 (Cucumelon, D Cherry, Life's Peach 等) は retailer 上で別名 (Cool Cucumber, Cherry Muffin, Carolina Peach) で出回っていることが多く、エージェントが似た名前の別商品を流用しがち。100g/250g 容量違いの混在もある。**ID 単位で厳密検証**するか、当面はスキップ |
 | **Panorama** | *(取得不可)* | 地域限定流通でネット上に商品写真がほぼ存在しない → スキップ推奨 |
 
 ## 落とし穴
@@ -280,6 +281,8 @@ IDs: 445, 446, 447, 453, 623, 625, 638, 641, 653, 659
 - **kalyan-hut.ru リサイズキャッシュ**: URL パスに `resize_cache/iblock/XXX/200_230_1/` が入る thumbnail URL が取れる。15KB 程度だが magic bytes は正常 JPEG。採用可
 - **layalinaus.com pimg.php**: `pimg.php?o=p&m=limit&w=300&h=300&s=1/img/p/...` 形式の PHP 画像プロキシは `.png` として保存可能。HTML エンティティ `&amp;` を `&` に正規化してから使うこと
 - **Panorama ブランド**: ネット上に商品写真がほぼ存在しないため収集対象外。Haiku エージェントを投入しても空リストが返る
+- **Hookah Vault のブランド汎用ロゴ罠**: hookahvault.com は商品個別写真が無いフレーバーで `azurelogo1_<uuid>.png` のようなブランドロゴ画像を返してくる。一見 Shopify CDN 直 URL に見えるが、ファイル名に商品名が含まれていなければ **却下**（プレースホルダー扱い）
+- **Azure 命名ミスマッチ**: shishaData.js のフレーバー名と retailer 上の販売名が一致しないことがある (例: "Cucumelon"→"Cool Cucumber"、"D Cherry"→"Cherry Muffin"、"Life's Peach"→"Carolina Peach"、"Melon Green Tea"→"Melon King"、"Lime Cola"→"Lime")。エージェントは「似た名前の別商品」を平気で流用するので、URL 集約時に **ファイル名と productName が一致するか必ず目視チェック**
 - **サイズ肥大**: 2 MB 超の画像は次のコマンドで事前圧縮するのが望ましい:
   ```bash
   magick <file> -resize '1024x1024>' -quality 85 <file>
