@@ -4,10 +4,11 @@ import { shishaData } from '../data/shishaData'
 import { brandSlug } from '../lib/utils/brandNormalizer'
 import type { ShishaFlavor } from '../types/shisha'
 
-// 本番の公開 URL は NEXT_PUBLIC_SITE_URL で設定する想定。
-// 未設定時は dev ホストにフォールバック (サーチエンジンへの送信時は必ず本番値を入れる)。
+// 本番の公開 URL。NEXT_PUBLIC_SITE_URL は build-time inline されるため、
+// 未設定で deploy すると sitemap が dev ホスト指しになる。env が抜けても
+// 本番が壊れないよう本番ドメインをフォールバックにしている。
 const SITE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'
+  process.env.NEXT_PUBLIC_SITE_URL ?? 'https://shisha-lento.com'
 ).replace(/\/$/, '')
 
 export default function sitemap(): MetadataRoute.Sitemap {
