@@ -47915,41 +47915,5 @@ export const shishaData =
             "country": "アメリカ合衆国",
             "price": "1,600円",
             "imageUrl": ""
-        },
-        {
-            "id": 5325,
-            "manufacturer": "ペッチャモー",
-            "productName": "ペッチャモー イースト",
-            "amount": "50.0g缶",
-            "country": "日本",
-            "price": "3,200円",
-            "imageUrl": ""
-        },
-        {
-            "id": 5326,
-            "manufacturer": "ペッチャモー",
-            "productName": "ペッチャモー ウェスト",
-            "amount": "50.0g缶",
-            "country": "日本",
-            "price": "3,200円",
-            "imageUrl": ""
-        },
-        {
-            "id": 5327,
-            "manufacturer": "ペッチャモー",
-            "productName": "ペッチャモー サウス",
-            "amount": "50.0g缶",
-            "country": "日本",
-            "price": "3,200円",
-            "imageUrl": ""
-        },
-        {
-            "id": 5328,
-            "manufacturer": "ペッチャモー",
-            "productName": "ペッチャモー ノース",
-            "amount": "50.0g缶",
-            "country": "日本",
-            "price": "3,200円",
-            "imageUrl": ""
         }
     ]
