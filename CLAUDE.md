@@ -79,9 +79,11 @@ pnpm build:data    # Regenerate data/generated/searchIndex.json + brands.json.
 - `/api/flavor/[id]/route.ts`: Returns individual flavor details (TypeScript) — **currently unused** (`/flavor/[id]` reads `shishaData` directly)
 
 ### Deployment
+- **本番ドメイン**: `https://shisha-lento.com`
 - **インフラ**: Cloudflare Workers + Assets (`@opennextjs/cloudflare`)。`wrangler.jsonc` で設定。
 - `pnpm deploy` で本番デプロイ。`pnpm preview` でローカル Workers プレビュー。
 - `open-next.config.ts` で `staticAssetsIncrementalCache` を使用（SSG ページのインクリメンタルキャッシュ）。
+- **og:image / canonical / sitemap の base URL**: `app/layout.tsx` / `app/sitemap.ts` / `app/robots.ts` の `SITE_URL` で決定。`NEXT_PUBLIC_SITE_URL` が build-time にセットされていれば優先、未設定時は `https://shisha-lento.com` にフォールバック (env を忘れて localhost が production に混入するのを防ぐ保険)。
 
 ### Routing Strategy
 - `/brands/[slug]` is **SSG** via `generateStaticParams` + `dynamicParams = false` (~92 pages; trivial build cost).

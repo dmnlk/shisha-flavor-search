@@ -17,8 +17,11 @@ const geistMono = Geist_Mono({
   display: 'swap',
 })
 
+// NEXT_PUBLIC_SITE_URL は build-time inline されるため、未設定のまま
+// deploy されると og:url / og:image が dev ホストに化ける。env が抜けても
+// 本番が壊れないよう、本番ドメインをフォールバックにする。
 const SITE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'
+  process.env.NEXT_PUBLIC_SITE_URL ?? 'https://shisha-lento.com'
 ).replace(/\/$/, '')
 
 export const metadata: Metadata = {
