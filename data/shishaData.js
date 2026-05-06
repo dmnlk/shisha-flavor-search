@@ -15386,7 +15386,7 @@ export const shishaData =
             "manufacturer": "DARKSIDE",
             "productName": "DARKSIDE MARY JANE 2.0",
             "amount": "30.0g箱",
-            "country": "日本",
+            "country": "ロシア",
             "price": "1,500円",
             "imageUrl": ""
         },
@@ -15863,7 +15863,7 @@ export const shishaData =
             "manufacturer": "DARKSIDE",
             "productName": "DARKSIDE YAGODA MALINA",
             "amount": "100.0g箱",
-            "country": "日本",
+            "country": "ロシア",
             "price": "4,400円",
             "imageUrl": ""
         },
@@ -26996,7 +26996,7 @@ export const shishaData =
             "manufacturer": "JiBiAR",
             "productName": "JiBiAR Almond Tofu",
             "amount": "50.0g箱",
-            "country": "日本",
+            "country": "トルコ",
             "price": "1,750円",
             "imageUrl": ""
         },
@@ -27122,7 +27122,7 @@ export const shishaData =
             "manufacturer": "JiBiAR",
             "productName": "JiBiAR Cappuccino",
             "amount": "50.0g箱",
-            "country": "日本",
+            "country": "トルコ",
             "price": "1,750円",
             "imageUrl": ""
         },
@@ -27221,7 +27221,7 @@ export const shishaData =
             "manufacturer": "JiBiAR",
             "productName": "JiBiAR Double Melon",
             "amount": "50.0g箱",
-            "country": "日本",
+            "country": "トルコ",
             "price": "1,750円",
             "imageUrl": ""
         },
@@ -27239,7 +27239,7 @@ export const shishaData =
             "manufacturer": "JiBiAR",
             "productName": "JiBiAR Dubai Chocolate",
             "amount": "50.0g箱",
-            "country": "日本",
+            "country": "トルコ",
             "price": "1,750円",
             "imageUrl": ""
         },
@@ -27248,7 +27248,7 @@ export const shishaData =
             "manufacturer": "JiBiAR",
             "productName": "JiBiAR English",
             "amount": "50.0g箱",
-            "country": "日本",
+            "country": "トルコ",
             "price": "1,750円",
             "imageUrl": ""
         },
@@ -27311,7 +27311,7 @@ export const shishaData =
             "manufacturer": "JiBiAR",
             "productName": "JiBiAR Happy Lemon",
             "amount": "50.0g箱",
-            "country": "日本",
+            "country": "トルコ",
             "price": "1,750円",
             "imageUrl": ""
         },
@@ -27419,7 +27419,7 @@ export const shishaData =
             "manufacturer": "JiBiAR",
             "productName": "JiBiAR Kaymak",
             "amount": "50.0g箱",
-            "country": "日本",
+            "country": "トルコ",
             "price": "1,750円",
             "imageUrl": ""
         },
@@ -27464,7 +27464,7 @@ export const shishaData =
             "manufacturer": "JiBiAR",
             "productName": "JiBiAR Lemonade",
             "amount": "50.0g箱",
-            "country": "日本",
+            "country": "トルコ",
             "price": "1,750円",
             "imageUrl": ""
         },
@@ -27761,7 +27761,7 @@ export const shishaData =
             "manufacturer": "JiBiAR",
             "productName": "JiBiAR Wafer",
             "amount": "50.0g箱",
-            "country": "日本",
+            "country": "トルコ",
             "price": "1,750円",
             "imageUrl": ""
         },
@@ -34862,7 +34862,7 @@ export const shishaData =
             "manufacturer": "REVOSHI",
             "productName": "REVOSHI TOBACCO Banana Flavored",
             "amount": "50.0g箱",
-            "country": "日本",
+            "country": "トルコ",
             "price": "1,750円",
             "imageUrl": ""
         },
@@ -34898,7 +34898,7 @@ export const shishaData =
             "manufacturer": "REVOSHI",
             "productName": "REVOSHI TOBACCO Dark Chocolate Flavored",
             "amount": "50.0g箱",
-            "country": "日本",
+            "country": "トルコ",
             "price": "1,750円",
             "imageUrl": ""
         },
@@ -34925,7 +34925,7 @@ export const shishaData =
             "manufacturer": "REVOSHI",
             "productName": "REVOSHI TOBACCO Elder Flower Flavored",
             "amount": "50.0g箱",
-            "country": "日本",
+            "country": "トルコ",
             "price": "1,750円",
             "imageUrl": ""
         },
@@ -34934,7 +34934,7 @@ export const shishaData =
             "manufacturer": "REVOSHI",
             "productName": "REVOSHI TOBACCO Eskimo Blueberry Flavored",
             "amount": "50.0g箱",
-            "country": "日本",
+            "country": "トルコ",
             "price": "1,750円",
             "imageUrl": ""
         },
@@ -34961,7 +34961,7 @@ export const shishaData =
             "manufacturer": "REVOSHI",
             "productName": "REVOSHI TOBACCO Eskimo Green Apple Flavored",
             "amount": "50.0g箱",
-            "country": "日本",
+            "country": "トルコ",
             "price": "1,750円",
             "imageUrl": ""
         },
@@ -35078,7 +35078,7 @@ export const shishaData =
             "manufacturer": "REVOSHI",
             "productName": "REVOSHI TOBACCO Ice Flavored",
             "amount": "50.0g箱",
-            "country": "日本",
+            "country": "トルコ",
             "price": "1,750円",
             "imageUrl": ""
         },
@@ -35105,7 +35105,7 @@ export const shishaData =
             "manufacturer": "REVOSHI",
             "productName": "REVOSHI TOBACCO Key Lime Flavored",
             "amount": "50.0g箱",
-            "country": "日本",
+            "country": "トルコ",
             "price": "1,750円",
             "imageUrl": ""
         },
@@ -35132,7 +35132,7 @@ export const shishaData =
             "manufacturer": "REVOSHI",
             "productName": "REVOSHI TOBACCO Linden Tea Flavored",
             "amount": "50.0g箱",
-            "country": "日本",
+            "country": "トルコ",
             "price": "1,750円",
             "imageUrl": ""
         },
@@ -35141,7 +35141,7 @@ export const shishaData =
             "manufacturer": "REVOSHI",
             "productName": "REVOSHI TOBACCO Lychee Flavored",
             "amount": "50.0g箱",
-            "country": "日本",
+            "country": "トルコ",
             "price": "1,750円",
             "imageUrl": ""
         },
@@ -35204,7 +35204,7 @@ export const shishaData =
             "manufacturer": "REVOSHI",
             "productName": "REVOSHI TOBACCO Milk Flavored",
             "amount": "50.0g箱",
-            "country": "日本",
+            "country": "トルコ",
             "price": "1,750円",
             "imageUrl": ""
         },
@@ -35267,7 +35267,7 @@ export const shishaData =
             "manufacturer": "REVOSHI",
             "productName": "REVOSHI TOBACCO Osmanthus Flavored",
             "amount": "50.0g箱",
-            "country": "日本",
+            "country": "トルコ",
             "price": "1,750円",
             "imageUrl": ""
         },
@@ -35276,7 +35276,7 @@ export const shishaData =
             "manufacturer": "REVOSHI",
             "productName": "REVOSHI TOBACCO Painapple Flavored",
             "amount": "50.0g箱",
-            "country": "日本",
+            "country": "トルコ",
             "price": "1,750円",
             "imageUrl": ""
         },
@@ -35285,7 +35285,7 @@ export const shishaData =
             "manufacturer": "REVOSHI",
             "productName": "REVOSHI TOBACCO Pan Rasna Flavored",
             "amount": "50.0g箱",
-            "country": "日本",
+            "country": "トルコ",
             "price": "1,750円",
             "imageUrl": ""
         },
@@ -35312,7 +35312,7 @@ export const shishaData =
             "manufacturer": "REVOSHI",
             "productName": "REVOSHI TOBACCO Passion Fruit Flavored",
             "amount": "50.0g箱",
-            "country": "日本",
+            "country": "トルコ",
             "price": "1,750円",
             "imageUrl": ""
         },
@@ -35357,7 +35357,7 @@ export const shishaData =
             "manufacturer": "REVOSHI",
             "productName": "REVOSHI TOBACCO Taiga Flavored",
             "amount": "50.0g箱",
-            "country": "日本",
+            "country": "トルコ",
             "price": "1,750円",
             "imageUrl": ""
         },
@@ -35411,7 +35411,7 @@ export const shishaData =
             "manufacturer": "REVOSHI",
             "productName": "REVOSHI TOBACCO The Shuffle Flavored",
             "amount": "50.0g箱",
-            "country": "日本",
+            "country": "トルコ",
             "price": "1,750円",
             "imageUrl": ""
         },
@@ -35420,7 +35420,7 @@ export const shishaData =
             "manufacturer": "REVOSHI",
             "productName": "REVOSHI TOBACCO Vanilla Flavored",
             "amount": "50.0g箱",
-            "country": "日本",
+            "country": "トルコ",
             "price": "1,750円",
             "imageUrl": ""
         },
@@ -35438,7 +35438,7 @@ export const shishaData =
             "manufacturer": "REVOSHI",
             "productName": "REVOSHI TOBACCO White Chocolate Flavored",
             "amount": "50.0g箱",
-            "country": "日本",
+            "country": "トルコ",
             "price": "1,750円",
             "imageUrl": ""
         },
@@ -35447,7 +35447,7 @@ export const shishaData =
             "manufacturer": "REVOSHI",
             "productName": "REVOSHI TOBACCO Yoghourt Flavored",
             "amount": "50.0g箱",
-            "country": "日本",
+            "country": "トルコ",
             "price": "1,750円",
             "imageUrl": ""
         },
