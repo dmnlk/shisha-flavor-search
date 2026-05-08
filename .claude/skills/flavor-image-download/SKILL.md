@@ -270,7 +270,7 @@ IDs: 445, 446, 447, 453, 623, 625, 638, 641, 653, 659
 | Nirvana (Super Shisha) | **5starhookah.com** (`NSS_<Flavor_Name>.png` 形式) | 公式に近い flavor-art ラベル画像。ただし retailer の設定漏れで `NSS_Citrus_OD.png` を別フレーバーに割り当てるケース多発。ファイル名と productName の照合必須 |
 | Hookafina | **hookafina.com** (Shopify CDN), 5starhookah.com, thehookahlab.com | 公式現行ラインナップは ~22 SKU のみ。shishaData の古いリスト (Bahama Mama, Currant, Coconut, Cool Menthol 等) は大半廃番で取得不能。現行の Tutti Fruiti / Vanilla Shake / Watermelon Mint / Deja Blu / Tangy Peach 等のみ採用可 |
 | TickTock | **thehookahlab.com** (Shopify CDN) | `Tick-Tock-Shisha-Tobacco-<NAME>-<Description>_<uuid>_1024x.jpg` 形式でファイル名にフレーバー名が明示。信頼性高 |
-| DEUS | **worldhookahmarket.com** (現行 200G ライン) | 商品ページ URL は `/product/deus-<flavor>-200g/`、本画像は `/wp-content/uploads/2026/05/<name>.webp`。ただし shishaData の DEUS は 30g/100g の旧ライン名で、現行 200G との name diff が大きい (例: shishaData "Mango Pineapple" → 現行 "Pineapple Mango"、"Gynness" → "Guiness"、"Marmelade" → "Marmalade"、"Pink Grapefruit"→"Rose Grapefruit" 等は別商品の可能性)。確証ある同義語のみ採用、不明はスキップ。Cyrillic ファイル名 (`Снимок-экрана-...`) は URL encode 必須 |
+| DEUS | **sakurashisha.jp** (日本正規流通、最優先) / worldhookahmarket.com (欧州 200G、補助) | sakurashisha.jp が shishaData の旧 30g/100g ライン名 (Gynness, Marmelade, Pineapple Mango, Pink Grapefruit, Viola, Wood, Flower Perfume, Elderberry Wine 等の特殊綴り) と完全一致する正規流通元で全 11 種を網羅。Shopify CDN URL は `https://sakurashisha.jp/cdn/shop/files/<FLAVOR_UPPERCASE>.jpg?v=...&width=1946` 形式 (`width=1946` で本画像)。worldhookahmarket は 200G 現行ラインで命名が変わっており (例: "Mango Pineapple"→"Pineapple Mango"、"Gynness"→"Guiness")、Cyrillic ファイル名は URL encode 必須 |
 | **Panorama** | *(取得不可)* | 地域限定流通でネット上に商品写真がほぼ存在しない → スキップ推奨 |
 
 ## 落とし穴
