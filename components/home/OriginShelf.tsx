@@ -1,6 +1,5 @@
 'use client'
 
-import { motion, AnimatePresence } from 'framer-motion'
 import { useState } from 'react'
 
 import ShishaCard from '../ShishaCard'
@@ -48,20 +47,14 @@ export default function OriginShelf({ buckets }: OriginShelfProps) {
         })}
       </div>
 
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={active.code}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.2 }}
-          className="pt-6 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4"
-        >
-          {active.flavors.map((flavor, idx) => (
-            <ShishaCard key={flavor.id} flavor={flavor} index={idx} />
-          ))}
-        </motion.div>
-      </AnimatePresence>
+      <div
+        key={active.code}
+        className="pt-6 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4"
+      >
+        {active.flavors.map((flavor, idx) => (
+          <ShishaCard key={flavor.id} flavor={flavor} index={idx} />
+        ))}
+      </div>
     </section>
   )
 }

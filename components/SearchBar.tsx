@@ -1,6 +1,5 @@
 'use client'
 
-import { motion, AnimatePresence } from 'framer-motion'
 import { useState, useEffect, FormEvent, useMemo } from 'react'
 
 import { debounce } from '../utils/debounce'
@@ -110,20 +109,15 @@ export default function SearchBar({ onSearch, searchQuery = '', isSearching = fa
                   searching
                 </span>
               )}
-              <AnimatePresence>
-                {searchTerm && (
-                  <motion.button
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    type="button"
-                    onClick={handleClear}
-                    className="font-mono-tight text-[10px] uppercase tracking-[0.14em] text-ink-500 dark:text-ink-400 hover:text-ember-500 transition-colors px-3 py-3"
-                  >
-                    clear ×
-                  </motion.button>
-                )}
-              </AnimatePresence>
+              {searchTerm && (
+                <button
+                  type="button"
+                  onClick={handleClear}
+                  className="font-mono-tight text-[10px] uppercase tracking-[0.14em] text-ink-500 dark:text-ink-400 hover:text-ember-500 transition-colors px-3 py-3"
+                >
+                  clear ×
+                </button>
+              )}
             </div>
           </div>
         </div>
