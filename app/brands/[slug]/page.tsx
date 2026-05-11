@@ -49,13 +49,16 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { slug } = await params
   const brand = resolveBrand(slug)
   if (!brand) {
-    return { title: 'Brand not found | Shisha Flavor Ledger' }
+    return { title: 'ブランドが見つかりませんでした' }
   }
-  const title = `${brand.displayName} — ${brand.flavors.length} flavors | Shisha Flavor Ledger`
-  const description = `All ${brand.flavors.length} shisha flavors produced by ${brand.displayName}, indexed in the Shisha Flavor Ledger.`
+  const blurb = getBrandDescription(slug)
+  const title = `${brand.displayName} シーシャ フレーバー一覧 — 全${brand.flavors.length}種類`
+  const description = blurb
+    ? `${brand.displayName} のシーシャフレーバー全${brand.flavors.length}種類を一覧表示。${blurb} 内容量・原産国・小売定価まで日本の流通情報を網羅。`
+    : `${brand.displayName} のシーシャ(水たばこ)フレーバー全${brand.flavors.length}種類を一覧表示。内容量・原産国・小売定価まで、日本国内の流通情報を網羅した一覧ページ。`
   const path = `/brands/${slug.toLowerCase()}`
   const images = brand.imageUrl
-    ? [{ url: brand.imageUrl, alt: `${brand.displayName} logo` }]
+    ? [{ url: brand.imageUrl, alt: `${brand.displayName} シーシャ ブランドロゴ` }]
     : undefined
   return {
     title,
@@ -82,24 +85,64 @@ export default async function BrandDetailPage({ params }: PageProps) {
   const brand = resolveBrand(slug)
   if (!brand) notFound()
 
-  const jsonLd = {
+  const brandDescription = getBrandDescription(slug)
+  const brandJsonLd: Record<string, unknown> = {
     '@context': 'https://schema.org',
     '@type': 'Brand',
     name: brand.displayName,
+    url: `/brands/${slug.toLowerCase()}`,
+  }
+  if (brand.imageUrl) brandJsonLd.logo = brand.imageUrl
+  if (brandDescription) brandJsonLd.description = brandDescription
+
+  const itemListJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: `${brand.displayName} シーシャ フレーバー一覧`,
+    numberOfItems: brand.flavors.length,
+    itemListElement: brand.flavors.slice(0, 50).map((f, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      url: `/flavor/${f.id}`,
+      name: f.productName,
+    })),
+  }
+
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'ホーム', item: '/' },
+      { '@type': 'ListItem', position: 2, name: 'ブランド一覧', item: '/brands' },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: brand.displayName,
+        item: `/brands/${slug.toLowerCase()}`,
+      },
+    ],
   }
 
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: escapeJsonLd(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: escapeJsonLd(brandJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: escapeJsonLd(itemListJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: escapeJsonLd(breadcrumbJsonLd) }}
       />
       <BrandDetailClient
         slug={slug.toLowerCase()}
         brandName={brand.displayName}
         flavors={brand.flavors}
         imageUrl={brand.imageUrl}
-        description={getBrandDescription(slug)}
+        description={brandDescription}
       />
     </>
   )

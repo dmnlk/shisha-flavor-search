@@ -32,7 +32,7 @@ export default function FeaturedBrands({ brands }: FeaturedBrandsProps) {
               <div className="relative h-14 w-24 shrink-0 bg-paper-50 dark:bg-paper-900 border border-rule-200 dark:border-rule-800">
                 <Image
                   src={brand.imageUrl as string}
-                  alt={`${brand.name} logo`}
+                  alt={`${brand.name} シーシャ ブランドロゴ`}
                   fill
                   sizes="96px"
                   className="object-contain p-2"

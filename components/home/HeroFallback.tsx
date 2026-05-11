@@ -45,6 +45,9 @@ export default function HeroFallback({ initialTotalItems, initialBrandsCount, la
             <p className="mt-8 font-sans-tight text-ink-600 dark:text-ink-300 text-base sm:text-lg leading-[1.5] max-w-[52ch]">
               A verified record of every shisha flavor on sale in Japan, cross-checked against the Ministry of Finance tobacco ledger. Search by brand, flavor, or country; every entry lists grammage, origin, and current retail price.
             </p>
+            <p className="mt-4 font-sans-tight text-ink-500 dark:text-ink-400 text-sm sm:text-base leading-[1.6] max-w-[52ch]">
+              日本国内で流通しているシーシャ(水たばこ)フレーバーを、ブランド名・フレーバー名・原産国から横断検索できる無料データベースです。AlFakher・STARBUZZ・Adalya・Fumari など主要銘柄の内容量・小売定価・産地を、財務省「製造たばこ小売定価」公告に基づいて随時更新しています。
+            </p>
             <div className="mt-8 flex items-center gap-4">
               <Link
                 href="/brands"
