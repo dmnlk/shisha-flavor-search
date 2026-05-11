@@ -106,7 +106,7 @@ export default function BrandDetailClient({ slug, brandName, flavors, imageUrl, 
               {showImage ? (
                 <Image
                   src={imageUrl as string}
-                  alt={`${brandName} logo`}
+                  alt={`${brandName} シーシャ ブランドロゴ`}
                   fill
                   priority
                   className="object-contain p-8 sm:p-10"

@@ -40,7 +40,7 @@ export default function FlavorDetailClient({ flavor, related = [] }: FlavorDetai
               {flavor.imageUrl ? (
                 <Image
                   src={flavor.imageUrl.replace('.png', '_w.png')}
-                  alt={flavor.productName}
+                  alt={`${flavor.manufacturer} ${flavor.productName} シーシャ フレーバー`}
                   fill
                   className="object-cover"
                   sizes="(max-width: 768px) 100vw, 58vw"

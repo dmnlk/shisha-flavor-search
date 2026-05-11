@@ -21,7 +21,9 @@ describe('ShishaCard', () => {
     expect(screen.getByText(mockFlavor.productName)).toBeInTheDocument()
     expect(screen.getByText(mockFlavor.manufacturer)).toBeInTheDocument()
     expect(screen.getByText(mockFlavor.price)).toBeInTheDocument()
-    expect(screen.getByAltText(mockFlavor.productName)).toBeInTheDocument()
+    expect(
+      screen.getByAltText(`${mockFlavor.manufacturer} ${mockFlavor.productName} シーシャ フレーバー`)
+    ).toBeInTheDocument()
   })
 
   it('links to the correct flavor page', () => {

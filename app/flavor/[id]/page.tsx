@@ -3,8 +3,9 @@ import { notFound } from 'next/navigation'
 
 import { resolveFlavorImage } from '../../../data/flavorImages'
 import { shishaData } from '../../../data/shishaData'
-import { normalizeBrandForSearch } from '../../../lib/utils/brandNormalizer'
+import { brandSlug, normalizeBrandForSearch } from '../../../lib/utils/brandNormalizer'
 import { escapeJsonLd } from '../../../lib/utils/jsonLd'
+import { parseJpyPrice } from '../../../lib/utils/priceParser'
 import type { ShishaFlavor } from '../../../types/shisha'
 
 import FlavorDetailClient from './FlavorDetailClient'
@@ -38,13 +39,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { id } = await params
   const flavor = findFlavor(id)
   if (!flavor) {
-    return { title: 'Flavor not found | Shisha Flavor Ledger' }
+    return { title: 'フレーバーが見つかりませんでした' }
   }
-  const title = `${flavor.productName} — ${flavor.manufacturer} | Shisha Flavor Ledger`
-  const description = `${flavor.manufacturer} / ${flavor.productName} · ${flavor.amount} · ${flavor.country} · ${flavor.price}`
+  const title = `${flavor.productName}(${flavor.manufacturer}) シーシャ フレーバー — ${flavor.price} / ${flavor.amount}`
+  const description = `${flavor.manufacturer}「${flavor.productName}」のシーシャ用フレーバー情報。内容量 ${flavor.amount}、原産国 ${flavor.country}、小売定価 ${flavor.price}。${flavor.description ? `テイスティングノート: ${flavor.description}` : '日本国内の流通情報を財務省「製造たばこ小売定価」公告に基づいて掲載しています。'}`
   const path = `/flavor/${flavor.id}`
   const images = flavor.imageUrl
-    ? [{ url: flavor.imageUrl, alt: flavor.productName }]
+    ? [{ url: flavor.imageUrl, alt: `${flavor.manufacturer} ${flavor.productName} シーシャ フレーバー` }]
     : undefined
   return {
     title,
@@ -72,19 +73,60 @@ export default async function FlavorDetailPage({ params }: PageProps) {
   if (!flavor) notFound()
   const related = findRelatedFlavors(flavor, RELATED_COUNT)
 
-  const jsonLd = {
+  const price = parseJpyPrice(flavor.price)
+  const productJsonLd: Record<string, unknown> = {
     '@context': 'https://schema.org',
     '@type': 'Product',
-    name: flavor.productName,
+    name: `${flavor.productName} (${flavor.manufacturer})`,
     brand: { '@type': 'Brand', name: flavor.manufacturer },
-    description: flavor.description ?? '',
+    category: 'シーシャ フレーバー / 水たばこ',
+    countryOfOrigin: flavor.country,
+    description:
+      flavor.description ??
+      `${flavor.manufacturer}「${flavor.productName}」のシーシャ用フレーバー。内容量 ${flavor.amount}、原産国 ${flavor.country}、小売定価 ${flavor.price}。`,
+  }
+  if (flavor.imageUrl) {
+    productJsonLd.image = flavor.imageUrl
+  }
+  if (price !== null) {
+    productJsonLd.offers = {
+      '@type': 'Offer',
+      price,
+      priceCurrency: 'JPY',
+      availability: 'https://schema.org/InStock',
+      areaServed: 'JP',
+    }
+  }
+
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'ホーム', item: '/' },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: flavor.manufacturer,
+        item: `/brands/${brandSlug(flavor.manufacturer)}`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: flavor.productName,
+        item: `/flavor/${flavor.id}`,
+      },
+    ],
   }
 
   return (
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: escapeJsonLd(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: escapeJsonLd(productJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: escapeJsonLd(breadcrumbJsonLd) }}
       />
       <FlavorDetailClient flavor={flavor} related={related} />
     </>
