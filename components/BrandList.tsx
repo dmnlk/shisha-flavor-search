@@ -1,6 +1,5 @@
 'use client'
 
-import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import { useState, useMemo, useEffect } from 'react'
 
@@ -94,17 +93,9 @@ export default function BrandList({ manufacturers, selectedManufacturer, onSelec
         )}
       </div>
 
-      <AnimatePresence>
-        {isExpanded && (
-          <motion.div
-            id="brand-list-full"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.2 }}
-            className="overflow-hidden"
-          >
-            <div className="mt-5 border border-rule-200 dark:border-rule-800 bg-paper-0 dark:bg-paper-950">
+      {isExpanded && (
+        <div id="brand-list-full" className="overflow-hidden">
+          <div className="mt-5 border border-rule-200 dark:border-rule-800 bg-paper-0 dark:bg-paper-950">
               <div className="flex items-center gap-3 border-b border-rule-200 dark:border-rule-800 px-3 py-2.5">
                 <span className="font-mono-tight text-[10px] uppercase tracking-[0.18em] text-ink-500 dark:text-ink-400 shrink-0">
                   Q.
@@ -143,10 +134,9 @@ export default function BrandList({ manufacturers, selectedManufacturer, onSelec
                   no matches
                 </p>
               )}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

@@ -1,6 +1,5 @@
 'use client'
 
-import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { useState, useEffect, Suspense, type ReactNode } from 'react'
@@ -281,13 +280,12 @@ function HomeContent({ editorialSections, lastDataUpdated, initialManufacturers 
           </span>
         </div>
 
-        <AnimatePresence mode="wait">
-          {loading ? (
-            <motion.div key="loader" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="pt-6">
-              <SkeletonGrid count={12} />
-            </motion.div>
-          ) : (
-            <motion.div key="results" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="pt-6">
+        {loading ? (
+          <div key="loader" className="pt-6">
+            <SkeletonGrid count={12} />
+          </div>
+        ) : (
+          <div key="results" className="pt-6">
               {flavors.length > 0 ? (
                 <>
                   <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
@@ -356,9 +354,8 @@ function HomeContent({ editorialSections, lastDataUpdated, initialManufacturers 
                   </button>
                 </div>
               )}
-            </motion.div>
-          )}
-        </AnimatePresence>
+          </div>
+        )}
       </main>
     </div>
   )
