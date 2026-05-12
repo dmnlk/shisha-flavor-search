@@ -14,7 +14,11 @@ export default function ShareOnX({ text, hashtags = [], className = '' }: ShareO
   useEffect(() => {
     const params = new URLSearchParams({ text, url: window.location.href })
     if (hashtags.length > 0) params.set('hashtags', hashtags.join(','))
-    setIntentUrl(`https://x.com/intent/post?${params.toString()}`)
+    // x.com/intent/tweet を使う。x.com/intent/post は iOS で X アプリの
+    // Universal Link を発火し、アプリ内ブラウザに Safari セッションが無く
+    // 再ログインを強いられる。同じ x.com でも旧 /intent/tweet パスは
+    // Universal Link 対象外で Safari でそのまま開く。
+    setIntentUrl(`https://x.com/intent/tweet?${params.toString()}`)
   }, [text, hashtags])
 
   return (
