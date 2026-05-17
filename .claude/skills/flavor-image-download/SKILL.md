@@ -35,6 +35,23 @@ Phase 3: 検証 (bash) — verify_images.ts で magic bytes チェック
 6. **検証** — `scripts/verify_images.ts` で magic bytes + サイズを全チェック、0 バイトや HTML 誤取得を弾く
 7. **レポート** — 追加件数、残件数、スキップ理由をユーザーに提示。`git status` で差分確認を促す
 
+## ⚠️ 致命的な落とし穴: バッチデータの幻覚 (Agent プロンプトの fabrication)
+
+**絶対にやってはいけない**: Python で `batch_N.json` を書き出した後、Agent プロンプトを組み立てるときに **記憶頼りで `id`/`productName` を直書きしないこと**。
+
+過去の事故例 (run #8, 2026-05-17):
+- `batch_2.json` の実中身は `[{id:732, productName:"ALFAKHAMAH AMORE"}, ...]` だった
+- しかし Agent ツールに渡したプロンプトは `[{id:3193, productName:"ALFAKHAMAH Apricot"}, ...]` という**完全に架空のデータ**だった
+- Haiku は正直に「flavor not found」と返してきたが、無いものを探させていたので当然
+- 6 並列 × 150 件で歩留まり 0、検索コストだけ消費した
+
+**回避策**: Agent プロンプトを組み立てるときは必ず:
+```bash
+# プロンプトに埋める JSON は batch ファイルから直読み
+BATCH_JSON=$(cat /tmp/shisha-flavor-images/batch_1.json)
+```
+…として、`{{FLAVORS}}` プレースホルダーに**ファイルから読んだ JSON 文字列をそのまま流し込む**。Agent プロンプトに ID と productName を**手で書き起こさない**。
+
 ## ステップ詳細
 
 ### 1. 対象の抽出
@@ -93,6 +110,36 @@ for i, b in enumerate(batches):
 プロンプト本文は [references/subagent_prompt_template.md](references/subagent_prompt_template.md) を `{{FLAVORS}}` プレースホルダーを JSON で置換して使う。
 
 **並列数の目安**: 100 件なら **4〜5 並列**（1 エージェント 20〜25 件）。サブエージェントは WebSearch + WebFetch を使うため、1 体あたりのコンテキストが増える場合があるが、Haiku なので許容範囲。
+
+### 3.5 Shopify 直取りショートカット (Haiku を経由しない)
+
+ブランドが Shopify ベースの日本物販で扱われていることが分かっている場合、**Haiku を経由せず products.json を直接叩く**のが圧倒的に効率的かつ正確:
+
+```bash
+curl -s -A "Mozilla/5.0 ..." \
+  "https://<shop>/collections/<brand-slug>/products.json?limit=250" \
+  -o /tmp/<brand>.json
+```
+
+すると `{ products: [{ title, images: [{ src }] }] }` が返り、`cdn.shopify.com` 直 URL が確実に取れる。
+
+実績のあるショップ:
+- **shop.cloud-jp.net** — AL FAKHAMAH / その他、`/collections/<brand>/products.json` で全 SKU + 画像
+- **tokyoshisha.com** — REVOSHI / その他、同上
+- **sakurashisha.jp** — DEUS / その他、同上
+- **5starhookah.com** — Haze / NIRVANA 等、同上
+- **shishagear.com** — Alchemist、同上
+- **thehookahlab.com** — TickTock、同上
+
+マッチング手順:
+1. `products.json` から `{ title, src }` を吸い出す
+2. shishaData の同ブランドエントリをロード (`node -e "..."`)
+3. 名前正規化 (lowercase + 記号除去 + 余分空白除去) で突き合わせ
+4. 出力は `[{id, url, ext}]` の標準フォーマットで `urls.json` へ → 通常の download_from_urls.ts に流し込む
+
+**重要**: ブランドによって shishaData の productName 表記が違う。例: REVOSHI は `REVOSHI TOBACCO <Name> Flavored`、ALFAKHAMAH は `ALFAKHAMAH <Name>`、Adalya は `Adalya <Name>` 等。**正規化前にブランド固有の接頭辞・接尾辞を strip すること**。
+
+歩留まり実績: 49/106 (46%) — Haiku 並列方式 (15%) を遥かに上回る。
 
 ### 4. URL 集約
 
