@@ -50,6 +50,7 @@ const config = [
       "node_modules/**",
       ".next/**",
       "out/**",
+      ".claude/**",
       "data/shishaData.js",
       "data/flavorImagesGenerated.ts",
       "eslint.config.mjs",
