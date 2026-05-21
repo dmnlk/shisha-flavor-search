@@ -318,6 +318,7 @@ IDs: 445, 446, 447, 453, 623, 625, 638, 641, 653, 659
 | Hookafina | **hookafina.com** (Shopify CDN), 5starhookah.com, thehookahlab.com | 公式現行ラインナップは ~22 SKU のみ。shishaData の古いリスト (Bahama Mama, Currant, Coconut, Cool Menthol 等) は大半廃番で取得不能。現行の Tutti Fruiti / Vanilla Shake / Watermelon Mint / Deja Blu / Tangy Peach 等のみ採用可 |
 | TickTock | **thehookahlab.com** (Shopify CDN) | `Tick-Tock-Shisha-Tobacco-<NAME>-<Description>_<uuid>_1024x.jpg` 形式でファイル名にフレーバー名が明示。信頼性高 |
 | DEUS | **sakurashisha.jp** (日本正規流通、最優先) / worldhookahmarket.com (欧州 200G、補助) | sakurashisha.jp が shishaData の旧 30g/100g ライン名 (Gynness, Marmelade, Pineapple Mango, Pink Grapefruit, Viola, Wood, Flower Perfume, Elderberry Wine 等の特殊綴り) と完全一致する正規流通元で全 11 種を網羅。Shopify CDN URL は `https://sakurashisha.jp/cdn/shop/files/<FLAVOR_UPPERCASE>.jpg?v=...&width=1946` 形式 (`width=1946` で本画像)。worldhookahmarket は 200G 現行ラインで命名が変わっており (例: "Mango Pineapple"→"Pineapple Mango"、"Gynness"→"Guiness")、Cyrillic ファイル名は URL encode 必須 |
+| **Must Have** (ロシア) | **iconhookah.com** (products.json で全SKU、最優先) | `/products.json?limit=250` をページングし title/vendor に "Must Have" を含む商品を抽出すると全 ~95 SKU が `cdn.shopify.com` 直 URL で取れる。ファイル名 `MustHave<Flavor>125g.png` でフレーバー名明示・ウォーターマーク無し・統一カタログ画像。URL に `&width=1000` を付けても元が 500x439 程度なのでそのまま。**worldhookahmarket は 290px サムネイル (`145.0x290.jpg` 等) か HOOKAH VAULT 透かし入りで品質劣るため非推奨**。hookahvault.com も透かし入り |
 | **Panorama** | *(取得不可)* | 地域限定流通でネット上に商品写真がほぼ存在しない → スキップ推奨 |
 
 ## 落とし穴
