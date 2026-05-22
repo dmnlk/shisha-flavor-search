@@ -73,6 +73,7 @@ python3 .claude/skills/shisha-update/scripts/merge_into_data.py
 - `/tmp/shisha-sources/extracted_auto.json` と `extracted_group_*.json` (サブエージェント出力) を統合
 - [references/excluded_brands.md](references/excluded_brands.md) のリストで除外判定
 - NFKC正規化して `(productName, amount)` で既存データと突合、新規は追加、既存に対しては PDF 日付が新しい場合のみ価格を更新
+- **変更認可 (`kouriteikahenkou`) 由来は必ず update になるはず** (既存製品の価格変更だから)。add に化けた場合は突合キー `(productName, amount)` の表記ゆれを疑う。スクリプトは henkou 由来が add された場合に `⚠️ WARNING` を出すので、出たら既存データを確認し、抽出側の amount を既存表記に合わせてマージし直す
 - 新 `data/shishaData.js` を書き出し (idは連番で振り直し)
 - 差分レポート (追加N件、更新M件、除外K件) を標準出力に
 
@@ -109,3 +110,5 @@ pnpm lint && npx tsc --noEmit
 - **User-Agent**: 財務省サーバーは一部UAを拒否する。`claude-code/1.0` を使う。
 - **文字コード**: MOFページはUTF-8 BOM。suitadou (使わない) はShift_JIS。
 - **「パイプたばこ」区分の混在**: MOFの「パイプたばこ」にはシーシャ以外 (伝統的パイプタバコ・シャグ) も含まれる。除外リストを必ず適用する。
+- **変更認可 = update**: ファイル名に `kouriteikahenkou` を含むPDFは既存製品の価格変更。突合キーは `(productName, amount)` で、amount 表記が既存とズレる (例: PDFの「箱」 vs 既存の「プラスチックケース」) と突合失敗して**重複追加**される。henkou が add になったら必ず既存データを確認し、抽出側の amount を既存に合わせること。`merge_into_data.py` が警告を出す。
+- **サブエージェントのパイプたばこ見落とし**: 1ページに葉巻・加熱式とパイプたばこが混在する変更認可PDFで、サブエージェントがパイプたばこ行を見落とすことがある。henkou PDFは特に、抽出0件報告でも疑わしければ自分でも Read して確認する。

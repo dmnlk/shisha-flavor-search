@@ -39,7 +39,7 @@ export default function FlavorDetailClient({ flavor, related = [] }: FlavorDetai
             <div className="relative aspect-[3/4] md:aspect-auto md:h-full md:min-h-[640px]">
               {flavor.imageUrl ? (
                 <Image
-                  src={flavor.imageUrl.replace('.png', '_w.png')}
+                  src={flavor.imageUrl}
                   alt={`${flavor.manufacturer} ${flavor.productName} シーシャ フレーバー`}
                   fill
                   className="object-cover"

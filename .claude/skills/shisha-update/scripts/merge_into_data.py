@@ -151,8 +151,12 @@ def main() -> int:
     updated = 0
     excluded_count = 0
     added_keys: set[tuple[str, str]] = set()
+    # 変更認可(kouriteikahenkou)は既存製品の価格変更なので update になるはず。
+    # add に化けた場合は (productName, amount) の突合失敗 (amount 表記ゆれ等) を疑う。
+    henkou_added: list[tuple[str, str]] = []
     for p in pdf_entries:
         product = norm(p["product"])
+        is_henkou = "kouriteikahenkou" in p.get("source", "") or bool(p.get("is_henkou"))
         entry = {
             "manufacturer": infer_manufacturer(product, known_brands),
             "productName": product,
@@ -171,12 +175,21 @@ def main() -> int:
             if entry["_date_int"] > existing_entry["_date_int"]:
                 if existing_entry.get("manufacturer") and not entry["manufacturer"]:
                     entry["manufacturer"] = existing_entry["manufacturer"]
+                # 既存 id を保持する。価格更新で id が振り直されると画像ファイル名
+                # (<id>.<ext>) と /flavor/<id> URL が壊れるため必須。
+                if isinstance(existing_entry.get("id"), int):
+                    entry["id"] = existing_entry["id"]
+                # 既存画像があれば引き継ぐ (価格更新は画像に影響しない)
+                if existing_entry.get("imageUrl") and not entry.get("imageUrl"):
+                    entry["imageUrl"] = existing_entry["imageUrl"]
                 merged[k] = entry
                 updated += 1
         else:
             merged[k] = entry
             added += 1
             added_keys.add(k)
+            if is_henkou:
+                henkou_added.append((product, entry["amount"]))
 
     # Rebuild final list sorted by manufacturer then product.
     # Preserve existing IDs; assign new monotonically-increasing IDs only to
@@ -216,6 +229,14 @@ def main() -> int:
     print(f"Updated:  {updated} (price change via 変更認可)")
     print(f"Excluded: {excluded_count} (non-shisha brands)")
     print(f"Total entries: {len(final)} (was {len(existing)})")
+
+    if henkou_added:
+        print("\n⚠️  WARNING: 変更認可(kouriteikahenkou)由来だが既存と突合できず新規追加された:")
+        for pn, am in henkou_added:
+            print(f"    - {pn} ({am})")
+        print("    → 変更認可は既存製品の価格変更なので、本来 update になるべきです。")
+        print("      amount 表記ゆれ(例: 「箱」vs「プラスチックケース」)等で突合に失敗していないか、")
+        print("      既存データを確認し、抽出側の amount を既存に合わせてマージし直してください。")
     return 0
 
 
