@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "build:data": "tsx scripts/build-data.ts",
+    "picks:candidates": "tsx scripts/list-imaged-flavors.ts",
     "dev": "pnpm run build:data && next dev",
     "prebuild": "npx tsx scripts/build/generate-flavor-image-map.ts",
     "build": "pnpm run build:data && next build",
