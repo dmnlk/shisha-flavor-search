@@ -23860,6 +23860,15 @@ export const shishaData =
             "imageUrl": ""
         },
         {
+            "id": 5335,
+            "manufacturer": "Fumari",
+            "productName": "Fumari Orange Gummi Bear",
+            "amount": "100.0gパウチ",
+            "country": "アメリカ合衆国",
+            "price": "3,400円",
+            "imageUrl": ""
+        },
+        {
             "id": 2650,
             "manufacturer": "Fumari",
             "productName": "Fumari Passion Fruit",
@@ -23878,9 +23887,27 @@ export const shishaData =
             "imageUrl": ""
         },
         {
+            "id": 5336,
+            "manufacturer": "Fumari",
+            "productName": "Fumari Peach N Ice",
+            "amount": "100.0gパウチ",
+            "country": "アメリカ合衆国",
+            "price": "3,400円",
+            "imageUrl": ""
+        },
+        {
             "id": 2652,
             "manufacturer": "FUMARI",
             "productName": "FUMARI Peaches N Honey",
+            "amount": "100.0gパウチ",
+            "country": "アメリカ合衆国",
+            "price": "3,400円",
+            "imageUrl": ""
+        },
+        {
+            "id": 5337,
+            "manufacturer": "Fumari",
+            "productName": "Fumari Pink Gummi Bear",
             "amount": "100.0gパウチ",
             "country": "アメリカ合衆国",
             "price": "3,400円",
