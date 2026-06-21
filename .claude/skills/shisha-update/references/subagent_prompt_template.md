@@ -47,6 +47,9 @@ for i, c in enumerate(chunks):
 - パイプたばこが全く含まれていないPDFもあります。その場合は該当PDFの行は0件でOK。
 - Read tool で PDF を直接開けば、Claudeが内容を画像/テキストとして読み取れます。OCRツールは使わないでください。
 - 変更認可 (ファイル名に kouriteikahenkou) では「変更小売定価」(新価格) を採用してください。
+- **入れ子表 (rowspanセル) の分割**: 「名称」列が入れ子になっていて、製品ライン名のセルが一部の行だけにまたがる (rowspan) ことがある。このとき全フレーバーを1製品に連結してはいけない。**名称列の行数分の別製品**として分割すること。
+  - 実例 (2026-06-15 FUMARI): 名称列が `Peach N Ice` / `Orange` / `Pink` の3行で、`Gummi Bear` セルが Orange/Pink の2行だけにまたがっていた。正しくは **Fumari Peach N Ice** / **Fumari Orange Gummi Bear** / **Fumari Pink Gummi Bear** の3製品 (Peach N Ice には Gummi Bear が付かない)。`Gummi Bear Peach N Ice Orange Pink` のような1行連結は誤り。
+  - 迷ったら、各行の製品区分・製造国・価格が同じでも別行なら別製品として出す。命名はそのブランドの既存表記 (例: `Fumari White/Red Gummi Bear` = 色+Gummi Bear) に合わせる。
 - 全PDFを処理し終えたら、件数を簡潔に報告してください。
 ```
 

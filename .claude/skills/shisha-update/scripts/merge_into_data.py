@@ -48,12 +48,28 @@ def load_excluded() -> dict:
     return json.loads(EXCLUDED_JSON.read_text())
 
 
+def _ex_loose(s: str) -> str:
+    """除外照合用キー: 長音・中黒・空白・ハイフン等を除去して表記ゆれを吸収する。
+    例) 「マックバーレン」と「マックバレン」、「チョイス ○○」と「チョイス・○○」を同一視。
+    濁点/半濁点や異体字の違い (カビート/カピート, 飛烏/飛鳥) は吸収できないので、
+    その種の表記ゆれは excluded_brands.json に両方を登録すること。"""
+    s = unicodedata.normalize("NFKC", s).upper()
+    return re.sub(r"[\sー・,，、。()（）\-_/]", "", s)
+
+
 def is_excluded(entry: dict, rules: dict) -> bool:
     mfr = entry["manufacturer"].upper()
     prod = entry["productName"].upper()
+    # 表記ゆれ吸収版 (長音・記号・空白除去)。生マッチに対して OR で足すだけなので
+    # 既存の除外判定は不変で、長音/中黒/空白のゆれだけ追加でカバーされる。
+    mfr_l = _ex_loose(entry["manufacturer"])
+    prod_l = _ex_loose(entry["productName"])
     for pat in rules["substrings"]:
         pu = pat.upper()
         if pu in mfr or pu in prod:
+            return True
+        pl = _ex_loose(pat)
+        if pl and (pl in mfr_l or pl in prod_l):
             return True
     for pat in rules["exact_or_prefix"]:
         pu = pat.upper()
