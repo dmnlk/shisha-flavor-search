@@ -67,7 +67,7 @@ pnpm build:data    # Regenerate data/generated/searchIndex.json + brands.json.
 - **lib/utils/brandNormalizer.ts**: `normalizeBrandName` / `normalizeBrandForSearch` / `brandSlug` — all **client-safe** (no fs). Import `brandSlug` from here in client components.
 - **data/brandImages.ts**: Server-only (uses `node:fs`). Re-exports `brandSlug` for convenience. Enumerates logos from `public/images/brands/<slug>.(png|jpg|jpeg|webp|svg|avif)` at module init.
 - **data/brandDescriptions.ts**: Hand-verified Japanese one-liners per brand slug. `getBrandDescription(slug)` returns `null` for unknown brands; UI hides the blurb in that case — never fabricate descriptions.
-- **data/flavorImagesGenerated.ts** (gitignored): フレーバーid → 画像URL マップ。`scripts/build/generate-flavor-image-map.ts` が `public/images/flavors/` を走査して生成。`pnpm build` の `prebuild` フックでのみ自動実行（`dev`/`test`/`typecheck` では実行されない）。Cloudflare Workers のバンドルサイズ制限を避けるためビルド時に静的生成している。
+- **data/flavorImagesGenerated.ts** (**git管理対象 / コミットする** — gitignore ではない): フレーバーid → 画像URL マップ。`scripts/build/generate-flavor-image-map.ts` が `public/images/flavors/` を走査して生成。`flavorImages.ts` が静的importするため `dev`/`test`/`typecheck` でもファイルの存在が必須で、リポジトリにコミットされている。自動再生成は `pnpm build` の `prebuild` フックでのみ行われ、`dev`/`test`/`typecheck` では再生成されない（コミット済みの内容を使う）。**フレーバー画像を `public/images/flavors/` に追加したら `npx tsx scripts/build/generate-flavor-image-map.ts` を実行して再生成・コミットすること**（忘れると追加画像がローカル dev / test / typecheck に反映されずドリフトする）。Cloudflare Workers のバンドルサイズ制限を避けるためビルド時に静的生成している。
 - **data/flavorImages.ts**: `flavorImagesGenerated.ts` のラッパー。フレーバー画像URLを解決する `resolveFlavorImage()` を公開。
 - **data/curatedPicks.ts**: トップページ「Editor's Selection」用の手選びフレーバーリスト。
 - **data/homeSections.ts**: トップページのセクション構成データ。
