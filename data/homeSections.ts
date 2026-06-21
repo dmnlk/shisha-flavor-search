@@ -90,9 +90,24 @@ function getLastAddedIds(): number[] {
  * Returns the most recently added flavors.
  * Reads last_added_ids from shisha-update-state.json (set by merge_into_data.py)
  * so results reflect actual insertion order, not alphabetical ID position.
- * Falls back to image-bearing tail entries when no state is available.
+ * The recorded additions always lead (image-bearing first); when there are
+ * fewer than `limit` of them, the result is topped up with image-bearing tail
+ * entries rather than discarding the recent ones. Falls back entirely to the
+ * tail when no state is available.
  */
 export function getLatestFlavors(limit = 6): ShishaFlavor[] {
+  const seen = new Set<number>()
+  const picked: ShishaFlavor[] = []
+  const take = (flavors: ShishaFlavor[]): void => {
+    for (const f of flavors) {
+      if (picked.length >= limit) break
+      if (seen.has(f.id)) continue
+      seen.add(f.id)
+      picked.push(f)
+    }
+  }
+
+  // Primary: most recently added flavors recorded by the update pipeline.
   const lastAddedIds = getLastAddedIds()
   if (lastAddedIds.length > 0) {
     const byId = new Map(shishaData.map(f => [f.id, f] as const))
@@ -100,13 +115,12 @@ export function getLatestFlavors(limit = 6): ShishaFlavor[] {
       .map(id => byId.get(id))
       .filter((f): f is ShishaFlavor => f !== undefined)
       .map(resolveFlavorImage)
-    const imaged = candidates.filter(hasImage)
-    const rest = candidates.filter(f => !hasImage(f))
-    const result = [...imaged, ...rest].slice(0, limit)
-    if (result.length >= limit) return result
+    take(candidates.filter(hasImage))
+    take(candidates.filter(f => !hasImage(f)))
+    if (picked.length >= limit) return picked
   }
 
-  // Fallback: image-bearing entries from tail of data
+  // Top up (or fall back) with image-bearing entries from the tail of data.
   const tail = shishaData.slice(-limit * 4)
   const imaged: ShishaFlavor[] = []
   const rest: ShishaFlavor[] = []
@@ -115,7 +129,9 @@ export function getLatestFlavors(limit = 6): ShishaFlavor[] {
     if (hasImage(resolved)) imaged.push(resolved)
     else rest.push(resolved)
   }
-  return [...imaged, ...rest].slice(0, limit)
+  take(imaged)
+  take(rest)
+  return picked.slice(0, limit)
 }
 
 const ORIGIN_ORDER: Array<{ code: string; keys: string[] }> = [
