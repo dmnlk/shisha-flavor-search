@@ -2,14 +2,21 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
 /**
- * 構造化アクセスログ proxy（旧 middleware 規約。Next.js 16 で proxy にリネーム）。
+ * 構造化アクセスログ middleware（Edge ランタイム）。
  *
  * Cloudflare Workers が自動で吐く invocation log は「GET <url>」だけで情報量が乏しいため、
  * ここで 1 リクエスト = 1 行の JSON ログを追加で出力する。Cloudflare Workers Logs は
  * メッセージが JSON のとき各キーをフィールドとして取り込むので、ダッシュボードの
  * 「Fields」から ua / referer / type などを列・フィルタとして使えるようになる。
  *
- * status / 応答時間は proxy からは取得できないため対象外（取得には Worker の
+ * なぜ非推奨の `middleware` 規約か:
+ *   Next.js 16 で `proxy` 規約はデフォルトかつ強制的に Node.js ランタイムになり
+ *   （proxy ファイルで runtime を指定すると E1031 で throw する）、OpenNext / Cloudflare
+ *   Workers は Node.js middleware 非対応のためビルドが失敗する。旧 `middleware` 規約は
+ *   `runtime: 'edge'` の指定が許されるので、Edge middleware としてビルドさせて回避する。
+ *   OpenNext が Node.js middleware に対応したら proxy へ移行する。
+ *
+ * status / 応答時間は middleware からは取得できないため対象外（取得には Worker の
  * ラップが必要）。
  */
 
@@ -20,8 +27,8 @@ const BOT_PATTERN =
 /**
  * リクエストの種別を判定する。
  * 実アクセスログに大量に現れる `?_rsc=...` は RSC / プリフェッチ fetch のノイズだが、
- * Next.js は `_rsc` クエリパラメータも `RSC` / `Next-Router-Prefetch` ヘッダも proxy
- * 到達前に除去してしまう。唯一 proxy まで残る `Accept: text/x-component` で RSC を判定する。
+ * Next.js は `_rsc` クエリパラメータも `RSC` / `Next-Router-Prefetch` ヘッダも middleware
+ * 到達前に除去してしまう。唯一 middleware まで残る `Accept: text/x-component` で RSC を判定する。
  * （プリフェッチと soft navigation はヘッダが残らないため区別できない＝まとめて rsc 扱い）
  */
 function classify(request: NextRequest): 'api' | 'rsc' | 'page' {
@@ -31,7 +38,7 @@ function classify(request: NextRequest): 'api' | 'rsc' | 'page' {
   return 'page'
 }
 
-export function proxy(request: NextRequest): NextResponse {
+export function middleware(request: NextRequest): NextResponse {
   const ua = request.headers.get('user-agent') ?? ''
   const botMatch = ua.match(BOT_PATTERN)
 
@@ -56,6 +63,9 @@ export function proxy(request: NextRequest): NextResponse {
 }
 
 export const config = {
+  // Edge ランタイムを明示（Node.js middleware は OpenNext / Cloudflare 非対応のため）。
+  // Next 16 は middleware の 'edge' を弾き 'experimental-edge' を要求する。
+  runtime: 'experimental-edge',
   // 静的アセットと Next 内部パスは除外し、ページ・API・RSC のみを対象にする。
   matcher: [
     '/((?!_next/static|_next/image|favicon.ico|icon.svg|robots.txt|sitemap.xml|images/).*)',

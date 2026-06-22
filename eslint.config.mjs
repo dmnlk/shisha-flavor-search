@@ -49,6 +49,7 @@ const config = [
     ignores: [
       "node_modules/**",
       ".next/**",
+      ".open-next/**",
       "out/**",
       ".claude/**",
       "data/shishaData.js",
