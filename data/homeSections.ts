@@ -120,17 +120,13 @@ export function getLatestFlavors(limit = 6): ShishaFlavor[] {
     if (picked.length >= limit) return picked
   }
 
-  // Top up (or fall back) with image-bearing entries from the tail of data.
-  const tail = shishaData.slice(-limit * 4)
-  const imaged: ShishaFlavor[] = []
-  const rest: ShishaFlavor[] = []
-  for (let i = tail.length - 1; i >= 0; i--) {
-    const resolved = resolveFlavorImage(tail[i])
-    if (hasImage(resolved)) imaged.push(resolved)
-    else rest.push(resolved)
-  }
-  take(imaged)
-  take(rest)
+  // Top up (or fall back) with the most recently inserted flavors. IDs are
+  // assigned sequentially (max id + 1 by the update pipeline), so descending
+  // id reflects insertion order — not the array's alphabetical tail. Image-
+  // bearing first so the cards render well.
+  const byRecency = [...shishaData].sort((a, b) => b.id - a.id).map(resolveFlavorImage)
+  take(byRecency.filter(hasImage))
+  take(byRecency.filter(f => !hasImage(f)))
   return picked.slice(0, limit)
 }
 
