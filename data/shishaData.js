@@ -35434,6 +35434,15 @@ export const shishaData =
             "imageUrl": ""
         },
         {
+            "id": 5338,
+            "manufacturer": "REVOSHI",
+            "productName": "REVOSHI TOBACCO Pineapple Flavored",
+            "amount": "50.0g箱",
+            "country": "トルコ",
+            "price": "1,750円",
+            "imageUrl": ""
+        },
+        {
             "id": 3900,
             "manufacturer": "REVOSHI",
             "productName": "REVOSHI TOBACCO Sting Like Bee Flavored",
@@ -35563,6 +35572,15 @@ export const shishaData =
             "id": 5324,
             "manufacturer": "REVOSHI",
             "productName": "REVOSHI TOBACCO Yoghourt Flavored",
+            "amount": "50.0g箱",
+            "country": "トルコ",
+            "price": "1,750円",
+            "imageUrl": ""
+        },
+        {
+            "id": 5339,
+            "manufacturer": "REVOSHI",
+            "productName": "REVOSHI TOBACCO Yoghurt Flavored",
             "amount": "50.0g箱",
             "country": "トルコ",
             "price": "1,750円",
