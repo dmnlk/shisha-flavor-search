@@ -126,6 +126,6 @@ pnpm build:data    # Regenerate data/generated/searchIndex.json + brands.json.
 
 6. **TypeScript Configuration**: Strict type checking enabled with proper interfaces for all data structures. Next.js requires awaiting params in dynamic API routes.
 
-7. **Node.js Version**: Project uses Node.js 22.12.0 LTS as specified in `.node-version` file.
+7. **Node.js Version**: Project uses Node.js 26.0.0 as specified in `.node-version` file.
 
 8. **CSS Framework**: Tailwind CSS v4 with PostCSS configuration in JavaScript format for compatibility.
