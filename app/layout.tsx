@@ -1,10 +1,14 @@
 import './globals.css'
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
+import { GoogleAnalytics } from '@next/third-parties/google'
 
 import { ThemeProvider } from '../components/ThemeProvider'
 import { ThemeToggle } from '../components/ThemeToggle'
 import { escapeJsonLd } from '../lib/utils/jsonLd'
+
+// Google Analytics 4 計測 ID。クライアントに露出する公開値のため直書きで問題ない。
+const GA_MEASUREMENT_ID = 'G-1BB2YP9MYK'
 
 const geistSans = Geist({
   subsets: ['latin'],
@@ -119,6 +123,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           {children}
         </ThemeProvider>
       </body>
+      <GoogleAnalytics gaId={GA_MEASUREMENT_ID} />
     </html>
   )
 }
