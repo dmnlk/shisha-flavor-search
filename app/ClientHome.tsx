@@ -1,15 +1,15 @@
 'use client'
 
 import Link from 'next/link'
-import { useSearchParams, useRouter } from 'next/navigation'
-import { useState, useEffect, Suspense, type ReactNode } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { type ReactNode, Suspense, useEffect, useState } from 'react'
 
 import BrandList from '../components/BrandList'
 import HeroFallback from '../components/home/HeroFallback'
 import SearchBar from '../components/SearchBar'
 import ShishaCard from '../components/ShishaCard'
 import SkeletonGrid from '../components/SkeletonGrid'
-import type { ShishaFlavor, SearchResponse } from '../types/shisha'
+import type { SearchResponse, ShishaFlavor } from '../types/shisha'
 
 interface SearchParams {
   query?: string
@@ -33,7 +33,7 @@ function HomeContent({ editorialSections, lastDataUpdated, initialManufacturers 
   const [loading, setLoading] = useState(false)
   const [isSearching, setIsSearching] = useState(false)
   const [manufacturers, setManufacturers] = useState<string[]>(initialManufacturers)
-  const [currentPage, setCurrentPage] = useState(parseInt(searchParams.get('page') || '1'))
+  const [currentPage, setCurrentPage] = useState(parseInt(searchParams.get('page') || '1', 10))
   const [totalPages, setTotalPages] = useState(0)
   const [totalResults, setTotalResults] = useState(initialTotalItems)
   const [selectedManufacturer, setSelectedManufacturer] = useState(searchParams.get('manufacturer') || '')
@@ -126,12 +126,12 @@ function HomeContent({ editorialSections, lastDataUpdated, initialManufacturers 
     handleSearch({ query: '', manufacturer: '', page: 1 })
   }
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: 初回マウント時に一度だけ URL パラメータで検索する
   useEffect(() => {
     const query = searchParams.get('query') || ''
     const manufacturer = searchParams.get('manufacturer') || ''
-    const page = parseInt(searchParams.get('page') || '1')
+    const page = parseInt(searchParams.get('page') || '1', 10)
     handleSearch({ query, manufacturer, page })
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const renderPageButton = (page: number, isCurrent = false) => {
@@ -148,6 +148,7 @@ function HomeContent({ editorialSections, lastDataUpdated, initialManufacturers 
     }
     return (
       <button
+        type="button"
         key={`page-${page}`}
         onClick={() => handlePageChange(page)}
         className={`${base} border-rule-200 dark:border-rule-800 text-ink-600 dark:text-ink-300 hover:text-ember-500 hover:border-ember-500`}
@@ -303,6 +304,7 @@ function HomeContent({ editorialSections, lastDataUpdated, initialManufacturers 
                     <div className="flex justify-center items-center mt-14 gap-1.5 border-t border-rule-200 dark:border-rule-800 pt-8">
                       {currentPage > 1 && (
                         <button
+                          type="button"
                           onClick={() => handlePageChange(currentPage - 1)}
                           className="h-9 px-3 font-mono-tight text-[10px] uppercase tracking-[0.14em] border border-rule-200 dark:border-rule-800 text-ink-600 dark:text-ink-300 hover:text-ember-500 hover:border-ember-500 transition-colors"
                         >
@@ -326,6 +328,7 @@ function HomeContent({ editorialSections, lastDataUpdated, initialManufacturers 
 
                       {currentPage < totalPages && (
                         <button
+                          type="button"
                           onClick={() => handlePageChange(currentPage + 1)}
                           className="h-9 px-3 font-mono-tight text-[10px] uppercase tracking-[0.14em] border border-rule-200 dark:border-rule-800 text-ink-600 dark:text-ink-300 hover:text-ember-500 hover:border-ember-500 transition-colors"
                         >
@@ -347,6 +350,7 @@ function HomeContent({ editorialSections, lastDataUpdated, initialManufacturers 
                     Adjust the filter or reset the archive.
                   </p>
                   <button
+                    type="button"
                     onClick={handleHomeReset}
                     className="font-mono-tight text-[11px] uppercase tracking-[0.14em] px-4 py-2 bg-ink-900 text-paper-0 dark:bg-ink-100 dark:text-paper-950 hover:bg-ember-500 transition-colors"
                   >

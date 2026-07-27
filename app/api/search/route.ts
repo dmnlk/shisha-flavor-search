@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { type NextRequest, NextResponse } from 'next/server'
 
 import { resolveFlavorImage } from '../../../data/flavorImages'
 import { fuzzySearch, type SearchType } from '../../../lib/search/fuzzySearch'
@@ -28,9 +28,9 @@ export async function GET(request: NextRequest): Promise<NextResponse<SearchResp
     const manufacturer = searchParams.get('manufacturer') || ''
     const searchType = coerceSearchType(searchParams.get('searchType'))
     const pageParam = searchParams.get('page')
-    const page = pageParam ? Math.max(1, parseInt(pageParam)) : 1
+    const page = pageParam ? Math.max(1, parseInt(pageParam, 10)) : 1
 
-    if (isNaN(page)) {
+    if (Number.isNaN(page)) {
       return NextResponse.json(
         { error: 'Invalid page parameter' },
         { status: 400 }

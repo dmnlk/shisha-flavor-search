@@ -9,6 +9,7 @@ export function ThemeToggle() {
     <div className="fixed top-5 right-5 z-50 font-mono-tight text-[10px] uppercase tracking-[0.12em]">
       <div className="flex items-stretch border border-ink-900 dark:border-ink-100 bg-paper-0 dark:bg-paper-950">
         <button
+          type="button"
           onClick={() => setDarkMode(false)}
           aria-pressed={!darkMode}
           aria-label="Light mode"
@@ -22,6 +23,7 @@ export function ThemeToggle() {
         </button>
         <span aria-hidden className="self-stretch w-px bg-ink-900 dark:bg-ink-100" />
         <button
+          type="button"
           onClick={() => setDarkMode(true)}
           aria-pressed={darkMode}
           aria-label="Dark mode"

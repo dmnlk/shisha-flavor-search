@@ -1,12 +1,10 @@
 import Fuse from 'fuse.js'
-
-import { shishaData } from '../../data/shishaData'
-import type { ShishaFlavor } from '../../types/shisha'
-import { tokenizeForSearch } from '../utils/japaneseNormalizer'
-
 // ビルド時に scripts/build-data.ts が生成する事前正規化済みインデックス。
 // モジュール初期化時の正規化ループ (5.3k 件 × 4 フィールド) を読み込みに置き換える。
 import searchIndex from '../../data/generated/searchIndex.json'
+import { shishaData } from '../../data/shishaData'
+import type { ShishaFlavor } from '../../types/shisha'
+import { tokenizeForSearch } from '../utils/japaneseNormalizer'
 
 export type SearchType = 'all' | 'brand' | 'flavor'
 

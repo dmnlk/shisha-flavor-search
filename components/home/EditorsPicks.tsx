@@ -1,8 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
-
-import { brandSlug } from '../../lib/utils/brandNormalizer'
 import type { EditorsPickFlavor } from '../../data/homeSections'
+import { brandSlug } from '../../lib/utils/brandNormalizer'
 import NoImage from '../NoImage'
 
 import SectionHeader from './SectionHeader'

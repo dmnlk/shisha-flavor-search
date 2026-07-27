@@ -1,4 +1,4 @@
-import { shishaService, ShishaServiceError } from '../shishaService'
+import { ShishaServiceError, shishaService } from '../shishaService'
 
 describe('shishaService', () => {
   describe('getShishaById', () => {

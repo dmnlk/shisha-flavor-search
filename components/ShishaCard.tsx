@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { type CSSProperties, MouseEvent } from 'react'
+import type { CSSProperties, MouseEvent } from 'react'
 
 import { brandSlug } from '../lib/utils/brandNormalizer'
 import type { ShishaFlavor } from '../types/shisha'
@@ -72,6 +72,7 @@ export default function ShishaCard({ flavor, onManufacturerClick, index = 0 }: S
           </div>
 
           <button
+            type="button"
             onClick={handleManufacturerClick}
             className="font-mono-tight text-[10px] uppercase tracking-[0.14em] text-ink-600 dark:text-ink-300 hover:text-ember-500 transition-colors block text-left truncate w-full mb-1"
           >

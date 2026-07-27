@@ -1,5 +1,5 @@
-import ShishaCard from '../ShishaCard'
 import type { ShishaFlavor } from '../../types/shisha'
+import ShishaCard from '../ShishaCard'
 
 import SectionHeader from './SectionHeader'
 

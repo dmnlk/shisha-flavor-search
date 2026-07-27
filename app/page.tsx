@@ -1,8 +1,8 @@
-import ClientHome from './ClientHome'
 import HomeSections from '../components/home/HomeSections'
 import updateState from '../data/generated/updateState.json'
-import { getManufacturers } from '../data/shishaMethods'
 import { shishaData } from '../data/shishaData'
+import { getManufacturers } from '../data/shishaMethods'
+import ClientHome from './ClientHome'
 
 function getLastDataUpdated(): string | null {
   const iso = updateState.lastDataUpdated

@@ -1,5 +1,5 @@
-import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
+import { NextResponse } from 'next/server'
 
 /**
  * 構造化アクセスログ middleware（Edge ランタイム）。
@@ -44,7 +44,7 @@ export function middleware(request: NextRequest): NextResponse {
 
   // JSON 1 行で出すことで Workers Logs がフィールド化する。msg は従来の見た目を踏襲。
   // アクセスログは info 相当で出したいので、ここでは意図的に console.log を使う。
-  // eslint-disable-next-line no-console
+  // biome-ignore lint/suspicious/noConsole: アクセスログは info 相当として意図的に console.log を使う
   console.log(
     JSON.stringify({
       msg: `${request.method} ${request.nextUrl.pathname}`,

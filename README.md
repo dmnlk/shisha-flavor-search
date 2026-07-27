@@ -29,7 +29,7 @@
 ### 開発ツール
 - **Node.js 22.12.0 LTS**: 最新のLTSランタイム
 - **pnpm 10.x**: 高速で効率的なパッケージマネージャー
-- **ESLint 9**: コード品質管理
+- **Biome**: コード品質管理（Linter）
 - **Jest 30**: TypeScript対応テストフレームワーク
 - **React Testing Library**: コンポーネントテスト
 
@@ -186,7 +186,7 @@ pnpm deploy
 
 ### コーディング規約
 - TypeScript厳格モードに従う
-- ESLintルールに従う
+- Biome (`pnpm lint`) のルールに従う
 - コンポーネントは関数コンポーネントで実装（.tsxファイル）
 - Tailwind CSS v4のユーティリティクラスを使用
 - 型定義を明確に記述
