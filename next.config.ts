@@ -4,6 +4,9 @@ import type { NextConfig } from 'next'
 initOpenNextCloudflareForDev()
 
 const nextConfig: NextConfig = {
+  experimental: {
+    useTypeScriptCli: true,
+  },
   images: {
     unoptimized: true,
     remotePatterns: [
