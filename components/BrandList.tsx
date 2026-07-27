@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useState, useMemo, useEffect } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 import { brandSlug } from '../lib/utils/brandNormalizer'
 
@@ -68,7 +68,7 @@ export default function BrandList({ manufacturers, selectedManufacturer, onSelec
       </div>
 
       <div className="flex flex-wrap items-center gap-1.5">
-        <button onClick={() => onSelect('')} className={chipClass(selectedManufacturer === '')}>
+        <button type="button" onClick={() => onSelect('')} className={chipClass(selectedManufacturer === '')}>
           All
         </button>
         {popularBrands.map((brand) => (
@@ -83,6 +83,7 @@ export default function BrandList({ manufacturers, selectedManufacturer, onSelec
 
         {manufacturers.length > 10 && (
           <button
+            type="button"
             onClick={() => setIsExpanded(!isExpanded)}
             aria-expanded={isExpanded}
             aria-controls="brand-list-full"

@@ -1,0 +1,48 @@
+{
+	"$schema": "https://biomejs.dev/schemas/2.5.5/schema.json",
+	"vcs": {
+		"enabled": true,
+		"clientKind": "git",
+		"useIgnoreFile": true
+	},
+	"files": {
+		"includes": [
+			"**",
+			"!node_modules",
+			"!.next",
+			"!.open-next",
+			"!out",
+			"!.claude",
+			"!public",
+			"!**/*.svg",
+			"!data/generated",
+			"!data/shishaData.js",
+			"!data/flavorImagesGenerated.ts"
+		]
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"preset": "recommended",
+			"security": {
+				"noDangerouslySetInnerHtml": "off"
+			},
+			"suspicious": {
+				"noConsole": {
+					"level": "warn",
+					"options": {
+						"allow": ["warn", "error"]
+					}
+				}
+			}
+		}
+	},
+	"css": {
+		"parser": {
+			"tailwindDirectives": true
+		}
+	},
+	"formatter": {
+		"enabled": false
+	}
+}

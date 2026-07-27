@@ -1,9 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-
-import ShishaCard from '../ShishaCard'
 import type { OriginBucket } from '../../data/homeSections'
+import ShishaCard from '../ShishaCard'
 
 import SectionHeader from './SectionHeader'
 

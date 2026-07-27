@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, FormEvent, useMemo } from 'react'
+import { type FormEvent, useEffect, useMemo, useState } from 'react'
 
 import { debounce } from '../utils/debounce'
 

@@ -1,7 +1,7 @@
 import './globals.css'
+import { GoogleAnalytics } from '@next/third-parties/google'
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
-import { GoogleAnalytics } from '@next/third-parties/google'
 
 import { ThemeProvider } from '../components/ThemeProvider'
 import { ThemeToggle } from '../components/ThemeToggle'

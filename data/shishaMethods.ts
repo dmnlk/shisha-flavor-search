@@ -1,7 +1,7 @@
-import { shishaData } from './shishaData'
 import { getUniqueBrands, normalizeBrandForSearch } from '../lib/utils/brandNormalizer'
 import { normalizeForSearch } from '../lib/utils/japaneseNormalizer'
 import type { ShishaFlavor } from '../types/shisha'
+import { shishaData } from './shishaData'
 
 interface SearchParams {
   query?: string

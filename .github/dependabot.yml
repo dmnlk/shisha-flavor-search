@@ -15,7 +15,6 @@ updates:
       next:
         patterns:
           - "next"
-          - "eslint-config-next"
           - "@next/*"
       react:
         patterns:
@@ -36,9 +35,7 @@ updates:
           - "@testing-library/*"
       linting:
         patterns:
-          - "eslint"
-          - "eslint-*"
-          - "@eslint/*"
+          - "@biomejs/biome"
       typescript:
         patterns:
           - "typescript"

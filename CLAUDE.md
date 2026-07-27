@@ -47,7 +47,8 @@ pnpm test:ci       # Run tests with coverage for CI
 pnpm test -- __tests__/foo.test.ts  # Run a single test file
 
 # Code Quality
-pnpm lint          # Run ESLint
+pnpm lint          # Run Biome (biome check .)
+pnpm lint:fix      # Run Biome with autofix (biome check --write .)
 pnpm typecheck     # Run TypeScript type checking (regenerates data/generated/ first)
 
 # Build-time data generation
@@ -109,8 +110,8 @@ pnpm build:data    # Regenerate data/generated/searchIndex.json + brands.json.
 
 ### Configuration Notes
 - **Path alias**: `@/*` maps to project root (e.g., `import { ShishaFlavor } from '@/types/shisha'`)
-- **ESLint**: Flat config format (`eslint.config.mjs`), `data/shishaData.js` is ignored
-- **Trailing commas**: Required in arrays/objects/imports/exports, forbidden in function params
+- **Biome**: Linter config in `biome.json` (`preset: recommended`). Formatter is intentionally **disabled** — Biome is used for linting only. Generated/vendored files (`data/shishaData.js`, `data/flavorImagesGenerated.ts`, `data/generated/`, `public/`, `**/*.svg`) are ignored.
+- **Trailing commas**: Convention — used in arrays/objects/imports/exports, omitted in function params. No longer lint-enforced (Biome formatter is disabled); follow the surrounding code.
 
 ### Key Implementation Details
 

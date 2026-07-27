@@ -133,6 +133,7 @@ export default function BrandsClient({ brands }: BrandsClientProps) {
             <div className="flex border border-rule-200 dark:border-rule-800">
               {(['popularity', 'alpha'] as SortKey[]).map((key, idx) => (
                 <button
+                  type="button"
                   key={key}
                   onClick={() => setSortKey(key)}
                   className={`flex-1 font-mono-tight text-[11px] uppercase tracking-[0.12em] px-4 py-3 transition-colors ${

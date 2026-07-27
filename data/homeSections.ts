@@ -1,12 +1,12 @@
+import { brandSlug, getUniqueBrands, normalizeBrandForSearch, normalizeBrandName } from '../lib/utils/brandNormalizer'
+import { getCountryDisplay } from '../lib/utils/countryDisplay'
+import type { ShishaFlavor } from '../types/shisha'
 import { BRAND_DESCRIPTIONS } from './brandDescriptions'
 import { getBrandImageUrl } from './brandImages'
 import { EDITORS_PICKS } from './curatedPicks'
 import { resolveFlavorImage } from './flavorImages'
 import updateState from './generated/updateState.json'
 import { shishaData } from './shishaData'
-import { brandSlug, getUniqueBrands, normalizeBrandForSearch, normalizeBrandName } from '../lib/utils/brandNormalizer'
-import { getCountryDisplay } from '../lib/utils/countryDisplay'
-import type { ShishaFlavor } from '../types/shisha'
 
 /**
  * Server-only helpers for the home page editorial sections.

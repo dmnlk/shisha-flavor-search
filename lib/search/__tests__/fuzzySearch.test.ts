@@ -1,7 +1,6 @@
-import { fuzzySearch } from '../fuzzySearch'
-
 import { shishaData } from '../../../data/shishaData'
 import type { ShishaFlavor } from '../../../types/shisha'
+import { fuzzySearch } from '../fuzzySearch'
 
 describe('fuzzySearch', () => {
   it('returns all items for an empty query', () => {

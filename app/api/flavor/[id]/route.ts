@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { type NextRequest, NextResponse } from 'next/server'
 
 import { resolveFlavorImage } from '../../../../data/flavorImages'
 import { shishaData } from '../../../../data/shishaData'
@@ -11,12 +11,12 @@ interface RouteParams {
 }
 
 export async function GET(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: RouteParams
 ): Promise<NextResponse<ShishaFlavor | { error: string }>> {
   try {
     const { id } = await params
-    const flavor = shishaData.find(item => item.id === parseInt(id))
+    const flavor = shishaData.find(item => item.id === parseInt(id, 10))
     
     if (!flavor) {
       return NextResponse.json(

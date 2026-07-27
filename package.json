@@ -9,7 +9,8 @@
     "prebuild": "npx tsx scripts/build/generate-flavor-image-map.ts",
     "build": "pnpm run build:data && next build",
     "start": "next start",
-    "lint": "eslint .",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
     "typecheck": "pnpm run build:data && tsc --noEmit",
     "test": "pnpm run build:data && jest",
     "test:watch": "pnpm run build:data && jest --watch",
@@ -27,6 +28,7 @@
     "react-dom": "^19.2.8"
   },
   "devDependencies": {
+    "@biomejs/biome": "2.5.5",
     "@opennextjs/cloudflare": "^1.20.1",
     "@tailwindcss/postcss": "^4.3.3",
     "@testing-library/dom": "^10.4.1",
@@ -37,8 +39,6 @@
     "@types/node": "^26.0.1",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
-    "eslint": "^10.8.0",
-    "eslint-config-next": "^16.2.9",
     "jest": "^30.4.2",
     "jest-environment-jsdom": "^30.4.1",
     "jest-fetch-mock": "^3.0.3",
