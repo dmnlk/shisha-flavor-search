@@ -1,3 +1,5 @@
+import { describe, expect, it } from 'vitest'
+
 import { shishaData } from '../../../data/shishaData'
 import type { ShishaFlavor } from '../../../types/shisha'
 import { fuzzySearch } from '../fuzzySearch'

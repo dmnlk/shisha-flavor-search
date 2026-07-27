@@ -1,3 +1,5 @@
+import { describe, expect, it } from 'vitest'
+
 import { normalizeForSearch, tokenizeForSearch } from '../japaneseNormalizer'
 
 describe('normalizeForSearch', () => {

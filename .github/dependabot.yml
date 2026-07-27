@@ -29,9 +29,11 @@ updates:
           - "postcss"
       testing:
         patterns:
-          - "jest"
-          - "jest-*"
-          - "@types/jest"
+          - "vitest"
+          - "@vitest/*"
+          - "vitest-*"
+          - "jsdom"
+          - "@vitejs/plugin-react"
           - "@testing-library/*"
       linting:
         patterns:
@@ -39,7 +41,6 @@ updates:
       typescript:
         patterns:
           - "typescript"
-          - "ts-node"
           - "@types/node"
       minor-and-patch:
         applies-to: version-updates

@@ -30,7 +30,7 @@
 - **Node.js 22.12.0 LTS**: 最新のLTSランタイム
 - **pnpm 10.x**: 高速で効率的なパッケージマネージャー
 - **Biome**: コード品質管理（Linter）
-- **Jest 30**: TypeScript対応テストフレームワーク
+- **Vitest 4**: TypeScript対応テストフレームワーク
 - **React Testing Library**: コンポーネントテスト
 
 ## 📦 インストールと起動
@@ -158,8 +158,8 @@ pnpm test
 # カバレッジレポート付きでテスト
 pnpm test:ci
 
-# 特定のテストファイルを実行
-pnpm test -- __tests__/ShishaCard.test.tsx
+# 特定のテストファイルを実行（Vitest はパスの部分一致でフィルタ）
+pnpm test -- ShishaCard
 ```
 
 ## 🚀 デプロイ
@@ -190,7 +190,7 @@ pnpm deploy
 - コンポーネントは関数コンポーネントで実装（.tsxファイル）
 - Tailwind CSS v4のユーティリティクラスを使用
 - 型定義を明確に記述
-- テストを書く（Jest + React Testing Library）
+- テストを書く（Vitest + React Testing Library）
 
 ## 📝 ライセンス
 
