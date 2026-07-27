@@ -1,3 +1,5 @@
+import { describe, expect, it } from 'vitest'
+
 import { ShishaServiceError, shishaService } from '../shishaService'
 
 describe('shishaService', () => {

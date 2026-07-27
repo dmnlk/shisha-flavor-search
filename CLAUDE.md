@@ -121,7 +121,7 @@ pnpm build:data    # Regenerate data/generated/searchIndex.json + brands.json.
 
 3. **Manufacturer Filtering**: Can be combined with search queries. Empty string means "All Brands".
 
-4. **Testing**: Vitest with React Testing Library configured for TypeScript and Next.js. Config lives in `vitest.config.ts` (jsdom environment, `globals: true`, `@` path alias) and `vitest.setup.ts` (jest-dom matchers via `@testing-library/jest-dom/vitest`, `next/navigation` mock, fetch mock via `vitest-fetch-mock`). Tests are located in `__tests__` folders within component directories with `.test.ts/.tsx` extensions.
+4. **Testing**: Vitest with React Testing Library configured for TypeScript and Next.js. Config lives in `vitest.config.ts` (jsdom environment, `@` path alias; `globals` intentionally **off** — test files import `describe`/`it`/`expect` from `vitest` explicitly) and `vitest.setup.ts` (jest-dom matchers via `@testing-library/jest-dom/vitest`, `next/navigation` mock, fetch mock via `vitest-fetch-mock`). Tests are located in `__tests__` folders within component directories with `.test.ts/.tsx` extensions.
 
 5. **Image Handling**: Configured to load images from external domains (Unsplash, shisha-mart.com, blogger.googleusercontent.com).
 
