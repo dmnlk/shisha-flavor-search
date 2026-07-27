@@ -11,6 +11,9 @@ export default defineConfig({
     },
   },
   test: {
+    // Explicitly off: test files import describe/it/expect from 'vitest'.
+    // Stated intentionally rather than relying on Vitest's default.
+    globals: false,
     environment: 'jsdom',
     setupFiles: ['./vitest.setup.ts'],
     include: ['**/__tests__/**/*.test.{ts,tsx}', '**/*.test.{ts,tsx}'],
