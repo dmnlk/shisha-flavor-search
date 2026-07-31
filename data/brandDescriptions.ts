@@ -84,7 +84,6 @@ export const BRAND_DESCRIPTIONS: Record<string, string> = {
   'serbetli': 'トルコ・トラブゾン製の定番ブランド。ハニーベースで初心者にも人気。',
   'smyrna': 'トルコ・イズミル(旧スミルナ)のバージニア葉シーシャ。2003年設立の独立系。',
   'starline': 'ロシアのDarkside傘下、旧Daily Hookah。軽めのバージニアゴールド葉ブレンド。',
-  'tick-tock': 'ヨルダンのAl-Bazaz Group発ブランド。ハニーテクスチャの米国展開シーシャ。',
   'lavoo': '米カリフォルニア拠点のフーカー本体メーカー。自社シーシャ葉は事実上未製造。',
   'shisha-kartel': 'Al Fakherのサブブランドとしてドバイで2023年に誕生したプレミアム路線。',
   'royal-smokin': 'インド発(2009年)のシーシャブランド。バージニア葉を二段階熟成で製造。',
@@ -98,6 +97,7 @@ export const BRAND_DESCRIPTIONS: Record<string, string> = {
   'white-elephant': '1945年創業の独バイエルンの老舗メーカーで、アフリカ地名を冠したパイプたばこ系フレーバーが特徴。',
   'mixto': '独Ruden Tobacco社の2コンポーネント式シーシャで、糖蜜と生葉を別売し使用時に混合する方式が特徴。',
   'zodiac': 'UAEのAl Fakher製・仏El-Badia独占流通で、茶葉ベースのノンタバコ・ノンニコチン系プレミアム銘柄。',
+  'kismet': '独Vandenberg社の手作業製ダークブレンド。木樽熟成の少量生産で、蜂蜜を使うHoney Blendも展開。',
 }
 
 export function getBrandDescription(slug: string): string | null {

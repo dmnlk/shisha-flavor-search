@@ -10270,6 +10270,15 @@ export const shishaData =
             "imageUrl": ""
         },
         {
+            "id": 5340,
+            "manufacturer": "Bang Bang",
+            "productName": "Bang Bang Double Apple Special",
+            "amount": "50.0g箱",
+            "country": "アラブ首長国連邦",
+            "price": "1,780円",
+            "imageUrl": ""
+        },
+        {
             "id": 1142,
             "manufacturer": "Bang Bang",
             "productName": "Bang Bang ENGLISH MAN",
@@ -28396,6 +28405,240 @@ export const shishaData =
             "imageUrl": ""
         },
         {
+            "id": 5341,
+            "manufacturer": "KISMET",
+            "productName": "KISMET BLACK APPLE",
+            "amount": "200g箱",
+            "country": "ドイツ",
+            "price": "9,500円",
+            "imageUrl": ""
+        },
+        {
+            "id": 5342,
+            "manufacturer": "KISMET",
+            "productName": "KISMET BLACK BISQUIT",
+            "amount": "200g箱",
+            "country": "ドイツ",
+            "price": "9,500円",
+            "imageUrl": ""
+        },
+        {
+            "id": 5343,
+            "manufacturer": "KISMET",
+            "productName": "KISMET BLACK CANE",
+            "amount": "200g箱",
+            "country": "ドイツ",
+            "price": "9,500円",
+            "imageUrl": ""
+        },
+        {
+            "id": 5344,
+            "manufacturer": "KISMET",
+            "productName": "KISMET BLACK FLOWERS",
+            "amount": "200g箱",
+            "country": "ドイツ",
+            "price": "9,500円",
+            "imageUrl": ""
+        },
+        {
+            "id": 5345,
+            "manufacturer": "KISMET",
+            "productName": "KISMET BLACK FORREST",
+            "amount": "200g箱",
+            "country": "ドイツ",
+            "price": "9,500円",
+            "imageUrl": ""
+        },
+        {
+            "id": 5346,
+            "manufacturer": "KISMET",
+            "productName": "KISMET BLACK GINGER",
+            "amount": "200g箱",
+            "country": "ドイツ",
+            "price": "9,500円",
+            "imageUrl": ""
+        },
+        {
+            "id": 5347,
+            "manufacturer": "KISMET",
+            "productName": "KISMET BLACK HAZELNUT",
+            "amount": "200g箱",
+            "country": "ドイツ",
+            "price": "9,500円",
+            "imageUrl": ""
+        },
+        {
+            "id": 5348,
+            "manufacturer": "KISMET",
+            "productName": "KISMET BLACK HIBISCUS",
+            "amount": "200g箱",
+            "country": "ドイツ",
+            "price": "9,500円",
+            "imageUrl": ""
+        },
+        {
+            "id": 5349,
+            "manufacturer": "KISMET",
+            "productName": "KISMET BLACK JASMINE",
+            "amount": "200g箱",
+            "country": "ドイツ",
+            "price": "9,500円",
+            "imageUrl": ""
+        },
+        {
+            "id": 5350,
+            "manufacturer": "KISMET",
+            "productName": "KISMET BLACK LAVENDER",
+            "amount": "200g箱",
+            "country": "ドイツ",
+            "price": "9,500円",
+            "imageUrl": ""
+        },
+        {
+            "id": 5351,
+            "manufacturer": "KISMET",
+            "productName": "KISMET BLACK LEMONADE",
+            "amount": "200g箱",
+            "country": "ドイツ",
+            "price": "9,500円",
+            "imageUrl": ""
+        },
+        {
+            "id": 5352,
+            "manufacturer": "KISMET",
+            "productName": "KISMET BLACK MAJESTY",
+            "amount": "200g箱",
+            "country": "ドイツ",
+            "price": "9,500円",
+            "imageUrl": ""
+        },
+        {
+            "id": 5353,
+            "manufacturer": "KISMET",
+            "productName": "KISMET BLACK PAAN",
+            "amount": "200g箱",
+            "country": "ドイツ",
+            "price": "9,500円",
+            "imageUrl": ""
+        },
+        {
+            "id": 5354,
+            "manufacturer": "KISMET",
+            "productName": "KISMET BLACK PERFUME",
+            "amount": "200g箱",
+            "country": "ドイツ",
+            "price": "9,500円",
+            "imageUrl": ""
+        },
+        {
+            "id": 5355,
+            "manufacturer": "KISMET",
+            "productName": "KISMET BLACK ROSE",
+            "amount": "200g箱",
+            "country": "ドイツ",
+            "price": "9,500円",
+            "imageUrl": ""
+        },
+        {
+            "id": 5356,
+            "manufacturer": "KISMET",
+            "productName": "KISMET BLACK SANDALWOOD",
+            "amount": "200g箱",
+            "country": "ドイツ",
+            "price": "9,500円",
+            "imageUrl": ""
+        },
+        {
+            "id": 5357,
+            "manufacturer": "KISMET",
+            "productName": "KISMET BLACK TEA",
+            "amount": "200g箱",
+            "country": "ドイツ",
+            "price": "9,500円",
+            "imageUrl": ""
+        },
+        {
+            "id": 5358,
+            "manufacturer": "KISMET",
+            "productName": "KISMET BLACK VANILLA",
+            "amount": "200g箱",
+            "country": "ドイツ",
+            "price": "9,500円",
+            "imageUrl": ""
+        },
+        {
+            "id": 5359,
+            "manufacturer": "KISMET",
+            "productName": "KISMET BLACK VIOLET",
+            "amount": "200g箱",
+            "country": "ドイツ",
+            "price": "9,500円",
+            "imageUrl": ""
+        },
+        {
+            "id": 5360,
+            "manufacturer": "KISMET",
+            "productName": "KISMET COFFEE CARDAMOM",
+            "amount": "200g箱",
+            "country": "ドイツ",
+            "price": "9,500円",
+            "imageUrl": ""
+        },
+        {
+            "id": 5361,
+            "manufacturer": "KISMET",
+            "productName": "KISMET ELIXIR",
+            "amount": "200g箱",
+            "country": "ドイツ",
+            "price": "9,500円",
+            "imageUrl": ""
+        },
+        {
+            "id": 5362,
+            "manufacturer": "KISMET",
+            "productName": "KISMET ELYSIUM",
+            "amount": "200g箱",
+            "country": "ドイツ",
+            "price": "9,500円",
+            "imageUrl": ""
+        },
+        {
+            "id": 5363,
+            "manufacturer": "KISMET",
+            "productName": "KISMET LEMON-ROSE",
+            "amount": "200g箱",
+            "country": "ドイツ",
+            "price": "9,500円",
+            "imageUrl": ""
+        },
+        {
+            "id": 5364,
+            "manufacturer": "KISMET",
+            "productName": "KISMET ORIENTTEE AL KASHMIR EDITION",
+            "amount": "200g箱",
+            "country": "ドイツ",
+            "price": "9,500円",
+            "imageUrl": ""
+        },
+        {
+            "id": 5365,
+            "manufacturer": "KISMET",
+            "productName": "KISMET PEACH BLOSSOM",
+            "amount": "200g箱",
+            "country": "ドイツ",
+            "price": "9,500円",
+            "imageUrl": ""
+        },
+        {
+            "id": 5366,
+            "manufacturer": "KISMET",
+            "productName": "KISMET VERITAS",
+            "amount": "200g箱",
+            "country": "ドイツ",
+            "price": "9,500円",
+            "imageUrl": ""
+        },
+        {
             "id": 3142,
             "manufacturer": "KRAKEN",
             "productName": "KRAKEN BLACK CORN",
@@ -44039,8 +44282,8 @@ export const shishaData =
         },
         {
             "id": 4849,
-            "manufacturer": "Tick Tock",
-            "productName": "Tick Tock Autumn Flame",
+            "manufacturer": "TickTock",
+            "productName": "TickTock Autumn Flame",
             "amount": "100.0g箱",
             "country": "トルコ",
             "price": "3,500円",
@@ -44048,8 +44291,8 @@ export const shishaData =
         },
         {
             "id": 4850,
-            "manufacturer": "Tick Tock",
-            "productName": "Tick Tock BLISS",
+            "manufacturer": "TickTock",
+            "productName": "TickTock BLISS",
             "amount": "100.0g箱",
             "country": "トルコ",
             "price": "3,500円",
@@ -44057,8 +44300,8 @@ export const shishaData =
         },
         {
             "id": 4851,
-            "manufacturer": "Tick Tock",
-            "productName": "Tick Tock BLUE EYES",
+            "manufacturer": "TickTock",
+            "productName": "TickTock BLUE EYES",
             "amount": "100.0g箱",
             "country": "トルコ",
             "price": "3,500円",
@@ -44066,8 +44309,8 @@ export const shishaData =
         },
         {
             "id": 4852,
-            "manufacturer": "Tick Tock",
-            "productName": "Tick Tock MADEMOISELLE",
+            "manufacturer": "TickTock",
+            "productName": "TickTock MADEMOISELLE",
             "amount": "100.0g箱",
             "country": "トルコ",
             "price": "3,500円",
@@ -44075,8 +44318,8 @@ export const shishaData =
         },
         {
             "id": 4853,
-            "manufacturer": "Tick Tock",
-            "productName": "Tick Tock MR. JUICE",
+            "manufacturer": "TickTock",
+            "productName": "TickTock MR. JUICE",
             "amount": "100.0g箱",
             "country": "トルコ",
             "price": "3,500円",
@@ -44084,8 +44327,8 @@ export const shishaData =
         },
         {
             "id": 4854,
-            "manufacturer": "Tick Tock",
-            "productName": "Tick Tock OLDI GOLDI",
+            "manufacturer": "TickTock",
+            "productName": "TickTock OLDI GOLDI",
             "amount": "100.0g箱",
             "country": "トルコ",
             "price": "3,500円",
@@ -44093,8 +44336,8 @@ export const shishaData =
         },
         {
             "id": 4855,
-            "manufacturer": "Tick Tock",
-            "productName": "Tick Tock SHOCK",
+            "manufacturer": "TickTock",
+            "productName": "TickTock SHOCK",
             "amount": "100.0g箱",
             "country": "トルコ",
             "price": "3,500円",
@@ -44102,8 +44345,8 @@ export const shishaData =
         },
         {
             "id": 4856,
-            "manufacturer": "Tick Tock",
-            "productName": "Tick Tock The Only Choice",
+            "manufacturer": "TickTock",
+            "productName": "TickTock The Only Choice",
             "amount": "100.0g箱",
             "country": "トルコ",
             "price": "3,500円",
@@ -44111,8 +44354,8 @@ export const shishaData =
         },
         {
             "id": 4857,
-            "manufacturer": "Tick Tock",
-            "productName": "Tick Tock TURN IT UP",
+            "manufacturer": "TickTock",
+            "productName": "TickTock TURN IT UP",
             "amount": "100.0g箱",
             "country": "トルコ",
             "price": "3,500円",
