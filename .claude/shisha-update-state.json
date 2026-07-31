@@ -1,5 +1,5 @@
 {
-  "last_run": "2026-06-23T20:31:54",
+  "last_run": "2026-07-31T14:57:41",
   "processed_pdfs": [
     "20230410_kouriteika.pdf",
     "20230419_kouriteika.pdf",
@@ -247,11 +247,47 @@
     "20260609_kouriteika.pdf",
     "20260615_kouriteika.pdf",
     "20260618_kouriteika.pdf",
-    "20260619_kouriteika.pdf"
+    "20260619_kouriteika.pdf",
+    "20260624_kouriteika.pdf",
+    "20260626_kouriteika.pdf",
+    "20260626_kouriteikahenkou.pdf",
+    "20260629_kouriteikahenkou.pdf",
+    "20260630_kouriteika.pdf",
+    "20260714_kouriteika.pdf",
+    "20260722_kouriteika.pdf",
+    "20260724_kouriteika.pdf",
+    "20260728_kouriteikahenkou.pdf",
+    "20260729_kouriteika.pdf",
+    "20260730_kouriteika.pdf"
   ],
   "last_added_ids": [
-    5338,
-    5339
+    5340,
+    5341,
+    5342,
+    5343,
+    5344,
+    5345,
+    5346,
+    5347,
+    5348,
+    5349,
+    5350,
+    5351,
+    5352,
+    5353,
+    5354,
+    5355,
+    5356,
+    5357,
+    5358,
+    5359,
+    5360,
+    5361,
+    5362,
+    5363,
+    5364,
+    5365,
+    5366
   ],
-  "last_data_updated": "2026-06-23T20:31:54"
+  "last_data_updated": "2026-07-31T14:57:41"
 }
