@@ -39,6 +39,7 @@ const OUT_DIR = path.join(ROOT, 'data', 'generated')
 const CACHE_FILE = path.join(ROOT, '.build-cache')
 const DATA_SOURCE = path.join(ROOT, 'data', 'shishaData.js')
 const SCRIPT_PATH = path.join(ROOT, 'scripts', 'build-data.ts')
+const BRAND_IMAGES_DIR = path.join(ROOT, 'public', 'images', 'brands')
 
 const CACHE_VERSION = 1
 
@@ -46,10 +47,18 @@ interface CacheShape {
   version?: number
   shishaDataHash?: string
   scriptHash?: string
+  brandImagesHash?: string
 }
 
 function fileHash(p: string): string {
   return createHash('sha256').update(readFileSync(p)).digest('hex')
+}
+
+// brandImageMap.json depends only on the directory listing, so hashing the
+// sorted filenames is enough to invalidate the cache on add/remove/rename.
+function brandImagesListingHash(): string {
+  const listing = existsSync(BRAND_IMAGES_DIR) ? readdirSync(BRAND_IMAGES_DIR).sort().join('\n') : ''
+  return createHash('sha256').update(listing).digest('hex')
 }
 
 function loadCache(): CacheShape {
@@ -70,9 +79,10 @@ function isCacheHit(): boolean {
   }
   const cache = loadCache()
   if (cache.version !== CACHE_VERSION) return false
-  if (!cache.shishaDataHash || !cache.scriptHash) return false
+  if (!cache.shishaDataHash || !cache.scriptHash || !cache.brandImagesHash) return false
   return cache.shishaDataHash === fileHash(DATA_SOURCE)
     && cache.scriptHash === fileHash(SCRIPT_PATH)
+    && cache.brandImagesHash === brandImagesListingHash()
 }
 
 async function writeCache(): Promise<void> {
@@ -80,6 +90,7 @@ async function writeCache(): Promise<void> {
     version: CACHE_VERSION,
     shishaDataHash: fileHash(DATA_SOURCE),
     scriptHash: fileHash(SCRIPT_PATH),
+    brandImagesHash: brandImagesListingHash(),
   }
   await writeFile(CACHE_FILE, JSON.stringify(payload, null, 2))
 }
