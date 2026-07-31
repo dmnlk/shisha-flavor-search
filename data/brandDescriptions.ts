@@ -97,6 +97,7 @@ export const BRAND_DESCRIPTIONS: Record<string, string> = {
   'white-elephant': '1945年創業の独バイエルンの老舗メーカーで、アフリカ地名を冠したパイプたばこ系フレーバーが特徴。',
   'mixto': '独Ruden Tobacco社の2コンポーネント式シーシャで、糖蜜と生葉を別売し使用時に混合する方式が特徴。',
   'zodiac': 'UAEのAl Fakher製・仏El-Badia独占流通で、茶葉ベースのノンタバコ・ノンニコチン系プレミアム銘柄。',
+  'kismet': '独Vandenberg社の手作業製ダークブレンド。木樽熟成の少量生産で、蜂蜜を使うHoney Blendも展開。',
 }
 
 export function getBrandDescription(slug: string): string | null {
