@@ -84,7 +84,6 @@ export const BRAND_DESCRIPTIONS: Record<string, string> = {
   'serbetli': 'トルコ・トラブゾン製の定番ブランド。ハニーベースで初心者にも人気。',
   'smyrna': 'トルコ・イズミル(旧スミルナ)のバージニア葉シーシャ。2003年設立の独立系。',
   'starline': 'ロシアのDarkside傘下、旧Daily Hookah。軽めのバージニアゴールド葉ブレンド。',
-  'tick-tock': 'ヨルダンのAl-Bazaz Group発ブランド。ハニーテクスチャの米国展開シーシャ。',
   'lavoo': '米カリフォルニア拠点のフーカー本体メーカー。自社シーシャ葉は事実上未製造。',
   'shisha-kartel': 'Al Fakherのサブブランドとしてドバイで2023年に誕生したプレミアム路線。',
   'royal-smokin': 'インド発(2009年)のシーシャブランド。バージニア葉を二段階熟成で製造。',
