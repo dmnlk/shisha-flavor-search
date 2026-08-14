@@ -17,6 +17,9 @@
  *   - data/generated/brandImageMap.json
  *       public/images/brands/ を走査して slug → 公開 URL のマップを作る。
  *       同上、ランタイムで readdirSync を呼ばないようにするため。
+ *   - data/generated/flavorTags.json
+ *       フレーバーid → タグスラッグ配列。lib/tags/flavorTagger.ts の辞書 +
+ *       data/flavorTagOverrides.ts (AI分類) から導出。タグが付いた項目のみ持つ。
  */
 import { createHash } from 'node:crypto'
 import { existsSync, readdirSync, readFileSync } from 'node:fs'
@@ -24,7 +27,13 @@ import { mkdir, writeFile } from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
+import {
+  type FlavorTagSlug,
+  flavorTagLabel,
+  flavorTagLabelEn,
+} from '../data/flavorTagTaxonomy'
 import { shishaData } from '../data/shishaData.js'
+import { tagFlavorName } from '../lib/tags/flavorTagger'
 import {
   brandSlug,
   getUniqueBrands,
@@ -41,17 +50,31 @@ const DATA_SOURCE = path.join(ROOT, 'data', 'shishaData.js')
 const SCRIPT_PATH = path.join(ROOT, 'scripts', 'build-data.ts')
 const BRAND_IMAGES_DIR = path.join(ROOT, 'public', 'images', 'brands')
 
-const CACHE_VERSION = 1
+const CACHE_VERSION = 2
+
+// flavorTags.json はこの3ファイルの内容にも依存するため、キャッシュ判定に含める。
+const TAG_SOURCE_FILES = [
+  path.join(ROOT, 'lib', 'tags', 'flavorTagger.ts'),
+  path.join(ROOT, 'data', 'flavorTagTaxonomy.ts'),
+  path.join(ROOT, 'data', 'flavorTagOverrides.ts'),
+]
 
 interface CacheShape {
   version?: number
   shishaDataHash?: string
   scriptHash?: string
   brandImagesHash?: string
+  tagSourcesHash?: string
 }
 
 function fileHash(p: string): string {
   return createHash('sha256').update(readFileSync(p)).digest('hex')
+}
+
+function tagSourcesHash(): string {
+  const hash = createHash('sha256')
+  for (const p of TAG_SOURCE_FILES) hash.update(readFileSync(p))
+  return hash.digest('hex')
 }
 
 // brandImageMap.json depends only on the directory listing, so hashing the
@@ -73,16 +96,17 @@ function loadCache(): CacheShape {
 function isCacheHit(): boolean {
   if (!existsSync(OUT_DIR)) return false
   // Check all 4 expected output files exist
-  const expectedFiles = ['searchIndex.json', 'brands.json', 'updateState.json', 'brandImageMap.json']
+  const expectedFiles = ['searchIndex.json', 'brands.json', 'updateState.json', 'brandImageMap.json', 'flavorTags.json']
   for (const f of expectedFiles) {
     if (!existsSync(path.join(OUT_DIR, f))) return false
   }
   const cache = loadCache()
   if (cache.version !== CACHE_VERSION) return false
-  if (!cache.shishaDataHash || !cache.scriptHash || !cache.brandImagesHash) return false
+  if (!cache.shishaDataHash || !cache.scriptHash || !cache.brandImagesHash || !cache.tagSourcesHash) return false
   return cache.shishaDataHash === fileHash(DATA_SOURCE)
     && cache.scriptHash === fileHash(SCRIPT_PATH)
     && cache.brandImagesHash === brandImagesListingHash()
+    && cache.tagSourcesHash === tagSourcesHash()
 }
 
 async function writeCache(): Promise<void> {
@@ -91,6 +115,7 @@ async function writeCache(): Promise<void> {
     shishaDataHash: fileHash(DATA_SOURCE),
     scriptHash: fileHash(SCRIPT_PATH),
     brandImagesHash: brandImagesListingHash(),
+    tagSourcesHash: tagSourcesHash(),
   }
   await writeFile(CACHE_FILE, JSON.stringify(payload, null, 2))
 }
@@ -116,18 +141,35 @@ interface UpdateStateSnapshot {
 
 const BRAND_IMAGE_EXTENSIONS = new Set(['.png', '.jpg', '.jpeg', '.webp', '.svg', '.avif'])
 
-function buildSearchIndex(data: ShishaFlavor[]): IndexedFlavor[] {
+function buildFlavorTagsMap(data: ShishaFlavor[]): Record<number, FlavorTagSlug[]> {
+  const map: Record<number, FlavorTagSlug[]> = {}
+  for (const item of data) {
+    const tags = tagFlavorName(item.productName, item.manufacturer)
+    if (tags.length > 0) map[item.id] = tags
+  }
+  return map
+}
+
+function buildSearchIndex(
+  data: ShishaFlavor[],
+  flavorTags: Record<number, FlavorTagSlug[]>
+): IndexedFlavor[] {
   return data.map(item => {
     const manufacturer = normalizeForSearch(item.manufacturer)
     const productName = normalizeForSearch(item.productName)
     const amount = normalizeForSearch(item.amount)
     const country = normalizeForSearch(item.country)
+    // タグの和名/英名もテキスト検索対象に入れる。「ミント」で "Peppermint" のような
+    // 名前にラベル経由でヒットさせるため。
+    const tagText = (flavorTags[item.id] ?? [])
+      .map(slug => normalizeForSearch(`${flavorTagLabel(slug)} ${flavorTagLabelEn(slug)}`))
+      .join(' ')
     return {
       id: item.id,
       manufacturer,
       productName,
       // 空フィールドが混ざっても余分な空白を残さないよう filter してから join
-      all: [manufacturer, productName, amount, country].filter(Boolean).join(' '),
+      all: [manufacturer, productName, amount, country, tagText].filter(Boolean).join(' '),
     }
   })
 }
@@ -196,7 +238,8 @@ async function main(): Promise<void> {
 
   const data = shishaData as ShishaFlavor[]
 
-  const searchIndex = buildSearchIndex(data)
+  const flavorTags = buildFlavorTagsMap(data)
+  const searchIndex = buildSearchIndex(data, flavorTags)
   const brands = buildBrandsSummary(data)
   const updateState = buildUpdateStateSnapshot()
   const brandImageMap = buildBrandImageMap()
@@ -218,11 +261,15 @@ async function main(): Promise<void> {
     path.join(OUT_DIR, 'brandImageMap.json'),
     JSON.stringify(brandImageMap)
   )
+  await writeFile(
+    path.join(OUT_DIR, 'flavorTags.json'),
+    JSON.stringify(flavorTags)
+  )
 
   await writeCache()
 
   console.warn(
-    `[build-data] searchIndex=${searchIndex.length} flavors, brands=${brands.length}, brandImages=${Object.keys(brandImageMap).length}, lastDataUpdated=${updateState.lastDataUpdated ?? 'null'}`
+    `[build-data] searchIndex=${searchIndex.length} flavors, brands=${brands.length}, brandImages=${Object.keys(brandImageMap).length}, taggedFlavors=${Object.keys(flavorTags).length}, lastDataUpdated=${updateState.lastDataUpdated ?? 'null'}`
   )
 }
 

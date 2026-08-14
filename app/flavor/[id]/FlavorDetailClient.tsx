@@ -6,6 +6,7 @@ import Link from 'next/link'
 import NoImage from '../../../components/NoImage'
 import ShareOnX from '../../../components/ShareOnX'
 import ShishaCard from '../../../components/ShishaCard'
+import { flavorTagLabel } from '../../../data/flavorTagTaxonomy'
 import { brandSlug } from '../../../lib/utils/brandNormalizer'
 import type { ShishaFlavor } from '../../../types/shisha'
 
@@ -86,6 +87,25 @@ export default function FlavorDetailClient({ flavor, related = [] }: FlavorDetai
                   <p className="font-sans-tight text-ink-700 dark:text-ink-200 text-base leading-[1.55]">
                     {flavor.description}
                   </p>
+                </div>
+              )}
+
+              {flavor.tags && flavor.tags.length > 0 && (
+                <div className="py-6 border-b border-rule-200 dark:border-rule-800">
+                  <p className="font-mono-tight text-[10px] uppercase tracking-[0.18em] text-ink-400 dark:text-ink-500 mb-3">
+                    Flavor tags
+                  </p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {flavor.tags.map(tag => (
+                      <Link
+                        key={tag}
+                        href={`/?tags=${tag}`}
+                        className="font-mono-tight text-[10px] tracking-[0.12em] px-2.5 py-1.5 border border-rule-200 dark:border-rule-800 text-ink-600 dark:text-ink-300 hover:border-ember-500 hover:text-ember-500 transition-colors"
+                      >
+                        {flavorTagLabel(tag)}
+                      </Link>
+                    ))}
+                  </div>
                 </div>
               )}
 

@@ -1,6 +1,8 @@
 import { type NextRequest, NextResponse } from 'next/server'
 
 import { resolveFlavorImage } from '../../../data/flavorImages'
+import { attachFlavorTags, getFlavorTags } from '../../../data/flavorTags'
+import { type FlavorTagSlug, isFlavorTagSlug } from '../../../data/flavorTagTaxonomy'
 import { fuzzySearch, type SearchType } from '../../../lib/search/fuzzySearch'
 import { normalizeBrandForSearch } from '../../../lib/utils/brandNormalizer'
 import type { SearchResponse } from '../../../types/shisha'
@@ -9,6 +11,12 @@ export const dynamic = 'force-dynamic'
 
 function coerceSearchType(value: string | null): SearchType {
   return value === 'brand' || value === 'flavor' ? value : 'all'
+}
+
+// "mint,berry" 形式のカンマ区切りを既知スラッグのみへ絞る (未知の値は無視)
+function parseTagsParam(value: string | null): FlavorTagSlug[] {
+  if (!value) return []
+  return [...new Set(value.split(',').map(t => t.trim()).filter(isFlavorTagSlug))]
 }
 
 export async function GET(request: NextRequest): Promise<NextResponse<SearchResponse | { error: string }>> {
@@ -26,6 +34,7 @@ export async function GET(request: NextRequest): Promise<NextResponse<SearchResp
 
     const query = queryParam || ''
     const manufacturer = searchParams.get('manufacturer') || ''
+    const tags = parseTagsParam(searchParams.get('tags'))
     const searchType = coerceSearchType(searchParams.get('searchType'))
     const pageParam = searchParams.get('page')
     const page = pageParam ? Math.max(1, parseInt(pageParam, 10)) : 1
@@ -50,12 +59,22 @@ export async function GET(request: NextRequest): Promise<NextResponse<SearchResp
       )
     }
 
+    // タグ絞り込みは AND (選択タグをすべて持つ項目のみ)。順序は同様に保持。
+    if (tags.length > 0) {
+      filteredData = filteredData.filter(item => {
+        const itemTags = getFlavorTags(item.id)
+        return tags.every(tag => itemTags.includes(tag))
+      })
+    }
+
     const totalItems = filteredData.length
     const totalPages = Math.max(1, Math.ceil(totalItems / itemsPerPage))
     const validPage = Math.min(page, totalPages)
     const startIndex = (validPage - 1) * itemsPerPage
     const endIndex = Math.min(startIndex + itemsPerPage, totalItems)
-    const paginatedItems = filteredData.slice(startIndex, endIndex).map(resolveFlavorImage)
+    const paginatedItems = filteredData
+      .slice(startIndex, endIndex)
+      .map(item => attachFlavorTags(resolveFlavorImage(item)))
 
     return NextResponse.json(
       {

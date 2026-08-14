@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
 import { resolveFlavorImage } from '../../../data/flavorImages'
+import { attachFlavorTags } from '../../../data/flavorTags'
 import { shishaData } from '../../../data/shishaData'
 import { brandSlug, normalizeBrandForSearch } from '../../../lib/utils/brandNormalizer'
 import { escapeJsonLd } from '../../../lib/utils/jsonLd'
@@ -20,7 +21,7 @@ function findFlavor(id: string): ShishaFlavor | null {
   const parsed = Number(id)
   if (!Number.isFinite(parsed)) return null
   const hit = (shishaData as ShishaFlavor[]).find((f) => f.id === parsed)
-  return hit ? resolveFlavorImage(hit) : null
+  return hit ? attachFlavorTags(resolveFlavorImage(hit)) : null
 }
 
 function findRelatedFlavors(flavor: ShishaFlavor, count: number): ShishaFlavor[] {
@@ -29,7 +30,7 @@ function findRelatedFlavors(flavor: ShishaFlavor, count: number): ShishaFlavor[]
   for (const item of shishaData as ShishaFlavor[]) {
     if (item.id === flavor.id) continue
     if (normalizeBrandForSearch(item.manufacturer) !== target) continue
-    related.push(resolveFlavorImage(item))
+    related.push(attachFlavorTags(resolveFlavorImage(item)))
     if (related.length >= count) break
   }
   return related
