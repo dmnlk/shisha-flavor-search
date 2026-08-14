@@ -1,3 +1,5 @@
+import type { FlavorTagSlug } from '../data/flavorTagTaxonomy'
+
 export interface ShishaFlavor {
   id: number
   manufacturer: string
@@ -7,6 +9,8 @@ export interface ShishaFlavor {
   price: string
   imageUrl: string
   description?: string
+  /** ビルド時に導出されるフレーバータグ。APIレスポンス整形時に付与される */
+  tags?: FlavorTagSlug[]
 }
 
 export interface SearchResponse {

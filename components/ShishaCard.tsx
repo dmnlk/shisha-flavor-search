@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import type { CSSProperties, MouseEvent } from 'react'
 
+import { flavorTagLabel } from '../data/flavorTagTaxonomy'
 import { brandSlug } from '../lib/utils/brandNormalizer'
 import type { ShishaFlavor } from '../types/shisha'
 
@@ -82,6 +83,19 @@ export default function ShishaCard({ flavor, onManufacturerClick, index = 0 }: S
           <h3 className="font-sans-tight text-[0.98rem] font-semibold leading-[1.15] text-ink-950 dark:text-ink-50 group-hover:text-ember-500 transition-colors line-clamp-2 mb-2">
             {flavor.productName}
           </h3>
+
+          {flavor.tags && flavor.tags.length > 0 && (
+            <div className="flex flex-wrap gap-1 mb-2">
+              {flavor.tags.slice(0, 3).map(tag => (
+                <span
+                  key={tag}
+                  className="font-mono-tight text-[9px] tracking-[0.08em] px-1.5 py-0.5 border border-rule-200 dark:border-rule-800 text-ink-500 dark:text-ink-400"
+                >
+                  {flavorTagLabel(tag)}
+                </span>
+              ))}
+            </div>
+          )}
 
           <div className="pt-2 mt-2 border-t border-rule-200 dark:border-rule-800 flex items-baseline justify-between">
             <span className="font-mono-tight text-sm font-medium text-ink-950 dark:text-ink-50 nums">

@@ -9,6 +9,8 @@ import HeroFallback from '../components/home/HeroFallback'
 import SearchBar from '../components/SearchBar'
 import ShishaCard from '../components/ShishaCard'
 import SkeletonGrid from '../components/SkeletonGrid'
+import TagFilter from '../components/TagFilter'
+import { type FlavorTagSlug, isFlavorTagSlug } from '../data/flavorTagTaxonomy'
 import type { SearchResponse, ShishaFlavor } from '../types/shisha'
 
 interface SearchParams {
@@ -16,6 +18,12 @@ interface SearchParams {
   manufacturer?: string
   page?: number
   searchType?: 'all' | 'brand' | 'flavor'
+  tags?: FlavorTagSlug[]
+}
+
+function parseTagsParam(value: string | null): FlavorTagSlug[] {
+  if (!value) return []
+  return value.split(',').filter(isFlavorTagSlug)
 }
 
 interface HomeContentProps {
@@ -37,6 +45,7 @@ function HomeContent({ editorialSections, lastDataUpdated, initialManufacturers 
   const [totalPages, setTotalPages] = useState(0)
   const [totalResults, setTotalResults] = useState(initialTotalItems)
   const [selectedManufacturer, setSelectedManufacturer] = useState(searchParams.get('manufacturer') || '')
+  const [selectedTags, setSelectedTags] = useState<FlavorTagSlug[]>(parseTagsParam(searchParams.get('tags')))
   const [searchQuery, setSearchQuery] = useState(searchParams.get('query') || '')
 
   useEffect(() => {
@@ -53,9 +62,9 @@ function HomeContent({ editorialSections, lastDataUpdated, initialManufacturers 
     fetchManufacturers()
   }, [initialManufacturers.length])
 
-  const handleSearch = async ({ query = '', manufacturer = undefined, page = undefined, searchType = 'all' }: SearchParams) => {
+  const handleSearch = async ({ query = '', manufacturer = undefined, page = undefined, searchType = 'all', tags = undefined }: SearchParams) => {
     try {
-      if (page === undefined && manufacturer === undefined) {
+      if (page === undefined && manufacturer === undefined && tags === undefined) {
         setIsSearching(true)
       } else {
         setLoading(true)
@@ -63,6 +72,7 @@ function HomeContent({ editorialSections, lastDataUpdated, initialManufacturers 
       setSearchQuery(query)
 
       const pageToUse = page !== undefined ? page : currentPage
+      const tagsToUse = tags !== undefined ? tags : selectedTags
 
       const queryParams = new URLSearchParams({
         query,
@@ -81,6 +91,10 @@ function HomeContent({ editorialSections, lastDataUpdated, initialManufacturers 
         queryParams.append('manufacturer', selectedManufacturer)
       }
 
+      if (tagsToUse.length > 0) {
+        queryParams.append('tags', tagsToUse.join(','))
+      }
+
       const response = await fetch(`/api/search?${queryParams}`)
       const data: SearchResponse = await response.json()
 
@@ -97,6 +111,7 @@ function HomeContent({ editorialSections, lastDataUpdated, initialManufacturers 
       if (manufacturer !== undefined ? manufacturer : selectedManufacturer) {
         urlParams.set('manufacturer', manufacturer !== undefined ? manufacturer : selectedManufacturer)
       }
+      if (tagsToUse.length > 0) urlParams.set('tags', tagsToUse.join(','))
       if (pageToUse > 1) urlParams.set('page', pageToUse.toString())
 
       const newUrl = urlParams.toString() ? `?${urlParams.toString()}` : '/'
@@ -115,6 +130,15 @@ function HomeContent({ editorialSections, lastDataUpdated, initialManufacturers 
     handleSearch({ query: searchQuery, manufacturer, page: 1 })
   }
 
+  const handleTagToggle = (slug: FlavorTagSlug) => {
+    const nextTags = selectedTags.includes(slug)
+      ? selectedTags.filter(t => t !== slug)
+      : [...selectedTags, slug]
+    setSelectedTags(nextTags)
+    setCurrentPage(1)
+    handleSearch({ query: searchQuery, page: 1, tags: nextTags })
+  }
+
   const handlePageChange = (newPage: number) => {
     handleSearch({ query: searchQuery, manufacturer: selectedManufacturer, page: newPage })
   }
@@ -122,8 +146,9 @@ function HomeContent({ editorialSections, lastDataUpdated, initialManufacturers 
   const handleHomeReset = () => {
     setSearchQuery('')
     setSelectedManufacturer('')
+    setSelectedTags([])
     setCurrentPage(1)
-    handleSearch({ query: '', manufacturer: '', page: 1 })
+    handleSearch({ query: '', manufacturer: '', page: 1, tags: [] })
   }
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: 初回マウント時に一度だけ URL パラメータで検索する
@@ -131,7 +156,8 @@ function HomeContent({ editorialSections, lastDataUpdated, initialManufacturers 
     const query = searchParams.get('query') || ''
     const manufacturer = searchParams.get('manufacturer') || ''
     const page = parseInt(searchParams.get('page') || '1', 10)
-    handleSearch({ query, manufacturer, page })
+    const tags = parseTagsParam(searchParams.get('tags'))
+    handleSearch({ query, manufacturer, page, tags })
   }, [])
 
   const renderPageButton = (page: number, isCurrent = false) => {
@@ -247,7 +273,7 @@ function HomeContent({ editorialSections, lastDataUpdated, initialManufacturers 
         </section>
 
         {/* Editorial sections (Featured / Latest / Origins / Editor's Picks) */}
-        {!searchQuery && !selectedManufacturer && editorialSections && (
+        {!searchQuery && !selectedManufacturer && selectedTags.length === 0 && editorialSections && (
           <section aria-label="Editorial">
             {editorialSections}
           </section>
@@ -267,6 +293,8 @@ function HomeContent({ editorialSections, lastDataUpdated, initialManufacturers 
             selectedManufacturer={selectedManufacturer}
             onSelect={handleManufacturerSelect}
           />
+
+          <TagFilter selectedTags={selectedTags} onToggle={handleTagToggle} />
         </section>
 
         {/* Results header */}
