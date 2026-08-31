@@ -14,12 +14,24 @@ function formatIndex(id: number): string {
   return id.toString().padStart(4, '0')
 }
 
+/**
+ * "100.0g箱" → 数量 "100.0g" + 容器 "箱" に分割する。数量は大きく、
+ * 容器種別 (プラスチックケース等の長い語) は小さなラベルで折り返して
+ * 表示し、狭いカラムでの見切れを防ぐ。
+ */
+function splitAmount(amount: string): { measure: string; container: string } {
+  const m = amount.match(/^([\d.,]+\s*g?)(.*)$/i)
+  if (!m) return { measure: amount, container: '' }
+  return { measure: m[1].trim(), container: m[2].trim() }
+}
+
 interface FlavorDetailClientProps {
   flavor: ShishaFlavor
   related?: ShishaFlavor[]
 }
 
 export default function FlavorDetailClient({ flavor, related = [] }: FlavorDetailClientProps) {
+  const { measure, container } = splitAmount(flavor.amount)
   return (
     <div className="min-h-screen bg-paper-0 dark:bg-paper-950 text-ink-950 dark:text-ink-50">
       <main className="mx-auto px-4 sm:px-6 lg:px-10 pt-8 sm:pt-10 pb-24 max-w-[1480px]">
@@ -109,20 +121,26 @@ export default function FlavorDetailClient({ flavor, related = [] }: FlavorDetai
                 </div>
               )}
 
-              <dl className="grid grid-cols-2 border-b border-rule-200 dark:border-rule-800">
-                <div className="py-5 pr-4 border-r border-rule-200 dark:border-rule-800">
+              {/* md〜lg は右カラムが狭くセルが約100pxになるため縦積みにする */}
+              <dl className="grid grid-cols-2 md:grid-cols-1 lg:grid-cols-2 border-b border-rule-200 dark:border-rule-800">
+                <div className="py-5 pr-4 md:pr-0 lg:pr-4 border-r md:border-r-0 lg:border-r border-rule-200 dark:border-rule-800">
                   <dt className="font-mono-tight text-[10px] uppercase tracking-[0.18em] text-ink-400 dark:text-ink-500 mb-2">
                     Grammage
                   </dt>
-                  <dd className="font-sans-tight font-semibold text-2xl sm:text-3xl tracking-[-0.02em] nums">
-                    {flavor.amount}
+                  <dd className="font-sans-tight font-semibold text-2xl xl:text-3xl tracking-[-0.02em] nums break-words">
+                    {measure}
+                    {container && (
+                      <span className="block mt-1 font-mono-tight text-xs font-normal tracking-[0.08em] text-ink-500 dark:text-ink-400">
+                        {container}
+                      </span>
+                    )}
                   </dd>
                 </div>
-                <div className="py-5 pl-4">
+                <div className="py-5 pl-4 md:pl-0 lg:pl-4 md:border-t lg:border-t-0 border-rule-200 dark:border-rule-800">
                   <dt className="font-mono-tight text-[10px] uppercase tracking-[0.18em] text-ink-400 dark:text-ink-500 mb-2">
                     Origin
                   </dt>
-                  <dd className="font-sans-tight font-semibold text-2xl sm:text-3xl tracking-[-0.02em]">
+                  <dd className="font-sans-tight font-semibold text-2xl xl:text-3xl tracking-[-0.02em] break-words">
                     {flavor.country}
                   </dd>
                 </div>
