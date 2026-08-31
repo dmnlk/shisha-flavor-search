@@ -31,6 +31,15 @@ describe('getFlavorDescription', () => {
     expect(mixed).toBe(upper)
   })
 
+  it('ハイフン入り商品名も正規化されて説明を引ける (DOGMA K-T BROADLEAF)', () => {
+    const description = getFlavorDescription({
+      id: 5376,
+      manufacturer: 'DOGMA',
+      productName: 'DOGMA K-T BROADLEAF',
+    })
+    expect(description).toContain('コネチカット・ブロードリーフ')
+  })
+
   it("Editor's Selection の note に id でフォールバックする", () => {
     const description = getFlavorDescription({
       id: 1398,
