@@ -55,7 +55,9 @@ export default function FlavorDetailClient({ flavor, related = [] }: FlavorDetai
                   src={flavor.imageUrl}
                   alt={`${flavor.manufacturer} ${flavor.productName} シーシャ フレーバー`}
                   fill
-                  className="object-cover"
+                  // cover だと横長のプロモ画像 (DARKSIDE 等) の左右が大きく
+                  // トリミングされるため、全体が見える contain で表示する
+                  className="object-contain"
                   sizes="(max-width: 768px) 100vw, 58vw"
                   priority
                 />
