@@ -263,6 +263,10 @@ IDs: 1872, 1873, 1875, 1879, 1880, 1881, 1882, 1883, 1884, 1886, 1890, 1908, 191
 
 IDs: 445, 446, 447, 453, 623, 625, 638, 641, 653, 659
 
+### NASH ロータスビスコス (1件) — 2026-08-21 MOF公告の超新作、小売未流通
+
+ID: 5389 — ロシアの主要小売 (kalyan-hut / bigsmokestore / hookahhouse / htreviews / smokedex)・日本の物販いずれにも 2026-08-31 時点で未掲載。露名も未確定 (Lotus Biscoff 系と推定)。流通が始まった頃に再試行すること。
+
 ---
 
 ## 採用/却下基準 (重要)
@@ -320,6 +324,9 @@ IDs: 445, 446, 447, 453, 623, 625, 638, 641, 653, 659
 | DEUS | **sakurashisha.jp** (日本正規流通、最優先) / worldhookahmarket.com (欧州 200G、補助) | sakurashisha.jp が shishaData の旧 30g/100g ライン名 (Gynness, Marmelade, Pineapple Mango, Pink Grapefruit, Viola, Wood, Flower Perfume, Elderberry Wine 等の特殊綴り) と完全一致する正規流通元で全 11 種を網羅。Shopify CDN URL は `https://sakurashisha.jp/cdn/shop/files/<FLAVOR_UPPERCASE>.jpg?v=...&width=1946` 形式 (`width=1946` で本画像)。worldhookahmarket は 200G 現行ラインで命名が変わっており (例: "Mango Pineapple"→"Pineapple Mango"、"Gynness"→"Guiness")、Cyrillic ファイル名は URL encode 必須 |
 | **Must Have** (ロシア) | **iconhookah.com** (products.json で全SKU、最優先) | `/products.json?limit=250` をページングし title/vendor に "Must Have" を含む商品を抽出すると全 ~95 SKU が `cdn.shopify.com` 直 URL で取れる。ファイル名 `MustHave<Flavor>125g.png` でフレーバー名明示・ウォーターマーク無し・統一カタログ画像。URL に `&width=1000` を付けても元が 500x439 程度なのでそのまま。**worldhookahmarket は 290px サムネイル (`145.0x290.jpg` 等) か HOOKAH VAULT 透かし入りで品質劣るため非推奨**。hookahvault.com も透かし入り |
 | **Panorama** | *(取得不可)* | 地域限定流通でネット上に商品写真がほぼ存在しない → スキップ推奨 |
+| **DOGMA** (ロシア) | **dogma-tobacco.ru** (公式、最優先) | カテゴリページ (`/catalog/aromaticheskaya-lineyka-3`, `/catalog/monosorta-2`, `/catalog/eksperimentalnaya-lineyka-4` 等) を WebFetch すると全製品の `/images/catalog/<hash>.webp` が一覧で取れる。透かしなし・統一カタログ画像 (~50KB webp)。MOF の英語名はロシア語名の直訳 (LEMON DROPS=Лемон дропс, GUMMI BEARS=Мишки Гамми, PURE DOGMA=Чистая Догма, K-T BROADLEAF=К-Т Бродлиф)。香水オマージュ系 (PLAY, BLACK ORCHID, GUERLINADE) は Экспериментальная линейка。GUERLINADE は «Для него»(For Him)/«Для неё»(For Her) の2種あり取り違え注意。hookah-voodoo.com は Hookah Voodoo 透かし入りで非推奨 |
+| **NASH** (ロシア) | **htreviews.org 個別ページ** / bigsmokestore.ru (補助) | htreviews はカテゴリページ (`/tobaccos/nash/cigar-product` 等) で個別ページ URL を洗い出し、各ページの `uploads/objects/<n>/<hash>.webp` (透過 2500x2500) を取る。ブランド一覧ページの画像は no_image.webp プレースホルダーなので個別ページ必須。MOF 名の対応注意: 「キャロット」=Морковный фреш (Carrot Fresh)。White Line 新作は bigsmokestore.ru (`/upload/iblock/...`、透過 PNG だが 4MB 級なので要 magick 圧縮) |
+| **TUMBAKI** (トルコ、日本 50g 箱) | **39shisha.com** (日本物販) | `/product-list/1` で TUMBAKI 製品ページ番号を特定し、個別ページの `/data/sankyushisha/product/<date>_<hash>.jpg` (公式パッケージ画像 1600px級) を取る。**tumbaki.de (独公式) は 200g/500g/1kg の別ライン (BANAN1 SLUSH 等の leet 表記) で日本の 50g 箱ラインnaming と互換なし** |
 
 ## 落とし穴
 
