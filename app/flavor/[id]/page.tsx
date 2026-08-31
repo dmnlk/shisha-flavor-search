@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
+import { resolveFlavorDescription } from '../../../data/flavorDescriptions'
 import { resolveFlavorImage } from '../../../data/flavorImages'
 import { attachFlavorTags } from '../../../data/flavorTags'
 import { shishaData } from '../../../data/shishaData'
@@ -21,7 +22,7 @@ function findFlavor(id: string): ShishaFlavor | null {
   const parsed = Number(id)
   if (!Number.isFinite(parsed)) return null
   const hit = (shishaData as ShishaFlavor[]).find((f) => f.id === parsed)
-  return hit ? attachFlavorTags(resolveFlavorImage(hit)) : null
+  return hit ? attachFlavorTags(resolveFlavorDescription(resolveFlavorImage(hit))) : null
 }
 
 function findRelatedFlavors(flavor: ShishaFlavor, count: number): ShishaFlavor[] {
