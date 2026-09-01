@@ -13,7 +13,7 @@ DOGMA (18) / MustHave (14) / DARKSIDE (73) / BONCHE (24) / SEBERO (78) / Azure (
 
 | ソース | 内容 | 備考 |
 |---|---|---|
-| **htreviews.org** (露語) | 公式説明・評価分布・リピート意向・レビュー+ブランド公式返信 | 主ソース。ロシア系ブランドはほぼ網羅 |
+| **htreviews.org** (露語) | 公式説明・評価分布・リピート意向・レビュー+ブランド公式返信 | ロシア系ブランドはほぼ網羅。**ただし robots.txt が `User-agent: Claude / Disallow: /` を宣言している** — 大量クロールはせず、必要最小限にとどめるか他ソースで代替すること |
 | **hookah-reviews.com** (日本語ブログ byダビデ) | 著者レビュー (総評点 100 点満点)・コメント欄 | 副ソース。扱いはブランド次第 (Bonche は 0 件、Azure は 75 件で主ソースだった)。HTTP サイト |
 | **日本の総代理店 / 輸入元の EC サイト** | 公式・代理店の日本語説明、開発経緯、推奨ミックス | 欧米ブランドや日本限定銘柄はここが唯一のソースになる。Azure = `tokyoshisha.com` |
 
@@ -193,10 +193,17 @@ pnpm lint && pnpm test && pnpm typecheck
 - **品種名の略記**: DOGMA「K-T BROADLEAF」= htreviews「Коннектикут Бродлиф」(Connecticut Broadleaf)。ページ記載の産地・品種で対応を検証し、PR に検証結果を書く。
 - **ラインページの SSR は部分的** (約20件)。「無い」と結論する前にプローブすること。
 - **hookah-reviews.com はブランドごと非対応がある** (Bonche は 0 件)。ブランド名単独検索で 0 件なら全銘柄「記事なし」として先へ進む。
-- **説明済みブランドの再実行**: 既存キーと重複しないよう、ステップ1の `(既存)` 表示を確認。
+- **説明済みブランドの再実行**: 既存キーと重複しないよう、ステップ1の `(既存)` 表示を確認。curatedPicks の id フォールバックだけで `(既存)` に見える銘柄は、名前キーのエントリを別途足す価値がある (サイズ違い id をカバーできる)。
 - htreviews の数値 (評価分布・リピート意向) はスナップショット。説明では「htreviewsでは」と出典を明示しているので許容だが、桁まで細かく書きすぎない。
+- **htreviews はライン違いでも同一ページを返すことがある**。URL のライン部分だけ変えた 200 応答を「両ラインに別ページがある」証拠にしない。存在しないページはトップ/ランキングへソフトリダイレクトするので、レスポンスサイズやタイトルで判別する。
+- **同名フレーバーがライン違いで併存するブランド (Azure の Black/Gold) では、レビュー記事がどちらのラインのものか必ず確認する**。hookah-reviews.com のダビデ氏は「両ラインで被る銘柄は Black だけレビューした」と明言しており、記事タイトルのライン表記が唯一の手がかり。説明文では「Black Line 評は NN 点」と出典ラインを明記すること。
+- **代理店 EC の商品ページも、ハンドルやタグでラインを確認する** (`..._azure-black` は Black Line、`..._tsgl` / vendor が「Tokyo Shisha Gold Line」は Gold Line)。片方のラインの文面をもう片方に流用しない。
+- **財務省公告名と実売名がずれることがある**: Azure「Mangosteen」は日本では Queen Of Fruits として発売された (代理店ブログに経緯の記載あり)。断定できるのは一次ソースが経緯を書いている場合だけで、名前が似ているだけの同一視はしない。
 
 ## 対応済みブランド (再実行不要)
 
-- 2026-08: DOGMA (18) / MustHave (14) / DARKSIDE (73) / BONCHE (24) — 説明あり計 241 件
-- 有望な次候補: 評価数が多く日本流通がある Sebero / Chabacco / Element / Sarma など
+- 2026-08: DOGMA (18) / MustHave (14) / DARKSIDE (73) / BONCHE (24) / SEBERO (78)
+- 2026-09: Azure (133 キー / 全 194 id 中 187 解決)。未記載は公開情報が皆無だった Black Berry /
+  Cherry Coke / Green Apple / MXN Cola / Whisky / White Chai / White Jasmine Chai の 7 銘柄
+- 有望な次候補: 日本流通があり hookah-reviews.com の記事数が多い StarBuzz (89+37+22+13) /
+  Tangiers (111) / Trifecta (62) / Fumari (50) / Nu Hookah (41) / Nirvana (45)
