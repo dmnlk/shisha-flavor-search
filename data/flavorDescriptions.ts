@@ -27,6 +27,86 @@ const AL_FAKHER_TWO_APPLES_MINT =
 const TANGIERS_CANE_MINT =
   'ダークリーフのTangiersを代表するピュアミント。強い清涼感とタバコ感を併せ持ち、単体でもミックスのベースでも定番。'
 
+// SEBERO — 財務省公告に別名で登録されている同一商品向けの共有説明
+const SEBERO_EZHEVIKA =
+  '熟したブラックベリーの野性的な甘酸っぱさを再現。htreviewsでは評価数が少なく賛否が割れており、「ソロだと石鹸っぽさが出るのでミックス向き」という指摘が目立つ (リピート意向50%)。'
+const SEBERO_BLACK_FEIJOA =
+  'フェイジョアの果肉の甘酸っぱさを狙った一本。htreviewsでは「草っぽい甘さのフェイジョアでハーブ系ミックスに合う」という評と「フェイジョアに程遠い」という酷評が拮抗し、リピート意向33%と評価は厳しい。'
+const SEBERO_BLACK_SOURNESS =
+  'シベリア産を謳う酸っぱいクランベリー。htreviewsでは「クランベリーとは分かるが香りが弱く、土っぽさを感じる」という指摘が多く、4点評価が中心ながらリピート意向59%と評価は伸び切らない。'
+
+// Azure — Black Line / Gold Line で着香が共通の銘柄向けの共有説明
+const AZURE_ALASKAN_ICE =
+  '甘さやビターさを排した純粋な清涼感だけのアイス系。hookah-reviews.comでは90点で「AFBMのPolar Freezeに近いクリアでシャープな冷たさ」と高く評価された。単体では単調だが3〜4g混ぜるだけで効くのでミックスの清涼剤として使いやすい。'
+const AZURE_APPLE_CIDER =
+  'シナモンやナツメグ、オールスパイスを効かせた青りんご系。hookah-reviews.comでは66点で「りんご2・青りんご1・シナモン1ほどの構成だが、余韻でシナモンの土っぽさが悪目立ちする」と辛口に評された。'
+const AZURE_BARISTAS_CHOICE =
+  'ビターさが前に立つストレートなコーヒー。hookah-reviews.comでは65点ながら「クラシックなコーヒー系と今風の中間で、適当に調節しても焦げたり崩れたりしにくい」と評価 (評者自身がコーヒー系を苦手と明記)。バニラ系やチョコ系との少量ミックス向き。'
+const AZURE_BERMUDA_MINT =
+  'Azure最強を謳うミント。hookah-reviews.comでは77点で「クリアでシャープな清涼感に控えめな甘さと微かなビター」と評され、清涼感の強さは同社Morocco Menthaより少し上、TFDのDurty Mintと同程度とされる。フルーツ系との相性が良い。'
+const AZURE_BERRYMANIA =
+  'ブルーベリー4・ストロベリー2・ラズベリー1ほどのベリーミックス。hookah-reviews.comでは79点で「濃いブルーベリーキャンディやジャムのような分かりやすい香り」と評価。htreviewsでも4点評価が中心で、火加減が適当でも崩れにくい。'
+const AZURE_CACTUS_BLAST =
+  '名前に反してサボテンではなく、パイナップル主体にマンゴーを重ねたトロピカルソーダ。hookah-reviews.comでは76点で「紙パックのフルーツオレのような香り」と評された。htreviewsでは賛否が分かれリピート意向は50%。'
+const AZURE_CALIFORNIA_BLUE =
+  'ブルーベリーにミントを合わせた鉄板ミックス。hookah-reviews.comでは76点で「Berrymaniaが濃いブルーベリーキャンディなら、こちらはブルーベリーの板ガムに少しの清涼感」と評され、清涼感はAl Fakherのミントの1/3ほどと穏やか。'
+const AZURE_COCOMANIA =
+  'ブルーベリー系にココナッツを少量重ねたミックス。hookah-reviews.comでは77点で「半透明のココナッツジュースと乳白色のココナッツミルクを半々にしたようなイメージ」と評され、ココナッツ系にありがちな辛みやゴム臭が無いのが利点。'
+const AZURE_COLA =
+  'コーラ飲料そのものの再現を狙った一本。hookah-reviews.comでは72点で「吐き終わりの余韻はコーラを飲んだ後の口中そのものだが、吸っている最中は輪郭がぼやけてコーララムネ寄り」と評価。htreviewsは母数こそ少ないが5点評価が付いている。'
+const AZURE_COPACABANA =
+  'リオデジャネイロのビーチ名を冠したスイカ×ミント。代理店は「フレッシュウォーターメロンミント」と紹介しており、日本では馴染みの薄い組み合わせだが海外では各社が作る定番構成。'
+const AZURE_COSMOS =
+  '公式はグレープフルーツにラズベリーを合わせたミックスとするが、hookah-reviews.comでは80点で「ラズベリーはほとんど分からず、厚みのあるビターさが特徴のグレープフルーツ単体と思った方が楽しめる」と評価。弱火でビター、強火で酸味が立つ。'
+const AZURE_CUCUMELON =
+  'メキシコなどで食べられる小さなウリ「キューカメロン」を模した変わり種。代理店は「Cool Cucumberからミントを抜いてスイカの甘みを足した感じ」と説明しており、青臭さが強いためウリ系好き向け。'
+const AZURE_D_CHERRY =
+  '赤黒く濃厚なダークチェリー。代理店によればTangiersのDark Cherryを手本に「使いやすく分かりやすいダークチェリーが他に無かった」ことから開発された銘柄で、チェリーパイのジャムのような濃さが特徴。'
+const AZURE_DUBAI_APPLE =
+  '玄人好みのダブルアップル。hookah-reviews.comでは77点で「粉コショウのような香りが主役でリコリスは控えめ」と評され、他社のダブルアップルとは大きく異なる。火加減で香りが変わりにくく扱いやすい一方、単体では飽きやすい。'
+const AZURE_GRAPEFRUIT =
+  '代理店がAzure本社に依頼して共同開発したグレープフルーツ。作りやすさと味持ちをテーマに設計されており、ファンネルでは爽やかに、エジプシャンボウルでは酸味が出やすいとされる。'
+const AZURE_ICE_PEAR =
+  'カリフォルニア産の西洋梨の甘みとジューシーさをアイスで引き締めた一本。代理店によれば梨7・アイス3ほどの構成であくまで梨が主役で、味持ちの良さが持ち味。バニラを足すとデザート系にもなる。'
+const AZURE_LEMONGRASS =
+  '酸味の控えめなライトなレモン系に、若草のようなクセの無いグリーンな香りを重ねたハーブ系。hookah-reviews.comでは79点で「レモングラスを知っていれば納得の再現度」と評価。やや弱めの火加減で維持しないと酸味に埋もれる。'
+const AZURE_LIFES_PEACH =
+  '缶ジュースのネクターを少し濃くしたような、甘さの強い桃。hookah-reviews.comでは77点で「実物の桃ではなくジュース寄りだが、輪郭がはっきりしてメリハリがある」と評価された。火の調節は難しくない。'
+const AZURE_LIME =
+  'カクテル用ライムシロップやリキュールを思わせるライム単体。hookah-reviews.comでは79点で「TFDのLimeやSBVのFresh Limeとよく似た、実物より皮を強調した香り」と評され、輪郭が明確でミックスでも主張が残る。'
+const AZURE_LIME_COLA =
+  'ライムとコーラを1本にまとめた銘柄。2023年にAzure工場で試作され、代理店曰く「黄金比率」を突き詰めて製品化が決まった経緯を持つ。人気の2種を混ぜる手間なく吸えるのが利点。'
+const AZURE_LIMONCELLO =
+  'イタリアのレモンリキュールを模した、シーシャでは珍しく酸味の立つレモン。hookah-reviews.comのGold Line評は81点で「クラシックなレモン系にアルコールを模した人工的なビターさが少し乗る」。火が強いと酸味が出過ぎるので弱めが無難。'
+const AZURE_MANGO_CHEESECAKE =
+  'マンゴーとクリームがほぼ半々のデザート系。hookah-reviews.comでは84点で「チーズ感はほとんど無く実質マンゴー×クリームだが、濃いめのマンゴーラッシーとして完成度が高い」と評価。火加減が適当でも崩れにくい。'
+const AZURE_MEXICOLA =
+  'メキシコの瓶コーラを模したスパイシー寄りのコーラ。hookah-reviews.comでは79点で「実物のコーラとコーララムネの中間で、シーシャのコーラ系としては珍しく再現度が高い」と評価。シナモン感は中盤でピークアウトする。'
+const AZURE_PAPAYA =
+  '熟したパパイヤの果汁感を主役にしたトロピカル系。代理店は「一番近いのはTangiersのPapaya Sorbet」と表現し、Royal MangoやQueen Of Fruits、Passion Fruitが好きな人向けと位置づけている。'
+const AZURE_PASSION_FRUIT =
+  '甘酸っぱさが軽やかな常夏系パッションフルーツ。代理店は単体でも吸える上にマンゴー・グアバ・パインなど何と混ぜても喧嘩しない使いやすさを推しており、神津島の特産に着想を得てAzureへ製造を依頼した経緯がある。'
+const AZURE_PINKY =
+  'ピンクグレープフルーツにストロベリー、少量のラズベリーを重ねたミックス。代理店によればAzure代表がロシアでMustHaveのPinkmanを吸って気に入り、それを手本に作らせたAzure版ピンクマン。'
+const AZURE_POMEGRANATE =
+  'ザクロの再現度が高い一本。hookah-reviews.comでは74点で「甘さの後ろに実物特有の土臭さがあり、MustHaveのRed Bombと双璧」と評価された。陶器のファンネルだと土臭さが強く出る。'
+const AZURE_QUEEN_OF_FRUITS =
+  '代理店の11周年記念フレーバーで、テーマはマンゴスチン。倒産したHookahHookah社のMangosteenを約1年かけてAzure工場で復刻したもので、トロピカルフルーツの甘さと透明感を併せ持つ。'
+const AZURE_RASPBERRY_VANILLA =
+  '同社Royal Raspberry7・Vanilla Bean3ほどのバランスで作られた濃厚なラズベリー。代理店は「グリコのパナップにそっくり」と表現しており、売れ行きに苦戦したラズベリーと品切れ続きのバニラを掛け合わせた企画と説明している。'
+const AZURE_SOLANA_BEACH =
+  'カリフォルニアのビーチ名を冠したメロン系ミックス。代理店によればかき氷のメロンシロップを軸にした甘い構成で、Azure代表がTangiersのForeplay on the Beachを念頭に作ったとされる。'
+const AZURE_SOUR =
+  'ハリボーのサワーグミのザラメを舐めたような、柑橘系の酸味を前面に出した一本。Azure代表企画の銘柄で、代理店はエジプシャンボウルで作るとより酸味が出ること、フルーツ系に30〜40%足す使い方を勧めている。'
+const AZURE_STRAWBERRY_GUAVA =
+  'ストロベリー3・グアバ1ほどのミックス。hookah-reviews.comでは68点で「イチゴのヘタのような青臭さが強いクラシック系ストロベリーが主体で、グアバは分かりにくい」と評され、htreviewsでも評価は低調。'
+const AZURE_STRONG_LYCHEE =
+  'どんな作り方でも濃厚に出るよう2024年に調整されたライチ。シリコンボウルなどで薄く感じる人がいたことを受けて香りを強めた改良版で、代理店の看板であるライチ系の中ではミックス用途に重宝される。'
+const AZURE_WATERMELON =
+  '甘くさっぱりとしたスイカ。公式は「スイカバーのような瑞々しい甘さ」と表現しており、夏向けの素直なフルーツ系として位置づけられている。'
+const AZURE_CINNAMON_COOKIE =
+  'シナモン入りのバターキャンディのような焼き菓子系。hookah-reviews.comでは79点で「主役はヴェルタース・オリジナル系のバターキャンディ香で、そこにシナモンが少々」と評価。バターは強火、シナモンは弱火で出るため火の調節が難しい。'
+
 export const FLAVOR_DESCRIPTIONS: Record<string, string> = {
   // Al Fakher — Two Apples 系 (サイズ・表記ゆれをキー別にカバー)
   'al-fakher:two apple': AL_FAKHER_TWO_APPLES,
@@ -44,11 +124,210 @@ export const FLAVOR_DESCRIPTIONS: Record<string, string> = {
   'adalya:the two apples':
     'トルコ・Adalya流のダブルアップル。りんごの甘みにアニスの香りを効かせた伝統系フレーバー。',
 
-  // Azure Gold Line
+  // Azure — hookah-reviews.com (byダビデ) / htreviews.org / 日本総代理店 tokyoshisha.com /
+  // ばんびえん (vangviengshisha.com) の情報を要約 (2026-09 時点)。
+  // Black Line = カリフォルニア産ダークリーフ (重め)、Gold Line = ウォッシュド (軽め) で、
+  // 同名フレーバーは着香が共通。hookah-reviews.com は原則 Black Line 版のみをレビューして
+  // いるため、Gold 側では点数の出典ラインを本文に明記している。
+  // 公開情報が見つからなかった Black Berry / Cherry Coke / Green Apple / MXN Cola /
+  // Whisky / White Chai / White Jasmine Chai は意図的に未記載。
+  'azure:hookah tobacco black line alaskan ice': AZURE_ALASKAN_ICE,
+  'azure:hookah tobacco black line apple cider': AZURE_APPLE_CIDER,
+  'azure:hookah tobacco black line barista s choice': AZURE_BARISTAS_CHOICE,
+  'azure:hookah tobacco black line bermuda mint': AZURE_BERMUDA_MINT,
+  'azure:hookah tobacco black line berrymania': AZURE_BERRYMANIA,
+  'azure:hookah tobacco black line blueberry':
+    'ダークリーフらしい吸いごたえのあるブルーベリージャム系。hookah-reviews.comでは71点で「香りはややサッパリめだが甘さは強めという変わったブルーベリーで、ツンとしたキレが強く輪郭がはっきりしている」と評され、ミックスでも主張が残る。',
+  'azure:hookah tobacco black line cactus blast': AZURE_CACTUS_BLAST,
+  'azure:hookah tobacco black line california blue': AZURE_CALIFORNIA_BLUE,
+  'azure:hookah tobacco black line cocomania': AZURE_COCOMANIA,
+  'azure:hookah tobacco black line cola': AZURE_COLA,
+  'azure:hookah tobacco black line copacabana': AZURE_COPACABANA,
+  'azure:hookah tobacco black line cosmos': AZURE_COSMOS,
+  'azure:hookah tobacco black line cucumelon': AZURE_CUCUMELON,
+  'azure:hookah tobacco black line d cherry': AZURE_D_CHERRY,
+  'azure:hookah tobacco black line down under':
+    'キウイ5・ブルーベリー3・アイス2ほどのミックス。Azureのオーストラリア法人が現地限定で開発した銘柄で、現地でAl Fakherのキウイ×ブルーベリー×ミントの組み合わせが人気だったことから製品化された。代理店は飽きの来ない味と評価している。',
+  'azure:hookah tobacco black line dubai apple': AZURE_DUBAI_APPLE,
+  'azure:hookah tobacco black line grapefruit': AZURE_GRAPEFRUIT,
+  'azure:hookah tobacco black line green tea':
+    '日本限定のグリーンティーをダークリーフで仕上げた濃厚版。代理店は「Gold Lineより渋く深く重い、苦味手前のくどいぐらい濃厚な仕上がり」「京都の抹茶のよう」と表現しており、味が濃く寿命が長いためミックスのベースにも向く。',
+  'azure:hookah tobacco black line grow a pear':
+    '甘みと酸味の均衡した洋梨。hookah-reviews.comでは82点で「熟していない固めの洋ナシ、あるいはシンプルな青りんご系」と評され、弱めの火加減で維持すると洋梨らしさが出る。ダークリーフのBlack LineはGold Lineより果実感が強いとされる。',
+  'azure:hookah tobacco black line guavi':
+    'グアバ50・キウイ30・ライム20のミックス。グアバの濃厚な甘み、キウイの刺すような酸味、ライムのほろ苦い酸味が時間差で来る構成で、同じ代理店が考案したDown Underと方向性が近い。',
+  'azure:hookah tobacco black line ice lime':
+    '凍らせたライムの鋭い酸味と強い冷感を組み合わせたアイス系。アメリカで人気化して2026年3月に日本へ入ってきた新しい銘柄で、公開されている情報は代理店の告知にとどまる。',
+  'azure:hookah tobacco black line ice pear': AZURE_ICE_PEAR,
+  'azure:hookah tobacco black line island city blend':
+    'ドラゴンフルーツにマンゴーやパインを重ねたトロピカルミックス。hookah-reviews.comでは75点で「実質はややマッタリしたパイナップル系」と評された。Black Lineの中では比較的軽く、ダークリーフ入門にも向く。',
+  'azure:hookah tobacco black line jasmine':
+    'ジャスミン茶の湯気をそのまま煙にしたような一本。代理店によれば倒産したGIXOM社のジャスミンを復刻した銘柄で、甘さ控えめで茶葉の渋みがベースにある。グリーンティーとの50/50ミックスが定番。',
+  'azure:hookah tobacco black line jungle juice':
+    '完熟マンゴーの甘みとパイナップルのジューシーさに、ガムミント系を効かせて後味を引き締めたトロピカルミックス。代理店は甘いのに吸い疲れしない点を推しており、少し強めの火加減でマンゴーの甘さを引き出すことを勧めている。',
+  'azure:hookah tobacco black line kokutou':
+    '日本限定フレーバー第2弾の黒糖 (第1弾はグリーンティー)。2022年10月にAzure工場で代理店とAzure代表・調合師が試作して生まれた共同開発品で、黒糖を70〜80%のベースにして緑茶やバニラ、紅茶系と混ぜる使い方が公式に推奨されている。',
+  'azure:hookah tobacco black line lemongrass': AZURE_LEMONGRASS,
+  'azure:hookah tobacco black line life s peach': AZURE_LIFES_PEACH,
+  'azure:hookah tobacco black line lime': AZURE_LIME,
+  'azure:hookah tobacco black line lime cola': AZURE_LIME_COLA,
+  'azure:hookah tobacco black line limoncello': AZURE_LIMONCELLO,
+  'azure:hookah tobacco black line lychee':
+    'Gold Lineのライチの透明感とStrong Lycheeの甘さに、ダークリーフの重さを足した2024年の派生版。代理店はAzureのライチ3種の中でもっとも煙が多く強く出やすい玄人向けと位置づけている。',
+  'azure:hookah tobacco black line mango cheesecake': AZURE_MANGO_CHEESECAKE,
+  'azure:hookah tobacco black line mangosteen':
+    '財務省公告にMangosteenとして登録された銘柄。代理店ブログによれば米国側で名称が変わる可能性があるとされ、最終的に日本ではマンゴスチンをテーマにしたQueen Of Fruitsの名で発売された経緯がある。',
+  'azure:hookah tobacco black line mexicola': AZURE_MEXICOLA,
+  'azure:hookah tobacco black line moroccan tea':
+    '紅茶3・レモン2・ミント1ほどのシトラスミントティー。hookah-reviews.comでは78点で「他社より紅茶系の香りが濃いめで分かりやすく、微かな清涼感が全体をサッパリさせている」と評価された。火が強いとレモンの酸味に紅茶が埋もれる。',
+  'azure:hookah tobacco black line new grape mint':
+    'カリフォルニアのぶどう産地にこだわって作られたグレープミント。代理店は「爽やかな甘さで吸いやすく、強すぎないミントで水々しさを表現している」と評し、サンプルから改良を重ねた最終版で取扱いを決めたと述べている。',
+  'azure:hookah tobacco black line orange crush':
+    '2023年にAzure工場で「シンプルなフルーツの決定版を」という話から生まれたオレンジ。代理店によればBlack Lineはホテルの朝食にある100%フレッシュジュースのような味わいで、Gold Lineとは印象がかなり異なるという。',
+  'azure:hookah tobacco black line papaya': AZURE_PAPAYA,
+  'azure:hookah tobacco black line passion fruit': AZURE_PASSION_FRUIT,
+  'azure:hookah tobacco black line pineapple':
+    '本物のパイナップルのように頬や顎に響く酸味まで再現したパイン単体。代理店はダークリーフのパインならこれと評価する一方、本品は後継のPineapple Expressに生まれ変わって廃盤になったとしている。',
+  'azure:hookah tobacco black line pineapple express':
+    '2023年にAzure工場で作られたパイナップルの決定版。同社の名作ライチのような透明感のある水々しいパインで、Black Line Pineappleを下敷きに改良された経緯を代理店が明かしている。',
+  'azure:hookah tobacco black line pinky': AZURE_PINKY,
+  'azure:hookah tobacco black line pomegranate': AZURE_POMEGRANATE,
+  'azure:hookah tobacco black line queen of fruits': AZURE_QUEEN_OF_FRUITS,
+  'azure:hookah tobacco black line raspberry vanilla': AZURE_RASPBERRY_VANILLA,
+  'azure:hookah tobacco black line royal citrus':
+    'レモン6・グレープフルーツ4ほどのシトラスミックス。hookah-reviews.comでは78点で「吐き終わりの厚いビターさが特徴だが、レモンとの混合で主張は控えめ」と評価。酸味が強く出るので序盤はやや弱めの火加減が良い。',
+  'azure:hookah tobacco black line royal mango':
+    '完熟マンゴーを大胆に打ち出した一本。hookah-reviews.comのGold Line評は83点で「ワックス様のツンとした香りが控えめで、フィリピン産より国産マンゴー寄りの再現度」と高評価。Black Lineはダークリーフのぶん重さが乗る。',
+  'azure:hookah tobacco black line royal orange':
+    'Azureのオレンジ。代理店は「Al Fakher以来11年ぶりにハマったオレンジ」と評し、Black Lineはダークリーフながら重さを感じるのは最初の30分ほどで以降は軽さが続くため、ダークリーフ入門にも向くとしている。',
+  'azure:hookah tobacco black line royal raspberry':
+    'ややサッパリめのラズベリー。hookah-reviews.comでは76点で「少し酸っぱいラズベリーキャンディに、ストロベリー的な丸い甘さと少しの青臭さが混じる」と評価。htreviewsでもリピート意向100%。火が強いと酸味で輪郭がぼやける。',
+  'azure:hookah tobacco black line solana beach': AZURE_SOLANA_BEACH,
+  'azure:hookah tobacco black line sour': AZURE_SOUR,
+  'azure:hookah tobacco black line strawberry guava': AZURE_STRAWBERRY_GUAVA,
+  'azure:hookah tobacco black line strong lychee': AZURE_STRONG_LYCHEE,
+  'azure:hookah tobacco black line vanilla bean':
+    '「単体でも吸える短命ではないバニラ」をコンセプトに代理店がAzureへ依頼して作らせた特注品。バニラともミルクともココナッツともつかない甘さが特徴で、短時間で味が飛びやすい他社のバニラの弱点を補うことを狙っている。',
+  'azure:hookah tobacco black line watermelon': AZURE_WATERMELON,
+  'azure:hookah tobacco gold line alaskan ice': AZURE_ALASKAN_ICE,
+  'azure:hookah tobacco gold line apple cider': AZURE_APPLE_CIDER,
+  'azure:hookah tobacco gold line barista s choice': AZURE_BARISTAS_CHOICE,
+  'azure:hookah tobacco gold line bermuda mint': AZURE_BERMUDA_MINT,
+  'azure:hookah tobacco gold line berrymania': AZURE_BERRYMANIA,
   'azure:hookah tobacco gold line blue mist':
     'ブルーベリーの甘酸っぱさにミントの清涼感を重ねた定番ミックス。Azure Gold Lineの人気銘柄。',
+  'azure:hookah tobacco gold line blueberry muffin':
+    '小麦とバターを焼いたふっくらした甘さに、ジャム寄りのブルーベリーを重ねた焼き菓子系。hookah-reviews.comのBlack Line評は84点だが「弱火維持とフンワリ詰めが必須で安定感は平均以下」とされ、酸味が出たら火が強すぎる合図。',
+  'azure:hookah tobacco gold line cactus blast': AZURE_CACTUS_BLAST,
+  'azure:hookah tobacco gold line california blue': AZURE_CALIFORNIA_BLUE,
+  'azure:hookah tobacco gold line candy':
+    'スキットルズを何粒かまとめて噛んだような、レモンとオレンジを軸にしたキャンディ系。hookah-reviews.comでは67点で「ケミカルだが丸みのあるお菓子っぽい甘さ」と評された。代理店も着色料の暴力と評するほど分かりやすい駄菓子系。',
+  'azure:hookah tobacco gold line carolina peach':
+    'ピーチ味のタブレット菓子を何粒も噛んだような、人工的で分かりやすい桃。hookah-reviews.comのBlack Line評は70点で「マッタリした甘さが強く輪郭がはっきりしている」。代理店はアールグレイ系と混ぜてピーチティーにする使い方を勧めている。',
+  'azure:hookah tobacco gold line chai masala':
+    'ターメリックやナツメグ、クローブ、カルダモンを重ねた本格派のマサラチャイ。hookah-reviews.comのBlack Line評は50点で「そこそこクセが強い」とされる一方、実物のマサラチャイとしての再現度は高いと評価が分かれる癖の強い銘柄。',
+  'azure:hookah tobacco gold line cherry muffin':
+    '熟したチェリーにマフィンの焼き菓子香を重ねたデザート系。hookah-reviews.comのBlack Line評は78点で「酸味の無いモワッとした甘さのチェリーに、後味で小麦とバターの焼き菓子香が来る」。弱めの火加減で焼き菓子感がはっきり出る。',
+  'azure:hookah tobacco gold line chocolate cake':
+    'ビターチョコに寄せたチョコレート系。hookah-reviews.comでは76点で「ウォッシュドのチョコ系としては珍しく再現度が高く、ココアシガレット的な粉っぽさが非常に少ない」と評価。名前に反して焼き菓子の香りは入っていない。',
+  'azure:hookah tobacco gold line chocolate mint':
+    'コンビニのチョコミント乳飲料のような一本。hookah-reviews.comのBlack Line評は71点で「チョコ部分はクラシックだがダークチョコのビターさは無く、清涼感もマットで穏やか」とされ、良くも悪くも基本に忠実で目新しさは薄いという評価。',
+  'azure:hookah tobacco gold line cinamon cookie': AZURE_CINNAMON_COOKIE,
+  'azure:hookah tobacco gold line cinnamon cookie': AZURE_CINNAMON_COOKIE,
+  'azure:hookah tobacco gold line cinnamon cookies': AZURE_CINNAMON_COOKIE,
+  'azure:hookah tobacco gold line cocomania': AZURE_COCOMANIA,
+  'azure:hookah tobacco gold line cola': AZURE_COLA,
+  'azure:hookah tobacco gold line cool cucumber':
+    'よく冷えたきゅうりに少し砂糖をかけてかじったような一本。hookah-reviews.comのBlack Line評は77点で「サッパリした甘さと強めのウリ臭さに微かな清涼感」。陶器のファンネルで作ると甘さがすっきり出て名前どおりの涼しさになる。',
+  'azure:hookah tobacco gold line copacabana': AZURE_COPACABANA,
+  'azure:hookah tobacco gold line cosmos': AZURE_COSMOS,
+  'azure:hookah tobacco gold line cucumelon': AZURE_CUCUMELON,
+  'azure:hookah tobacco gold line d cherry': AZURE_D_CHERRY,
+  'azure:hookah tobacco gold line dubai apple': AZURE_DUBAI_APPLE,
+  'azure:hookah tobacco gold line fun at the beach':
+    'マンゴー3・パイナップル2・ココナッツ3ほどのトロピカルミックス。hookah-reviews.comでは76点で「ワックス感のあるマンゴーとクセの無いココナッツが前面で、パイナップルは押され気味」と評された。ココナッツのぶん煙はウェット寄り。',
+  'azure:hookah tobacco gold line grapefruit': AZURE_GRAPEFRUIT,
+  'azure:hookah tobacco gold line green tea':
+    '日本限定フレーバー第1弾のグリーンティー。2020年に代理店がAzureへ製造を依頼して生まれた銘柄で、スターバックスの抹茶フラペチーノをモデルに再現したもの。黒糖やバニラビーン、ジャスミンとのミックスが定番。',
+  'azure:hookah tobacco gold line grow a pear':
+    'ラフランスのジャムのような甘さに、ほのかな酸味を添えた洋梨。hookah-reviews.comのBlack Line評は82点で「熟していない固めの洋ナシ、あるいはシンプルな青りんご系」とされ、弱めの火加減で維持すると洋梨らしさが出る。',
+  'azure:hookah tobacco gold line ice pear': AZURE_ICE_PEAR,
+  'azure:hookah tobacco gold line lemon muffin':
+    '柑橘のレモンにマフィンの焼き菓子香を合わせた一本。hookah-reviews.comのBlack Line評は79点で「レモンが主体で吐き終わりに小麦とバターの焼き菓子香」。弱めの火加減が必須で、強いと酸味が出過ぎて崩れる。',
+  'azure:hookah tobacco gold line lemongrass': AZURE_LEMONGRASS,
+  'azure:hookah tobacco gold line life s peach': AZURE_LIFES_PEACH,
+  'azure:hookah tobacco gold line lime': AZURE_LIME,
+  'azure:hookah tobacco gold line lime cola': AZURE_LIME_COLA,
+  'azure:hookah tobacco gold line limoncello': AZURE_LIMONCELLO,
+  'azure:hookah tobacco gold line lychee':
+    'Azureを世界的に知らしめた看板のライチ。hookah-reviews.comでは87点で「再現度が高く、他社のライチにありがちな渋みやタバコ臭が無い」と同サイトのライチ系で最高評価。やや弱めの火加減で水々しさが出る。陶器ボウル推奨。',
+  'azure:hookah tobacco gold line mango cheesecake': AZURE_MANGO_CHEESECAKE,
+  'azure:hookah tobacco gold line matcha mint':
+    '急須で濃いめに入れた緑茶のような、甘さのほとんど無い抹茶系にマットな清涼感を重ねた一本。hookah-reviews.comのBlack Line評は79点だが「火加減で香りの出方が大きく変わり正解が分かりにくいのが最大の癖」と指摘されている。',
+  'azure:hookah tobacco gold line melon green tea':
+    'メロンとグリーンティーという緑つながりのミックス。代理店は「実際に混ぜると不味いのに煙にすると意外に合う」「境目が無く無理なく調和している」と評しており、メロン部分はStarBuzzのSafari Melon Dewを濃くしたような風味とされる。',
+  'azure:hookah tobacco gold line melonmania':
+    'かき氷のメロンシロップを思わせる駄菓子っぽいメロン。hookah-reviews.comのBlack Line評は65点で「ケミカルさにカドがあり長時間はクドい」、htreviewsでも2〜3点評価が中心と辛口。一方でメロン系にしては火の調節が安定している。',
+  'azure:hookah tobacco gold line mexicola': AZURE_MEXICOLA,
+  'azure:hookah tobacco gold line napa grape':
+    '他社に珍しいサッパリした白ぶどう系。hookah-reviews.comのBlack Line評は77点で「Al Fakherのグレープを下敷きにした多くのグレープ系と違い、実物のマスカットに寄せた努力が見える」。輪郭はボンヤリ気味でミックスでは押し負けやすい。',
+  'azure:hookah tobacco gold line orange crush':
+    '2023年にAzure工場で「シンプルなフルーツの決定版を」という話から生まれたオレンジ。代理店によればGold Lineは瓶のハイシーオレンジのような透明感のある爽やかさで、Black Lineとは味わいがはっきり異なるという。',
+  'azure:hookah tobacco gold line orange my guava':
+    'マッタリした甘さの強いオレンジに、青臭さの控えめなグアバを重ねたミックス。hookah-reviews.comのBlack Line評は66点で「名前から想像するサッパリ感より甘くマッタリで、グアバがストロベリーのように感じられることもある」。',
+  'azure:hookah tobacco gold line papaya': AZURE_PAPAYA,
+  'azure:hookah tobacco gold line passion fruit': AZURE_PASSION_FRUIT,
+  'azure:hookah tobacco gold line pep cream':
+    'ペパーミントにバニラクリームを重ねたクリームミント。hookah-reviews.comのBlack Line評は78点で「典型的なクリーム系だがマッタリした甘さは抑えめで、Al FakherのCream with Mintよりスッキリして万人受けする」。ミックスにも使いやすい。',
+  'azure:hookah tobacco gold line pina colada':
+    'パイナップルとココナッツが半々のピニャコラーダ。hookah-reviews.comでは77点で「パイン飴的な駄菓子っぽさはあるが濃縮還元のパインジュースとして納得の香り、ココナッツはツンとしたクセが無い」と評価。パイン系としては安定感が高い。',
+  'azure:hookah tobacco gold line pinky': AZURE_PINKY,
+  'azure:hookah tobacco gold line pomegranate': AZURE_POMEGRANATE,
+  'azure:hookah tobacco gold line queen of fruits': AZURE_QUEEN_OF_FRUITS,
+  'azure:hookah tobacco gold line raspberry vanilla': AZURE_RASPBERRY_VANILLA,
+  'azure:hookah tobacco gold line rio mint':
+    'やや強めだが穏やかでマットな清涼感のシンプルなミント。hookah-reviews.comのBlack Line評は77点で「Al Fakherのミントから後味の渋みとグリーンな香りを抜き、清涼感を少し強めた感じ」。代理店は単品で吸いたい玄人向けと位置づけている。',
+  'azure:hookah tobacco gold line root beer':
+    'バニラとシナモンの甘いスパイスミックスに、ルートビア特有の湿布のような香りを乗せた一本。hookah-reviews.comのBlack Line評は65点だが「StarBuzz Vintageのものより湿布感が弱くクセ控えめで、無難にまとまっている」と評されている。',
+  'azure:hookah tobacco gold line route 66':
+    '公式はパッションフルーツとメロンにクーリングミントを重ねたミックスとするが、hookah-reviews.comのBlack Line評は77点で「体感はメロン3・スイカ2・スペアミント1ほどで、パッションフルーツは分かりにくい」。ウリ臭さとミントでキレは良い。',
+  'azure:hookah tobacco gold line royal mango':
+    '人工的でなくフレッシュな甘さのマンゴー。hookah-reviews.comでは83点で「ワックス様のツンとした香りが控えめで、フィリピン産より国産マンゴー寄りの再現度」と高評価。ただし火が強いとワックス感が出過ぎるため見極めはややシビア。',
+  'azure:hookah tobacco gold line royal queen':
+    'ベルガモットの香りにリアリティのあるアールグレイ系。hookah-reviews.comのBlack Line評は84点で、LavooのRussian Teaよりベルガモットが控えめで穏やか、TFDやStarBuzz Serpentの紅茶系より甘さが控えめとされる。',
+  'azure:hookah tobacco gold line royal raspberry':
+    '際立った甘さの中にほのかな酸味を感じるラズベリー。hookah-reviews.comのBlack Line評は76点で「少し酸っぱいラズベリーキャンディに丸い甘さと少しの青臭さ」とされる。Gold Lineは同名のBlack Lineより軽く上品な出方になる。',
+  'azure:hookah tobacco gold line solana beach': AZURE_SOLANA_BEACH,
+  'azure:hookah tobacco gold line sour': AZURE_SOUR,
+  'azure:hookah tobacco gold line spiced berry':
+    'ラズベリー6・シナモン3・八角1ほどの構成で、余韻に微かなアニスの香りが残るスパイスドベリー。hookah-reviews.comのBlack Line評は79点で「SBVのSpice Me Redと同構造だがクローブでなくシナモンなので穏やかで丸い」と評価。',
+  'azure:hookah tobacco gold line strawberry guava': AZURE_STRAWBERRY_GUAVA,
+  'azure:hookah tobacco gold line strawberry passion':
+    'ストロベリー3〜4・パッションフルーツ1ほどのミックス。hookah-reviews.comのBlack Line評は73点で「実物のイチゴより安いイチゴジャム寄りで、パッションは押され気味ながら甘さにコクを与えている」。ミックス用途に向く。',
+  'azure:hookah tobacco gold line strong lychee': AZURE_STRONG_LYCHEE,
+  'azure:hookah tobacco gold line tomahawk':
+    'レモン3・ライム2・ミント2ほどのソフトなシトラスミックス。hookah-reviews.comでは75点で「酸味やビターさが非常に控えめで軽やか、強めの火加減でも酸味が出過ぎず柑橘系としては扱いやすい」と評された王道の構成。',
+  'azure:hookah tobacco gold line tropical citrus':
+    'メロン5・レモン2ほどのミックス。hookah-reviews.comでは82点で「クセの無いメロンに、クラシックで酸味の強いレモンがアクセントとして効いて甘さを引き締めている」と高評価。名前に反してマンゴーやココナッツの香りはしない。',
+  'azure:hookah tobacco gold line tropical paradise':
+    'パイナップルを軸にココナッツを重ねたトロピカルミックス。hookah-reviews.comでは76点で「パイン主体のサッパリしたフルーツミックスをマッタリしたココナッツが覆う」と評された。ミルクやバニラを足すとピニャコラーダ寄りになる。',
+  'azure:hookah tobacco gold line twisted teabag':
+    '酸味とビターさの強いクラシックなレモンに、甘めの紅茶を少し重ねたレモンティー系。hookah-reviews.comでは70点で「火が強いとレモンの酸味が勝って紅茶がほぼ消えるため、やや弱めの火加減で維持するのが無難」と指摘されている。',
+  'azure:hookah tobacco gold line viva la horchata':
+    '米とシナモンのメキシコの飲料オルチャータを再現した一本。hookah-reviews.comのBlack Line評は70点で「ローストナッツ的な香ばしさのあるクリーム系にシナモンと土臭さが少々、チャイ系なのか香ばしいクリーム系なのかどっちつかず」。',
+  'azure:hookah tobacco gold line watermelon': AZURE_WATERMELON,
   'azure:hookah tobacco gold line white gummi bear':
-    'パイナップル系のホワイトグミキャンディを再現した甘系フレーバー。Azure Gold Lineの人気銘柄。',
+    'パイナップル系を軸にしたフルーツミックスに、煙を吐き終える際にグミの後味のような人工的な甘い香りが鼻を抜ける。hookah-reviews.comでは77点で「FumariのWhite Gummi Bearに近く、主な違いは煙の質」と評価。適当な火加減でも特徴が出る。',
+  'azure:hookah tobacco gold line winter berries':
+    'ミント2〜3にラズベリー1ほどを重ねたサッパリ系。hookah-reviews.comでは69点で「透明感のあるミントが主体で、背後に酸味と渋みの控えめなラズベリー」と評されたが、王道すぎて目新しさに欠けるとも指摘されている。',
+  'azure:hookah tobacco gold line winter lemon':
+    '酸味やビターさを抑え、ソフトさに特化した軽やかなレモンミント。hookah-reviews.comでは77点で「FumariのLemonやLemon Mintに近い作り」と評価。火が強いと少し酸味が出る程度で、かなり適当に調節しても崩れない安定感がある。',
+  'azure:hookah tobacco gold line winter peach':
+    'フローラル2・アプリコット1・ミント1ほどの構成で、名前ほどピーチらしくない変化球。hookah-reviews.comでは79点で「Tangiersのフローラル系に似た、少し渋みのあるフワッとした甘さ」と評され、ウォッシュドの軽さで楽しめる点が評価されている。',
+  'azure:hookah tobacco gold line winter rose':
+    'シトラス6・香草系4ほどの構成で、他社のローズ系には珍しい仕上がり。hookah-reviews.comでは81点で「レモンとライムを半々にしたようなシトラス感に、クセの無いフレッシュハーブのような香りが乗る」と評価。火は気持ち弱めが良い。',
+  'azure:lemon sage gold line':
+    'フレッシュなレモンにセージの土のようなハーブ感を合わせた変わり種。代理店はレモンセージというハーブそのものの香りだとし、Azureのフレーバーの中でも再現度と完成度が高い一本と位置づけている。',
 
   // Tangiers — Cane Mint 系
   'tangiers:cane mint': TANGIERS_CANE_MINT,
@@ -324,6 +603,164 @@ export const FLAVOR_DESCRIPTIONS: Record<string, string> = {
     'クリーミーで化学臭のない上質なバニラ (Notesライン)。htreviewsでは「ミックスを主張しすぎず支える教科書的な脇役」と評され、リピート意向97%と高い支持。ベリーや焼き菓子系と好相性。',
   'bonche:wild strawberry':
     '森の野いちご (ゼムリャニカ) を再現したベリー系。htreviewsでは「唯一まともに野いちごを実現した銘柄」との絶賛と「ジャム寄り」との指摘があるが、おおむね好評 (リピート意向78%)。',
+  // SEBERO — htreviews.org のレビューを要約 (2026-09 時点)。hookah-reviews.com には
+  // Sebero の記事が無いため htreviews のみを出典としている。財務省公告の銘柄名と
+  // htreviews のライン表記は必ずしも一致しない (例: 「Classic Coco Like」「Classic Fruit
+  // Yogurt」は htreviews では Arctic Mix ライン、「Waffle」「Bilberry」等の無印は Classic)
+  // ため、説明ではライン名や生産状況を断定していない。
+  // 同一商品を指す別登録名は同じ説明を共有する:
+  //   Berry Black / Classic Blackberry = Ежевика、Black Feiberry / Black Feijoa = Feiberry、
+  //   Black Sourness / Black Sour Cranberry = Sourness (Клюква)。
+  'sebero:apricot':
+    '甘くベルベットのような口当たりに軽い酸味を添えたアプリコット。htreviewsでは「ケミカル感のない自然な杏」「砂糖控えめのコンポートや自家製ジャムのよう」と評され、リピート意向100%の堅実な評価。ミックスの甘み補強に使う声が多い。',
+  'sebero:arctic':
+    '香りを持たず冷涼感だけを足すクールブースター。htreviewsでは「余計な匂いがなく純粋に冷える」との評が大半で (評価71件・リピート意向85%)、効きが強いため入れ過ぎ注意という指摘が定番。',
+  'sebero:arctic mix caramel glass':
+    'カラメルをかけたワッフルコーンのアイスを謳うデザート系。htreviewsでは「香りは良いが吸うとアイスもワッフルも出ず、薄いカラメルと冷涼感だけが残る」という辛口が優勢で評価は伸びない (3点評価44%・リピート意向55%)。',
+  'sebero:arctic mix peanut latte':
+    'カラメルトッピングとピーナッツを効かせたアイスラテ。htreviewsでは4点評価が過半を占める安定した人気で (リピート意向81%)、ナッツの香ばしさが主役でコーヒーとカラメルは控えめという指摘が多い。低温でゆっくり熱を入れる運用が推奨される。',
+  'sebero:banana':
+    'ストレートなバナナ。htreviewsでは評価数が少なく、「甘く煙量のあるバナナ」という声と「青いバナナで物足りない」という声に分かれる (3点評価43%)。ミックスでは他の香りに埋もれやすいという指摘がある。',
+  'sebero:banana chocolate':
+    'バナナにチョコレートを重ねたデザート系。htreviewsでは「軽いミルクチョコにバナナがほのかに乗る」という評が中心だが、全体に香りが薄いという指摘が多く評価は割れる (リピート意向50%)。',
+  'sebero:banana strawberry':
+    'バナナとイチゴを合わせた、Love isのガムを思わせる甘いミックス。htreviewsでは「説明どおりガムそのもの」と再現度は認められる一方、甘さが強すぎるという声も多く評価は割れる (リピート意向60%)。',
+  'sebero:barberry':
+    'ロシアで定番のバーバリス (メギ) キャンディを再現。htreviewsでは「甘さから15分ほどで酸味が立つ本物のバーバリス飴」と再現度が好評 (リピート意向71%)。香りが主張しすぎず、ミックス素材としても使いやすいとされる。',
+  'sebero:berry black': SEBERO_EZHEVIKA,
+  'sebero:bilberry':
+    'みずみずしく甘いブルーベリー (ビルベリー)。htreviewsではリピート意向94%と安定した支持で、「ヨーグルト的な甘さのある素直なベリー」と評される。香りが強く、入れ過ぎると他を消すためミックスでは少量が推奨される。',
+  'sebero:black amarena cherry':
+    'イタリアのアマレーナチェリーを思わせる、酸味と渋みのある濃いチェリー。htreviewsでは「果汁というより濃厚なコンポートやチェリーリキュール」と評され、リピート意向89%と好評。ソロはやや重いという声もある。',
+  'sebero:black apple juice':
+    '搾りたてのリンゴジュースを謳うベース向けフレーバー。htreviewsでは「果肉感がなく皮だけのような薄いリンゴ」という酷評が優勢で、リピート意向27%と低調な銘柄。',
+  'sebero:black barberry':
+    'バーバリス飴に軽い渋みと酸味を効かせた一本。htreviewsでは評価数が少ないながら「香りが弱く乾いた印象」という辛口が中心 (3点評価71%・リピート意向50%)。',
+  'sebero:black bilberry':
+    '摘みたてのビルベリーの、やや渋みのある味わい。htreviewsでは「石鹸っぽさのない素直なベリー」という声と「花のようなケミカル感がある」という声に分かれる (リピート意向50%)。',
+  'sebero:black blueberry':
+    '甘く香り高いブルーベリー (голубика) に軽い酸味を添えた一本。htreviewsでは「甘さを強く振ってあり実物より濃い」との指摘が多く、ソロよりミックス向きという評が中心 (リピート意向43%)。',
+  'sebero:black bubble gum':
+    '00年代のフルーツガムをイメージしたノスタルジックなバブルガム。htreviewsでは「香りが弱く葉の風味が前に出る」という指摘が多く評価は伸びない (3点評価50%・リピート意向57%)。',
+  'sebero:black cactus':
+    'サボテンの果肉にイチゴ・マンゴー・キウイのニュアンスを重ねた一本。htreviewsではリピート意向82%と数字は悪くないが、「ソロでは単調で石鹸っぽく、ミックス前提」というレビューが目立つ。',
+  'sebero:black cola':
+    'よく知られた炭酸飲料をなぞった、甘さのはっきりしたコーラ。htreviewsでは「派手さはないが最後まで安定して吸える無難なコーラ」との評が中心で (リピート意向70%)、ミックス素材として推す声が多い。',
+  'sebero:black cookie monster':
+    'ココナッツを散らしたクッキーを謳うデザート系。htreviewsでは「ソロだと乾いたクッキーで物足りない」という指摘が多くリピート意向38%と低調。ミルク系を合わせると化けるという使い方が紹介されている。',
+  'sebero:black feiberry': SEBERO_BLACK_FEIJOA,
+  'sebero:black feijoa': SEBERO_BLACK_FEIJOA,
+  'sebero:black garnet':
+    '搾りたてのザクロジュースを謳う濃い果実系。htreviewsでは「ザクロというより酸味と渋みにアルコール様のニュアンスが乗る独特の味」という指摘が多く、ソロよりミックス向きとされる (リピート意向33%)。',
+  'sebero:black grape':
+    '濃い色のブドウの甘さと香りをまとめたグレープ。htreviewsでは「缶の香りは良いが吸うと石鹸っぽさやレーズン様の癖が出る」という低評価が多く、リピート意向33%と賛否の激しい銘柄。',
+  'sebero:black grapefruit':
+    'グレープフルーツのフレッシュジュースの、ほろ苦さを含む香り。htreviewsではリピート意向88%と評価が高く、「酸味と苦みのバランスが良くミックスで映える」という声が中心。香りが強いため入れ過ぎ注意という指摘もある。',
+  'sebero:black green pear':
+    '青梨にレモネードのニュアンスを重ねた一本。htreviewsでは評価数が少なく、「ドゥシェス (梨のソーダ飴) そのものだが15分ほどで香りが弱くなる」という評が共通している。',
+  'sebero:black herbal currant':
+    '黒スグリの甘さにルバーブの青い爽やかさを合わせた変化球。htreviewsではSebero Black屈指の高評価で (リピート意向87%)、「葉ごと摘んだスグリのような香り」と再現度が支持される。香りが強くミックスでは主役になりやすい。',
+  'sebero:black kiwi':
+    '熟したキウイの果肉のやわらかい甘さ。htreviewsでは「草っぽさと軽い甘さが中心で主張は控えめ」という評が多く、ソロでは香りが飛びやすいという指摘がある (リピート意向64%)。',
+  'sebero:black lemon bomb':
+    'シチリアレモンの果肉とすりおろした皮をイメージした強い酸味のレモン。htreviewsでは「ミックスに酸味を足す用途で優秀」と好評で4点評価が8割 (リピート意向86%)。喉に来やすいという指摘もある。',
+  'sebero:black lemon candy':
+    'サトウキビの甘さを添えたレモンキャンディ系。htreviewsでは評価数が少なく、「苦みのない飴らしいレモン」という好評と「石鹸っぽさが出る」という酷評が並ぶ。',
+  'sebero:black lemon waffle':
+    'レモンクリームを挟んだバニラワッフル。htreviewsでは「レモンは良いがワッフルが遠い」「皮の苦みが出る」といった指摘が多く評価が割れる銘柄 (リピート意向43%)。',
+  'sebero:black limonchello':
+    'レモンの果肉とシロップで組み立てたリモンチェッロ。htreviewsではリピート意向90%と安定した人気で、「軽いラインのリモンチェッロと同じ味でボディだけ強い」という評が定番。',
+  'sebero:black mango yogurt':
+    'トロピカルなマンゴーをヨーグルトのクリーミーさで包んだミックス。htreviewsではSebero Blackで最も評価数の多い人気銘柄 (評価79件・リピート意向81%)。マンゴーが前に出てヨーグルトは背景という指摘が多く、香りが強いためミックスでは主役になる。',
+  'sebero:black mellow mango':
+    '熟したマンゴーの甘さを前面に出した一本。htreviewsでは評価数が少なく、「甘さは出るが青い草っぽさが残る」という指摘が中心。同ラインのMango Yogurtと比べられることが多い銘柄。',
+  'sebero:black mint':
+    'ペパーミントそのものの味。htreviewsでは評価数こそ少ないが全員がリピート意向を示しており、「主張しすぎず他の香りを消さないミックス向きのミント」と好評。入れ過ぎると苦みが出るとされる。',
+  'sebero:black nitro':
+    'タバコの風味そのものを香りにした、強さを足すためのノンアロマ系ブースター。htreviewsでは「ライ麦パンやカカオ、ナッツを思わせる風味でニコチン感が強い」と評され、ミックスの強度調整用という位置づけ (リピート意向57%)。',
+  'sebero:black prunes':
+    '燻香とナッツのニュアンスを持つ濃厚なプルーン。htreviewsでは「手に入れやすいプルーンの代表格」として支持され (リピート意向71%)、ソロでもミックスでも使えるという声が多い。',
+  'sebero:black raspberry':
+    '摘みたてのラズベリーに軽い酸味を添えた一本。htreviewsでは「素直だが単純で物足りない」という評が中心で、ロットによる苦みや喉への刺激を指摘する声もある (リピート意向57%)。',
+  'sebero:black root beer':
+    'スパイスとクリーミーさを併せ持つアメリカのルートビア。htreviewsではSebero Black屈指の高評価で (5点評価41%・リピート意向88%)、「香りの密度はやや軽いが完成度は高い」と評される。',
+  'sebero:black snickers':
+    'チョコレート・ピーナッツ・ヌガーでスニッカーズを狙ったデザート系。htreviewsでは「ナッツとチョコは出るがスニッカーズには届かない」という評が多く、評価は中位に落ち着く (評価42件・リピート意向57%)。',
+  'sebero:black sour cranberry': SEBERO_BLACK_SOURNESS,
+  'sebero:black sourness': SEBERO_BLACK_SOURNESS,
+  'sebero:black strawberry':
+    '甘く香りの高い露地イチゴ。htreviewsでは「香料感が強く、軽いラインのイチゴに比べると分が悪い」という評が目立ち、リピート意向44%と評価は割れる。',
+  'sebero:black strawberry banana':
+    'イチゴとバナナを合わせた定番ミックス。htreviewsでは「バナナ寄りで甘さが強く、まとまりに欠ける」という辛口が多く評価は割れる (リピート意向50%)。',
+  'sebero:black strawberry guava':
+    'イチゴとグアバに青い草のニュアンスを効かせたミックス。htreviewsでは「グアバが主役でイチゴは控えめ」という指摘が多く賛否が分かれるが、鋭い柑橘を和らげるミックス素材としては好評 (リピート意向50%)。',
+  'sebero:black top':
+    'イチゴと茹でトウモロコシに清涼感を合わせたSeberoの看板ミックスを強めの葉で再構成した一本。htreviewsでは「トウモロコシのクリーミーさが立つ」と支持する声と「単調」という声が拮抗する (3点評価46%・リピート意向50%)。',
+  'sebero:black watermelon':
+    'スイカとハネデューメロンを合わせた夏向けのミックス。htreviewsでは「メロンが優勢でケミカル感が出る」という指摘が多く、リピート意向43%と評価は低め。',
+  'sebero:black western':
+    'シガーリーフの渋みとスパイスを主役にしたノンアロマ系の一本。htreviewsでは評価数は少ないものの「理想的なノンアロマ」「木肌や乾いた果実を思わせる」と好意的な評が並ぶ (リピート意向75%)。',
+  'sebero:black wild berries':
+    '森のベリーを詰め込んだ甘酸っぱいミックス。htreviewsでは「迷ったときの無難な一本」として安定した高評価で (4点評価62%・リピート意向87%)、スグリ寄りの渋みが感じられるという声が多い。',
+  'sebero:bubble gum':
+    'シナモンをほのかに効かせた甘いバブルガム。htreviewsでは「派手さはないが素直なガムでミックスの土台に良い」との評が中心 (評価40件・リピート意向64%)。ソロでは飽きが来やすいという指摘もある。',
+  'sebero:chocolate':
+    'ストレートなチョコレート。htreviewsでは「ダーク寄りの素直なチョコ」と4点評価が過半を占めるが、終盤に葉の風味が出るという指摘もある。ミックスで真価を発揮するという声が多い。',
+  'sebero:citrus fizz':
+    'ブラッドオレンジのレモネードにベルガモットの渋みと香りを重ねた一本。htreviewsではリピート意向92%と好評で「紅茶系が好きな人向け」という評が多い。吸い始めはベルガモット、後半にオレンジが出るという声が目立つ。',
+  'sebero:classic blackberry': SEBERO_EZHEVIKA,
+  'sebero:classic cactus':
+    'サボテンをテーマにした草っぽい甘さのフレーバー。htreviewsでは評価数が少なく「渋みと石鹸っぽさが出る」「香りが過剰」という辛口が中心で、ソロよりミックス向きとされる。',
+  'sebero:classic coco like':
+    'ミルクチョコレートにココナッツのプラリネを合わせ、軽い清涼感を添えたデザート系。htreviewsでは「バウンティに近い」と好評で (4点評価58%・リピート意向78%)、チョコが主役でココナッツは後味に出るという評が多い。',
+  'sebero:classic coffee':
+    'エスプレッソを謳うコーヒー。htreviewsでは「苦みや酸味のない砂糖入りコーヒー」と評され、ミルクや練乳と合わせてアイスコーヒー風にする使い方が定番 (リピート意向83%)。',
+  'sebero:classic fruit yogurt':
+    'マンゴーの甘さとラズベリーの酸味をヨーグルトのクリーミーさでまとめた一本。htreviewsでは「マンゴーが優勢でヨーグルトは背景」という指摘が多く、香りが穏やかで主張が弱いという評が中心 (リピート意向63%)。',
+  'sebero:classic halloween pumpkin':
+    '熟したカボチャの果肉を再現した季節限定系。htreviewsでは「甘く柔らかい本物のカボチャ」という絶賛と「実際はメロンに近い」という指摘が拮抗する賛否両論の銘柄 (リピート意向57%)。',
+  'sebero:classic milk':
+    '加糖練乳を思わせる甘いミルク。htreviewsでは評価93件・リピート意向91%とSebero屈指の人気で、ミックスに甘さとまろやかさを足す定番素材とされる。入れ過ぎると甘くなりすぎるという注意が多い。',
+  'sebero:classic papaya':
+    '南国の果肉の甘さを持つパパイヤ。htreviewsではリピート意向96%と非常に高く、「トロピカル系ミックスで映える」と支持される。ソロではガム的な甘さに感じるという声もある。',
+  'sebero:classic passion fruit':
+    '軽い酸味を持つジューシーなパッションフルーツ。htreviewsでは4点以上が全てを占め全員がリピート意向を示しており、「ミックスでも埋もれない明快なマラクヤ」と評価が安定している。他社より甘め寄りという指摘がある。',
+  'sebero:classic tiramisu':
+    'ビスキュイ・リキュール・コーヒー・カカオをバニラでまとめたティラミス。htreviewsでは「エスプレッソの苦みとマスカルポーネのクリーミーさが両方出る」と好評 (リピート意向85%)。',
+  'sebero:classic tropic rose':
+    'トロピカルフルーツにバラの花びらを重ねたフローラル系。htreviewsでは「花屋にいるような香り」と評価する声と「香水のようで重い」という声に分かれる (リピート意向71%)。バラが主役で後半に木のニュアンスが出るとされる。',
+  'sebero:feijoa':
+    'コーカサスの熟したフェイジョアの甘酸っぱさ。htreviewsでは「試した中で最高のフェイジョア」という絶賛が並ぶ高評価銘柄で (5点評価64%・リピート意向100%)、ジャムのような濃さと草っぽさのバランスが支持される。',
+  'sebero:garnet cherry':
+    'チェリーとザクロを合わせた甘酸っぱい一本。htreviewsでは評価55件・リピート意向90%と人気が高く、「チェリージュースの甘さにザクロの渋みが程よく乗る」とバランスの良さが評価される。',
+  'sebero:grapes':
+    'イザベラ種のブドウの甘さと香りをまとめたグレープ。htreviewsでは「軽いラインでは最良のブドウ」という支持がある一方、「濃さが足りない」という声もあり評価は分かれる (リピート意向80%)。',
+  'sebero:kivi fresh':
+    'キウイのフレッシュジュースを思わせる甘酸っぱい一本。htreviewsでは「草っぽい緑の風味がミックスに映える」と好評 (リピート意向83%)。熱に弱く、温度を上げすぎると苦みが出るという指摘が多い。',
+  'sebero:limoncello':
+    'ほどよい酸味の柑橘をまとめたリモンチェッロ。htreviewsでは評価93件・リピート意向98%とSeberoでも屈指の評価で、「アルコール感はほぼなく自然なレモン」と支持される。香りの持続は30分ほどという指摘がある。',
+  'sebero:lychee':
+    'ライチの素直な甘さ。htreviewsでは「ケミカル感が少なく、ミックスで他を邪魔しないライチ」として評価が高い (リピート意向100%)。ほのかな花のニュアンスがあるとされる。',
+  'sebero:mango':
+    'ストレートなマンゴー。htreviewsでは「青くて草っぽく、甘みが足りない」という指摘が多くリピート意向33%と評価は厳しい。蜂蜜など甘い香りと合わせて補正する使い方が紹介されている。',
+  'sebero:mint':
+    'ストレートなミント。htreviewsでは評価数がごく少なく、「刺激が強すぎない穏やかなミント」という評と「後半は草っぽさだけが残る」という評が並ぶ。',
+  'sebero:orange':
+    '素直なオレンジ。htreviewsでは「マーマレード的な甘さの飴っぽいオレンジ」との評が中心で、果肉感の薄さを指摘する声が多い (3点評価50%)。ソロよりミックス向きとされる。',
+  'sebero:orange chocolate':
+    'オレンジとチョコレートを合わせたデザート系。htreviewsでは「チョコが背景に回り柑橘を潰さない」とバランスが評価される一方、甘さが強いという声もある (リピート意向57%)。',
+  'sebero:pineapple':
+    'ストレートなパイナップル。htreviewsでは「酸味だけが立ってパイナップルらしさが消える」という酷評が優勢で、1点評価41%・リピート意向17%と厳しい評価が並ぶ銘柄。',
+  'sebero:raspberries':
+    '夏の熟したラズベリーに軽い酸味を添えた一本。htreviewsでは「ケミカル感のない上質なラズベリー」として高評価で (リピート意向93%)、あらゆるミックスに入れやすい定番素材とされる。',
+  'sebero:strawberry':
+    'Seberoを代表するイチゴ。htreviewsでは評価103件・リピート意向91%と看板級の人気で、「軽いラインでは最高のイチゴ」「甘すぎず自然」という絶賛が並ぶ。ミックスの甘さ補強にも定番。',
+  'sebero:thai':
+    'ラムベースのカクテル「マイタイ」をイメージした甘酸っぱいトロピカル系。htreviewsでは「カクテルというより濃いエキゾチックフルーツ」という評が多く、香りの持続の良さが支持される (リピート意向100%)。',
+  'sebero:vanilla':
+    '濃厚で香りの立つバニラ。htreviewsでは評価105件・5点評価43%とSebero Classicの人気銘柄で、「ケミカル感のないミックスの土台」として支持される。10〜15分で香りが弱まるという指摘もある。',
+  'sebero:waffle':
+    '焼きたてのワッフルを思わせるデザート系。htreviewsでは「乾いておらずクリーミーで甘さも程よい」と好評 (評価57件・リピート意向80%)。チョコやミルク系と合わせる使い方が定番。',
   // Trifecta — 日本語レビューブログ hookah-reviews.com (byダビデ) の各フレーバー記事を要約
   // (2026-09 時点)。Blonde / Dark の 2 ライン。財務省公告名は「Trifecta Tobacco <名前>」
   // のようにライン表記が無いものが多いため、説明文の冒頭で記事側のライン
