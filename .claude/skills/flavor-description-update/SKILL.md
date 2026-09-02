@@ -7,14 +7,19 @@ description: shisha-flavor-search リポジトリで、指定ブランドのフ�
 
 指定ブランドの全フレーバーについて、レビューサイトから公式説明+レビュー/コメント欄の傾向を収集し、日本語 2〜3 文の説明として `data/flavorDescriptions.ts` の `FLAVOR_DESCRIPTIONS` に追加するスキル。追加すれば詳細ページの「Tasting note」セクション・meta description・Product JSON-LD に自動反映される (SEO 上は thin content 対策として本文テキストが最重要)。
 
-DOGMA (18) / MustHave (14) / DARKSIDE (73) / BONCHE (24) の 4 ランで確立した手順 (2026-08)。
+DOGMA (18) / MustHave (14) / DARKSIDE (73) / BONCHE (24) / SEBERO (78) / Azure (138) /
+StarBuzz (145) / Tangiers (58) / Al Fakher (129) / Trifecta (99) / Fumari (56) / LaVoo (8) の
+ランで確立した手順 (2026-08〜09)。
 
 ## 情報ソース
 
 | ソース | 内容 | 備考 |
 |---|---|---|
-| **htreviews.org** (露語) | 公式説明・評価分布・リピート意向・レビュー+ブランド公式返信 | 主ソース。ロシア系ブランドはほぼ網羅 |
-| **hookah-reviews.com** (日本語ブログ byダビデ) | 著者レビュー (総評点 100 点満点)・コメント欄 | 副ソース。扱いはブランド次第 (Bonche は 0 件だった)。HTTP サイト |
+| **htreviews.org** (露語) | 公式説明・評価分布・リピート意向・レビュー+ブランド公式返信 | ロシア系ブランドはほぼ網羅。**ただし robots.txt が `User-agent: Claude / Disallow: /` を宣言している** — 大量クロールはせず、必要最小限にとどめるか他ソースで代替すること |
+| **hookah-reviews.com** (日本語ブログ byダビデ) | 著者レビュー (総評点 100 点満点)・コメント欄 | 副ソース。扱いはブランド次第 (Bonche は 0 件、Azure は 75 件で主ソースだった)。HTTP サイト |
+| **日本の総代理店 / 輸入元の EC サイト** | 公式・代理店の日本語説明、開発経緯、推奨ミックス | 欧米ブランドや日本限定銘柄はここが唯一のソースになる。Azure = `tokyoshisha.com` |
+
+**ブランドの出自でソースの優先度が変わる**: ロシア系は htreviews が主ソースだが、**アメリカ系ブランド (Azure, Fumari, StarBuzz, Trifecta 等) は htreviews の掲載が薄く、hookah-reviews.com と日本の代理店 EC が主ソースになる**。着手前に3ソースそれぞれの掲載量を数えてから分担を決めること。
 
 他ソースを使う場合も方針は同じ: 出典が特定できる公知情報のみ。
 
@@ -23,8 +28,9 @@ DOGMA (18) / MustHave (14) / DARKSIDE (73) / BONCHE (24) の 4 ランで確立�
 1. **捏造禁止**: 情報源が見つからないフレーバーは**書かずにスキップ**し、その旨を報告する (例: 情報なし時の Bonche Happy New Year)。ユーザーが URL を提供したら追記する。
 2. **ノンアロマ表記**: 香料なしタバコは「無香料」ではなく**「ノンアロマ」**と書く (日本の通称)。
 3. **賛否は正直に**: 酷評が優勢な銘柄はそのまま書く (例: 「低評価が優勢な癖の強い銘柄 (リピート意向13%)」)。宣伝コピーにしない。
-4. **main 直コミット禁止**: 作業前に `feature/<brand>-flavor-descriptions` ブランチを切る。
+4. **main 直コミット禁止**: 作業前に `feature/<brand>-flavor-descriptions` ブランチを切る (セッションで作業ブランチが指定されている場合はそちらを使う)。
 5. **既存エントリの重複キー禁止**: 追加前に対象ブランドのキーが既に無いか確認。既存エントリを充実させる場合は置き換える。
+6. **代理店 EC の煽り文をそのまま写さない**: 「最高⚡️」「絶対美味い」のようなセールス表現は落とし、味の構成・開発経緯・推奨ミックスなど事実部分だけを使う。
 
 ## 説明文のスタイル
 
@@ -38,11 +44,13 @@ DOGMA (18) / MustHave (14) / DARKSIDE (73) / BONCHE (24) の 4 ランで確立�
 
 ```
 1. ブランチ作成 → 対象ブランドのフレーバーとキーを列挙
-2. htreviews recon: ブランド/ラインページから slug 収集 → 不足分をプローブ
-3. 並列サブエージェント (general-purpose, 1体あたり5〜9銘柄) でレビュー収集
+2. recon: 各ソースの URL を銘柄に事前マッピングする (2-a htreviews / 2-b hookah-reviews / 2-c 代理店 EC)
+3. 並列サブエージェント (general-purpose, 1体あたり5〜10銘柄) でレビュー収集
 4. FLAVOR_DESCRIPTIONS へ書き込み → 全 id 解決を検証
 5. pnpm lint / test / typecheck → コミット → push → PR (マージは人間が Web UI で)
 ```
+
+**recon は必ず自分でやってからエージェントを起動する**。URL 発見をエージェント任せにすると同じ検索を N 体が重複実行し、取りこぼしも増える。銘柄 → URL の対応表を作り、`brief_<n>.md` に書き出してエージェントに渡すのが最も速い。
 
 ### 1. 対象列挙とキー確認
 
@@ -63,7 +71,7 @@ console.log('unique:', seen.size)
 - キーは `brandSlug(manufacturer) + ':' + normalizeFlavorName(productName, manufacturer)`。**サイズ違い (30g/100g等) は同一キーに正規化される**ので、説明はユニーク銘柄数だけ書けばよい。
 - ハイフンや記号はスペースに正規化される (`K-T BROADLEAF` → `k t broadleaf`、`C.R.E.A.M. S.O.D.A.` → `c r e a m s o d a`)。
 
-### 2. htreviews.org の recon
+### 2-a. htreviews.org の recon
 
 URL 構造: `https://htreviews.org/tobaccos/<brand>/<line>/<flavor-slug>`
 
@@ -86,9 +94,38 @@ slug の作り方と落とし穴:
 - **季節限定は MOF 公告名とサイト名が別物のことがある**: Bonche「Happy New Year」= htreviews「New Year 2026」(slug `new-year-2026`)。年付き slug (当年・翌年) も試し、それでも駄目なら**ユーザーに URL を聞く**のが早い。
 - 大規模ブランドは probe スクリプト化が有効 (Darkside 73 銘柄の例: 候補 slug × ライン優先順で ThreadPoolExecutor 並列 HEAD、known slug はスキップ)。
 
+### 2-b. hookah-reviews.com の recon
+
+`?s=<brand>` の検索ページは当てにならない (Azure では 0 件に見えた)。**サイドバーのカテゴリ一覧に載っているブランド別カテゴリを直接ページングする**のが確実:
+
+```bash
+# 1) 任意の記事を1つ取得し、サイドバーからブランドのカテゴリ slug を拾う
+curl -sL -A "claude-code/1.0" "http://hookah-reviews.com/?s=Azure" -o $S/hr.html
+grep -o 'href="[^"]*"[^>]*>Azure Black/Gold' $S/hr.html | head -1   # → /category/flavour-review/azb/
+
+# 2) カテゴリを page/N/ でページング (1ページ28件、404 が出るまで)
+#    記事リンクは <h3 class="post-title"><a href="...">タイトル</a>
+```
+
+記事タイトルは `<Brand> <Line> / <Flavor>（一言サマリ）` 形式なので、`（` の手前を切り出して銘柄名で突き合わせる。表記ゆれ (`Carifornia`→`California`, `Chocoralate`→`Chocolate`, `Cinamon`→`Cinnamon`, `Life's a Peach`→`Life's Peach`, `Teabag`→`Tea Bag`) を正規化してからマッチさせること。
+
+記事本文には**「（総評）NN点」**が入っているので、説明文に引用できる定量情報として拾う。
+
+### 2-c. 日本の代理店 EC (Shopify) の recon
+
+代理店サイトが Shopify なら、商品と説明文を一括で取れる:
+
+```bash
+curl -sL "https://tokyoshisha.com/collections/shisha/products.json?limit=250" -o $S/ts.json
+# title / handle / vendor / tags / body_html を抽出。商品URLは https://<host>/products/<handle>
+```
+
+**他ブランドの商品が混ざるので、`tags` と `vendor` にブランド名 (英語+カタカナ表記ゆれ: Azure/アズア/アズアー/アズーア) が含まれるものだけに絞ること**。絞らないと同名フレーバー (Watermelon 等) を他社商品の説明で埋めてしまう。取得した `body_html` はエージェントに再取得させず、`brief_<n>.md` に本文ごと埋め込んで渡す。
+
 ### 3. 並列サブエージェントで収集
 
-- **general-purpose** エージェントに 1 体あたり **5〜9 銘柄** を割り当てる (73 銘柄 = 8 体が実績)。同一メッセージで一斉起動。
+- **general-purpose** エージェントに 1 体あたり **5〜10 銘柄** を割り当てる (73 銘柄 = 8 体、138 銘柄 = 14 体が実績)。同一メッセージで一斉起動。
+- **同名フレーバーの別ライン (Azure の Black/Gold 等) は同じエージェントにまとめる**。ソースが共通なので取得が 1 回で済み、説明のトーンも揃う。
 - 一時ファイルの scratchpad プレフィックスをエージェントごとに変える (衝突防止)。
 - プロンプト雛形 (実績あり):
 
@@ -155,7 +192,7 @@ pnpm lint && pnpm test && pnpm typecheck
 ## hookah-reviews.com が主ソースのブランドを一括で処理する (2026-09 の実績)
 
 アメリカ系ブランドをまとめて処理する場合、**記事本文を先に全部ローカルへ落としてから
-エージェントに配る**のが圧倒的に速い (StarBuzz〜LaVoo の 6 ブランド 443 キーを 1 セッションで処理)。
+エージェントに配る**のが圧倒的に速い (StarBuzz〜LaVoo の 6 ブランド 495 キーを 1 セッションで処理)。
 
 1. **カテゴリ一覧をトップページから取る**: `curl -sL "http://hookah-reviews.com/"` の
    サイドバーに `href=".../category/flavour-review/<slug>/">ブランド名 (件数)` が並んでいる。
@@ -190,6 +227,9 @@ pnpm lint && pnpm test && pnpm typecheck
 - 公告名にライン表記が無く、同名の `Bold <名前>` が別途登録されている銘柄は
   Original / Bold のどちらか確定できない。**確定できないものは未記載にする**
   (StarBuzz Mint Colossus / Peach Queen / Queen of Sex)。
+- **作業ブランチは必ず `git fetch origin main` してから切ること**。stale な
+  `origin/main` から切ると、直前にマージ済みのブランド (Azure 等) を含まない土台の上に
+  追記してしまい、PR が conflict になる。
 
 ## 落とし穴集 (実績ベース)
 
@@ -197,8 +237,12 @@ pnpm lint && pnpm test && pnpm typecheck
 - **品種名の略記**: DOGMA「K-T BROADLEAF」= htreviews「Коннектикут Бродлиф」(Connecticut Broadleaf)。ページ記載の産地・品種で対応を検証し、PR に検証結果を書く。
 - **ラインページの SSR は部分的** (約20件)。「無い」と結論する前にプローブすること。
 - **hookah-reviews.com はブランドごと非対応がある** (Bonche は 0 件)。ブランド名単独検索で 0 件なら全銘柄「記事なし」として先へ進む。
-- **説明済みブランドの再実行**: 既存キーと重複しないよう、ステップ1の `(既存)` 表示を確認。
+- **説明済みブランドの再実行**: 既存キーと重複しないよう、ステップ1の `(既存)` 表示を確認。curatedPicks の id フォールバックだけで `(既存)` に見える銘柄は、名前キーのエントリを別途足す価値がある (サイズ違い id をカバーできる)。
 - htreviews の数値 (評価分布・リピート意向) はスナップショット。説明では「htreviewsでは」と出典を明示しているので許容だが、桁まで細かく書きすぎない。
+- **htreviews はライン違いでも同一ページを返すことがある**。URL のライン部分だけ変えた 200 応答を「両ラインに別ページがある」証拠にしない。存在しないページはトップ/ランキングへソフトリダイレクトするので、レスポンスサイズやタイトルで判別する。
+- **同名フレーバーがライン違いで併存するブランド (Azure の Black/Gold) では、レビュー記事がどちらのラインのものか必ず確認する**。hookah-reviews.com のダビデ氏は「両ラインで被る銘柄は Black だけレビューした」と明言しており、記事タイトルのライン表記が唯一の手がかり。説明文では「Black Line 評は NN 点」と出典ラインを明記すること。
+- **代理店 EC の商品ページも、ハンドルやタグでラインを確認する** (`..._azure-black` は Black Line、`..._tsgl` / vendor が「Tokyo Shisha Gold Line」は Gold Line)。片方のラインの文面をもう片方に流用しない。
+- **財務省公告名と実売名がずれることがある**: Azure「Mangosteen」は日本では Queen Of Fruits として発売された (代理店ブログに経緯の記載あり)。断定できるのは一次ソースが経緯を書いている場合だけで、名前が似ているだけの同一視はしない。
 
 ## 対応済みブランド (再実行不要)
 
