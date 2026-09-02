@@ -7,7 +7,9 @@ description: shisha-flavor-search リポジトリで、指定ブランドのフ�
 
 指定ブランドの全フレーバーについて、レビューサイトから公式説明+レビュー/コメント欄の傾向を収集し、日本語 2〜3 文の説明として `data/flavorDescriptions.ts` の `FLAVOR_DESCRIPTIONS` に追加するスキル。追加すれば詳細ページの「Tasting note」セクション・meta description・Product JSON-LD に自動反映される (SEO 上は thin content 対策として本文テキストが最重要)。
 
-DOGMA (18) / MustHave (14) / DARKSIDE (73) / BONCHE (24) / SEBERO (78) / Azure (138) のランで確立した手順 (2026-08〜09)。
+DOGMA (18) / MustHave (14) / DARKSIDE (73) / BONCHE (24) / SEBERO (78) / Azure (138) /
+StarBuzz (145) / Tangiers (58) / Al Fakher (129) / Trifecta (99) / Fumari (56) / LaVoo (8) の
+ランで確立した手順 (2026-08〜09)。
 
 ## 情報ソース
 
@@ -187,6 +189,48 @@ pnpm lint && pnpm test && pnpm typecheck
 
 `git worktree add ../shisha-flavor-search-<brand> -b feature/<brand>-flavor-descriptions main` で worktree を切れば、収集エージェントの待ち時間中に別ブランドを進められる (Darkside/MustHave 並行の実績)。後発 PR は先発マージ後に `git rebase origin/main` してから push すると衝突しない。終わったら `git worktree remove` で片付ける。
 
+## hookah-reviews.com が主ソースのブランドを一括で処理する (2026-09 の実績)
+
+アメリカ系ブランドをまとめて処理する場合、**記事本文を先に全部ローカルへ落としてから
+エージェントに配る**のが圧倒的に速い (StarBuzz〜LaVoo の 6 ブランド 495 キーを 1 セッションで処理)。
+
+1. **カテゴリ一覧をトップページから取る**: `curl -sL "http://hookah-reviews.com/"` の
+   サイドバーに `href=".../category/flavour-review/<slug>/">ブランド名 (件数)` が並んでいる。
+   ここに載っていないブランドは記事がほぼ無いと考えてよい (Nirvana の旧ラインなど)。
+2. **各カテゴリを `page/N/` でページングして記事 URL とタイトルを収集** → 重複 URL を除去。
+   ACID ラインのようにカテゴリが無いものは `?s=<Brand>+<Line>` の検索で拾う。
+3. **記事本文を並列 GET してローカルにキャッシュ**。本文は
+   `<div class="content">` 〜 `<div class="sharedaddy` の間。タグを除去して
+   `<scratchpad>/hr_bodies/<記事ID>.txt` に保存する (1 記事 4KB 程度)。
+4. **銘柄 → 記事のマッピングを作り、記事単位でグループ化する**。財務省公告は同一商品を
+   複数の名前で登録していることが多い (Al Fakher の「Shisha Molasses <名前>」、
+   Trifecta の「Tobacco <名前>」など)。**記事 1 本につきエージェント 1 エントリだけ書かせ、
+   同じ記事を指す全キーへ同じ説明をコピーする**とトークンが 1/2 以下になる。
+5. **エージェントにはローカルファイルだけ読ませる** (ネットワーク不要と明記)。
+   ブリーフに記事本文を丸ごと埋め込み、1 体あたり 12〜15 銘柄。
+
+### この一括ランで分かったこと
+
+- 記事タイトルは `<Brand> <Line> / <Flavor>（一言サマリ）` 形式。`（` の手前で切り、
+  `/` の左側でラインを判定する。**ラインが公告名と食い違う場合は説明文で出典ラインを明記**
+  させること (例: 公告 = Tangiers Burley、記事 = Tangiers Noir)。
+- 記事本文の見出しタグが壊れていて「（総評）NN点」が 2 つ出るページがある
+  (StarBuzz Cantaloupe は 78 点と 35 点が混在)。**どちらが総評か確定できないときは
+  点数を書かない**。
+- 財務省公告の表記ゆれは相当多い。実績のある対応: Blue Sufer = Blue Surfer /
+  Grapefruits = Grapefruit / Marlett = Marlette / Vintage Timisue = Vintage Tiramisu /
+  Water melon = Watermelon / Cardamom = Cardamon / Bonafide = Bona Fide /
+  Apple509 = Apple 509 / Twice the IceX = Twice the Ice X / Tutti Fruitti = Tutti Frutti。
+- **似ているだけの名前は同一視しない**。見送った例: StarBuzz Bold Apple Mist と
+  記事の Misty Apple、Fumari の RGB / WGB と Red Gummy Bear / White Gummi Bear、
+  Al Fakher の Fresh と Fresh Mist、Tangiers の Noir Lime と New Lime。
+- 公告名にライン表記が無く、同名の `Bold <名前>` が別途登録されている銘柄は
+  Original / Bold のどちらか確定できない。**確定できないものは未記載にする**
+  (StarBuzz Mint Colossus / Peach Queen / Queen of Sex)。
+- **作業ブランチは必ず `git fetch origin main` してから切ること**。stale な
+  `origin/main` から切ると、直前にマージ済みのブランド (Azure 等) を含まない土台の上に
+  追記してしまい、PR が conflict になる。
+
 ## 落とし穴集 (実績ベース)
 
 - **同名の旧版/2.0 は別商品**: Darkside Mango Lassi (Base) と Mango Lassi 2.0 (Core)、Virgin Peach と 2.0。別エントリ・別ページ。
@@ -205,5 +249,15 @@ pnpm lint && pnpm test && pnpm typecheck
 - 2026-08: DOGMA (18) / MustHave (14) / DARKSIDE (73) / BONCHE (24) / SEBERO (78)
 - 2026-09: Azure (133 キー / 全 194 id 中 187 解決)。未記載は公開情報が皆無だった Black Berry /
   Cherry Coke / Green Apple / MXN Cola / Whisky / White Chai / White Jasmine Chai の 7 銘柄
-- 有望な次候補: 日本流通があり hookah-reviews.com の記事数が多い StarBuzz (89+37+22+13) /
-  Tangiers (111) / Trifecta (62) / Fumari (50) / Nu Hookah (41) / Nirvana (45)
+- 2026-09: hookah-reviews.com 一括ランで以下を追加 (いずれも htreviews は使わず日本語ブログのみ)
+  - StarBuzz 145 キー (164 id 中 156 解決)。Original / Bold / Vintage / ACID
+  - Tangiers 58 キー (81 id 中 64 解決)。記事はほぼ全て Noir ライン
+  - Al Fakher 129 キー (251 id 中 233 解決)。通常 / Golden / Special Edition ほか
+  - Trifecta 99 キー (139 id 中 130 解決)。Blonde / Dark
+  - Fumari 56 キー (152 id 中 127 解決)。近年発売銘柄は記事が無く未記載
+  - LaVoo 8 キー (8 id 全解決)
+- **記事が無く見送ったブランド**: Nirvana (公告は旧 Super Shisha ライン、ブログは
+  Eclipse / Othmani で銘柄が全く重ならない) / Malaki (12 キー中 2 件しか記事が無い) /
+  Dozaj (119 キーに対し Dozaj Black の記事 4 本のみ)
+- 有望な次候補: hookah-reviews.com のカテゴリに載っていないブランドが残っているため、
+  次は日本の代理店 EC (tokyoshisha.com 等) を主ソースにできるブランドを探すこと
