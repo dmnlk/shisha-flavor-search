@@ -324,6 +324,131 @@ export const FLAVOR_DESCRIPTIONS: Record<string, string> = {
     'クリーミーで化学臭のない上質なバニラ (Notesライン)。htreviewsでは「ミックスを主張しすぎず支える教科書的な脇役」と評され、リピート意向97%と高い支持。ベリーや焼き菓子系と好相性。',
   'bonche:wild strawberry':
     '森の野いちご (ゼムリャニカ) を再現したベリー系。htreviewsでは「唯一まともに野いちごを実現した銘柄」との絶賛と「ジャム寄り」との指摘があるが、おおむね好評 (リピート意向78%)。',
+  // Tangiers — 日本語レビューブログ hookah-reviews.com (byダビデ) の各フレーバー記事を要約
+  // (2026-09 時点)。記事はほぼ全てが Noir ラインのため、財務省公告名が Burley など別ライン
+  // の銘柄では本文に「Noir版レビューでは」と出典ラインを明記している。
+  // 既存の Cane Mint 系 3 キー (ファイル冒頭の TANGIERS_CANE_MINT) はそのまま維持。
+  // 記事が見つからなかった Aussie Juice / Birquq Ololiuqui / Birquq Panic Punch /
+  // Maraschino Cherry / Peach Cobbler / Noir Bacon / Noir Lime (New Lime とは別商品) /
+  // Noir Banana Foster / Noir Bubblegum / Noir Caramel Apple / Noir Cardamom Cheesecake /
+  // Noir Coconut / Noir Dark Cherry / Noir Ginger Pear / Noir Kashmir Lime /
+  // Noir Ololiuqui / Noir Vanilla は意図的に未記載。
+  'tangiers:2005 blueberry':
+    'クリーム系4：ブルーベリー系1ほどの構成で、トロンとした甘さのクリーム系が主体、ブルーベリーは吐き終わりに華やぎを添える隠し味程度。TangiersのWelsh Creamよりアッサリした質感で、煙の質と香りの持ちも良好。hookah-reviews.comでは85点で「Cream系単体に近い香りは意外と珍しく、試す価値は大きい」と評された。',
+  'tangiers:burley a cane mint':
+    '甘さ控えめでやや強めのシャープな清涼感に少々のビターさが乗り、ダークリーフの土っぽいベース香がほどよく抑えられたバランス型のミント。焦げにくくボウルも選ばない。hookah-reviews.comのNoir版レビューでは96点で「最も売れているだけの出来で家に常備している」と評された。',
+  'tangiers:burley canemint':
+    'やや強めのシャープな清涼感に控えめな甘さと少々のビターさが乗り、土っぽいダークリーフのベースの香りが程よく活きたミント系。焦げにくくボウルも選ばない扱いやすさが持ち味。hookah-reviews.comのNoir版レビューでは96点で「Tangiersは苦手だがこれだけは好きという人も多い」と評された。',
+  'tangiers:cane mint alpha':
+    '控えめな甘さと少々のビターさ、やや強めでシャープな清涼感が土っぽいダークリーフのベースの香りをうまく抑え込んだバランス型のミント系。安定感が高く焦げにくいうえ、煙の量と質もTangiers平均以上。hookah-reviews.comでは96点で「Mint系が好きならば一度は試す価値がある」と評された。',
+  'tangiers:cool strawberry':
+    '少々の青臭さを伴う中東の会社にありそうなストロベリー系に、ケミカルなチェリー系特有のツンと鼻を抜ける感じが微かに混じるサッパリめの香りで、商品名に反して清涼感は無い。比較的高温にも耐え扱いやすい。hookah-reviews.comでは69点で「TangiersのStrawberryの方が分かりやすい」と再現度の低さを指摘された。',
+  'tangiers:foreplay on the peach':
+    'TangiersのJuicy PeachとApricot Spring Blendの中間、ややJuicy Peach寄りのピーチ系で、アプリコット系に似たフワッとした香りが微かなアクセントになる。ケミカルさは控えめで輪郭はハッキリ。hookah-reviews.comでは80点で「無難に良く出来ている」と評されたが、Juicy Peachと似るため片方あれば足りるとも指摘された。',
+  'tangiers:horchata':
+    'ライトでフンワリしたクリーム系のテイストに、後味のシナモン系の甘い香りとローストナッツのような香ばしさが重なるチャイ系。その香ばしさがTangiersのベースの香りをうまく溶け込ませている。hookah-reviews.comでは81点で「Cream系のテイストが強めのChai系を探しているのであれば、試す価値はある」と評された。',
+  'tangiers:kashmir guajava':
+    '砂糖入りのフレッシュなグァバジュースを思わせるマッタリ甘いグァバ系に、ターメリックやナツメグに似たクセのあるスパイス系の香りが強く混じる。煙はTangiersの平均で可もなく不可もなし。hookah-reviews.comでは70点で、スパイスが出来の良いグァバ系を邪魔しており「Guajava単体で良い」と評された。',
+  'tangiers:melon blend':
+    '人工香料100％のメロンゼリーやメロンソーダのような、輪郭のハッキリしたケミカルなメロン系。火が強くても酸っぱくなりにくく、メロン系としては扱いやすいのが利点。hookah-reviews.comでは63点と辛口で「ワザとらしさが目立つ」「定番のMelon系でこの出来は少し微妙」と評された。',
+  'tangiers:mime':
+    '渋味が少なく軽やかな酸味のレモン系に、ライム系と弱い清涼感を重ねたクリアなシトラス系のミックスで、ケミカルさは非常に少ない。ノドへの当たりもソフトで扱いやすい。hookah-reviews.comでは91点で、TangiersのNew Lemon-Limeよりクリアで軽やかな仕上がりと評された。',
+  'tangiers:noir 2005 blueberry':
+    'クリーム系とブルーベリー系を4：1ほどで合わせ、トロンとした甘さとマッタリした煙の質を持つクリーム系が主体。ブルーベリーは吐き終わりにわずかな華やぎを添える程度で、香りの持ちも長め。hookah-reviews.comでは85点で、TangiersのWelsh Creamと甲乙つけがたい出来と評された。',
+  'tangiers:noir blitzsturm':
+    'ハーブティー用の乾燥ラベンダーのようなハッキリしたフローラルの香りに、マットで甘さのあるそこそこ強めの清涼感が重なる。ベースの香りは控えめで、焦げにくく扱いやすい。hookah-reviews.comでは91点で「ラベンダーの香りが非常に分かりやすい」と評され、TangiersのLeviathanとほぼ同じ香りとも指摘された。',
+  'tangiers:noir blue gumball 2 0':
+    'Al FakherとStarBuzzの中間あたりに位置するブルーベリー系で、輪郭はハッキリしつつケミカルさは控えめ。ダークリーフのベースが皮の渋みのように溶け込みコクを出している。hookah-reviews.comでは77点で「基本に忠実で無難に良く出来ている」と評された一方、目新しさは無いとも指摘された。',
+  'tangiers:noir cherry limeade':
+    '鼻を抜けるツンとしたアメリカの会社らしいケミカルなチェリー系と、輪郭のハッキリしたライム系をほぼ1：1で合わせた、清涼飲料水を思わせる香り。煙はTangiersの平均的。hookah-reviews.comでは68点で「Mixのチョイス自体は割と捻りが無い」としつつ、ドクターペッパー好きに向くと評された。',
+  'tangiers:noir chocolate iced cream':
+    'キスチョコやココアシガレットを思わせるクラシックなチョコレートに、バニラ入りのマッタリしたクリームが重なる、紙パックのココアのような香り。hookah-reviews.comでは74点で「Chocolate系の基本に忠実だが商品名の割に目新しさが無い」と評された。粉っぽさが少なく高温にも比較的耐える。',
+  'tangiers:noir chocolate mint':
+    'キスチョコのような駄菓子っぽいチョコレートにミントペーストを混ぜたクラシックなチョコミントで、清涼感は吐き出しに軽くヒンヤリする程度。hookah-reviews.comでは70点で、ベースの土臭い香りがチョコにビターな奥行きを与える点は良いが好き嫌いは分かれると評された。火が強すぎると粉っぽさが出る。',
+  'tangiers:noir clove':
+    '鼻にツンと抜けるスパイス感と少々の甘さを持つ、クローブそのものの再現度が非常に高い香り。ベース香の有機的なニュアンスで精油的な他社品よりホールの粒に近く、ミックス素材にも使える。hookah-reviews.comでは72点で「スパイス系が好きでなければ好みではないが、用途と需要はある」と評された。',
+  'tangiers:noir cocoa':
+    'ココアシガレット的なクラシックChocolate系に粉乳っぽい乳臭さを強めた、薄めの缶ココアのような香り。バニラやコーヒーは入らないシンプルな作りで、hookah-reviews.comでは73点で「言われてみれば確かにココアで再現度は高いが、香り自体の目新しさは薄い」と評された。やや弱めの火加減向き。',
+  'tangiers:noir cooling':
+    '甘さもビターさも持たず、冷たく切り込むシャープな清涼感とTangiersのベース香だけという極めてシンプルな構成。そのベース香が強く、他社フレーバーとのミックスでは邪魔になりやすい。hookah-reviews.comでは68点で「単体で吸うならCane Mintの方がずっと良い」と評された。',
+  'tangiers:noir foreplay on the peach':
+    'マッタリした甘さのピーチ系に、アプリコットに似たフワッとした香りが微かなアクセントを添える。ケミカルさは目立たず輪郭は明瞭で、高温にも耐えて扱いやすい。hookah-reviews.comでは80点で「無難によく出来ているが、Juicy Peachと似ておりどちらか一つで足りる」と評された。',
+  'tangiers:noir french jelly':
+    '微かにツンとした青臭さのある香草系で、余韻にうっすらセロリらしさが出る程度。全体の8割がTangiersのベースの香りに押され、フレーバー自体が分かりにくい。hookah-reviews.comでは51点で、香りの持ちも悪くKiwiやPearと同じくTangiersの残念な出来の典型と評された。',
+  'tangiers:noir it s like that one breakfast cereal':
+    'シロップ漬けチェリー主体にオレンジが少し混じり、吐き終わりにクッキーのような焼き菓子感が広がる、砂糖多めのフルーツグラノーラ風の香り。中盤からはジェリービーンズ寄りに変化する。hookah-reviews.comでは68点で、香りの変化は気になるが煙はきめ細かく扱いやすいと評された。',
+  'tangiers:noir kashmir':
+    'タイムやレモングラスのようなスッキリした香草感に、ターメリック系のスパイスが4対1ほどで加わる、甘さ控えめでキレのある香り。hookah-reviews.comのライン表記「Tangiers」のレビューでは点数は付されていないが、Kashmir系の中で最も好みで煙の質も扱いやすさも優秀と評された。',
+  'tangiers:noir kashmir apple':
+    'ターメリックやナツメグのようなマッタリしたスパイス香が支配的で、アップルの甘さは奥にぼんやり感じられる程度。煙質と香りの持ちは良いがクセは強い。hookah-reviews.comでは55点で「ベースの果実香が立たず、オススメしにくい」と評された。',
+  'tangiers:noir kashmir black':
+    'ターメリックやナツメグに似たクセのある甘いスパイスが主体で、スパイス多めのチャイのようなマッタリした香り。Kashmir単体よりキレは控えめ。hookah-reviews.comでは70点で、キレのあるKashmirの方が好みとしつつ、マッタリしたSpice系が好きなら合うと評された。安定感はやや良い。',
+  'tangiers:noir kashmir peach':
+    'Al Fakher系に近いマッタリ甘いピーチに、Kashmir系共通のターメリックのようなスパイスが重なる香り。hookah-reviews.comでは70点で、濃いめのフルーツとスパイスの相性は良い部類だがクセが強く勧めにくいと評された。煙はきめ細かく香りの持ちも良い。',
+  'tangiers:noir kosmik':
+    'Al FakherのTwo Applesに近い、ボディのあるマッタリ甘いダブルアップル系。ダークリーフのベース香と重さが加わってドッシリした仕上がりで、煙も程よくソリッド。hookah-reviews.comでは76点で「基本に忠実で、重さによる満足感がしっかりしている」と評された。',
+  'tangiers:noir lemon':
+    '酸味のシッカリしたクラシックなレモンで、Al Fakherより酸味とビターさが穏やか。ベースの香りも悪目立ちしない。hookah-reviews.comでは85点で「目新しさは無いがバランスが良く、オーソドックスなLemon系が半歩リファインされている」とオススメされた。強めの火加減でも崩れにくい。',
+  'tangiers:noir lemon lime':
+    'TangiersのNew LimeとLemonを3対2で混ぜた構成で、レモンがライム特有のケミカルさだけを消し、キュッとした輪郭は残るライム系単体のような香り。hookah-reviews.comでは90点で、他社を含めてもライム系で一番との高評価。ただしタバコ的には重い。',
+  'tangiers:noir lemon tea':
+    '酸味控えめでラムネ菓子のような甘さが混じるレモン系で、瓶詰めの甘め濃いめのレモネードを思わせる香り。商品名の紅茶感はベース香に押されて分かりにくい。hookah-reviews.comでは79点で「変なクセがなく万人受けする」と評された。',
+  'tangiers:noir mime':
+    'ケミカルさの少ないスッキリした酸味のLemon系に軽やかなLime系を重ねたCitrus系で、Mint由来の弱い清涼感も少し感じられる。hookah-reviews.comでは91点で「New Lemon-Limeよりクリアで軽やかな仕上がり」と評された。酸味はあるがノドへの当たりはソフトで、火の調節も難しくない。',
+  'tangiers:noir mimon':
+    'Al Fakherのレモンを穏やかにして少し甘くしたソフトなレモンに、Spear Mint感の無い純粋な清涼感を合わせたレモンミント。hookah-reviews.comでは88点で、ベースの香りが上手く活かされた無難に良い出来と評された。ノド越しが良く高温にも比較的耐える。',
+  'tangiers:noir mixed fruit 6':
+    '王道のグレープフルーツを薄めてサッパリさせた香りが7割、マッタリした甘いパッションフルーツ系が3割ほどのミックス。hookah-reviews.comでは79点で、個々の香りは拾いづらいものの焦点は定まっており好みと評された。煙も安定感もTangiersの平均的な水準。',
+  'tangiers:noir nectarine':
+    'Al FakherのPeachを1.5〜2倍濃くしたような、丸みのある甘さのマッタリめなPeach系。ケミカルさは控えめで香りの輪郭はハッキリしている。hookah-reviews.comでは75点で「目新しさは無いが、そのぶん無難によく出来ている」と評された。火が強すぎると煙がドライで粗くなる。',
+  'tangiers:noir new lemon lime':
+    'TangiersのNew LimeとLemonを3対2で混ぜた構成で、レモンがライム特有のケミカルさだけを消し、キュッとした輪郭は残るライム系単体のような香り。hookah-reviews.comでは90点で、他社を含めてもライム系で一番との高評価。ただしタバコ的には重い。',
+  'tangiers:noir new lime':
+    'ライムリキュール的なケミカルさは少し残るものの、ライムの輪郭がハッキリ出たLime系。ベースの香りが邪魔をせず煙もスムーズだが、火加減を強めるとケミカルさが出やすい。hookah-reviews.comでは88点で「Lime系単体の中で最も良く出来ている」と評された。',
+  'tangiers:noir papaya sorbet':
+    'パパイアというより濃いめのGreen Apple系に、Melon系のような青臭さ・ウリ臭さが重なるサッパリした甘い香り。きめ細かくスッキリした煙で、高温にも比較的強く扱いやすい。hookah-reviews.comでは87点で「Tangiersの中では間違いなくアタリの部類」と評された。',
+  'tangiers:noir passionfruit lemonade':
+    '酸味とビターさが程よいクラシックなLemon系に、後味でラムネ菓子のようなお菓子っぽさが少し混じる。パッションフルーツらしさは分かりにくく、煙はTangiersの平均で可もなく不可もなし。hookah-reviews.comでは79点で「少し変わったLemon系単体」と評された。',
+  'tangiers:noir peach iced tea':
+    '中東系とアメリカ系の中間のようなマッタリ甘いピーチが主体で、後味にダージリンのような華やぎのある紅茶感がホンノリ混じる。紅茶がピーチのクドさを抑え、香りの持ちはやや長め。hookah-reviews.comでは77点で「Mixのバランスは地味に良い」と評された。',
+  'tangiers:noir pineapple':
+    '缶詰のパインとパイン飴の中間のようなマッタリした香りに、醗酵の進んだ土っぽいダークリーフのベースが強く乗る。煙自体は平均的で扱いやすいが、ベースがパイナップルの香りとぶつかる。hookah-reviews.comでは53点で「他社のPineapple系の方が間違いなく無難」と評された。',
+  'tangiers:noir pink grapefruit':
+    '厚みのあるビターさが特徴のGrapefruit系で、FumariのTangeloのコクにAl FakherのGrapefruitの酸味を足したような濃い口の香り。hookah-reviews.comでは75点で「サッパリ系好きの好みからは外れるが、Tangelo系の厚みが好きなら気に入る」と評された。タバコ感は重め。',
+  'tangiers:noir pumpkin':
+    '焼き色のついたパンプキンパイのフィリングのような、少しビターな香ばしさを伴うカボチャの香りに、強めのClove系が重なる。hookah-reviews.comでは78点で「他社より再現度が高く、ベースの香りとも調和して良く出来ている」と評された。やや弱めの火加減が向くが扱いは容易。',
+  'tangiers:noir raspberry iced tea':
+    '酸味のシッカリしたRaspberry系と、やや渋めに入れたダージリンのような紅茶系が半々のMix。両者が混ざって輪郭がぼやけ、hookah-reviews.comでは55点で「意識して吸わないと何の香りか分かりづらい」と評された。煙持ちと扱いやすさは良いが、Mixのバランスに難がある。',
+  'tangiers:noir static starlight':
+    '酸味のあるガッシリしたBlack Grape系に、ビターさのあるフローラル系が少し重なりマイルドな余韻を作る。序盤は火が強いと煙がイガイガしやすく、弱めの火加減で維持する必要がある。hookah-reviews.comでは72点で「どちらか1つあれば事足りる」とTangiersのRed Grapeと比較され評された。',
+  'tangiers:noir strawberry':
+    'イチゴジャムの後味のような、酸味を抑えたマッタリ甘いStrawberry系。中東系にありがちなヘタの青臭さがなく煙もスムーズで香りの持ちは長めだが、タバコ的な重さとベースの香りは残る。hookah-reviews.comでは71点で「Tangiersの中では割と楽しめる部類」と評された。',
+  'tangiers:noir summer resort':
+    'キュウリを思わせるウリ臭さの強いサッパリした甘い香りに、LemonとLimeのCitrus系が微かに混じる。ソリッドな吸いごたえで香りの持ちも長めだが、低めの火加減で維持する方が調子が良い。hookah-reviews.comでは77点で「キュウリを使った甘いカクテルと思えばキュウリらしさを感じる」と評された。',
+  'tangiers:noir tropical punch':
+    'ジェリービーンズや缶詰のチェリーを思わせる、酸味とツンとしたケミカルさの強いCherry系が主体で、Orange系はほとんど埋もれている。煙は平均的で焦げにくいがクセは強い。hookah-reviews.comでは60点で「あまり日本人受けはしないと思う」と評された。',
+  'tangiers:noir welsh cream':
+    'ベイリーズやアーモンドクリームのような、Vanilla系のマッタリした甘さと後味の香ばしさを持つCream系。煙はボリュームとウェットさに優れ、高温にも比較的強く扱いやすい。hookah-reviews.comでは86点で「Tangiersの中では間違いなくアタリの部類」と評された。',
+  'tangiers:noir wintergreen':
+    '湿布のような清涼感にVanilla系の丸い甘さが加わり、ルートビアと言われても納得の再現度。煙はスムーズでノド越しが良く、火加減も比較的適当で維持できる。hookah-reviews.comでは66点で「ルートビアが好きならかなり良い」と評された。',
+  'tangiers:noir yunnan shaddok':
+    '和ミカンのようなライトで穏やかなOrange系をベースに、吐き終わりへGrapefruit系に似た微かなビターさが乗るCitrus系。hookah-reviews.comでは83点で「サッパリしたフルーツ系として楽しめる、少し変わった仕上がり」と評された。酸味が控えめで高温にも比較的強い。',
+  'tangiers:orange soda':
+    'オレンジと和ミカンの中間のような、酸味とビターさを抑えた丸みのある甘さのOrange系で、商品名のソーダらしさは皆無。Citrus系としてはノドへの当たりが穏やかで香りの持ちも良い。hookah-reviews.comのNoir版レビューでは76点で「無難に良く出来ている」と評された。',
+  'tangiers:papaya sorbet':
+    'パパイアというより濃いめのGreen Apple系に、Melon系のような青臭さ・ウリ臭さが重なるサッパリした甘い香り。きめ細かくスッキリした煙で、高温にも比較的強く扱いやすい。hookah-reviews.comのNoir版レビューでは87点で「Tangiersの中では間違いなくアタリの部類」と評された。',
+  'tangiers:pink grapefruit':
+    '厚みのあるビターさが際立つグレープフルーツ系で、FumariのTangeloとAl Fakherのグレープフルーツを合わせたような濃い口。酸味と苦味ゆえ喉への当たりはあるが、高温でも焦げにくい。hookah-reviews.comでは75点で「サッパリ系好みには合わないが、香りだけなら気に入る人はいる」と評された。',
+  'tangiers:pumpkin':
+    '焼き色のついたパンプキンパイのフィリングを思わせる香ばしい甘さに、クローブ系のスパイスがはっきり重なる香り。皮の土臭さのようなベース香とも調和し、他社のパンプキン系より再現度が高い。hookah-reviews.comでは78点で「よく出来ている」と評された。',
+  'tangiers:schnozzberry':
+    'ブルーベリー系とメロン系がほぼ半々のミックスで、輪郭のはっきりした甘さに人工的なキレのあるウリ臭さがアクセントとして乗る。煙は安定していて扱いやすいが、駄菓子めいたケミカルさは好みが分かれる。hookah-reviews.comでは70点で「マズくはないが好きでもない」と評された。',
+  'tangiers:sevilla orange':
+    'ベルガモット、あるいは着香の強いアールグレイのような香りで、甘さ控えめに柑橘の皮のビターさが出た引き締まった味。ベース香が紅茶らしさを補い、高温にも耐えて扱いやすい。hookah-reviews.comでは88点で「よく出来ている、オススメ」と評された。',
+  'tangiers:summer resort':
+    'キュウリを思わせるウリ臭さの強いサッパリした甘さが主体で、吐き終わりにレモン系とライム系が微かに混じる。AzureのCool Cucumberに近いがやや甘めで、煙はTangiersの平均的な質。hookah-reviews.comでは77点で「濃いウリ臭さに新しさがあり、暑い日に良さそう」と評された。',
+  'tangiers:watermelon':
+    'スイカの中心部だけをくり抜いたようなマッタリ甘いアメリカ系のウォーターメロンで、ウリっぽい青臭さは控えめ。土っぽいベース香が目立つ一方、煙質と火加減の安定感は良好。hookah-reviews.comでは75点で「目新しさはない」と評された。',
 }
 
 // Editor's Selection の手書き短評を id フォールバックとして流用
