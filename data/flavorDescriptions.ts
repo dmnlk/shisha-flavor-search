@@ -1309,6 +1309,213 @@ export const FLAVOR_DESCRIPTIONS: Record<string, string> = {
     'キュウリを思わせるウリ臭さの強いサッパリした甘さが主体で、吐き終わりにレモン系とライム系が微かに混じる。AzureのCool Cucumberに近いがやや甘めで、煙はTangiersの平均的な質。hookah-reviews.comでは77点で「濃いウリ臭さに新しさがあり、暑い日に良さそう」と評された。',
   'tangiers:watermelon':
     'スイカの中心部だけをくり抜いたようなマッタリ甘いアメリカ系のウォーターメロンで、ウリっぽい青臭さは控えめ。土っぽいベース香が目立つ一方、煙質と火加減の安定感は良好。hookah-reviews.comでは75点で「目新しさはない」と評された。',
+  // Trifecta — 日本語レビューブログ hookah-reviews.com (byダビデ) の各フレーバー記事を要約
+  // (2026-09 時点)。Blonde / Dark の 2 ライン。財務省公告名は「Trifecta Tobacco <名前>」
+  // のようにライン表記が無いものが多いため、説明文の冒頭で記事側のライン
+  // (Blonde / Dark) を明示している。同一銘柄が複数の公告名で登録されている場合は
+  // 同じ記事を出典として同じ説明を共有する (56 記事 → 99 キー)。
+  // 公告名が Blonde だが記事は Dark ライン版のみの Blonde Peppermint Shake は
+  // 本文に出典ラインを明記。
+  // 記事が見つからなかった Apple 509 / Pineapple Iced Tea / Raspberry Lemon Roll /
+  // The Buzz は意図的に未記載。
+  'trifecta:arak':
+    'Darkラインの、アニスあるいはリコリスの香りを軸にした一本で、マッタリした甘さと薬っぽいキレ感が強く全体に濃い口。hookah-reviews.comでは50点で「個人的にLicorice系の香りが苦手なので、これも好きではなかった」と評された。開封後は半日ほど空気に晒す必要がある。',
+  'trifecta:b d s':
+    'Blondeラインの、甘めのピーチ味タブレット菓子を思わせる、香りの輪郭がハッキリしたPeach系単体。hookah-reviews.comでは77点で「アメリカの会社らしいPeach系として無難に良く出来ている」と評された。ボウルによる差が大きく、陶器のPhunnel系だと甘さが控えめになる。',
+  'trifecta:bds':
+    'Blondeラインの、甘めのピーチ味タブレット菓子を思わせる、香りの輪郭がハッキリしたPeach系単体。hookah-reviews.comでは77点で「アメリカの会社らしいPeach系として無難に良く出来ている」と評された。ボウルによる差が大きく、陶器のPhunnel系だと甘さが控えめになる。',
+  'trifecta:blonde nawar':
+    'Blondeラインの、バラの入浴剤や芳香剤を思わせるシンプルで濃い口のRose系単体。hookah-reviews.comでは69点で「個人的にRose系が苦手なので、点数は不当に低い可能性が高い」と評された。煙はAl FakherのRoseよりウェットでソフトで、香りとの相性が良い。',
+  'trifecta:blonde peppermint shake':
+    'ややアッサリしたCream系とシャープな清涼感に微かなChocolate系を重ねた、ミントシロップとチョコチップ入りのバニラシェイクのような香り。hookah-reviews.comのDarkライン版レビューでは85点で「個々の香りのバランスも絶妙」と評された。陶器のPhunnel系で作ると特徴がよりハッキリ出る。',
+  'trifecta:blue strawberry':
+    'Blondeラインの、外国のイチゴ味のガムやキャンディを思わせる人工的なStrawberry系。他社に多いヘタのような青臭さが無く、可愛らしい甘さとウェットな煙の相性も良い。hookah-reviews.comでは72点で「お菓子っぽいイチゴの香りで、割と珍しいタイプのStrawberry系」と評された。',
+  'trifecta:bohemian mix':
+    'BlondeラインのSpice系Mixで、濃いめのCardamon系を軸に少々のClove系とフンワリした紅茶っぽい香りが重なり、ほんのり甘くEarthyに仕上がる。hookah-reviews.comでは79点で「Cardamon系の香りが濃いめでハッキリしているフレーバーは珍しい」と評された。',
+  'trifecta:bonafide':
+    'Blondeラインの、紙パックのバナナオレのように輪郭がハッキリしたBanana系に、Clove系とCinnamon系らしきスパイスが微かなアクセントとして重なる一本。hookah-reviews.comでは77点で「他社には珍しいMixでちゃんと形にもなっている」と評された。火加減はBlondeラインの平均で扱いやすい。',
+  'trifecta:cherry berry':
+    'BlondeラインのCherry系とBlueberry系のMixで、杏仁やアマレットのようなツンとした感じが強いアメリカ的なCherry系が主役。hookah-reviews.comでは69点で「普通にアメリカの会社っぽいCherry系」と評された。陶器のPhunnel系で作るとBlueberry系が分かりやすい。',
+  'trifecta:coconut ginger':
+    'Blondeラインの、ココナッツミルクのようなマッタリした甘さのCoconut系に、すりおろしショウガの絞り汁のようなピリッとした香りがアクセントで乗る。hookah-reviews.comでは81点で「思った以上に楽しめた」と評され、人を選ぶクセが無く吸いやすい点も評価された。',
+  'trifecta:cucumber mojito':
+    'BlondeラインのLime系をメインに、キュウリを思わせるウリっぽい青臭さと控えめな清涼感が重なる、キレのあるスッキリした甘い香り。hookah-reviews.comでは79点で「キュウリの香りの入ったフレーバーの中では、これが一番好きだった」と評され、煙の質と扱いやすさも良好。',
+  'trifecta:dark pineapple':
+    'Darkラインの、缶詰のパイナップルとパイン飴の中間のような、Al FakherのPineappleに近い香り。hookah-reviews.comでは50点で「短所ばかりが目立つ」と評された。開封後に数時間空気へ晒さないと気管支に負担のかかる煙になり、手間の割に香りは凡庸。',
+  'trifecta:death by ice':
+    'Darkラインの、シャープで冷たい清涼感に特化したMint系。湿布のようなイチヤクソウの香りは控えめで、微かなビターさとホンノリした甘さで全体が引き締まる。hookah-reviews.comでは77点で「ある程度の重さや少々のイチヤクソウの香り、鮮烈な清涼感を求めるのであれば、試す価値はある」と評された。',
+  'trifecta:earl grey':
+    'Darkラインの、ベルガモットが強めで再現度の極めて高いアールグレイ。甘さは控えめでストレートの紅茶らしいビターさが出るが安定感は皆無で、作り方と火加減の工夫が要る。hookah-reviews.comでは83点で「香り自体はLavooのRussian Teaと優劣つけがたい出来」と評された。',
+  'trifecta:huckleberry':
+    'Blondeラインの、紅茶や少し渋めのフローラルを思わせるフンワリした広がりのあるBlueberry系に、微かな清涼感が混じるStarBuzzのBlue Mist系の香り。hookah-reviews.comでは77点で「甘さはあるが意外とキレが良い」と評された。',
+  'trifecta:iced orange mint':
+    'Blondeラインの、皮のようなビターさが強く酸味は控えめなOrange系に、グリーンな香りのMint系が重なる一本。hookah-reviews.comでは73点で「ボウルによって香りの出方が結構違い、幅があって面白い」と評された。気持ち弱めの火加減が向く。',
+  'trifecta:indianan kheer':
+    'Darkラインの、砂糖を入れたホットミルクのような甘い牛乳の香りに、Cardamon系のキリッとしたアクセントを重ねたMix。香りと煙の質がマッチし、火の調節で苦労することも無い。hookah-reviews.comでは88点で「個人的にはTrifecta Darkの中で1番の当たりだと思った」と評された。',
+  'trifecta:lavender mint':
+    'Darkラインの、甘さの無い生花のようなラベンダーの香りと、シャープでキリッとした強めの清涼感の組み合わせ。後味の少々のビターさが芳香剤っぽさを抑えている。hookah-reviews.comでは83点で「他社には無い香りながら再現度が高く、良く出来ている」と評された。',
+  'trifecta:lemon mint':
+    'Blondeラインの、酸味とビターさを残しつつ丸みのある甘さが強めのLemon系に、微かな清涼感を添えた香り。ノドへの当たりが抑えられ、クラシックなLemon系よりソフトで吸いやすい。hookah-reviews.comでは78点で「丸みのある甘さが強いが、確かにLemon系らしい香りはハッキリ感じられる」と評された。',
+  'trifecta:lychee':
+    'Darkラインの、ボンヤリしたマッタリめの甘さとCoconut系寄りのトロピカルなテイストが実物のライチらしい香り。ただし安定感に欠け、長めの空気晒しと弱めの火加減が要る。hookah-reviews.comでは77点で「煙まわりに難を感じるが、珍しい香りだし個人的にも好みなので割と楽しめた」と評された。',
+  'trifecta:mango smoothie':
+    'Blondeラインの、ワックスっぽいツンとしたテイストのあるMango系に、Vanilla系っぽい甘さのマッタリしたCream系が少々加わる一本。hookah-reviews.comでは80点で「Mango系とCream系の相性が良い」と評され、着香が濃いめで香りの持ちも長め。',
+  'trifecta:mediterranean mint':
+    'Blondeラインの、グリーンな香りと丸みのある甘さでクセを抑えたSpear Mint系。清涼感はAl FakherのMint程度で、歯磨き粉っぽさは無い。hookah-reviews.comでは73点で「Spear Mint系の中では割と良く出来ている」と評されたが、Mixでの使い勝手は劣るとされる。',
+  'trifecta:melon melange':
+    'Blondeラインの、ウリ臭さがやや強めでマッタリと甘いMelon系。メロン味のチューイングキャンディを思わせるお菓子っぽさがあり、hookah-reviews.comでは77点で「無難かつ高水準にまとまっている」と評された。火が強いと甘さがノドに残りやすい。',
+  'trifecta:moro zest':
+    'Blondeラインの、バヤリースのオレンジジュースを何倍にも濃くしたような、やや甘めでハッキリした着香のOrange系。酸味が控えめで吸いやすい反面、やや人工的でわざとらしさもある。hookah-reviews.comでは75点で「吸いやすく分かりやすいこれは、Orange系の入り口に良いと思う」と評された。',
+  'trifecta:morozest':
+    'Blondeラインの、バヤリースのオレンジジュースを何倍にも濃くしたような、やや甘めでハッキリした着香のOrange系。酸味が控えめで吸いやすい反面、やや人工的でわざとらしさもある。hookah-reviews.comでは75点で「吸いやすく分かりやすいこれは、Orange系の入り口に良いと思う」と評された。',
+  'trifecta:mountain fog':
+    'Blondeラインの、ライムの香料が入った炭酸飲料を濃くしたような、甘めでケミカルなLime系。ツンとした感じは同系統のものより穏やかで、香りの持ちはやや長い。hookah-reviews.comでは77点で「輪郭がハッキリした香りで甘めだったので、分かりやすくて良いと思った」と評された。',
+  'trifecta:nawar':
+    'Blondeラインの、バラの入浴剤や芳香剤を思わせるシンプルで濃い口のRose系単体。hookah-reviews.comでは69点で「個人的にRose系が苦手なので、点数は不当に低い可能性が高い」と評された。煙はAl FakherのRoseよりウェットでソフトで、香りとの相性が良い。',
+  'trifecta:p3':
+    'Blondeラインの、パインアメのようなやや甘いPineapple系にサッパリしたBlueberry系を3:1ほどで重ねたMix。hookah-reviews.comでは72点で「商品名の割に素直なMixだと思った」と評され、Pineapple系単体と割り切っても吸える香りとされる。煙の質は問題の出やすいPineapple系としては優秀。',
+  'trifecta:peach mint':
+    'Blondeラインの、気になるケミカルさが無く実物の桃を思わせるPeach系に、ノドがスッとする程度の控えめな清涼感を添えた一本。hookah-reviews.comでは83点で「派手さは無いが完成度は高い」と評された。モワッとした煙との相性が良く、単体でも吸えMixの邪魔にもならない。',
+  'trifecta:pearfect':
+    'Darkラインの、ラ・フランスのような洋梨をトロンとした甘い余韻まで再現した再現度の高いフレーバー。hookah-reviews.comでは83点で「やや火の調節は厄介だが、オススメ」と評された。序盤は弱めの火加減で維持する必要があるが、中盤からは落ち着き煙の質も良くなる。',
+  'trifecta:peppermint shake':
+    'ややアッサリしたCream系とシャープな清涼感に微かなChocolate系を重ねた、ミントシロップとチョコチップ入りのバニラシェイクのような香り。hookah-reviews.comのDarkライン版レビューでは85点で「個々の香りのバランスも絶妙」と評された。陶器のPhunnel系で作ると特徴がよりハッキリ出る。',
+  'trifecta:persian melon':
+    'Blondeラインの、Melon系としてはアッサリした甘さで、ダークリーフを思わせる土っぽい微かな渋みが混じるクラシック寄りの一本。hookah-reviews.comでは68点で「Melon系としては引き締まった香り」と評される一方、万人受けはしにくいとされた。',
+  'trifecta:pineapple':
+    'Darkラインの、缶詰のパイナップルとパイン飴の中間のような、Al FakherのPineappleに近い香り。hookah-reviews.comでは50点で「短所ばかりが目立つ」と評された。開封後に数時間空気へ晒さないと気管支に負担のかかる煙になり、手間の割に香りは凡庸。',
+  'trifecta:pineapple guava':
+    'Blondeラインの、パインアメっぽい甘めのPineapple系にGuava系の青臭さを2:1ほどで効かせたMix。hookah-reviews.comでは75点で「無難に良く出来ていた」と評された。青臭さが甘さを引き締めMixのバランスも良く、火の調節も難しくない。',
+  'trifecta:pumpkin somethin':
+    'Blondeラインの、缶詰のカボチャペーストのようなモッタリしたイモっぽい香りに、Cinnamon系主体のスパイスが強めに重なる一本。hookah-reviews.comでは60点で「イマイチだった」と評され、カボチャと分かる香りかは想像力で補完が要るとされた。',
+  'trifecta:ruby':
+    'Darkラインの、ウリ臭さと青臭さが強いクラシックなMelon系にツンとしたCherry系とCinnamon系が重なり、全体ではリコリスのような香草系っぽさが立つ一本。hookah-reviews.comでは69点で「ややクセはあるが、地味に凝ったMix」と評された。',
+  'trifecta:spiced java':
+    'Blondeラインの、Cream系のテイストがある甘めのCoffee系に、ごく微かなSpice系のアクセントを効かせた一本。hookah-reviews.comでは66点で「個人的にCoffee系があまり好きでないので、点数は不当に低い」と断りつつ評された。同系統より薄味でクドさが控えめのライトな仕上がり。',
+  'trifecta:tko':
+    'Darkラインの、ヘーゼルナッツ入りチョコレート、いわばヌテラを思わせる香りで、余韻の香ばしさが特徴。hookah-reviews.comでは82点で「Chocolate系単体やそれに近い香りが好きであれば、試す価値は大きい」と評された。安定感があって扱いやすく、煙の量と質を両立しやすい。',
+  'trifecta:tnt':
+    'Blondeラインの、ワックスっぽいツンとしたMango系と微かなビターさのあるGrapefruit系を1:1で合わせたMix。hookah-reviews.comでは80点で「他社には珍しい感じのスッキリ感が出ているのが良かった」と評された。清涼感はほぼ無く、火の調節でも苦労しない。',
+  'trifecta:tobacco apple pie':
+    'Darkラインの、リコリス感のあるDouble Apple系とCinnamon系に、クッキーのような焼き菓子の香りが濃く重なるアップルパイ系。hookah-reviews.comでは79点で「再現度が高く、かなり頑張ってる部類」と評された。火加減は弱めが無難。',
+  'trifecta:tobacco arak':
+    'Darkラインの、アニスあるいはリコリスの香りを軸にした一本で、マッタリした甘さと薬っぽいキレ感が強く全体に濃い口。hookah-reviews.comでは50点で「個人的にLicorice系の香りが苦手なので、これも好きではなかった」と評された。開封後は半日ほど空気に晒す必要がある。',
+  'trifecta:tobacco bdh':
+    'Darkラインの、ウリ臭さが強めのWatermelon系とMelon系を、Vanilla系っぽいCream系のテイストで柔らかくまとめた一本。hookah-reviews.comでは78点で「万人受けする」と評され、煙の質の良さと火加減に強い扱いやすさも評価された。',
+  'trifecta:tobacco bds':
+    'Blondeラインの、甘めのピーチ味タブレット菓子を思わせる、香りの輪郭がハッキリしたPeach系単体。hookah-reviews.comでは77点で「アメリカの会社らしいPeach系として無難に良く出来ている」と評された。ボウルによる差が大きく、陶器のPhunnel系だと甘さが控えめになる。',
+  'trifecta:tobacco blue strawberry':
+    'Blondeラインの、外国のイチゴ味のガムやキャンディを思わせる人工的なStrawberry系。他社に多いヘタのような青臭さが無く、可愛らしい甘さとウェットな煙の相性も良い。hookah-reviews.comでは72点で「お菓子っぽいイチゴの香りで、割と珍しいタイプのStrawberry系」と評された。',
+  'trifecta:tobacco bohemian mix':
+    'BlondeラインのSpice系Mixで、濃いめのCardamon系を軸に少々のClove系とフンワリした紅茶っぽい香りが重なり、ほんのり甘くEarthyに仕上がる。hookah-reviews.comでは79点で「Cardamon系の香りが濃いめでハッキリしているフレーバーは珍しい」と評された。',
+  'trifecta:tobacco bona fide':
+    'Blondeラインの、紙パックのバナナオレのように輪郭がハッキリしたBanana系に、Clove系とCinnamon系らしきスパイスが微かなアクセントとして重なる一本。hookah-reviews.comでは77点で「他社には珍しいMixでちゃんと形にもなっている」と評された。火加減はBlondeラインの平均で扱いやすい。',
+  'trifecta:tobacco cherry berry':
+    'BlondeラインのCherry系とBlueberry系のMixで、杏仁やアマレットのようなツンとした感じが強いアメリカ的なCherry系が主役。hookah-reviews.comでは69点で「普通にアメリカの会社っぽいCherry系」と評された。陶器のPhunnel系で作るとBlueberry系が分かりやすい。',
+  'trifecta:tobacco cherry plum':
+    'Darkラインの、梅ガムや梅キャンディを思わせる香り。典型的なチェリー系のミックスではなく、酸味はほとんど無く香りに一体感があるのが特徴。hookah-reviews.comでは80点で「梅ガムや梅キャンディと思えば再現度が高く、かなり楽しめた」と評された。',
+  'trifecta:tobacco coconut ginger':
+    'Blondeラインの、ココナッツミルクのようなマッタリした甘さのCoconut系に、すりおろしショウガの絞り汁のようなピリッとした香りがアクセントで乗る。hookah-reviews.comでは81点で「思った以上に楽しめた」と評され、人を選ぶクセが無く吸いやすい点も評価された。',
+  'trifecta:tobacco concord grape':
+    'Darkラインの濃いめのブラックグレープ系で、巨峰やデラウェアの皮の近くのフォクシー香を何倍にも濃くしたような香り。単体では濃すぎて分かりにくいが、ミント系などとミックスして薄めると実物のブドウらしさが際立つ。hookah-reviews.comでは78点で、余韻の再現度は非常に高いと評された。',
+  'trifecta:tobacco cucumber mojito':
+    'BlondeラインのLime系をメインに、キュウリを思わせるウリっぽい青臭さと控えめな清涼感が重なる、キレのあるスッキリした甘い香り。hookah-reviews.comでは79点で「キュウリの香りの入ったフレーバーの中では、これが一番好きだった」と評され、煙の質と扱いやすさも良好。',
+  'trifecta:tobacco death by ice':
+    'Darkラインの、シャープで冷たい清涼感に特化したMint系。湿布のようなイチヤクソウの香りは控えめで、微かなビターさとホンノリした甘さで全体が引き締まる。hookah-reviews.comでは77点で「ある程度の重さや少々のイチヤクソウの香り、鮮烈な清涼感を求めるのであれば、試す価値はある」と評された。',
+  'trifecta:tobacco deja dew':
+    'Darkラインの、ライム味の炭酸飲料やリキュールを思わせるケミカルなライム系。StarBuzzのPirate\'s Caveと同系統でケミカルさはさらに強く、好き嫌いが分かれる。hookah-reviews.comでは73点で「まぁまぁ楽しめた」ものの飽きる人もいそうと評された。',
+  'trifecta:tobacco earl gray':
+    'Darkラインの、ベルガモットが強めで再現度の極めて高いアールグレイ。甘さは控えめでストレートの紅茶らしいビターさが出るが安定感は皆無で、作り方と火加減の工夫が要る。hookah-reviews.comでは83点で「香り自体はLavooのRussian Teaと優劣つけがたい出来」と評された。',
+  'trifecta:tobacco earl grey':
+    'Darkラインの、ベルガモットが強めで再現度の極めて高いアールグレイ。甘さは控えめでストレートの紅茶らしいビターさが出るが安定感は皆無で、作り方と火加減の工夫が要る。hookah-reviews.comでは83点で「香り自体はLavooのRussian Teaと優劣つけがたい出来」と評された。',
+  'trifecta:tobacco enigma':
+    'Darkラインの、ブルーベリー系を軸にしたフルーツミックスで、後味にサンダルウッドのような香木の香りがアクセントとして乗る。甘さは控えめでキレが良く、煙の質も平均以上。hookah-reviews.comでは82点で「最初は違和感があるが何度か吸ううちに妙にクセになる」と評された。',
+  'trifecta:tobacco grapefruit':
+    'Darkラインの、酸味とビターさが非常に控えめでアッサリ方面に特化したグレープフルーツ系。スウィーティのような可愛らしくキレの良い甘さで、最後までサッパリ吸える。hookah-reviews.comでは81点で、他社には珍しい仕上がりと評された。',
+  'trifecta:tobacco hipster mint':
+    'Darkラインの、シャープで冷たい強めの清涼感に主張の控えめなガム系（スペアミント系）の香りを重ねたミント系。Al FakherのGumほどの主張やクセは無い。hookah-reviews.comでは74点で、同ラインのDeath by IceやDurty Mintの方が万人受けしそうと評された。',
+  'trifecta:tobacco huckleberry':
+    'Blondeラインの、紅茶や少し渋めのフローラルを思わせるフンワリした広がりのあるBlueberry系に、微かな清涼感が混じるStarBuzzのBlue Mist系の香り。hookah-reviews.comでは77点で「甘さはあるが意外とキレが良い」と評された。',
+  'trifecta:tobacco iced orange mint':
+    'Blondeラインの、皮のようなビターさが強く酸味は控えめなOrange系に、グリーンな香りのMint系が重なる一本。hookah-reviews.comでは73点で「ボウルによって香りの出方が結構違い、幅があって面白い」と評された。気持ち弱めの火加減が向く。',
+  'trifecta:tobacco indian kheer':
+    'Darkラインの、砂糖を入れたホットミルクのような甘い牛乳の香りに、Cardamon系のキリッとしたアクセントを重ねたMix。香りと煙の質がマッチし、火の調節で苦労することも無い。hookah-reviews.comでは88点で「個人的にはTrifecta Darkの中で1番の当たりだと思った」と評された。',
+  'trifecta:tobacco lavender mint':
+    'Darkラインの、甘さの無い生花のようなラベンダーの香りと、シャープでキリッとした強めの清涼感の組み合わせ。後味の少々のビターさが芳香剤っぽさを抑えている。hookah-reviews.comでは83点で「他社には無い香りながら再現度が高く、良く出来ている」と評された。',
+  'trifecta:tobacco lemon mint':
+    'Blondeラインの、酸味とビターさを残しつつ丸みのある甘さが強めのLemon系に、微かな清涼感を添えた香り。ノドへの当たりが抑えられ、クラシックなLemon系よりソフトで吸いやすい。hookah-reviews.comでは78点で「丸みのある甘さが強いが、確かにLemon系らしい香りはハッキリ感じられる」と評された。',
+  'trifecta:tobacco lemon pie':
+    'Darkラインの、ライム入りのレアチーズケーキやムースのような香り。キリッとしたレモン＋ライムのシトラス系とマッタリしたクリーム系のコントラストが持ち味。hookah-reviews.comでは83点で、他社に珍しいミックスで満足感があると評された。',
+  'trifecta:tobacco lime':
+    'Darkラインの、アメリカのブランドによくあるライム系だがケミカルさはやや控えめで、微かなビターさが良い。StarBuzz VintageのFresh Limeに近い香り。hookah-reviews.comでは79点で、目新しさは無いがバランスは悪くないと評された。',
+  'trifecta:tobacco lychee':
+    'Darkラインの、ボンヤリしたマッタリめの甘さとCoconut系寄りのトロピカルなテイストが実物のライチらしい香り。ただし安定感に欠け、長めの空気晒しと弱めの火加減が要る。hookah-reviews.comでは77点で「煙まわりに難を感じるが、珍しい香りだし個人的にも好みなので割と楽しめた」と評された。',
+  'trifecta:tobacco mango smoothie':
+    'Blondeラインの、ワックスっぽいツンとしたテイストのあるMango系に、Vanilla系っぽい甘さのマッタリしたCream系が少々加わる一本。hookah-reviews.comでは80点で「Mango系とCream系の相性が良い」と評され、着香が濃いめで香りの持ちも長め。',
+  'trifecta:tobacco manzanas':
+    'Darkラインの、リコリスやアニス特有のキレが非常に強いダブルアップル系。NakhlaのDouble Appleにマッタリした甘さを足したような濃い口で、クラシックな作りに忠実。hookah-reviews.comでは78点で、キレと甘さがシッカリして満足感があると評された。',
+  'trifecta:tobacco mediterranean mint':
+    'Blondeラインの、グリーンな香りと丸みのある甘さでクセを抑えたSpear Mint系。清涼感はAl FakherのMint程度で、歯磨き粉っぽさは無い。hookah-reviews.comでは73点で「Spear Mint系の中では割と良く出来ている」と評されたが、Mixでの使い勝手は劣るとされる。',
+  'trifecta:tobacco melon melange':
+    'Blondeラインの、ウリ臭さがやや強めでマッタリと甘いMelon系。メロン味のチューイングキャンディを思わせるお菓子っぽさがあり、hookah-reviews.comでは77点で「無難かつ高水準にまとまっている」と評された。火が強いと甘さがノドに残りやすい。',
+  'trifecta:tobacco morning glory':
+    'Darkラインの、ミルクと砂糖のたっぷり入ったコーヒーキャンディのような香り。クリーム系とバニラ系が多めで、焦げたようなビターさは控えめで吸いやすい。hookah-reviews.comでは64点で、よくあるアメリカのブランドのコーヒー系で没個性的と評された。',
+  'trifecta:tobacco moro zest':
+    'Blondeラインの、バヤリースのオレンジジュースを何倍にも濃くしたような、やや甘めでハッキリした着香のOrange系。酸味が控えめで吸いやすい反面、やや人工的でわざとらしさもある。hookah-reviews.comでは75点で「吸いやすく分かりやすいこれは、Orange系の入り口に良いと思う」と評された。',
+  'trifecta:tobacco mountain fog':
+    'Blondeラインの、ライムの香料が入った炭酸飲料を濃くしたような、甘めでケミカルなLime系。ツンとした感じは同系統のものより穏やかで、香りの持ちはやや長い。hookah-reviews.comでは77点で「輪郭がハッキリした香りで甘めだったので、分かりやすくて良いと思った」と評された。',
+  'trifecta:tobacco natural order':
+    'Darkラインの、ローズマリーやセージのようなスッキリした香草系にライム系と清涼感を重ねた香り。陶器のファンネル系ボウルで作ると香草系の香りがハッキリ出る。hookah-reviews.comでは81点で、他社に無い香りが欠点も無く無難にまとまっていると評された。',
+  'trifecta:tobacco p3':
+    'Blondeラインの、パインアメのようなやや甘いPineapple系にサッパリしたBlueberry系を3:1ほどで重ねたMix。hookah-reviews.comでは72点で「商品名の割に素直なMixだと思った」と評され、Pineapple系単体と割り切っても吸える香りとされる。煙の質は問題の出やすいPineapple系としては優秀。',
+  'trifecta:tobacco peach mint':
+    'Blondeラインの、気になるケミカルさが無く実物の桃を思わせるPeach系に、ノドがスッとする程度の控えめな清涼感を添えた一本。hookah-reviews.comでは83点で「派手さは無いが完成度は高い」と評された。モワッとした煙との相性が良く、単体でも吸えMixの邪魔にもならない。',
+  'trifecta:tobacco pearfect':
+    'Darkラインの、ラ・フランスのような洋梨をトロンとした甘い余韻まで再現した再現度の高いフレーバー。hookah-reviews.comでは83点で「やや火の調節は厄介だが、オススメ」と評された。序盤は弱めの火加減で維持する必要があるが、中盤からは落ち着き煙の質も良くなる。',
+  'trifecta:tobacco persian melon':
+    'Blondeラインの、Melon系としてはアッサリした甘さで、ダークリーフを思わせる土っぽい微かな渋みが混じるクラシック寄りの一本。hookah-reviews.comでは68点で「Melon系としては引き締まった香り」と評される一方、万人受けはしにくいとされた。',
+  'trifecta:tobacco pineapple':
+    'Darkラインの、缶詰のパイナップルとパイン飴の中間のような、Al FakherのPineappleに近い香り。hookah-reviews.comでは50点で「短所ばかりが目立つ」と評された。開封後に数時間空気へ晒さないと気管支に負担のかかる煙になり、手間の割に香りは凡庸。',
+  'trifecta:tobacco pineapple guava':
+    'Blondeラインの、パインアメっぽい甘めのPineapple系にGuava系の青臭さを2:1ほどで効かせたMix。hookah-reviews.comでは75点で「無難に良く出来ていた」と評された。青臭さが甘さを引き締めMixのバランスも良く、火の調節も難しくない。',
+  'trifecta:tobacco pulp friction':
+    'Darkラインの、オレンジリキュールを少し垂らした甘くないドライなカクテルのような香り。硬質でキレの良いアルコール的なテイストが特徴だが、中盤でそれが先に薄れバランスが崩れる。hookah-reviews.comでは78点で、キレとドライさに特化した作りと評された。',
+  'trifecta:tobacco pumpkin somethin':
+    'Blondeラインの、缶詰のカボチャペーストのようなモッタリしたイモっぽい香りに、Cinnamon系主体のスパイスが強めに重なる一本。hookah-reviews.comでは60点で「イマイチだった」と評され、カボチャと分かる香りかは想像力で補完が要るとされた。',
+  'trifecta:tobacco raspberry':
+    'Darkラインの、少々の青臭さと草木のような爽やかさ、独特の水々しさを持つ軽やかなラズベリー。実物のラズベリーに近い薄味で香りの持ちは短めだが、煙の質はスムーズで強めの火加減でも崩れず扱いやすい。hookah-reviews.comでは78点で「最近のRaspberry系としては異色の出来」と評された。',
+  'trifecta:tobacco ruby':
+    'Darkラインの、ウリ臭さと青臭さが強いクラシックなMelon系にツンとしたCherry系とCinnamon系が重なり、全体ではリコリスのような香草系っぽさが立つ一本。hookah-reviews.comでは69点で「ややクセはあるが、地味に凝ったMix」と評された。',
+  'trifecta:tobacco spiced java':
+    'Blondeラインの、Cream系のテイストがある甘めのCoffee系に、ごく微かなSpice系のアクセントを効かせた一本。hookah-reviews.comでは66点で「個人的にCoffee系があまり好きでないので、点数は不当に低い」と断りつつ評された。同系統より薄味でクドさが控えめのライトな仕上がり。',
+  'trifecta:tobacco spumoni':
+    'Darkラインの、ローストナッツのような香ばしさとバニラ的な甘さを持つクリーム系に、シロップ漬けチェリーのツンとしたアクセントが少し混じるミックス。煙はやや重めでウェット、適当な火加減でも焦げにくい。hookah-reviews.comでは81点で「なかなか上手く形になっている」と評された。',
+  'trifecta:tobacco the twist':
+    'Darkラインの、キリッとしたシャープな清涼感とミント系のグリーンな香りが強めのスイカミント。高温に強く安定感が良いうえ、煙の量も吸いごたえも十分。hookah-reviews.comでは78点で「万人受けする鉄板の香り」と評された。',
+  'trifecta:tobacco tko':
+    'Darkラインの、ヘーゼルナッツ入りチョコレート、いわばヌテラを思わせる香りで、余韻の香ばしさが特徴。hookah-reviews.comでは82点で「Chocolate系単体やそれに近い香りが好きであれば、試す価値は大きい」と評された。安定感があって扱いやすく、煙の量と質を両立しやすい。',
+  'trifecta:tobacco tnt':
+    'Blondeラインの、ワックスっぽいツンとしたMango系と微かなビターさのあるGrapefruit系を1:1で合わせたMix。hookah-reviews.comでは80点で「他社には珍しい感じのスッキリ感が出ているのが良かった」と評された。清涼感はほぼ無く、火の調節でも苦労しない。',
+  'trifecta:tobacco true grape':
+    'Darkラインの、マスカットを思わせる甘さ控えめなホワイトグレープに、スペアミント系の香りと微かな清涼感を合わせた一本。煙はウェットでボリュームがあり、香りの持ちも長めで扱いやすい。hookah-reviews.comでは77点で「非常にオツなMix」と評された。',
+  'trifecta:tobacco twice the ice':
+    'Blondeラインの、シャープで冷たい強い清涼感に、お菓子のような丸みのある可愛らしい甘さが混じるミント系。煙量・煙質ともBlondeの平均でソツなく、陶器のファンネル系で作るとよりスッキリ出る。hookah-reviews.comでは84点で「人気があるのも納得の出来」と評された。',
+  'trifecta:tobacco twice the ice x':
+    'Blondeラインの、ミント系でも最も強い部類のシャープで鮮烈な清涼感に、可愛らしい甘さと後味の少々のビターさが乗る一本。煙質も安定感も平均的で、火の調節に苦労しにくい。hookah-reviews.comでは87点で「シンプルだがちゃんと特徴があり」と評された。',
+  'trifecta:tobacco vanilla':
+    'Blondeラインの、バニラエッセンスと砂糖入りのホイップクリームのような、マッタリした甘さがやや強めのバニラ。着香が濃いめで香りの持ちは長く、ミックスでも主張を残しやすい。hookah-reviews.comでは77点で「無難に良く出来ている」と評された。',
+  'trifecta:tobacco vertigo':
+    'Blondeラインの、ウリ臭さのあるやや甘めのスイカに控えめな清涼感と微かなスペアミントが乗る、王道のスイカミント。煙はモワッとして満足感があり、陶器のファンネル系の方が特徴がハッキリ出る。hookah-reviews.comでは75点で「マズくする方が難しい王道のMix」と評された。',
+  'trifecta:twice the ice':
+    'Blondeラインの、シャープで冷たい強い清涼感に、お菓子のような丸みのある可愛らしい甘さが混じるミント系。煙量・煙質ともBlondeの平均でソツなく、陶器のファンネル系で作るとよりスッキリ出る。hookah-reviews.comでは84点で「人気があるのも納得の出来」と評された。',
+  'trifecta:twice the ice x':
+    'Blondeラインの、ミント系でも最も強い部類のシャープで鮮烈な清涼感に、可愛らしい甘さと後味の少々のビターさが乗る一本。煙質も安定感も平均的で、火の調節に苦労しにくい。hookah-reviews.comでは87点で「シンプルだがちゃんと特徴があり」と評された。',
+  'trifecta:twice the icex':
+    'Blondeラインの、ミント系でも最も強い部類のシャープで鮮烈な清涼感に、可愛らしい甘さと後味の少々のビターさが乗る一本。煙質も安定感も平均的で、火の調節に苦労しにくい。hookah-reviews.comでは87点で「シンプルだがちゃんと特徴があり」と評された。',
+  'trifecta:vanilla':
+    'Blondeラインの、バニラエッセンスと砂糖入りのホイップクリームのような、マッタリした甘さがやや強めのバニラ。着香が濃いめで香りの持ちは長く、ミックスでも主張を残しやすい。hookah-reviews.comでは77点で「無難に良く出来ている」と評された。',
+  'trifecta:vertigo':
+    'Blondeラインの、ウリ臭さのあるやや甘めのスイカに控えめな清涼感と微かなスペアミントが乗る、王道のスイカミント。煙はモワッとして満足感があり、陶器のファンネル系の方が特徴がハッキリ出る。hookah-reviews.comでは75点で「マズくする方が難しい王道のMix」と評された。',
   // Al Fakher — 日本語レビューブログ hookah-reviews.com (byダビデ) の各フレーバー記事を要約
   // (2026-09 時点)。通常ライン / Golden / Special Edition・Fusion・Dreams Collection が対象。
   // 財務省公告には同一商品が「Al Fakher <名前>」と「AL FAKHER Shisha Molasses <名前>」の
