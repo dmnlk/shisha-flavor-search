@@ -2335,6 +2335,29 @@ export const FLAVOR_DESCRIPTIONS: Record<string, string> = {
     'ナッツ系では珍しいくるみを据えたフレーバーで、強い香ばしさが特徴。味が濃く出るため作りやすく、ポップコーンや焼き菓子系の再現ミックスに向くとされる。',
   'al-amasi:xylitol gum':
     'キシリトールガムを思わせる、甘味と清涼感、ミント香を併せ持つフレーバー。販売元の説明ではこの3要素のバランスが取れており、単品でも飽きにくいとされる。',
+  // Zumerret — smokedex.info の製品データ (味の構成・方向性) を要約 (2026-09 時点)。Blue Edition ライン。
+  'zumerret:blue edition ambrosia':
+    'ハネデューメロンをフレーバーに据えた、Blue Edition の一銘柄。製品データ上の方向性はフルーティに分類され、原産国は米国とされる。',
+  'zumerret:blue edition code 007':
+    '米国を原産とする Zumerret の Code 007 は、複数の果実を合わせたフルーツミックスとして登録されている。製品データ上の方向性の分類はフルーティ一系統。',
+  'zumerret:blue edition fakfakhina':
+    'アップル、グレープ、ペア、ストロベリーにフルーツミックスを重ねた構成として登録されている。フルーティかつベリー寄りの方向性とされ、米国産の製品にあたる。',
+  'zumerret:blue edition grape':
+    'フレーバーはグレープ単体として登録されており、方向性もフルーティに分類されている。ぶどうの味わいを軸にした、米国産 Zumerret の一銘柄。',
+  'zumerret:blue edition green lemon':
+    '商品名は Green Lemon だが、製品データ上のフレーバー表記はライムとなっている。方向性はフルーティに分類され、原産は米国とされる。',
+  'zumerret:blue edition misty blend':
+    'キウイ、オレンジ、ストロベリーを組み合わせた構成と記載されている銘柄。フルーティでベリー寄りの方向性に分類され、製造国は米国と記録されている。',
+  'zumerret:hookah tobacco blue edition ambrosia':
+    '米国を原産地とする Zumerret の Ambrosia で、味の構成はハネデューメロンと記録されている。方向性についてはフルーティのみが挙げられている。',
+  'zumerret:hookah tobacco blue edition fakfakhina':
+    'Fakfakhina は、りんご・ぶどう・洋なし・いちごとフルーツミックスからなると記される銘柄。製品データではフルーティおよびベリー方向、生産国は米国。',
+  'zumerret:hookah tobacco blue edition grape':
+    '米国で製造される Zumerret のグレープ味。データベース上のフレーバー表記はぶどう単一で、方向性についてもフルーティのみが挙げられている。',
+  'zumerret:hookah tobacco blue edition green lemon':
+    'ライム風味として記載されている、米国産の一銘柄。Green Lemon という名称ながら、製品データ上の味の分類はライム、方向性はフルーティとなっている。',
+  'zumerret:hookah tobacco blue edition misty blend':
+    'Misty Blend のフレーバー表記はキウイ・オレンジ・いちごの三種とされる。米国産で、方向性はフルーティとベリーの二系統に分類されている。',
 }
 
 // Editor's Selection の手書き短評を id フォールバックとして流用
