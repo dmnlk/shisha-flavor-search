@@ -2525,6 +2525,121 @@ export const FLAVOR_DESCRIPTIONS: Record<string, string> = {
     'ミントとチューインガムを組み合わせた構成のフレーバー。方向性は清涼感に分類されており、ヨルダン産で、ベースにはバージニア葉が使われている。',
   'romman:watermelon':
     'ウォーターメロンを単体で立てた味。方向性はフルーティに分類されており、バージニア葉をベースとしてヨルダンで生産されているフレーバーである。',
+  // Layalina — smokedex.info の製品データ (味の構成・方向性・ベース葉・原産国) を要約 (2026-09 時点)。
+  // Golden Layalina / Ya Layl / 無印 Layalina の 3 ライン混在のため、
+  // smokedex 側のライン別ページ (-golden-layalina / ya-layl-* / -layalina) と 1 対 1 で対応させている。
+  'layalina:golden layalina molasses blueberry':
+    'ブルーベリーだけで構成されたフルーティ方向のフレーバー。Golden Layalina ラインに属し、ベースはバージニア葉、産地はUAEとデータに記載がある。',
+  'layalina:golden layalina molasses blueberry grape':
+    'グレープとブルーベリーを重ねた果実系の一本。方向性はフルーティとされ、Golden Layalina ラインのバージニア葉ベース、UAE製と記録されている。',
+  'layalina:golden layalina molasses candy apple':
+    '味の内訳データは登録されていないが、方向性はキャンディ系に分類されている。Golden Layalina ラインのアップル系で、バージニア葉ベースのUAE産とされる。',
+  'layalina:golden layalina molasses cherry amaretto':
+    'チェリーとアーモンドを組み合わせた一本。フルーティ寄りにナッツ感が加わる方向とされ、Golden Layalina ラインのバージニア葉ベース、産地はUAE。',
+  'layalina:golden layalina molasses double apple':
+    'ダブルアップルにアニスが乗る構成。酸味寄りでスパイス感のある方向に分類され、Golden Layalina ラインのバージニア葉ベース・UAE産と記載がある。',
+  'layalina:golden layalina molasses mango tango':
+    'パッションフルーツとマンゴーを合わせた組み合わせ。甘めのフルーティ系という位置づけで、Golden Layalina ラインのバージニア葉ベース、UAE製とされる。',
+  'layalina:golden layalina molasses melon':
+    'ハニーデューメロン単体のフルーティ系。Golden Layalina ラインの一本として、バージニア葉をベースにUAEで製造されているとデータにある。',
+  'layalina:golden layalina molasses spearmint':
+    'ミント主体で、方向性は清涼感に振られている。Golden Layalina ラインのスペアミントで、ベースはバージニア葉、産地はUAEと登録されている。',
+  'layalina:molasses apricot':
+    'アプリコット単体で構成されたフルーティ系。Layalina Molasses の一本として、バージニア葉ベース・UAE産と製品データに記載がある。',
+  'layalina:molasses banana':
+    'バナナ主体で、方向性はクリーミー系に分類されている。Layalina Molasses のラインナップに含まれ、ベースはバージニア葉、産地はUAEとされる。',
+  'layalina:molasses blackberry':
+    'ブラックベリー単体という登録内容で、フルーティ方向とされる。Layalina Molasses の一本にあたり、バージニア葉ベースのUAE製と記載されている。',
+  'layalina:molasses bubble gum':
+    '商品名どおりのチューインガム系。甘さとキャンディ寄りの方向が挙げられ、Layalina Molasses のバージニア葉ベースでUAE産と記録されている。',
+  'layalina:molasses cherry':
+    'チェリーのみで構成されたフルーティ系という登録。Layalina Molasses に含まれる一本で、バージニア葉ベース、製造国はUAEとされている。',
+  'layalina:molasses cola':
+    'コーラ系の味づくりで、甘さとドリンク方向が挙げられている。Layalina Molasses のバージニア葉ベースにあたり、産地はUAEと記載がある。',
+  'layalina:molasses double apple':
+    'ダブルアップルにアニスを添えた構成。酸味とスパイス感の方向に分類され、Layalina Molasses のバージニア葉ベースでUAE産とデータにある。',
+  'layalina:molasses grape lemon':
+    'グレープとレモンを組み合わせたフルーティ系。Layalina Molasses の一本で、ベースはバージニア葉、UAEで製造されていると記録されている。',
+  'layalina:molasses guava':
+    'グアバ単体の構成で、フルーティさに酸味寄りの方向が加わるとされる。Layalina Molasses に属し、バージニア葉ベースのUAE産と記載がある。',
+  'layalina:molasses guava lemon':
+    'グアバにレモンを合わせた一本。フルーティかつ酸味寄りの方向に分類され、Layalina Molasses のバージニア葉ベース、UAE製と記載がある。',
+  'layalina:molasses guava orange':
+    'グアバとオレンジを重ねた構成。方向性はフルーティと酸味寄りの二つが挙がり、Layalina Molasses のバージニア葉ベースでUAE産とされている。',
+  'layalina:molasses gum':
+    'チューインガムを軸にした味で、方向性は甘めとだけ登録されている。Layalina Molasses のラインナップに含まれ、バージニア葉ベースのUAE製。',
+  'layalina:molasses kiwi':
+    'キウイ単体のフルーティ系。Layalina Molasses の一本にあたり、ベースはバージニア葉、産地はUAEと製品データに記されている。',
+  'layalina:molasses kiwi strawberry':
+    'キウイとストロベリーを合わせた果実系の構成。フルーティ方向とされ、Layalina Molasses のバージニア葉ベース、UAE産と登録されている。',
+  'layalina:molasses lemon mint':
+    'レモンにミントを重ねた組み合わせ。清涼感とフルーティさが並ぶ方向に分類され、Layalina Molasses のバージニア葉ベースでUAE製とされる。',
+  'layalina:molasses mango':
+    'マンゴー単体で構成されたフルーティ系という内容。Layalina Molasses に含まれ、バージニア葉をベースにUAEで作られているとされる。',
+  'layalina:molasses melon':
+    'ハニーデューメロンのみを使ったフルーティ系。Layalina Molasses の一本で、ベースはバージニア葉、製造国はUAEと記載がある。',
+  'layalina:molasses orange':
+    'オレンジ単体という登録で、方向性はフルーティに振られている。Layalina Molasses のバージニア葉ベースにあたり、産地はUAEと記録されている。',
+  'layalina:molasses orange mint':
+    'オレンジとミントを組んだ構成。清涼感寄りのフルーティ方向とされ、Layalina Molasses のバージニア葉ベース、UAE産と製品データにある。',
+  'layalina:molasses passion fruit':
+    'パッションフルーツを主役にした一本。甘めのフルーティ方向に分類され、Layalina Molasses のバージニア葉ベースでUAE製とされている。',
+  'layalina:molasses passion melon':
+    'パッションフルーツとハニーデューメロンを合わせた構成。甘さとフルーティさが方向として挙がり、Layalina Molasses のバージニア葉ベース、UAE産。',
+  'layalina:molasses power booster':
+    'エナジードリンク系として登録された味で、方向性は甘め。Layalina Molasses のラインナップに含まれ、バージニア葉ベースのUAE製とされる。',
+  'layalina:molasses strawberry':
+    'ストロベリー単体のフルーティ系。Layalina Molasses の一本にあたり、ベースはバージニア葉、UAEで製造されていると記載がある。',
+  'layalina:molasses vanilla':
+    'バニラのみの構成で、方向性はクリーミー系に分類されている。Layalina Molasses のバージニア葉ベースで、産地はUAEと記録されている。',
+  'layalina:ya layl blueberry special':
+    'ミントとブルーベリーにメンソールを重ねた構成。清涼感とベリー感が並ぶ方向とされ、Ya Layl ラインのバージニア葉ベースでUAE産と記載がある。',
+  'layalina:ya layl bubble gum':
+    'チューインガムを写した味づくりで、甘めのキャンディ系に分類される。Ya Layl ラインの一本にあたり、バージニア葉ベースのUAE製とデータにある。',
+  'layalina:ya layl cherry':
+    'チェリー単体のシンプルな構成。フルーティ方向とされ、Ya Layl ラインのバージニア葉ベースで、UAEで作られていると製品データに記されている。',
+  'layalina:ya layl coconut':
+    'ココナッツを主役に据えた一本。方向性はナッツ系に分類されており、Ya Layl ラインに属するバージニア葉ベースで、産地はUAEと記録されている。',
+  'layalina:ya layl cola':
+    'コーラを写した味の構成で、甘めのドリンク系という分類。Ya Layl ラインのバージニア葉ベースにあたり、UAE産と製品データに記載がある。',
+  'layalina:ya layl cream':
+    '味の登録はアイス系のみで、方向性はクリーミーに振られている。Ya Layl ラインのクリーム系フレーバーとして、バージニア葉ベース・UAE産とされる。',
+  'layalina:ya layl double apple':
+    'アニスを伴うダブルアップルという構成。酸味とスパイス感の寄る方向に分類され、Ya Layl ラインのバージニア葉ベース、UAE製と記載されている。',
+  'layalina:ya layl eskandarani':
+    'エスカンダラニの名を持つ一本で、味はりんご単体と登録されている。方向性はフルーティとされ、Ya Layl ラインのバージニア葉ベース、産地はUAE。',
+  'layalina:ya layl grape mint':
+    'グレープにミントを合わせた構成。清涼感とフルーティさが並ぶ方向とされ、Ya Layl ラインの一本でバージニア葉ベース、UAE産と記録がある。',
+  'layalina:ya layl gum':
+    'チューインガムを軸にした味で、甘さと清涼感の両方向に分類されている。Ya Layl ラインに属し、ベースはバージニア葉、製造はUAEとされる。',
+  'layalina:ya layl lemon':
+    'レモン単体で構成され、方向性はフルーティ系とされている。Ya Layl ラインのバージニア葉ベースで、UAEで製造されていると製品データに記載がある。',
+  'layalina:ya layl lemon mint':
+    'レモンとミントの二本立てという内容。清涼感寄りのフルーティ方向に分類され、Ya Layl ラインのバージニア葉ベース、産地はUAEと登録されている。',
+  'layalina:ya layl mango':
+    'マンゴーのみを使ったフルーティ系という登録内容になっている。Ya Layl ラインの一本で、バージニア葉をベースにUAEで作られているとされる。',
+  'layalina:ya layl mango cream':
+    'マンゴーにアイス系を合わせた構成。フルーティさとクリーミーさが並ぶ方向とされ、Ya Layl ラインのバージニア葉ベース、UAE産と記載がある。',
+  'layalina:ya layl mastic gum':
+    'マスティックガムを冠した一本で、味の登録はチューインガム。方向性はスパイス感寄りに分類され、Ya Layl ラインのバージニア葉ベース、UAE産とされる。',
+  'layalina:ya layl melon':
+    'ハニーデューメロン単体という登録で、方向性のデータは付与されていない。Ya Layl ラインのバージニア葉ベースにあたり、産地はUAEとされている。',
+  'layalina:ya layl mint':
+    'ミント単体で清涼感方向のフレーバー。Ya Layl ラインの基本的な一本で、ベースはバージニア葉、UAEで製造されていると製品データにある。',
+  'layalina:ya layl mint cream':
+    'ミントにアイス系を重ねた構成。清涼感とクリーミーさが同居する方向に分類され、Ya Layl ラインのバージニア葉ベース、UAE産と記録されている。',
+  'layalina:ya layl orange cream':
+    'オレンジとアイス系を組んだ味づくり。フルーティかつクリーミーな方向とされ、Ya Layl ラインに属するバージニア葉ベースのUAE製と記載がある。',
+  'layalina:ya layl peach cream':
+    'ピーチにアイス系を合わせた一本。方向性はフルーティとクリーミーの両方が挙がっており、Ya Layl ラインのバージニア葉ベース、UAE産とされる。',
+  'layalina:ya layl strawberry':
+    'ストロベリー単体の構成で、方向性はベリー系と登録されている。Ya Layl ラインの一本にあたり、バージニア葉ベースで産地はUAEと記載がある。',
+  'layalina:ya layl strawberry cream':
+    'ストロベリーにアイス系を重ねた構成。ベリー感とクリーミーさが並ぶ方向とされ、Ya Layl ラインのバージニア葉ベースでUAE製と記録されている。',
+  'layalina:ya layl vanilla':
+    'バニラのみを使ったクリーミー方向のフレーバー。Ya Layl ラインに属し、ベースはバージニア葉、UAEで製造されているとデータに記されている。',
+  'layalina:ya layl watermelon':
+    'スイカ単体という構成で、フルーティ系に分類されている。Ya Layl ラインのバージニア葉ベースであり、産地はUAEと製品データに記録がある。',
 }
 
 // Editor's Selection の手書き短評を id フォールバックとして流用
