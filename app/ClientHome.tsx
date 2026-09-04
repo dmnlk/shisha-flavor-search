@@ -2,13 +2,15 @@
 
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { type ReactNode, Suspense, useEffect, useState } from 'react'
+import { type ReactNode, Suspense, useCallback, useEffect, useRef, useState } from 'react'
 
 import BrandList from '../components/BrandList'
 import HeroFallback from '../components/home/HeroFallback'
 import SearchBar from '../components/SearchBar'
 import ShishaCard from '../components/ShishaCard'
+import SiteHeader from '../components/SiteHeader'
 import SkeletonGrid from '../components/SkeletonGrid'
+import { useSearchCommand } from '../components/search/SearchCommandContext'
 import TagFilter from '../components/TagFilter'
 import { type FlavorTagSlug, isFlavorTagSlug } from '../data/flavorTagTaxonomy'
 import type { SearchResponse, ShishaFlavor } from '../types/shisha'
@@ -36,6 +38,7 @@ interface HomeContentProps {
 function HomeContent({ editorialSections, lastDataUpdated, initialManufacturers = [], initialTotalItems = 0 }: HomeContentProps) {
   const searchParams = useSearchParams()
   const router = useRouter()
+  const { registerQuerySubmitHandler } = useSearchCommand()
 
   const [flavors, setFlavors] = useState<ShishaFlavor[]>([])
   const [loading, setLoading] = useState(false)
@@ -143,6 +146,39 @@ function HomeContent({ editorialSections, lastDataUpdated, initialManufacturers 
     handleSearch({ query: searchQuery, manufacturer: selectedManufacturer, page: newPage })
   }
 
+  // ⌘K モーダルで確定した検索語は、遷移せずこのページの検索状態へ反映する。
+  // handleSearch は毎レンダー再生成されるため、ref 経由で最新版を呼ぶ。
+  const paletteSubmitRef = useRef<(_query: string) => void>(() => {})
+  const pendingResultScrollRef = useRef(false)
+
+  useEffect(() => {
+    paletteSubmitRef.current = (query: string) => {
+      setCurrentPage(1)
+      setSelectedManufacturer('')
+      setSelectedTags([])
+      pendingResultScrollRef.current = true
+      handleSearch({ query, manufacturer: '', page: 1, tags: [] })
+    }
+  })
+
+  // 結果が描画されてからスクロールする。検索語が入るとエディトリアル節が
+  // 消えて高さが変わるため、先にスクロールすると位置がずれる。
+  // biome-ignore lint/correctness/useExhaustiveDependencies: 新しい結果が描画された後に走らせたいので flavors も依存に含める
+  useEffect(() => {
+    if (!pendingResultScrollRef.current || loading) return
+    pendingResultScrollRef.current = false
+    document.getElementById('ledger-results')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }, [loading, flavors])
+
+  const handlePaletteSubmit = useCallback((query: string) => {
+    paletteSubmitRef.current(query)
+  }, [])
+
+  useEffect(() => {
+    registerQuerySubmitHandler(handlePaletteSubmit)
+    return () => registerQuerySubmitHandler(null)
+  }, [registerQuerySubmitHandler, handlePaletteSubmit])
+
   const handleHomeReset = () => {
     setSearchQuery('')
     setSelectedManufacturer('')
@@ -188,23 +224,27 @@ function HomeContent({ editorialSections, lastDataUpdated, initialManufacturers 
     <div className="min-h-screen bg-paper-0 dark:bg-paper-950 text-ink-950 dark:text-ink-50">
       <main className="mx-auto px-4 sm:px-6 lg:px-10 pt-8 sm:pt-10 pb-24 max-w-[1480px]">
         {/* Masthead */}
-        <header className="flex flex-wrap items-center justify-between gap-3 py-3 border-t-2 border-b border-ink-900 dark:border-ink-100 font-mono-tight text-[10px] uppercase tracking-[0.16em] text-ink-700 dark:text-ink-200 mb-0">
-          <span className="flex items-center gap-3">
-            <span className="inline-block w-2 h-2 bg-ember-500" aria-hidden />
-            <button
-              type="button"
-              onClick={handleHomeReset}
-              className="font-sans-tight font-semibold text-sm normal-case tracking-[-0.01em] text-ink-950 dark:text-ink-50 hover:text-ember-500 transition-colors"
-            >
-              Shisha Flavor Ledger
-            </button>
-            <span className="hidden sm:inline text-ink-400 dark:text-ink-500">—</span>
-            <span className="hidden sm:inline nums">Vol.&nbsp;I · Ed.&nbsp;2026</span>
-          </span>
-          <Link href="/brands" className="hover:text-ember-500 transition-colors">
-            Brand Index →
-          </Link>
-        </header>
+        <SiteHeader
+          leading={
+            <>
+              <span className="inline-block w-2 h-2 bg-ember-500 shrink-0" aria-hidden />
+              <button
+                type="button"
+                onClick={handleHomeReset}
+                className="font-sans-tight font-semibold text-sm normal-case tracking-[-0.01em] text-ink-950 dark:text-ink-50 hover:text-ember-500 transition-colors truncate"
+              >
+                Shisha Flavor Ledger
+              </button>
+              <span className="hidden lg:inline text-ink-400 dark:text-ink-500">—</span>
+              <span className="hidden lg:inline nums">Vol.&nbsp;I · Ed.&nbsp;2026</span>
+            </>
+          }
+          trailing={
+            <Link href="/brands" className="hover:text-ember-500 transition-colors whitespace-nowrap">
+              Brand Index →
+            </Link>
+          }
+        />
 
         {/* Hero */}
         <section className="grid grid-cols-12 gap-0 border-b border-ink-900 dark:border-ink-100">
@@ -298,7 +338,9 @@ function HomeContent({ editorialSections, lastDataUpdated, initialManufacturers 
         </section>
 
         {/* Results header */}
-        <div className="flex items-baseline justify-between border-t border-ink-900 dark:border-ink-100 border-b border-rule-200 dark:border-rule-800 py-3 mb-0 font-mono-tight text-[10px] uppercase tracking-[0.16em] text-ink-600 dark:text-ink-300">
+        <div
+          id="ledger-results"
+          className="scroll-mt-28 sm:scroll-mt-20 flex items-baseline justify-between border-t border-ink-900 dark:border-ink-100 border-b border-rule-200 dark:border-rule-800 py-3 mb-0 font-mono-tight text-[10px] uppercase tracking-[0.16em] text-ink-600 dark:text-ink-300">
           <span className="flex items-center gap-3">
             <span className="text-ember-500 nums">§&nbsp;006</span>
             <span>Entries</span>

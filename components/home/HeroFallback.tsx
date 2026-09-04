@@ -1,5 +1,7 @@
 import Link from 'next/link'
 
+import SiteHeader from '../SiteHeader'
+
 interface HeroFallbackProps {
   initialTotalItems: number
   initialBrandsCount: number
@@ -15,19 +17,23 @@ export default function HeroFallback({ initialTotalItems, initialBrandsCount, la
   return (
     <div className="min-h-screen bg-paper-0 dark:bg-paper-950 text-ink-950 dark:text-ink-50">
       <main className="mx-auto px-4 sm:px-6 lg:px-10 pt-8 sm:pt-10 pb-24 max-w-[1480px]">
-        <header className="flex flex-wrap items-center justify-between gap-3 py-3 border-t-2 border-b border-ink-900 dark:border-ink-100 font-mono-tight text-[10px] uppercase tracking-[0.16em] text-ink-700 dark:text-ink-200 mb-0">
-          <span className="flex items-center gap-3">
-            <span className="inline-block w-2 h-2 bg-ember-500" aria-hidden />
-            <span className="font-sans-tight font-semibold text-sm normal-case tracking-[-0.01em] text-ink-950 dark:text-ink-50">
-              Shisha Flavor Ledger
-            </span>
-            <span className="hidden sm:inline text-ink-400 dark:text-ink-500">—</span>
-            <span className="hidden sm:inline nums">Vol.&nbsp;I · Ed.&nbsp;2026</span>
-          </span>
-          <Link href="/brands" className="hover:text-ember-500 transition-colors">
-            Brand Index →
-          </Link>
-        </header>
+        <SiteHeader
+          leading={
+            <>
+              <span className="inline-block w-2 h-2 bg-ember-500 shrink-0" aria-hidden />
+              <span className="font-sans-tight font-semibold text-sm normal-case tracking-[-0.01em] text-ink-950 dark:text-ink-50 truncate">
+                Shisha Flavor Ledger
+              </span>
+              <span className="hidden lg:inline text-ink-400 dark:text-ink-500">—</span>
+              <span className="hidden lg:inline nums">Vol.&nbsp;I · Ed.&nbsp;2026</span>
+            </>
+          }
+          trailing={
+            <Link href="/brands" className="hover:text-ember-500 transition-colors whitespace-nowrap">
+              Brand Index →
+            </Link>
+          }
+        />
 
         <section className="grid grid-cols-12 gap-0 border-b border-ink-900 dark:border-ink-100">
           <div className="col-span-12 lg:col-span-8 lg:border-r lg:border-rule-200 lg:dark:border-rule-800 py-10 lg:py-14 lg:pr-10">

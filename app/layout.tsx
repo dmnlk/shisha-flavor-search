@@ -3,8 +3,8 @@ import { GoogleAnalytics } from '@next/third-parties/google'
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 
+import { SearchCommandProvider } from '../components/search/SearchCommandContext'
 import { ThemeProvider } from '../components/ThemeProvider'
-import { ThemeToggle } from '../components/ThemeToggle'
 import { escapeJsonLd } from '../lib/utils/jsonLd'
 
 // Google Analytics 4 計測 ID。クライアントに露出する公開値のため直書きで問題ない。
@@ -119,8 +119,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
           dangerouslySetInnerHTML={{ __html: escapeJsonLd(organizationJsonLd) }}
         />
         <ThemeProvider>
-          <ThemeToggle />
-          {children}
+          <SearchCommandProvider>{children}</SearchCommandProvider>
         </ThemeProvider>
       </body>
       <GoogleAnalytics gaId={GA_MEASUREMENT_ID} />

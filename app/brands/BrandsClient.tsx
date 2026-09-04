@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useMemo, useState } from 'react'
 
 import BrandCard from '../../components/BrandCard'
+import SiteHeader from '../../components/SiteHeader'
 import { normalizeForSearch } from '../../lib/utils/japaneseNormalizer'
 import type { BrandSummary } from '../api/brands/route'
 
@@ -40,22 +41,26 @@ export default function BrandsClient({ brands }: BrandsClientProps) {
     <div className="min-h-screen bg-paper-0 dark:bg-paper-950 text-ink-950 dark:text-ink-50">
       <main className="mx-auto px-4 sm:px-6 lg:px-10 pt-8 sm:pt-10 pb-24 max-w-[1480px]">
         {/* Masthead */}
-        <header className="flex flex-wrap items-center justify-between gap-3 py-3 border-t-2 border-b border-ink-900 dark:border-ink-100 font-mono-tight text-[10px] uppercase tracking-[0.16em] text-ink-700 dark:text-ink-200 mb-0">
-          <span className="flex items-center gap-3">
-            <span className="inline-block w-2 h-2 bg-ember-500" aria-hidden />
-            <Link
-              href="/"
-              className="font-sans-tight font-semibold text-sm normal-case tracking-[-0.01em] text-ink-950 dark:text-ink-50 hover:text-ember-500 transition-colors"
-            >
-              Shisha Flavor Ledger
+        <SiteHeader
+          leading={
+            <>
+              <span className="inline-block w-2 h-2 bg-ember-500 shrink-0" aria-hidden />
+              <Link
+                href="/"
+                className="font-sans-tight font-semibold text-sm normal-case tracking-[-0.01em] text-ink-950 dark:text-ink-50 hover:text-ember-500 transition-colors truncate"
+              >
+                Shisha Flavor Ledger
+              </Link>
+              <span className="hidden lg:inline text-ink-400 dark:text-ink-500">—</span>
+              <span className="hidden lg:inline nums">Vol.&nbsp;I · Ed.&nbsp;2026</span>
+            </>
+          }
+          trailing={
+            <Link href="/" className="hover:text-ember-500 transition-colors whitespace-nowrap">
+              ← Flavor Ledger
             </Link>
-            <span className="hidden sm:inline text-ink-400 dark:text-ink-500">—</span>
-            <span className="hidden sm:inline nums">Vol.&nbsp;I · Ed.&nbsp;2026</span>
-          </span>
-          <Link href="/" className="hover:text-ember-500 transition-colors">
-            ← Flavor Ledger
-          </Link>
-        </header>
+          }
+        />
 
         {/* Hero */}
         <section className="grid grid-cols-12 gap-0 border-b border-ink-900 dark:border-ink-100">
