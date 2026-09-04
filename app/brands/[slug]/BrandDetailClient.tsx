@@ -6,6 +6,7 @@ import { useMemo, useState } from 'react'
 
 import ShareOnX from '../../../components/ShareOnX'
 import ShishaCard from '../../../components/ShishaCard'
+import SiteHeader from '../../../components/SiteHeader'
 import type { ShishaFlavor } from '../../../types/shisha'
 
 interface BrandDetailClientProps {
@@ -48,15 +49,19 @@ export default function BrandDetailClient({ slug, brandName, flavors, imageUrl, 
     <div className="min-h-screen bg-paper-0 dark:bg-paper-950 text-ink-950 dark:text-ink-50">
       <main className="mx-auto px-4 sm:px-6 lg:px-10 pt-8 sm:pt-10 pb-24 max-w-[1480px]">
         {/* Masthead */}
-        <header className="flex flex-wrap items-center justify-between gap-3 py-3 border-t-2 border-b border-ink-900 dark:border-ink-100 font-mono-tight text-[10px] uppercase tracking-[0.16em] text-ink-700 dark:text-ink-200">
-          <Link href="/brands" className="flex items-center gap-2 hover:text-ember-500 transition-colors">
-            <span aria-hidden>←</span>
-            <span>Brand Index</span>
-          </Link>
-          <span className="nums text-ember-500">
-            BRAND · /{slug}
-          </span>
-        </header>
+        <SiteHeader
+          leading={
+            <Link href="/brands" className="flex items-center gap-2 hover:text-ember-500 transition-colors truncate">
+              <span aria-hidden>←</span>
+              <span>Brand Index</span>
+            </Link>
+          }
+          trailing={
+            <span className="hidden sm:inline nums text-ember-500">
+              BRAND · /{slug}
+            </span>
+          }
+        />
 
         {/* Hero */}
         <section className="grid grid-cols-12 gap-0 border-b border-ink-900 dark:border-ink-100">

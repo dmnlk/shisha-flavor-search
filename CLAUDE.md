@@ -100,10 +100,15 @@ pnpm build:data    # Regenerate data/generated/searchIndex.json + brands.json.
 - **Animation**: Framer Motion for page transitions and loading states
 - **Styling**: Tailwind CSS v4 with dark mode support and PostCSS configuration
 - **Component structure** (all TypeScript):
-  - `SearchBar.tsx`: Search input and controls
+  - `SiteHeader.tsx`: 全ページ共通の sticky マストヘッド (`leading` / `trailing` スロット + 検索トリガー + `ThemeToggle`)
+  - `search/SearchCommandContext.tsx`: `SearchCommandProvider` (layout に設置) — ⌘K / Ctrl+K / `/` のグローバルショートカットと検索モーダルの開閉状態を持つ
+  - `search/SearchCommandPalette.tsx`: 検索モーダル本体 (ブランド候補 + `/api/search` のフレーバー候補、↑↓ / Enter / Esc 操作)
+  - `search/HeaderSearchTrigger.tsx`: マストヘッド内の検索窓 (クリックでモーダルを開く)
+  - `SearchBar.tsx`: Search input and controls (ホームのインライン検索 + 種別フィルタ)
   - `BrandList.tsx`: Manufacturer filter pills
   - `ShishaCard.tsx`: Individual flavor card display
   - `ClientHome.tsx`: Main client-side component
+- **モーダル検索の確定先**: `SearchCommandProvider.submitQuery()` は既定で `/?query=` へ遷移するが、ホーム (`ClientHome`) は `registerQuerySubmitHandler` でハンドラを登録し、遷移せずページ内の検索状態を更新して `#ledger-results` へスクロールする。
 
 ### Design System
 - **Palette** in `app/globals.css` @theme: `paper-*`, `ink-*`, `rule-*` (hairlines), `ember-*` (single crimson-orange accent `#e8492c`). "Review Ledger" aesthetic — flat, 1px borders, zero radius, zero shadow.
