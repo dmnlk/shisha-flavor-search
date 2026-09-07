@@ -42,11 +42,11 @@ describe('getFlavorDescription', () => {
 
   it("Editor's Selection の note に id でフォールバックする", () => {
     const description = getFlavorDescription({
-      id: 1398,
-      manufacturer: 'Buta',
-      productName: 'Buta Ice Mint',
+      id: 5390,
+      manufacturer: 'TUMBAKI',
+      productName: 'TUMBAKI BAKED PEACH',
     })
-    expect(description).toContain('ミント')
+    expect(description).toContain('ピーチ')
   })
 
   it('未知のフレーバーは null (UI はセクションを非表示にする)', () => {
