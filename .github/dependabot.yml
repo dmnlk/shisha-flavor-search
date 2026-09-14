@@ -8,6 +8,9 @@ updates:
       time: "09:00"
       timezone: "Asia/Tokyo"
     open-pull-requests-limit: 10
+    # 公開から 1 日経過したバージョンだけを対象にする (pnpm の minimumReleaseAge と揃える)
+    cooldown:
+      default-days: 1
     commit-message:
       prefix: "deps"
       include: "scope"
