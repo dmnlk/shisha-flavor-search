@@ -1,0 +1,22 @@
+name: Dependabot auto-merge
+
+# Dependabot が開いた PR に auto-merge を有効化する。
+# 実際のマージは main のブランチ保護 (required status check: CI の `test` ジョブ)
+# を満たした時点で GitHub 側が行うため、CI が通らない PR はマージされない。
+on:
+  pull_request:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  enable-auto-merge:
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.user.login == 'dependabot[bot]' && github.repository == 'dmnlk/shisha-flavor-search'
+    steps:
+      - name: Enable auto-merge for Dependabot PR
+        run: gh pr merge --auto --merge "$PR_URL"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
