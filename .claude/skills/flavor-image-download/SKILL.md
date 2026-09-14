@@ -202,8 +202,11 @@ npx tsx .claude/skills/flavor-image-download/scripts/verify_images.ts
 BRANCH="images/flavor-$(date +%Y%m%d)"
 git checkout -b "$BRANCH" 2>/dev/null || git checkout -b "${BRANCH}b" 2>/dev/null || git checkout -b "${BRANCH}c"
 
-# 2. 追加された画像をステージ
-git add public/images/flavors/
+# 2. 画像マップを再生成してから、画像とマップをステージ
+#    data/flavorImagesGenerated.ts は git 管理の静的マップ。dev / test / typecheck では再生成されないので
+#    ここで必ず再生成する (忘れると画像を置いても UI に出ない。2026-09-14 の DEUS run で発生)
+npx tsx scripts/build/generate-flavor-image-map.ts
+git add public/images/flavors/ data/flavorImagesGenerated.ts
 
 # 3. コミット（追加件数とブランドを記載）
 git commit -m "feat(images): add <N> flavor images (<brand1>, <brand2>, ...)
