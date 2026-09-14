@@ -42,11 +42,11 @@ describe('getFlavorDescription', () => {
 
   it("Editor's Selection の note に id でフォールバックする", () => {
     const description = getFlavorDescription({
-      id: 5390,
-      manufacturer: 'TUMBAKI',
-      productName: 'TUMBAKI BAKED PEACH',
+      id: 3868,
+      manufacturer: 'REVOSHI',
+      productName: 'REVOSHI TOBACCO Eskimo Candy Flavored',
     })
-    expect(description).toContain('ピーチ')
+    expect(description).toContain('キャンディ')
   })
 
   it('未知のフレーバーは null (UI はセクションを非表示にする)', () => {
