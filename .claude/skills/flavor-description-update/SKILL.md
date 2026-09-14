@@ -256,6 +256,11 @@ pnpm lint && pnpm test && pnpm typecheck
   - Trifecta 99 キー (139 id 中 130 解決)。Blonde / Dark
   - Fumari 56 キー (152 id 中 127 解決)。近年発売銘柄は記事が無く未記載
   - LaVoo 8 キー (8 id 全解決)
+- 2026-09: DEUS 45 キー (92 id 中 90 解決)。htreviews のメインライン (`/tobaccos/deus/deus-main/<slug>`) が新ライン
+  34 種を全網羅。旧ライン 11 種は sakurashisha.jp (輸入元 Shopify) の `body_html` を併用し、htreviews に無い
+  5 種 (Black Berry / Elderberry Wine / Flower Perfume / Viola / Wood) は輸入元の 1 文のみで短く記載。
+  公告の旧表記 Gynness = Guinness、Pink Grapefruit = Rose Grapefruit (露語名 «Розовый грейпфрут» で確認) は共有定数。
+  Black Currant は全ソース未掲載で未記載
 - **記事が無く見送ったブランド**: Nirvana (公告は旧 Super Shisha ライン、ブログは
   Eclipse / Othmani で銘柄が全く重ならない) / Malaki (12 キー中 2 件しか記事が無い) /
   Dozaj (119 キーに対し Dozaj Black の記事 4 本のみ)
