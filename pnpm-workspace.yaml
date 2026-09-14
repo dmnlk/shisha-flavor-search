@@ -2,3 +2,6 @@ allowBuilds:
   esbuild: true
   sharp: true
   workerd: true
+
+# 公開から 24 時間未満のバージョンを解決対象から外す (supply chain 対策)
+minimumReleaseAge: 1440
