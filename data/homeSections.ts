@@ -130,11 +130,13 @@ export function getLatestFlavors(limit = 6): ShishaFlavor[] {
   return picked.slice(0, limit)
 }
 
+// shishaData の country は正規表記に揃っている (lib/utils/countryDisplay.ts の
+// canonicalCountryName 参照) ため、各国 1 キーで拾える。
 const ORIGIN_ORDER: Array<{ code: string; keys: string[] }> = [
-  { code: 'US', keys: ['アメリカ合衆国', 'USA', 'アメリ力合衆国'] },
-  { code: 'JO', keys: ['ヨルダン', 'Jordan'] },
+  { code: 'US', keys: ['アメリカ合衆国'] },
+  { code: 'JO', keys: ['ヨルダン'] },
   { code: 'TR', keys: ['トルコ'] },
-  { code: 'AE', keys: ['アラブ首長国連邦', 'UAE', 'U.A.E'] },
+  { code: 'AE', keys: ['アラブ首長国連邦'] },
   { code: 'RU', keys: ['ロシア'] },
 ]
 
