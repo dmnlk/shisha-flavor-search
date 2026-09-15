@@ -37,6 +37,13 @@ export default function BrandsClient({ brands }: BrandsClientProps) {
     [brands]
   )
 
+  // ロゴが public/images/brands/ にあるブランド数。ハードコードすると
+  // ロゴ追加のたびにズレるので、サーバーから渡された imageUrl の有無で数える。
+  const logoCount = useMemo(
+    () => brands.filter(b => Boolean(b.imageUrl)).length,
+    [brands]
+  )
+
   return (
     <div className="min-h-screen bg-paper-0 dark:bg-paper-950 text-ink-950 dark:text-ink-50">
       <main className="mx-auto px-4 sm:px-6 lg:px-10 pt-8 sm:pt-10 pb-24 max-w-[1480px]">
@@ -105,7 +112,7 @@ export default function BrandsClient({ brands }: BrandsClientProps) {
                 Logos on file
               </p>
               <p className="font-mono-tight text-base text-ink-950 dark:text-ink-50 nums">
-                74 / {brands.length}
+                {logoCount} / {brands.length}
               </p>
             </div>
           </aside>
