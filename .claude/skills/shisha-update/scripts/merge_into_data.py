@@ -37,6 +37,25 @@ def norm(s: str) -> str:
     return unicodedata.normalize("NFKC", s).strip() if s else ""
 
 
+# 原産国の表記ゆれ → data/shishaData.js の正規表記。
+# lib/utils/countryDisplay.ts の COUNTRY_CANONICAL と同じ表を保つこと。
+COUNTRY_CANONICAL = {
+    "USA": "アメリカ合衆国",
+    "アメリ力合衆国": "アメリカ合衆国",
+    "Jordan": "ヨルダン",
+    "UAE": "アラブ首長国連邦",
+    "U.A.E": "アラブ首長国連邦",
+    "switzerland": "スイス",
+    "Germany": "ドイツ",
+    "ロシア モルドバ": "ロシアモルドバ",
+}
+
+
+def norm_country(s: str) -> str:
+    c = norm(s)
+    return COUNTRY_CANONICAL.get(c, c)
+
+
 def norm_key(s: str) -> str:
     s = norm(s).upper()
     s = re.sub(r"\s+", "", s)
@@ -177,7 +196,7 @@ def main() -> int:
             "manufacturer": infer_manufacturer(product, known_brands),
             "productName": product,
             "amount": norm(p["amount"]),
-            "country": norm(p["country"]),
+            "country": norm_country(p["country"]),
             "price": norm(p["price"]),
             "_date_int": int(p["date"]) if p.get("date", "").isdigit() else 0,
             "_source": p.get("source", "pdf"),

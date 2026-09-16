@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next'
 
+import updateState from '../data/generated/updateState.json'
 import { shishaData } from '../data/shishaData'
 import { brandSlug } from '../lib/utils/brandNormalizer'
 import type { ShishaFlavor } from '../types/shisha'
@@ -11,8 +12,21 @@ const SITE_URL = (
   process.env.NEXT_PUBLIC_SITE_URL ?? 'https://shisha-lento.com'
 ).replace(/\/$/, '')
 
+// lastModified は「データが最後に更新された日時」を使う。以前はビルド時刻
+// (= 毎リクエストの new Date()) を全 URL に入れていたため、内容が変わって
+// いなくても毎日全ページが更新済みに見え、クローラへの更新シグナルとして
+// 意味を成していなかった。データ更新日時が取れないときのみ現在時刻に落とす。
+function resolveLastModified(): Date {
+  const iso = updateState.lastDataUpdated
+  if (iso) {
+    const parsed = new Date(iso)
+    if (!Number.isNaN(parsed.getTime())) return parsed
+  }
+  return new Date()
+}
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date()
+  const now = resolveLastModified()
 
   const staticEntries: MetadataRoute.Sitemap = [
     {
