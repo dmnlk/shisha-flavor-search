@@ -21,7 +21,7 @@
   "dependencies": {
     "@heroicons/react": "^2.2.0",
     "@next/third-parties": "^16.3.5",
-    "@sentry/browser": "^10.75.0",
+    "@sentry/browser": "^11.0.0",
     "@sentry/cloudflare": "^10.75.0",
     "@sentry/nextjs": "^10.75.0",
     "clsx": "^2.1.1",
