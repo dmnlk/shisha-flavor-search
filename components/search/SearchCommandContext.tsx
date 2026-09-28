@@ -85,6 +85,16 @@ export function SearchCommandProvider({ children }: { children: ReactNode }) {
   )
 }
 
+/**
+ * Provider 外でも落ちない版。Provider が無ければ `undefined` を返す。
+ * 存在しない Server Action ID 付きの POST などで Next が not-found を
+ * root layout (= Provider) の外で描画するケースがあるため、not-found からも
+ * 描画される `HeaderSearchTrigger` はこちらを使う。
+ */
+export function useOptionalSearchCommand(): SearchCommandContextValue | undefined {
+  return useContext(SearchCommandContext)
+}
+
 export function useSearchCommand(): SearchCommandContextValue {
   const context = useContext(SearchCommandContext)
   if (context === undefined) {

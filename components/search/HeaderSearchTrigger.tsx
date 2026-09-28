@@ -2,10 +2,12 @@
 
 import { useEffect, useState } from 'react'
 
-import { useSearchCommand } from './SearchCommandContext'
+import { useOptionalSearchCommand } from './SearchCommandContext'
 
 export default function HeaderSearchTrigger() {
-  const { open } = useSearchCommand()
+  // not-found が root layout の外で描画されると Provider が無い。その場合はトップの検索へ遷移する。
+  const searchCommand = useOptionalSearchCommand()
+  const open = searchCommand?.open ?? (() => window.location.assign('/'))
   // ショートカット表記はマウント後に決める (SSR とクライアントで差が出るため)
   const [shortcut, setShortcut] = useState<string | null>(null)
 
