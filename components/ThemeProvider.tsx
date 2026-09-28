@@ -48,6 +48,14 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
   )
 }
 
+/**
+ * Provider 外でも落ちない版。Provider が無ければ `undefined` を返す。
+ * 存在しない Server Action ID 付きの POST などで Next が not-found を
+ * root layout (= Provider) の外で描画するケースがあるため、not-found からも
+ * 描画される `ThemeToggle` はこちらを使う。
+ */
+export const useOptionalTheme = () => useContext(ThemeContext)
+
 export const useTheme = () => {
   const context = useContext(ThemeContext)
   if (context === undefined) {

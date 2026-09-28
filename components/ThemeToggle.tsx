@@ -1,10 +1,13 @@
 'use client'
 
-import { useTheme } from './ThemeProvider'
+import { useOptionalTheme } from './ThemeProvider'
 
 /** マストヘッド内に置くインラインの Day / Night 切り替え */
 export function ThemeToggle() {
-  const { darkMode, setDarkMode } = useTheme()
+  const theme = useOptionalTheme()
+  // not-found が root layout の外で描画されると Provider が無い。切り替えられないのでトグルごと出さない。
+  if (!theme) return null
+  const { darkMode, setDarkMode } = theme
 
   return (
     <div className="flex items-stretch border border-ink-900 dark:border-ink-100 bg-paper-0 dark:bg-paper-950 font-mono-tight text-[10px] uppercase tracking-[0.12em] shrink-0">
