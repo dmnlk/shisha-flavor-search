@@ -125,7 +125,8 @@ shisha-search/
 │   └── build/              # prebuild フック用スクリプト
 ├── .node-version            # Node.js バージョン指定
 ├── open-next.config.ts      # Cloudflare Workers 設定
-├── wrangler.jsonc           # Wrangler（Cloudflare CLI）設定
+├── cloudflare.config.ts     # Cloudflare Workers 設定（cf CLI）
+├── wrangler.config.ts       # Wrangler（バンドラ）固有の設定
 ├── postcss.config.js        # PostCSS設定（Tailwind v4対応）
 ├── tsconfig.json            # TypeScript設定
 └── public/                  # 静的ファイル

@@ -15,8 +15,11 @@
     "test": "pnpm run build:data && vitest run",
     "test:watch": "pnpm run build:data && vitest",
     "test:ci": "pnpm run build:data && vitest run --coverage",
-    "preview": "pnpm run build:data && opennextjs-cloudflare build && opennextjs-cloudflare preview",
-    "deploy": "pnpm run build:data && opennextjs-cloudflare build && opennextjs-cloudflare deploy"
+    "build:worker": "pnpm run build:data && opennextjs-cloudflare build --skipWranglerConfigCheck && opennextjs-cloudflare populateCache local",
+    "build:output": "pnpm run build:worker && wrangler build --experimental-new-config --experimental-cf-build-output",
+    "preview": "pnpm run build:worker && wrangler dev --experimental-new-config",
+    "deploy": "pnpm run build:output && cf deploy --prebuilt",
+    "deploy:dry-run": "pnpm run build:output && cf deploy --prebuilt --dry-run"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
@@ -44,6 +47,7 @@
     "@types/react-dom": "^19.3.0",
     "@vitejs/plugin-react": "^6.1.1",
     "@vitest/coverage-v8": "^5.0.2",
+    "cf": "1.0.0-beta.2",
     "jsdom": "^30.1.1",
     "postcss": "^8.5.28",
     "tailwindcss": "^4.3.3",

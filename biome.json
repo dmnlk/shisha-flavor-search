@@ -11,6 +11,7 @@
 			"!node_modules",
 			"!.next",
 			"!.open-next",
+			"!.cloudflare",
 			"!out",
 			"!.claude",
 			"!public",
