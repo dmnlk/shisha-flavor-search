@@ -37,8 +37,9 @@ pnpm build         # Create production build
 pnpm start         # Start production server
 
 # Cloudflare Workers Deployment (本番デプロイ先)
-pnpm preview       # Cloudflare向けビルド + ローカルプレビュー (opennextjs-cloudflare)
-pnpm deploy        # Cloudflare向けビルド + 本番 Workers へデプロイ
+pnpm preview       # Cloudflare向けビルド + ローカルプレビュー (wrangler dev)
+pnpm deploy        # Cloudflare向けビルド + 本番 Workers へデプロイ (cf deploy)
+pnpm deploy:dry-run # Cloudflare向けビルド + デプロイ前チェックのみ (アップロードしない)
 
 # Testing
 pnpm test          # Run all tests
@@ -85,20 +86,26 @@ pnpm build:data    # Regenerate data/generated/searchIndex.json + brands.json.
 
 ### Deployment
 - **本番ドメイン**: `https://shisha-lento.com`
-- **インフラ**: Cloudflare Workers + Assets (`@opennextjs/cloudflare`)。`wrangler.jsonc` で設定。
+- **インフラ**: Cloudflare Workers + Assets (`@opennextjs/cloudflare`)。Worker の設定は `cloudflare.config.ts` (`cf` CLI)、バンドラ固有の設定 (alias / assets ディレクトリ) は `wrangler.config.ts`。`wrangler.jsonc` は廃止済み。
 - `pnpm deploy` で本番デプロイ。`pnpm preview` でローカル Workers プレビュー。
+- **デプロイの流れ** (`cf` は beta、OpenNext は `cf` 未対応のため手順を自前で繋いでいる):
+  1. `build:worker` — `opennextjs-cloudflare build --skipWranglerConfigCheck` で `.open-next/` を生成し、`opennextjs-cloudflare populateCache local` で SSG キャッシュを `.open-next/assets/cdn-cgi/_next_cache` にコピーする (以前は `opennextjs-cloudflare deploy` / `preview` が暗黙に行っていた処理。**省くと SSG ページのキャッシュがアセットに載らない**。`local` という名前だが static assets キャッシュでは単なるファイルコピー)。
+  2. `build:output` — `wrangler build --experimental-new-config --experimental-cf-build-output` で `.cloudflare/output/v0/` (Build Output、gitignore) を生成する。
+  3. `cf deploy --prebuilt` で Build Output をアップロードする。
+- **`cf build` / `--prebuilt` なしの `cf deploy` は使わない** — Next.js を検出して `next build` だけを実行し、Build Output が無いため失敗する。
+- wrangler を直接叩くときは `--experimental-new-config` が必須 (付けないと `cloudflare.config.ts` を読まない)。
 - `open-next.config.ts` で `staticAssetsIncrementalCache` を使用（SSG ページのインクリメンタルキャッシュ）。
 - **og:image / canonical / sitemap の base URL**: `app/layout.tsx` / `app/sitemap.ts` / `app/robots.ts` の `SITE_URL` で決定。`NEXT_PUBLIC_SITE_URL` が build-time にセットされていれば優先、未設定時は `https://shisha-lento.com` にフォールバック (env を忘れて localhost が production に混入するのを防ぐ保険)。
 
 ### Error Monitoring (Sentry)
 - サーバー側は `@sentry/cloudflare`、ブラウザ側は `@sentry/nextjs` (client) のハイブリッド構成。**`@sentry/nextjs` のサーバー SDK は使わない** — Node 向け OpenTelemetry instrumentation 一式が Worker に入り gzip +1 MiB で Cloudflare Workers Free の上限 (3 MiB) を超えるため。3 パッケージは同じバージョンに揃える (`@sentry/core` を共有するため)。
-- **Worker エントリ**: `wrangler.jsonc` の `main` は `worker.ts`。OpenNext 生成物 `.open-next/worker.js` を wrangler の `alias` (`open-next-worker`) 経由で import し、`Sentry.withSentry()` で包む (型は `types/open-next-worker.d.ts`)。リクエストごとのクライアント生成・未捕捉例外の送信・レスポンス後の flush (`ctx.waitUntil`) を担う。
+- **Worker エントリ**: `cloudflare.config.ts` の `entrypoint` は `worker.ts`。OpenNext 生成物 `.open-next/worker.js` を `wrangler.config.ts` の `alias` (`open-next-worker`) 経由で import し、`Sentry.withSentry()` で包む (型は `types/open-next-worker.d.ts`)。リクエストごとのクライアント生成・未捕捉例外の送信・レスポンス後の flush (`ctx.waitUntil`) を担う。
 - **Next.js 内部で捕捉されたエラー** (RSC / Route Handler) は `instrumentation.ts` の `onRequestError` が `@sentry/cloudflare` の `captureException` で同じリクエストスコープに送る (nodejs ランタイムのみ。edge = middleware は対象外)。
 - **ブラウザ**: `instrumentation-client.ts` (`@sentry/nextjs` で init + `captureRouterTransitionStart`)、`app/global-error.tsx` (root layout 崩壊時のフォールバック)。**client component から `@sentry/nextjs` を import しない** — SSR 用バンドルでサーバーエントリ (約 2 MB) に解決される。`global-error.tsx` のように client component から送るときは `@sentry/browser` を使う。
 - 共通値は `lib/sentry/config.ts` (DSN / `SENTRY_ENABLED` / サンプリング率)。DSN は公開値なので直書き。差し替えは `NEXT_PUBLIC_SENTRY_DSN` (build-time)。
 - **production build のときだけ送信** (`NODE_ENV === 'production'`)。`next dev` では送らない。`wrangler dev` (= `pnpm preview`) は NODE_ENV を development に置換するため、ローカルで送信まで確認したいときは `NODE_ENV=production pnpm preview`。
 - `next.config.ts` の `withSentryConfig` はソースマップ用。アップロードは `SENTRY_AUTH_TOKEN` (+ `SENTRY_ORG` / `SENTRY_PROJECT`) が build 時にあるときだけ行い、未設定ならソースマップを生成しない。token は `.env.sentry-build-plugin` (gitignore 済) に置く。
-- バンドルサイズは `npx wrangler deploy --dry-run --outdir /tmp/wr` の `gzip:` で確認する (導入時: 2.44 → 2.66 MiB)。
+- バンドルサイズは `pnpm deploy:dry-run` の `gzip:` で確認する (導入時: 2.44 → 2.66 MiB)。
 
 ### Routing Strategy
 - `/brands/[slug]` is **SSG** via `generateStaticParams` + `dynamicParams = false` (~92 pages; trivial build cost).

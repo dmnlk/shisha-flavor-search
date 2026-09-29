@@ -1,5 +1,5 @@
 /**
- * `open-next-worker` は wrangler.jsonc の `alias` で `.open-next/worker.js` (opennextjs-cloudflare build の
+ * `open-next-worker` は wrangler.config.ts の `alias` で `.open-next/worker.js` (opennextjs-cloudflare build の
  * 生成物、gitignore) に解決される仮想モジュール。生成物の有無に関わらず `worker.ts` を型チェック
  * できるよう、ここで公開面を宣言する。
  */

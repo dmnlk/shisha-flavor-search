@@ -1,6 +1,6 @@
-// Cloudflare Workers のエントリポイント (wrangler.jsonc の `main`)。
+// Cloudflare Workers のエントリポイント (cloudflare.config.ts の `entrypoint`)。
 //
-// `opennextjs-cloudflare build` が生成する `.open-next/worker.js` (wrangler の `alias` で
+// `opennextjs-cloudflare build` が生成する `.open-next/worker.js` (wrangler.config.ts の `alias` で
 // `open-next-worker` として解決) を `@sentry/cloudflare` の `withSentry()` で包む。これにより
 // リクエストごとに Sentry クライアントが用意され、Worker から漏れた例外の捕捉と、レスポンス返却後の
 // 送信 (`ctx.waitUntil` による flush) が行われる。Next.js 内部で捕捉されたエラーは
