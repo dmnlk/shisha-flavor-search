@@ -42,11 +42,11 @@ describe('getFlavorDescription', () => {
 
   it("Editor's Selection の note に id でフォールバックする", () => {
     const description = getFlavorDescription({
-      id: 86,
-      manufacturer: 'AFZAL',
-      productName: 'AFZAL Hookah Molasses Mango Lassi',
+      id: 356,
+      manufacturer: 'AL FAKHER',
+      productName: 'Al Fakher Special Edition Watermelon Splash',
     })
-    expect(description).toContain('マンゴー')
+    expect(description).toContain('スイカ')
   })
 
   it('未知のフレーバーは null (UI はセクションを非表示にする)', () => {
