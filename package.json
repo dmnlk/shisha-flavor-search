@@ -20,10 +20,10 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
-    "@next/third-parties": "^16.3.6",
-    "@sentry/browser": "^11.0.0",
-    "@sentry/cloudflare": "^11.0.0",
-    "@sentry/nextjs": "^11.0.0",
+    "@next/third-parties": "^16.3.8",
+    "@sentry/browser": "^11.4.0",
+    "@sentry/cloudflare": "^11.4.0",
+    "@sentry/nextjs": "^11.4.0",
     "clsx": "^2.1.1",
     "fuse.js": "^7.5.0",
     "next": "^16.3.8",
@@ -32,8 +32,8 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.15",
-    "@cloudflare/workers-types": "^5.20260926.1",
-    "@opennextjs/cloudflare": "^1.20.6",
+    "@cloudflare/workers-types": "^5.20261003.1",
+    "@opennextjs/cloudflare": "^1.20.8",
     "@tailwindcss/postcss": "^4.3.3",
     "@testing-library/dom": "^10.4.2",
     "@testing-library/jest-dom": "^7.0.1",
@@ -43,7 +43,7 @@
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "@vitejs/plugin-react": "^6.1.1",
-    "@vitest/coverage-v8": "^5.0.2",
+    "@vitest/coverage-v8": "^5.0.3",
     "jsdom": "^30.1.1",
     "postcss": "^8.5.28",
     "tailwindcss": "^4.3.3",
@@ -51,6 +51,6 @@
     "typescript": "^7.0.2",
     "vitest": "^5.0.3",
     "vitest-fetch-mock": "^0.4.5",
-    "wrangler": "^4.141.0"
+    "wrangler": "^4.147.0"
   }
 }
