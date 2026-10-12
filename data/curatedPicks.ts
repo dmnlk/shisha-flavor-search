@@ -12,14 +12,14 @@ export interface CuratedPick {
 }
 
 export const EDITORS_PICKS: CuratedPick[] = [
-  { id: 356, note: 'UAE産Al Fakherスペシャルエディション。スイカの甘い清涼感が広がるサマーフルーツ系。' },
-  { id: 4029, note: 'ヨルダン産日本テーマシリーズ。青森りんごを冠した甘み強めの爽快フルーツ系。' },
-  { id: 5046, note: '米国産Trifectaのフローラルミント。ラベンダーの花香とミントの清涼が重なる個性派。' },
-  { id: 4418, note: '米国産香港着想ミルクティー。濃い紅茶とミルクの甘みが交わる本格アジア系。' },
-  { id: 3911, note: 'ヨルダン産Rommanのアップルシナモン。林檎の甘みとシナモンが絡む温かみある定番。' },
-  { id: 1308, note: 'ロシア産Boncheのダークチョコレート。苦みを抑えた純粋なカカオ甘みが広がるデザート系。' },
-  { id: 74, note: 'インド産Afzalのアイシーグレープフルーツ。グレープフルーツの酸味と冷涼感が爽快に交わる。' },
-  { id: 3510, note: 'エジプト産Nakhla El Bashaのカプチーノ。コーヒーの苦みとクリームが穏やかに重なる一本。' },
-  { id: 51, note: 'トルコ産Adalyaのオレンジミント。オレンジの爽やかな甘みとミントの清涼が素直に合わさる。' },
-  { id: 1134, note: 'UAE産Bang Bangのブルーグァバ。甘みある熱帯グァバ香に清涼感が加わるトロピカル系。' },
+  { id: 1911, note: 'スイス産DoobaccoのFrozen Lemon。レモンの鋭い酸みと清涼感が刺激的に交差するシトラス系。' },
+  { id: 2669, note: '米国産FumariのSpiced Chai。シナモンとカルダモンが香る濃厚なインド式チャイ着想系。' },
+  { id: 1657, note: 'ロシア産DarksideのCOSMO FLOWER。花のアロマを独自ブレンドで表現した個性派フローラル。' },
+  { id: 3070, note: 'トルコ産JiBiARのTiramisu。濃いめのエスプレッソとマスカルポーネが重なるデザート系。' },
+  { id: 1349, note: 'ヨルダン産ButaのBlueberry Cake。甘酸っぱいベリーとスポンジケーキの風味が交わる菓子系。' },
+  { id: 3232, note: 'UAE産LayalinaのCHERRY COLA。さくらんぼの甘みとコーラの炭酸感が弾ける個性派フルーツ系。' },
+  { id: 1044, note: '米国産Azure Gold LineのViva La Horchata。シナモン米ドリンク着想の独特な甘みが広がる一本。' },
+  { id: 2978, note: 'ロシア産JentのHerbal Labrador Tea。野生ハーブ茶ベースの植物香豊かなアロマ系の珍品。' },
+  { id: 4209, note: 'ロシア産SeberoのBlack Lemon Waffle。レモンの酸みとワッフルの焼き菓子甘みが重なる菓子系。' },
+  { id: 4619, note: '米国産StarbuzzのBold Brownie。コクある濃厚チョコレートブラウニーの甘みが広がる定番デザート。' },
 ]
