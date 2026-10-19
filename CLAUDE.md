@@ -88,6 +88,7 @@ pnpm build:data    # Regenerate data/generated/searchIndex.json + brands.json.
 - **インフラ**: Cloudflare Workers + Assets (`@opennextjs/cloudflare`)。`wrangler.jsonc` で設定。
 - `pnpm deploy` で本番デプロイ。`pnpm preview` でローカル Workers プレビュー。
 - `open-next.config.ts` で `staticAssetsIncrementalCache` を使用（SSG ページのインクリメンタルキャッシュ）。
+- **ビルド失敗時のログ取得**: Workers Builds は GitHub に `Workers Builds: shisha-flavor-search` という check-run を返す (production ブランチ = main のみ。PR のプレビュービルドは無効)。失敗すると `.github/workflows/cloudflare-build-logs.yml` が `cf builds get` / `cf builds logs get` (Cloudflare CLI `cf`) でログを取得し、job summary と PR / コミットのコメントに貼る。手動で調べるときは workflow_dispatch に Build ID (ダッシュボードのビルド URL 末尾) を渡す。要 secret `CLOUDFLARE_API_TOKEN` (Builds API は user-scoped トークン限定、権限 Workers Builds Configuration) と、workflow_dispatch 用 variable `CLOUDFLARE_ACCOUNT_ID`。
 - **og:image / canonical / sitemap の base URL**: `app/layout.tsx` / `app/sitemap.ts` / `app/robots.ts` の `SITE_URL` で決定。`NEXT_PUBLIC_SITE_URL` が build-time にセットされていれば優先、未設定時は `https://shisha-lento.com` にフォールバック (env を忘れて localhost が production に混入するのを防ぐ保険)。
 
 ### Error Monitoring (Sentry)
