@@ -148,7 +148,9 @@ pnpm build:data    # Regenerate data/generated/searchIndex.json + brands.json.
 
 7. **Node.js Version**: Project uses Node.js 26.0.0 as specified in `.node-version` file.
 
-8. **CSS Framework**: Tailwind CSS v4 with PostCSS configuration in JavaScript format for compatibility.
+8. **pnpm Version**: `package.json` の `packageManager` (`pnpm@11.9.0`) で固定。Cloudflare Workers Builds と `pnpm/action-setup` (ci.yml) はこの値を読む。`pnpm-workspace.yaml` は pnpm 10 以降向けの設定 (`allowBuilds` / `minimumReleaseAge`) だけで `packages` を持たないため、`packageManager` を外すと Cloudflare が既定の pnpm 9 にフォールバックして `packages field missing or empty` で落ちる。pnpm を上げるときは `packageManager` を更新する (ci.yml 側に `version` を書き戻さないこと — `packageManager` との併用は action-setup がエラーにする)。
+
+9. **CSS Framework**: Tailwind CSS v4 with PostCSS configuration in JavaScript format for compatibility.
 
 <!-- BEGIN:nextjs-agent-rules -->
 
