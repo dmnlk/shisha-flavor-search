@@ -12,14 +12,14 @@ export interface CuratedPick {
 }
 
 export const EDITORS_PICKS: CuratedPick[] = [
-  { id: 1911, note: 'スイス産DoobaccoのFrozen Lemon。レモンの鋭い酸みと清涼感が刺激的に交差するシトラス系。' },
-  { id: 2669, note: '米国産FumariのSpiced Chai。シナモンとカルダモンが香る濃厚なインド式チャイ着想系。' },
-  { id: 1657, note: 'ロシア産DarksideのCOSMO FLOWER。花のアロマを独自ブレンドで表現した個性派フローラル。' },
-  { id: 3070, note: 'トルコ産JiBiARのTiramisu。濃いめのエスプレッソとマスカルポーネが重なるデザート系。' },
-  { id: 1349, note: 'ヨルダン産ButaのBlueberry Cake。甘酸っぱいベリーとスポンジケーキの風味が交わる菓子系。' },
-  { id: 3232, note: 'UAE産LayalinaのCHERRY COLA。さくらんぼの甘みとコーラの炭酸感が弾ける個性派フルーツ系。' },
-  { id: 1044, note: '米国産Azure Gold LineのViva La Horchata。シナモン米ドリンク着想の独特な甘みが広がる一本。' },
-  { id: 2978, note: 'ロシア産JentのHerbal Labrador Tea。野生ハーブ茶ベースの植物香豊かなアロマ系の珍品。' },
-  { id: 4209, note: 'ロシア産SeberoのBlack Lemon Waffle。レモンの酸みとワッフルの焼き菓子甘みが重なる菓子系。' },
-  { id: 4619, note: '米国産StarbuzzのBold Brownie。コクある濃厚チョコレートブラウニーの甘みが広がる定番デザート。' },
+  { id: 4772, note: '米国産TangiersのCane Mint。サトウキビ由来の清涼感とタバコのコクが融合する本格ミント系の代名詞。' },
+  { id: 163, note: 'UAE産Al FakherのCardamom。中東の伝統スパイス、カルダモンの芳醇な香りを素直に凝縮した純粋な一本。' },
+  { id: 2249, note: 'トルコ産DozajのBergamot Tea。ベルガモットの柑橘的な花香が茶葉の渋みに溶けるアールグレイ着想系。' },
+  { id: 2260, note: 'トルコ産DozajのBlack Jamaican Rum。濃厚なラムの甘辛さにスパイスが重なるカリブ海着想の個性派。' },
+  { id: 5418, note: 'ロシア産DeusのJasmine Pear。ジャスミンの繊細な花香とみずみずしい洋梨の甘みが穏やかに溶け合う。' },
+  { id: 462, note: 'ヨルダン産Al WahaのBounty。バウンティチョコバー着想のミルクチョコとヤシの実が濃密に絡むデザート系。' },
+  { id: 69, note: 'インド産AfzalのGingerelle。ジンジャーの刺激的な辛みと清涼感が際立つスパイシー系の珍品。' },
+  { id: 3500, note: 'エジプト産NakhlaのClassic Mint。スペアミント主体のオーソドックスな定番で、ミント系の基準となる一本。' },
+  { id: 2365, note: '米国産Eternal SmokeのAloha Nights。ハワイをテーマにした熱帯フルーツの甘みが広がるトロピカル系。' },
+  { id: 3382, note: 'ヨルダン産MazayaのCoffee with Cardamom。コーヒーとカルダモンが交わる中東式コーヒーの風合いを再現した一本。' },
 ]
