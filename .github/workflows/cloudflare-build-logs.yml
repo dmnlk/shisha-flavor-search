@@ -120,6 +120,23 @@ jobs:
           done
           echo "lines=$(wc -l < out/logs.txt | tr -d ' ')" >> "$GITHUB_OUTPUT"
 
+      # このリポジトリは public で、PR コメント / job summary / artifact はすべて誰でも読める。
+      # Workers Builds のログにビルド時の環境変数やトークンが混入した場合に備え、
+      # 機密らしい文字列をマスクしたものだけを外に出す (生ログはこの job の外に出さない)。
+      - name: Redact secrets from logs
+        run: |
+          set -euo pipefail
+          sed -E \
+            -e 's/(Bearer|bearer|Basic|basic)[[:space:]]+[A-Za-z0-9._~+\/=-]{8,}/\1 [REDACTED]/g' \
+            -e 's/([A-Za-z0-9_-]*(TOKEN|SECRET|PASSWORD|PASSWD|API_KEY|APIKEY|ACCESS_KEY|PRIVATE_KEY|AUTH|DSN|CREDENTIAL)[A-Za-z0-9_-]*)[[:space:]]*[=:][[:space:]]*[^[:space:]"'"'"']+/\1=[REDACTED]/Ig' \
+            -e 's#(https?://[^/[:space:]]*:)[^@/[:space:]]+@#\1[REDACTED]@#g' \
+            -e 's/[A-Fa-f0-9]{32,}/[REDACTED-HEX]/g' \
+            -e 's/[A-Za-z0-9_-]{40,}/[REDACTED-LONG]/g' \
+            out/logs.txt > out/logs.redacted.txt
+          rm -f out/logs.txt out/page.json
+          # build.json は trigger の環境変数名などを含むので外に出さず、必要な値は fetch ステップで output 済み
+          rm -f out/build.json
+
       - name: Write job summary and comment body
         id: report
         env:
@@ -143,13 +160,13 @@ jobs:
             echo "### エラーらしい行"
             echo
             echo '```'
-            grep -iE 'error|fail|exit code|not found|missing' out/logs.txt | tail -n 40 || echo "(該当なし)"
+            grep -iE 'error|fail|exit code|not found|missing' out/logs.redacted.txt | tail -n 40 || echo "(該当なし)"
             echo '```'
             echo
             echo "### ログ末尾 (最後の 80 行)"
             echo
             echo '```'
-            tail -n 80 out/logs.txt
+            tail -n 80 out/logs.redacted.txt
             echo '```'
           } > out/report.md
           cat out/report.md >> "$GITHUB_STEP_SUMMARY"
@@ -163,9 +180,7 @@ jobs:
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: cloudflare-build-logs
-          path: |
-            out/build.json
-            out/logs.txt
+          path: out/logs.redacted.txt
           retention-days: 14
 
       - name: Comment on the PR or commit
