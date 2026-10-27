@@ -5,8 +5,8 @@ import { BRAND_DESCRIPTIONS } from './brandDescriptions'
 import { getBrandImageUrl } from './brandImages'
 import { EDITORS_PICKS } from './curatedPicks'
 import { resolveFlavorImage } from './flavorImages'
-import { LATEST_ADDITIONS } from './latestAdditions'
 import updateState from './generated/updateState.json'
+import { LATEST_ADDITIONS } from './latestAdditions'
 import { shishaData } from './shishaData'
 
 /**
