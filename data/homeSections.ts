@@ -6,6 +6,7 @@ import { getBrandImageUrl } from './brandImages'
 import { EDITORS_PICKS } from './curatedPicks'
 import { resolveFlavorImage } from './flavorImages'
 import updateState from './generated/updateState.json'
+import { LATEST_ADDITIONS } from './latestAdditions'
 import { shishaData } from './shishaData'
 
 /**
@@ -88,9 +89,10 @@ function getLastAddedIds(): number[] {
 
 /**
  * Returns the most recently added flavors.
- * Reads last_added_ids from shisha-update-state.json (set by merge_into_data.py)
- * so results reflect actual insertion order, not alphabetical ID position.
- * The recorded additions always lead (image-bearing first); when there are
+ * Hand-picked ids in data/latestAdditions.ts lead (in file order). Then
+ * last_added_ids from shisha-update-state.json (set by merge_into_data.py)
+ * follow, so results reflect actual insertion order, not alphabetical ID
+ * position. The recorded additions lead (image-bearing first); when there are
  * fewer than `limit` of them, the result is topped up with image-bearing tail
  * entries rather than discarding the recent ones. Falls back entirely to the
  * tail when no state is available.
@@ -106,11 +108,19 @@ export function getLatestFlavors(limit = 6): ShishaFlavor[] {
       picked.push(f)
     }
   }
+  const byId = new Map(shishaData.map(f => [f.id, f] as const))
+
+  // Curated: hand-picked showcase of the latest update (data/latestAdditions.ts).
+  take(
+    LATEST_ADDITIONS.map(id => byId.get(id))
+      .filter((f): f is ShishaFlavor => f !== undefined)
+      .map(resolveFlavorImage)
+  )
+  if (picked.length >= limit) return picked
 
   // Primary: most recently added flavors recorded by the update pipeline.
   const lastAddedIds = getLastAddedIds()
   if (lastAddedIds.length > 0) {
-    const byId = new Map(shishaData.map(f => [f.id, f] as const))
     const candidates = lastAddedIds
       .map(id => byId.get(id))
       .filter((f): f is ShishaFlavor => f !== undefined)

@@ -72,6 +72,7 @@ pnpm build:data    # Regenerate data/generated/searchIndex.json + brands.json.
 - **data/flavorImagesGenerated.ts** (**git管理対象 / コミットする** — gitignore ではない): フレーバーid → 画像URL マップ。`scripts/build/generate-flavor-image-map.ts` が `public/images/flavors/` を走査して生成。`flavorImages.ts` が静的importするため `dev`/`test`/`typecheck` でもファイルの存在が必須で、リポジトリにコミットされている。自動再生成は `pnpm build` の `prebuild` フックでのみ行われ、`dev`/`test`/`typecheck` では再生成されない（コミット済みの内容を使う）。**フレーバー画像を `public/images/flavors/` に追加したら `npx tsx scripts/build/generate-flavor-image-map.ts` を実行して再生成・コミットすること**（忘れると追加画像がローカル dev / test / typecheck に反映されずドリフトする）。Cloudflare Workers のバンドルサイズ制限を避けるためビルド時に静的生成している。
 - **data/flavorImages.ts**: `flavorImagesGenerated.ts` のラッパー。フレーバー画像URLを解決する `resolveFlavorImage()` を公開。
 - **data/curatedPicks.ts**: トップページ「Editor's Selection」用の手選びフレーバーリスト。
+- **data/latestAdditions.ts**: トップページ「Latest Additions」用の手選び id リスト (6 件)。shisha-update で新規フレーバーを取り込むたびに、その回の追加分から画像ありのものを選んで書き換える (空なら `lastAddedIds` の先頭に自動フォールバック)。
 - **data/homeSections.ts**: トップページのセクション構成データ。
 - **data/flavorTagTaxonomy.ts**: フレーバータグの固定タクソノミー (18種、client-safe)。自由記述タグは追加しないこと。
 - **lib/tags/flavorTagger.ts**: 商品名 → タグのルールエンジン。キーワード辞書 (単語境界付き英語 + 部分一致カタカナ、長いパターン優先で消費) + `data/flavorTagOverrides.ts` (辞書で判定できない固有名のAI分類結果、`normalizeFlavorName` キー)。**オーバーライドは根拠のあるものだけ — 不明な名前は未タグのまま**。実行はビルド時のみで、`scripts/build-data.ts` が `data/generated/flavorTags.json` (id → タグ配列) を生成する。
