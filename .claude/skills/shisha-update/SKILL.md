@@ -16,6 +16,7 @@ description: shisha-flavor-search リポジトリで、財務省「製造たば�
 5. **既存データにマージ** — `(productName, amount)` をキーに dedupe、`kouriteikahenkou` は新価格で上書き
 6. **検証 & レポート** — `pnpm lint` と `npx tsc --noEmit` を走らせ、差分レポートを出力
 7. **stateファイル更新** — 処理済みPDFリストを `.claude/shisha-update-state.json` に保存
+8. **Latest Additions 更新** — `data/latestAdditions.ts` の `LATEST_ADDITIONS` を今回の追加分 6 件で書き換える (画像・説明文を付けた後に行う)
 
 ## ステップ詳細
 
@@ -96,11 +97,25 @@ pnpm lint && npx tsc --noEmit
 }
 ```
 
+### 7. Latest Additions の更新 (必須)
+
+トップページ § 003 「Latest Additions」は `data/latestAdditions.ts` の `LATEST_ADDITIONS` (id 6 件・手選び) を表示する。
+自動選定 (`lastAddedIds` の先頭 6 件) は id 順 = ブランド名のアルファベット順になり、同じブランドの似た銘柄が並んでしまうので、**取り込みのたびに必ず書き換える**。
+
+- 今回の `last_added_ids` (state ファイル) から、**画像が `public/images/flavors/<id>.*` にあるもの**だけを候補にする。画像と説明文は
+  `flavor-image-download` / `flavor-description-update` スキルで先に付けてから選ぶ (同じ PR に積む)
+- ブランド・産地・系統が偏らないよう 6 件選ぶ (同一ブランドは最大 2 件、ノンアロマばかりにしない)。並び順がそのまま表示順
+- 各行にブランド名・銘柄・産地のコメントを付ける
+- 確認: `npx tsx -e "import { getLatestFlavors } from './data/homeSections'; for (const f of getLatestFlavors(6)) console.log(f.id, f.productName, f.imageUrl ? 'img' : '-')"`
+  で 6 件とも `img` になること
+- 新規追加が 6 件未満の回は、足りない分を前回の選定から残してよい
+
 ## 対話の流れ (ユーザーとのやり取り)
 
 スキル実行中、以下を都度ユーザーに報告すること:
 - ステップ1完了時: 「MOFに新規PDF X 件あり。処理に進みますか?」 (新規0件ならここで終了)
 - ステップ4完了時: 差分レポートを提示し、除外ブランドに想定外のものが含まれていたら確認
+- ステップ7完了時: Latest Additions に選んだ 6 件 (id・銘柄) を提示
 - ステップ5失敗時: エラー詳細を出して手動修正を促す
 
 ## 落とし穴
