@@ -261,6 +261,15 @@ pnpm lint && pnpm test && pnpm typecheck
   5 種 (Black Berry / Elderberry Wine / Flower Perfume / Viola / Wood) は輸入元の 1 文のみで短く記載。
   公告の旧表記 Gynness = Guinness、Pink Grapefruit = Rose Grapefruit (露語名 «Розовый грейпфрут» で確認) は共有定数。
   Black Currant は全ソース未掲載で未記載
+- 2026-10: shisha-update (MOF 2026-09-14〜10-26) の新規 146 id に対し 120 id 解決。SERBETLI 44 キー (htreviews `/tobaccos/serbetli/main/<slug>`
+  32 種 + worldhookahmarket.com の構成 1 文 12 種)、Tombacco 37 キー (htreviews whiteline/blackline + myshisha.id)、MEZZA 9 キー (myshisha.id の
+  英語説明)、DOGMA シガーモノソート 10 キー (htreviews `/tobaccos/dogma/sigarnyy-monosort/` + dogma-tobacco.ru)、NASH ノーアロマ 4 キー
+  (htreviews `/tobaccos/nash/no-aroma-cigar-line/`)、Debaj Grape Berry (debajtobacco.com)。
+  - htreviews の slug 推測で外れた Serbetli の対応: LEMON MINT = `lemon-with-mint`、CARDAMON = `cardamom`、PASSIONFRUIT = `passion-fruit`。
+    `dark-sweet` はチョコ×チェリーで公告の DARK SWEET ICE CACTUS とは別物として不採用。
+  - Tombacco Blackline は htreviews もインドネシア販売店もワヤン名 (Dewi Sinta 等) で、副題とパッケージ併記のフレーバー名で公告名に対応付ける
+    (対応表は flavor-image-download スキルの表を参照)。KOLA CANDY / STRAWBERRY DREAM / RASPBERRY / AFRICAN QUEEN は対応が取れず未記載。
+  - hookah-reviews.com はこれらのブランドのカテゴリを持たない。Serbetli の公式 serbetli.com は米国代理店の JS サイトで使えない。
 - **記事が無く見送ったブランド**: Nirvana (公告は旧 Super Shisha ライン、ブログは
   Eclipse / Othmani で銘柄が全く重ならない) / Malaki (12 キー中 2 件しか記事が無い) /
   Dozaj (119 キーに対し Dozaj Black の記事 4 本のみ)
