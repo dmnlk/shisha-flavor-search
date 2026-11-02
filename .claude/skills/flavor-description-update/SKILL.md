@@ -270,6 +270,11 @@ pnpm lint && pnpm test && pnpm typecheck
   - Tombacco Blackline は htreviews もインドネシア販売店もワヤン名 (Dewi Sinta 等) で、副題とパッケージ併記のフレーバー名で公告名に対応付ける
     (対応表は flavor-image-download スキルの表を参照)。KOLA CANDY / STRAWBERRY DREAM / RASPBERRY / AFRICAN QUEEN は対応が取れず未記載。
   - hookah-reviews.com はこれらのブランドのカテゴリを持たない。Serbetli の公式 serbetli.com は米国代理店の JS サイトで使えない。
+- 2026-11: KRAKEN 13 キー (13 id 全解決)。htreviews 単独 (`/tobaccos/kraken/medium-seco/` と `/strong-ligero/`)。hookah-reviews.com
+  にカテゴリ無し、日本代理店 EC も未発見。公告名にライン表記が無く、13 銘柄中 7 銘柄 (Cheddar Cheese / Creme Brulee / Lemon Cake / Mexican Lime / Original /
+  Peanut / Strawberry) は両ラインに別ページがあるため両ラインの評価を併記した。**ラインページの SSR 一覧は不完全** — 片ラインにしか
+  見えない銘柄も必ずもう一方のラインを直接プローブすること (Medium Seco の Creme Brulee 等 4 件を初回に見落とした)。
+  reviews_object は 1 回の取得で最新 4 件しか返さない (以降は lazy load)。
 - **記事が無く見送ったブランド**: Nirvana (公告は旧 Super Shisha ライン、ブログは
   Eclipse / Othmani で銘柄が全く重ならない) / Malaki (12 キー中 2 件しか記事が無い) /
   Dozaj (119 キーに対し Dozaj Black の記事 4 本のみ)
