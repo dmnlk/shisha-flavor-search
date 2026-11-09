@@ -32,7 +32,7 @@
     "react-dom": "^19.3.1"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.6.4",
+    "@biomejs/biome": "2.6.6",
     "@cloudflare/workers-types": "^5.20261031.1",
     "@opennextjs/cloudflare": "^1.20.15",
     "@tailwindcss/postcss": "^4.3.3",
