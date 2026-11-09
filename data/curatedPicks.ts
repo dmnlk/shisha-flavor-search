@@ -12,14 +12,14 @@ export interface CuratedPick {
 }
 
 export const EDITORS_PICKS: CuratedPick[] = [
-  { id: 4772, note: '米国産TangiersのCane Mint。サトウキビ由来の清涼感とタバコのコクが融合する本格ミント系の代名詞。' },
-  { id: 163, note: 'UAE産Al FakherのCardamom。中東の伝統スパイス、カルダモンの芳醇な香りを素直に凝縮した純粋な一本。' },
-  { id: 4438, note: '米国産Social SmokeのJapanese Yuzu。柚子の爽やかな柑橘香を米国流に解釈した、国際的に珍しいシトラス系。' },
-  { id: 2588, note: '米国産FumariのDark White Peach。白桃の果肉感ある甘みをダーク仕上げで深みを加えた、フルーティーな一本。' },
-  { id: 4033, note: 'ヨルダン産Samurai BlondのAzuki。小豆の素朴な甘みを和菓子着想で再現した、国際的に珍しい和風デザート系。' },
-  { id: 3137, note: 'ヨルダン産Khalil MaamoonのSpiced Tea。スパイスを纏った中東式紅茶の香り豊かな風合いが広がるティー系。' },
-  { id: 1316, note: 'ロシア産BoncheのLavender。ラベンダーの淡い花香が穏やかに漂うフローラル系で、シンプルながら存在感がある。' },
-  { id: 5327, note: 'ロシア産MustHaveのEarl Grey。ベルガモットの柑橘花香と紅茶の渋みが上品に溶け合うアールグレイ系。' },
-  { id: 3911, note: 'ヨルダン産RommanのApple Cinnamon。リンゴの甘みにシナモンの温かいスパイシーさが重なる親しみやすい組み合わせ。' },
-  { id: 1768, note: 'UAE産DebajのCactus。サボテン果実の甘酸っぱいジュースを思わせる、希少感のある個性派フルーツ系。' },
+  { id: 2567, note: '米国産FumariのBlueberry Muffin。完熟ブルーベリーの甘酸っぱさに焼きたてマフィンの香ばしさが重なる定番ベーカリー系。' },
+  { id: 4418, note: '米国産Social SmokeのHong Kong Milk Tea。濃厚な紅茶と練乳が絡む香港式ミルクティー着想のクリーミーな甘み系。' },
+  { id: 5042, note: '米国産TrifectaのCucumber Mojito。清涼感あるキュウリとミント、ライムが混在する個性的なカクテル系の異色作。' },
+  { id: 3939, note: 'ヨルダン産RommanのRose。バラの華やかな花香を凝縮したフローラル系で、中東のローズ文化を素直に表現した一本。' },
+  { id: 1633, note: 'ロシア産DarksideのBasil Blast。フレッシュバジルの青々しい植物香が前面に出る他に類を見ないハーブ系の異色作。' },
+  { id: 4037, note: 'ヨルダン産Samurai BlondのBiwa。ビワ（枇杷）の繊細な甘みと軽い酸みを表現した希少な日本着想の変わり種。' },
+  { id: 1305, note: 'ロシア産BoncheのClove。クローブ固有の強い芳香と甘みが煙に乗るシンプルかつ骨格のあるスパイス系純品。' },
+  { id: 1185, note: 'ヨルダン産BangbangのBlack Russian。コーヒーリキュールとウォッカのカクテルに着想した甘辛い個性派。' },
+  { id: 904, note: '米国産AzureのMoroccan Tea。甘みとスペアミントが重なる北アフリカ式甘茶着想の爽やかな茶系フレーバー。' },
+  { id: 1778, note: 'UAE産DebajのCinnamon Cake。シナモンの辛みとスポンジケーキの甘みが折り重なる中東発のスパイスデザート系。' },
 ]
