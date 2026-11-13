@@ -1,0 +1,201 @@
+# Cloudflare Workers Builds が失敗したときに、cf CLI でビルドログを取得して
+# GitHub 側 (job summary + PR / コミットのコメント) に貼る。
+#
+# Workers Builds は GitHub に "Workers Builds: <worker名>" という check-run を返すので、
+# その completed イベントのうち失敗したものだけを拾う。
+# 手動で特定の Build ID を調べたいときは workflow_dispatch で Build ID を渡す。
+#
+# 必要な設定:
+#   - secret  CLOUDFLARE_API_TOKEN : Builds API は user-scoped トークン限定 (account-owned は不可)。
+#                                     権限: Workers Builds Configuration (Read で足りるはず。
+#                                     Invalid token になる場合は Edit にする)。
+#   - variable CLOUDFLARE_ACCOUNT_ID : workflow_dispatch のときだけ使う
+#                                     (check_run のときは details_url から取る)。
+name: Cloudflare build logs
+
+on:
+  check_run:
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      build_uuid:
+        description: 'Workers Builds の Build ID (ダッシュボードのビルド URL 末尾の UUID)'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  pull-requests: write
+
+env:
+  CF_VERSION: 1.0.0-beta.18
+  CF_SEND_TELEMETRY: 'false'
+  CF_QUIET: '1'
+  NO_COLOR: '1'
+
+jobs:
+  fetch-logs:
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (
+        startsWith(github.event.check_run.name, 'Workers Builds') &&
+        contains(fromJSON('["failure", "timed_out", "cancelled", "action_required"]'), github.event.check_run.conclusion)
+      )
+    runs-on: ubuntu-latest
+    steps:
+      - name: Resolve build ID and account ID
+        id: resolve
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          DETAILS_URL: ${{ github.event.check_run.details_url }}
+          INPUT_BUILD_UUID: ${{ inputs.build_uuid }}
+          VAR_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          set -euo pipefail
+          if [ "$EVENT_NAME" = "workflow_dispatch" ]; then
+            build_uuid="$INPUT_BUILD_UUID"
+            account_id="$VAR_ACCOUNT_ID"
+            if [ -z "$account_id" ]; then
+              echo "::error::repository variable CLOUDFLARE_ACCOUNT_ID が未設定です"; exit 1
+            fi
+          else
+            # 例: https://dash.cloudflare.com/<account_id>/workers/services/view/<worker>/production/builds/<build_uuid>
+            build_uuid="${DETAILS_URL##*/}"
+            account_id="$(printf '%s' "$DETAILS_URL" | sed -E 's#^https://dash\.cloudflare\.com/([0-9a-f]{32})/.*$#\1#')"
+          fi
+          if ! printf '%s' "$build_uuid" | grep -Eq '^[0-9a-f-]{36}$'; then
+            echo "::error::Build ID を特定できません: '$build_uuid' (details_url: $DETAILS_URL)"; exit 1
+          fi
+          if ! printf '%s' "$account_id" | grep -Eq '^[0-9a-f]{32}$'; then
+            echo "::error::Account ID を特定できません: '$account_id'"; exit 1
+          fi
+          echo "build_uuid=$build_uuid" >> "$GITHUB_OUTPUT"
+          echo "account_id=$account_id" >> "$GITHUB_OUTPUT"
+          echo "dashboard_url=${DETAILS_URL:-https://dash.cloudflare.com/$account_id/workers}" >> "$GITHUB_OUTPUT"
+
+      - name: Check CLOUDFLARE_API_TOKEN
+        env:
+          TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          if [ -z "$TOKEN" ]; then
+            echo "::error::secret CLOUDFLARE_API_TOKEN が未設定です。Builds API 用の user-scoped トークン (Workers Builds Configuration 権限) を https://dash.cloudflare.com/profile/api-tokens で作成して登録してください"
+            exit 1
+          fi
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+
+      - name: Fetch build details and logs with cf CLI
+        id: fetch
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ steps.resolve.outputs.account_id }}
+          BUILD_UUID: ${{ steps.resolve.outputs.build_uuid }}
+        run: |
+          set -euo pipefail
+          mkdir -p out
+          npx -y "cf@${CF_VERSION}" builds get "$BUILD_UUID" > out/build.json
+          # cf は API の result を JSON で stdout に出す。envelope 付きでも読めるよう (.result // .) で吸収する。
+          jq -r '(.result // .) | "status=\(.status // "")\nbuild_outcome=\(.build_outcome // "")\nbranch=\(.build_trigger_metadata.branch // "")\ncommit=\(.build_trigger_metadata.commit_hash // "")\nstopped_on=\(.stopped_on // "")"' out/build.json | tee -a "$GITHUB_OUTPUT"
+
+          # ログはカーソルページング。空ページか cursor が尽きるまで追う (上限 100 ページ)。
+          cursor=""
+          page=0
+          : > out/logs.txt
+          while :; do
+            page=$((page + 1))
+            if [ -n "$cursor" ]; then
+              npx -y "cf@${CF_VERSION}" builds logs get "$BUILD_UUID" --cursor "$cursor" > out/page.json
+            else
+              npx -y "cf@${CF_VERSION}" builds logs get "$BUILD_UUID" > out/page.json
+            fi
+            count="$(jq -r '(.result // .) | (.lines // []) | length' out/page.json)"
+            jq -r '(.result // .) | (.lines // [])[] | "\((.[0] | floor | todate)) \(.[1])"' out/page.json >> out/logs.txt
+            next="$(jq -r '(.result // .) | .cursor // ""' out/page.json)"
+            if [ "$count" -eq 0 ] || [ -z "$next" ] || [ "$next" = "$cursor" ] || [ "$page" -ge 100 ]; then
+              break
+            fi
+            cursor="$next"
+          done
+          echo "lines=$(wc -l < out/logs.txt | tr -d ' ')" >> "$GITHUB_OUTPUT"
+
+      # このリポジトリは public で、PR コメント / job summary / artifact はすべて誰でも読める。
+      # Workers Builds のログにビルド時の環境変数やトークンが混入した場合に備え、
+      # 機密らしい文字列をマスクしたものだけを外に出す (生ログはこの job の外に出さない)。
+      - name: Redact secrets from logs
+        run: |
+          set -euo pipefail
+          sed -E \
+            -e 's/(Bearer|bearer|Basic|basic)[[:space:]]+[A-Za-z0-9._~+\/=-]{8,}/\1 [REDACTED]/g' \
+            -e 's/([A-Za-z0-9_-]*(TOKEN|SECRET|PASSWORD|PASSWD|API_KEY|APIKEY|ACCESS_KEY|PRIVATE_KEY|AUTH|DSN|CREDENTIAL)[A-Za-z0-9_-]*)[[:space:]]*[=:][[:space:]]*[^[:space:]"'"'"']+/\1=[REDACTED]/Ig' \
+            -e 's#(https?://[^/[:space:]]*:)[^@/[:space:]]+@#\1[REDACTED]@#g' \
+            -e 's/[A-Fa-f0-9]{32,}/[REDACTED-HEX]/g' \
+            -e 's/[A-Za-z0-9_-]{40,}/[REDACTED-LONG]/g' \
+            out/logs.txt > out/logs.redacted.txt
+          rm -f out/logs.txt out/page.json
+          # build.json は trigger の環境変数名などを含むので外に出さず、必要な値は fetch ステップで output 済み
+          rm -f out/build.json
+
+      - name: Write job summary and comment body
+        id: report
+        env:
+          BUILD_UUID: ${{ steps.resolve.outputs.build_uuid }}
+          DASHBOARD_URL: ${{ steps.resolve.outputs.dashboard_url }}
+          STATUS: ${{ steps.fetch.outputs.status }}
+          OUTCOME: ${{ steps.fetch.outputs.build_outcome }}
+          BRANCH: ${{ steps.fetch.outputs.branch }}
+          COMMIT: ${{ steps.fetch.outputs.commit }}
+          LINES: ${{ steps.fetch.outputs.lines }}
+        run: |
+          set -euo pipefail
+          {
+            echo "## Cloudflare Workers Builds: ${OUTCOME:-$STATUS}"
+            echo
+            echo "- Build: [${BUILD_UUID}](${DASHBOARD_URL})"
+            echo "- status: \`${STATUS}\` / build_outcome: \`${OUTCOME}\`"
+            [ -n "$BRANCH" ] && echo "- branch: \`${BRANCH}\` commit: \`${COMMIT}\`"
+            echo "- log lines: ${LINES} (全文はこの workflow run の artifact \`cloudflare-build-logs\`)"
+            echo
+            echo "### エラーらしい行"
+            echo
+            echo '```'
+            grep -iE 'error|fail|exit code|not found|missing' out/logs.redacted.txt | tail -n 40 || echo "(該当なし)"
+            echo '```'
+            echo
+            echo "### ログ末尾 (最後の 80 行)"
+            echo
+            echo '```'
+            tail -n 80 out/logs.redacted.txt
+            echo '```'
+          } > out/report.md
+          cat out/report.md >> "$GITHUB_STEP_SUMMARY"
+          {
+            echo "<!-- cloudflare-build-logs:${BUILD_UUID} -->"
+            cat out/report.md
+            echo
+            echo "_workflow run: ${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}_"
+          } > out/comment.md
+
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: cloudflare-build-logs
+          path: out/logs.redacted.txt
+          retention-days: 14
+
+      - name: Comment on the PR or commit
+        if: github.event_name == 'check_run'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBERS: ${{ join(github.event.check_run.pull_requests.*.number, ' ') }}
+          HEAD_SHA: ${{ github.event.check_run.head_sha }}
+        run: |
+          set -euo pipefail
+          if [ -n "$PR_NUMBERS" ]; then
+            for n in $PR_NUMBERS; do
+              gh pr comment "$n" --repo "$GITHUB_REPOSITORY" --body-file out/comment.md
+            done
+          else
+            gh api --method POST "repos/${GITHUB_REPOSITORY}/commits/${HEAD_SHA}/comments" -F body=@out/comment.md > /dev/null
+            echo "commit ${HEAD_SHA} にコメントしました"
+          fi
