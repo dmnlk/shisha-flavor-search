@@ -15,5 +15,5 @@ export const LATEST_ADDITIONS: number[] = [
   5625, // Debaj Green Lemon (UAE)
   5643, // Sapphire Crown WAFFLES (ロシア)
   5624, // Debaj Berry (UAE)
-  5515, // SERBETLI ICE ACAI RASPBERRY (トルコ、前回から継続)
+  5666, // Tombacco Whiteline TOKYO MATCHA WAFER (インドネシア)
 ]
