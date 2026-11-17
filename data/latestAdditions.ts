@@ -10,10 +10,10 @@
  * - 空配列にすると homeSections.getLatestFlavors が自動選定 (lastAddedIds の先頭) にフォールバックする
  */
 export const LATEST_ADDITIONS: number[] = [
-  5515, // SERBETLI ICE ACAI RASPBERRY (トルコ)
-  5596, // Tombacco Whiteline MI AMOR (インドネシア)
-  5479, // MEZZA Jeruk Juara (インドネシア)
-  5465, // DOGMA CARMEN CUBITA (ロシア、ノンアロマ)
-  5487, // NASH ノーアロマ コロホ (ロシア)
-  5464, // Debaj Grape Berry (UAE)
+  5634, // Sapphire Crown MATCHA COCOS (ロシア)
+  5667, // Tombacco Whiteline VANILLA (インドネシア)
+  5625, // Debaj Green Lemon (UAE)
+  5643, // Sapphire Crown WAFFLES (ロシア)
+  5624, // Debaj Berry (UAE)
+  5666, // Tombacco Whiteline TOKYO MATCHA WAFER (インドネシア)
 ]
