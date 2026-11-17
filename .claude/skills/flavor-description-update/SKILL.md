@@ -275,6 +275,19 @@ pnpm lint && pnpm test && pnpm typecheck
   Peanut / Strawberry) は両ラインに別ページがあるため両ラインの評価を併記した。**ラインページの SSR 一覧は不完全** — 片ラインにしか
   見えない銘柄も必ずもう一方のラインを直接プローブすること (Medium Seco の Creme Brulee 等 4 件を初回に見落とした)。
   reviews_object は 1 回の取得で最新 4 件しか返さない (以降は lazy load)。
+- 2026-11: shisha-update (MOF 2026-10-27〜11-13) の新規 59 id に対し 41 id 解決。
+  - Sapphire Crown 17 キー (17 id 全解決)。htreviews メインライン `/tobaccos/sapphire-crown/main/<slug>` 単独。ロシアの炭メーカー Crown 製。
+    ライン一覧の SSR は 20 件しか出ないが、直接プローブで全銘柄ヒット (存在しない slug は 325KB のトップページが 200 で返るので
+    `<title>` に「Вкус <名前> табака」が含まれるかで判定する)。公告の MORS は `yagodnyy-mors` (Ягодный морс)。
+  - Tombacco Whiteline 2026 新作 22 キー (24 id 中 22 解決)。htreviews 未掲載。公式サイト `https://tombacco.co.id/new-flavors` の
+    英語説明 (アコーディオン形式、`Available Packaging ... Description` で分割) と、**日本代理店シーシャモンスター
+    (`https://shisha-monster.com/products.json?limit=250&page=N`、Shopify、vendor = `Tombacco White FS` / `MEZZA` / `Afzal` / `Debaj`)** の
+    `body_html` を併用。CARDAMOM / SWEET CARAMEL は両方に説明が無く未記載。myshisha.id は 2026 新作を未掲載。
+  - Debaj 2 キー (Berry / Green Lemon)。debajtobacco.com `/product/<flavor>-flavor/` の短い説明のみ。
+  - **未解決**: AFZAL 12 id (Chocolate Pan / Cola / Corn Potage / Double Milk / Energy Drink / Icy Chocolate Pan / Maghai Paan / Musk Melon /
+    Sakura / Sheik Mint / Lime / Banana) は smokedex・soex.com・newemoshisha・shisha-monster・shisha.jp・mizutabakoland のいずれにも無い日本向け
+    新ライン。BLACK ROCK Hookah Molasses (インド、Earl Grey / Lychee) はブランド自体がどこにも見つからない。MEZZA Smokey Bacon / Tokyo Matcha
+    Wafer は myshisha.id・shisha-monster とも未掲載。いずれも流通が始まってから再試行。
 - **記事が無く見送ったブランド**: Nirvana (公告は旧 Super Shisha ライン、ブログは
   Eclipse / Othmani で銘柄が全く重ならない) / Malaki (12 キー中 2 件しか記事が無い) /
   Dozaj (119 キーに対し Dozaj Black の記事 4 本のみ)
