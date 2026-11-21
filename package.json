@@ -21,10 +21,10 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
-    "@next/third-parties": "^16.4.5",
-    "@sentry/browser": "^11.11.0",
-    "@sentry/cloudflare": "^11.11.0",
-    "@sentry/nextjs": "^11.11.0",
+    "@next/third-parties": "^16.4.6",
+    "@sentry/browser": "^11.12.0",
+    "@sentry/cloudflare": "^11.12.0",
+    "@sentry/nextjs": "^11.12.0",
     "clsx": "^2.1.1",
     "fuse.js": "^7.5.0",
     "next": "^16.4.6",
@@ -33,13 +33,13 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.6.7",
-    "@cloudflare/workers-types": "^5.20261107.1",
-    "@opennextjs/cloudflare": "^1.20.16",
+    "@cloudflare/workers-types": "^5.20261114.1",
+    "@opennextjs/cloudflare": "^1.20.17",
     "@tailwindcss/postcss": "^4.3.5",
     "@testing-library/dom": "^10.4.2",
     "@testing-library/jest-dom": "^7.0.1",
     "@testing-library/react": "^16.3.3",
-    "@testing-library/user-event": "^14.6.8",
+    "@testing-library/user-event": "^14.6.10",
     "@types/node": "^26.6.6",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
@@ -52,6 +52,6 @@
     "typescript": "^7.0.2",
     "vitest": "^5.1.0",
     "vitest-fetch-mock": "^0.4.5",
-    "wrangler": "^4.158.0"
+    "wrangler": "^4.162.0"
   }
 }
