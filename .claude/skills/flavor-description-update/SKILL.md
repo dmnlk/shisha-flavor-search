@@ -288,6 +288,14 @@ pnpm lint && pnpm test && pnpm typecheck
     Sakura / Sheik Mint / Lime / Banana) は smokedex・soex.com・newemoshisha・shisha-monster・shisha.jp・mizutabakoland のいずれにも無い日本向け
     新ライン。BLACK ROCK Hookah Molasses (インド、Earl Grey / Lychee) はブランド自体がどこにも見つからない。MEZZA Smokey Bacon / Tokyo Matcha
     Wafer は myshisha.id・shisha-monster とも未掲載。いずれも流通が始まってから再試行。
+- 2026-11: NASH フレーバー付き 28 キー (45 id 中 39 解決、ノーアロマ 4 キーは 2026-10 に記載済み)。htreviews 単独
+  (`/tobaccos/nash/white-line/` `/black-line/` `/cigar-product/`)。hookah-reviews.com にカテゴリ無し。slug はロシア語の翻字で、
+  公告名との対応は スキットルズ = `swittles`、リプトン = `lipton` (現地名 Зеленый чай)、トフィー = `iriska`、キャロット = `morkovnyy-fresh`、
+  ローズマリー タイム = `rozmarin-chabrets`、ブルーベリー = `golubika`、レディシークレット = `lady-secret`。
+  **ラインページは `?s=created&d=asc` など並び順を変えて取得すると SSR の 20 件が入れ替わり、slug の列挙が進む**。
+  公告名にライン表記が無く、グレープフルーツ / スキットルズ / ブルーベリー (White + Black)、パッションフルーツ / マンゴー (White + Cigar) は
+  両ラインを併記。未記載は対応ページが見つからない ウイスキー (Black Line に Торфяной виски はあるが同一と確定できず) /
+  シダーベリーパイナップル / ハニートロピカルフルーツ / ロータスビスコス。
 - **記事が無く見送ったブランド**: Nirvana (公告は旧 Super Shisha ライン、ブログは
   Eclipse / Othmani で銘柄が全く重ならない) / Malaki (12 キー中 2 件しか記事が無い) /
   Dozaj (119 キーに対し Dozaj Black の記事 4 本のみ)
